@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge.net.jodah:typetools:0.6.3" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge.net.jodah" artifactId="typetools" version="0.6.3" baseVersion="0.6.3" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge/net/jodah/typetools/0.6.3/typetools-0.6.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

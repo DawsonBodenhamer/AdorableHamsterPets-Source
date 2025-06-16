@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" factoryName="Application" name="Minecraft Client (:fabric)" type="Application">
+    <option name="MAIN_CLASS_NAME" value="dev.architectury.transformer.TransformerRuntime"/>
+    <module name="adorablehamsterpets.fabric.main"/>
+    <option name="PROGRAM_PARAMETERS" value=""/>
+    <option name="VM_PARAMETERS" value="-Dfabric.dli.config=C:\Users\tweek\OneDrive\Documents\MY@@0020MINECRAFT@@0020MODS\Data\Repositories\Adorable@@0020Hamster@@0020Pets\fabric\.gradle\loom-cache\launch.cfg -Dfabric.dli.env=client -Dfabric.dli.main=net.fabricmc.loader.impl.launch.knot.KnotClient &quot;-Darchitectury.main.class=C:\Users\tweek\OneDrive\Documents\MY MINECRAFT MODS\Data\Repositories\Adorable Hamster Pets\fabric\.gradle\architectury\.main_class&quot; &quot;-Darchitectury.runtime.transformer=C:\Users\tweek\OneDrive\Documents\MY MINECRAFT MODS\Data\Repositories\Adorable Hamster Pets\fabric\.gradle\architectury\.transforms&quot; &quot;-Darchitectury.properties=C:\Users\tweek\OneDrive\Documents\MY MINECRAFT MODS\Data\Repositories\Adorable Hamster Pets\fabric\.gradle\architectury\.properties&quot; -Djdk.attach.allowAttachSelf=true &quot;-javaagent:C:\Users\tweek\OneDrive\Documents\MY MINECRAFT MODS\Data\Repositories\Adorable Hamster Pets\.gradle\architectury\architectury-transformer-agent.jar&quot;"/>
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/fabric/run/"/>
+    <method v="2">
+      <option enabled="true" name="Make"/>
+    </method>
+    <envs>
+      
+    </envs>
+    <shortenClasspath name="ARGS_FILE"/>
+  <classpathModifications/></configuration>
+</component>

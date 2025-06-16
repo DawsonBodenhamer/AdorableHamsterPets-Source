@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: net.minecraft:minecraft-merged-dd95a7ae94:1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="net.minecraft" artifactId="minecraft-merged-dd95a7ae94" version="1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2" baseVersion="1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-merged-dd95a7ae94/1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2/minecraft-merged-dd95a7ae94-1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

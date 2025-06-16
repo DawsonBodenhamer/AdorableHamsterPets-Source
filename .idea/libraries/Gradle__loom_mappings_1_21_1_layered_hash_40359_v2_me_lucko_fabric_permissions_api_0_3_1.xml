@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: loom_mappings_1_21_1_layered_hash_40359_v2.me.lucko:fabric-permissions-api:0.3.1" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="loom_mappings_1_21_1_layered_hash_40359_v2.me.lucko" artifactId="fabric-permissions-api" version="0.3.1" baseVersion="0.3.1" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/me/lucko/fabric-permissions-api/0.3.1/fabric-permissions-api-0.3.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

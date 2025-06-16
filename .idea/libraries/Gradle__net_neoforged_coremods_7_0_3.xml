@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: net.neoforged:coremods:7.0.3" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="net.neoforged" artifactId="coremods" version="7.0.3" baseVersion="7.0.3" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.neoforged/coremods/7.0.3/9147e6f638b4272b3bd5fc8f92ad37802512c6c/coremods-7.0.3.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.neoforged/coremods/7.0.3/346a331677763a8fe0a8adb06fcf946d0977f717/coremods-7.0.3-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

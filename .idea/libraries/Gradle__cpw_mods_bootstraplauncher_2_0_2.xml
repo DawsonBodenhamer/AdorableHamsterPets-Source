@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: cpw.mods:bootstraplauncher:2.0.2" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="cpw.mods" artifactId="bootstraplauncher" version="2.0.2" baseVersion="2.0.2" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/cpw.mods/bootstraplauncher/2.0.2/1a2d076cbc33b0520cbacd591224427b2a20047d/bootstraplauncher-2.0.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

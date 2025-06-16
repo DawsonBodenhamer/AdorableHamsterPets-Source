@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: net.peanuuutz.tomlkt:tomlkt-jvm:0.3.7" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="net.peanuuutz.tomlkt" artifactId="tomlkt-jvm" version="0.3.7" baseVersion="0.3.7" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.peanuuutz.tomlkt/tomlkt-jvm/0.3.7/c7fbe652c724763ce5639967582ab9b0e471c435/tomlkt-jvm-0.3.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.peanuuutz.tomlkt/tomlkt-jvm/0.3.7/223f274ed05e03a982b25fb3c84beeb97b7a197c/tomlkt-jvm-0.3.7-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: net.minecraft:neoforge-21.1.172-minecraft-merged:1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2-neoforge-21.1.172" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="net.minecraft" artifactId="neoforge-21.1.172-minecraft-merged" version="1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2-neoforge-21.1.172" baseVersion="1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2-neoforge-21.1.172" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/fabric-loom/minecraftMaven/net/minecraft/neoforge-21.1.172-minecraft-merged/1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2-neoforge-21.1.172/neoforge-21.1.172-minecraft-merged-1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2-neoforge-21.1.172.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/fabric-loom/minecraftMaven/net/minecraft/neoforge-21.1.172-minecraft-merged/1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2-neoforge-21.1.172/neoforge-21.1.172-minecraft-merged-1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2-neoforge-21.1.172-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

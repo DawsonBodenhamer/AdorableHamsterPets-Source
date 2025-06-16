@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge.org.openjdk.nashorn:nashorn-core:15.4" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge.org.openjdk.nashorn" artifactId="nashorn-core" version="15.4" baseVersion="15.4" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge/org/openjdk/nashorn/nashorn-core/15.4/nashorn-core-15.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

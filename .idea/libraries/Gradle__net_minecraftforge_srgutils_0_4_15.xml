@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: net.minecraftforge:srgutils:0.4.15" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="net.minecraftforge" artifactId="srgutils" version="0.4.15" baseVersion="0.4.15" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.minecraftforge/srgutils/0.4.15/ca408b131759478f164e010fae0d73997e125fb5/srgutils-0.4.15.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.minecraftforge/srgutils/0.4.15/e385404e84b778248ec4df7fb1a16934010d4daf/srgutils-0.4.15-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

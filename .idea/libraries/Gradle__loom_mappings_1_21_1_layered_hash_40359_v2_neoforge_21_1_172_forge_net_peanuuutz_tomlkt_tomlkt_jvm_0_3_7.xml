@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge.net.peanuuutz.tomlkt:tomlkt-jvm:0.3.7" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge.net.peanuuutz.tomlkt" artifactId="tomlkt-jvm" version="0.3.7" baseVersion="0.3.7" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge/net/peanuuutz/tomlkt/tomlkt-jvm/0.3.7/tomlkt-jvm-0.3.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

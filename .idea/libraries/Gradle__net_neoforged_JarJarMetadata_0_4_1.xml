@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: net.neoforged:JarJarMetadata:0.4.1" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="net.neoforged" artifactId="JarJarMetadata" version="0.4.1" baseVersion="0.4.1" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.4.1/f8da03683dc81694556dc3e177c5e3bb77ae6fcb/JarJarMetadata-0.4.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.neoforged/JarJarMetadata/0.4.1/f446dd1aded33f2cc9a59e71026fcec9730a2545/JarJarMetadata-0.4.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

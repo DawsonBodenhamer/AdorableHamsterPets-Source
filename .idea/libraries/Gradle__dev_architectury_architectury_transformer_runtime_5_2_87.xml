@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: dev.architectury:architectury-transformer:runtime:5.2.87" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="dev.architectury" artifactId="architectury-transformer" version="5.2.87" baseVersion="5.2.87" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/dev.architectury/architectury-transformer/5.2.87/980814ce433a3396de4495194f027dfecc94bb3a/architectury-transformer-5.2.87-runtime.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

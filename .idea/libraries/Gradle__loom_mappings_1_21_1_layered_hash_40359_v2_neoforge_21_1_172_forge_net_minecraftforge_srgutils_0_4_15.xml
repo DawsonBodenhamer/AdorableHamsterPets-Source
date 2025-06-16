@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Gradle: loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge.net.minecraftforge:srgutils:0.4.15" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge.net.minecraftforge" artifactId="srgutils" version="0.4.15" baseVersion="0.4.15" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge/net/minecraftforge/srgutils/0.4.15/srgutils-0.4.15.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
