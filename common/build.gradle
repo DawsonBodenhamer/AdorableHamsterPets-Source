@@ -1,5 +1,5 @@
 architectury {
-    common(rootProject.enabled_platforms.split(','))
+    common(rootProject.enabled_platforms.split(","))
 }
 
 loom {
@@ -7,11 +7,15 @@ loom {
 }
 
 dependencies {
-    // We depend on Fabric Loader here to use the Fabric @Environment annotations,
-    // which get remapped to the correct annotations on each platform.
-    // Do NOT use other classes from Fabric Loader.
-    modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
+    // Depend on Fabric Loader here to use the Fabric @Environment annotations
+    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
 
     // Architectury API
-    modImplementation "dev.architectury:architectury:$rootProject.architectury_api_version"
+    modCompileOnly "dev.architectury:architectury:$rootProject.architectury_api_version"
+
+    // GeckoLib API
+    modCompileOnly "software.bernie.geckolib:geckolib-common-$rootProject.minecraft_version:$rootProject.geckolib_version"
+
+    // Fzzy Config API
+    modCompileOnly "me.fzzyhmstrs:fzzy_config:${rootProject.fzzy_config_version}"
 }

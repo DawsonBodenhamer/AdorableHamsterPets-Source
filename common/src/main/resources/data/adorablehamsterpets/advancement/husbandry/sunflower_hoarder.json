@@ -1,0 +1,30 @@
+{
+  "parent": "adorablehamsterpets:husbandry/root",
+  "display": {
+    "icon": {
+      "id": "adorablehamsterpets:sunflower_seeds"
+    },
+    "title": {
+      "translate": "advancements.adorablehamsterpets.husbandry.sunflower_hoarder.title"
+    },
+    "description": {
+      "translate": "advancements.adorablehamsterpets.husbandry.sunflower_hoarder.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_sunflower_seeds": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["adorablehamsterpets:sunflower_seeds"]
+          }
+        ]
+      }
+    }
+  }
+}

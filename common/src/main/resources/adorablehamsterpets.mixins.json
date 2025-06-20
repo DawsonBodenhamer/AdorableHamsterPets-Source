@@ -1,11 +1,15 @@
 {
   "required": true,
   "package": "net.dawson.adorablehamsterpets.mixin",
-  "compatibilityLevel": "JAVA_21",
-  "minVersion": "0.8",
-  "client": [
-  ],
+  "compatibilityLevel": "JAVA_17",
   "mixins": [
+
+    "server.PlayerEntityMixin"
+  ],
+  "client": [
+
+    "client.PlayerEntityRendererMixin",
+    "client.LivingEntityRendererInvoker"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,0 +1,23 @@
+{
+  "parent": "adorablehamsterpets:husbandry/nose_for_treasure",
+  "display": {
+    "icon": {
+      "id": "minecraft:bone"
+    },
+    "title": {
+      "translate": "advancements.adorablehamsterpets.husbandry.canine_aspirations.title"
+    },
+    "description": {
+      "translate": "advancements.adorablehamsterpets.husbandry.canine_aspirations.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hamster_found_diamond": {
+      "trigger": "adorablehamsterpets:hamster_led_to_diamond"
+    }
+  }
+}

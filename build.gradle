@@ -1,82 +1,54 @@
 plugins {
-    id 'dev.architectury.loom' version '1.10-SNAPSHOT' apply false
-    id 'architectury-plugin' version '3.4-SNAPSHOT'
-    id 'com.gradleup.shadow' version '8.3.6' apply false
+    id "architectury-plugin" version "3.4-SNAPSHOT"
+    id "dev.architectury.loom" version "1.9-SNAPSHOT" apply false
 }
 
 architectury {
-    minecraft = project.minecraft_version
-}
-
-allprojects {
-    group = rootProject.maven_group
-    version = rootProject.mod_version
+    minecraft = rootProject.minecraft_version
 }
 
 subprojects {
-    apply plugin: 'dev.architectury.loom'
-    apply plugin: 'architectury-plugin'
-    apply plugin: 'maven-publish'
-
-    base {
-        archivesName = "$rootProject.archives_name-$project.name"
-    }
-
-    repositories {
-        // --- Kotlin for Forge Maven ---
-        maven {
-            url "https://thedarkcolour.github.io/KotlinForForge/"
-        }
-        // --- GeckoLib ---
-        maven {
-            name = 'GeckoLib'
-            url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
-        }
-        // --- Fzzy Config ---
-        maven {
-            name = 'FzzyMaven'
-            url = 'https://maven.fzzyhmstrs.me/'
-        }
-        // --- Mod Menu ---
-        maven {
-            name = 'TerraformersMC'
-            url  = 'https://maven.terraformersmc.com/'
-        }
-        // --- Jade ---
-        maven {
-            url "https://cursemaven.com"
-            content { includeGroup "curse.maven" }
-        }
-    }
-
-    loom {
-        silentMojangMappingsLicense()
-    }
+    apply plugin: "dev.architectury.loom"
 
     dependencies {
-        minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
-        mappings loom.officialMojangMappings()
+        minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
+        // Layered mappings for better cross-loader compatibility
+        mappings loom.layered {
+            it.mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+            it.mappings "dev.architectury:yarn-mappings-patch-neoforge:${project.neoforge_yarn_patch}"
+        }
+    }
+}
+
+allprojects {
+    apply plugin: "java"
+    apply plugin: "architectury-plugin"
+
+    architectury {
+        compileOnly()
+    }
+
+    base {
+        archivesName = rootProject.archives_base_name
+    }
+
+    version = "${rootProject.mod_version}+${project.name}"
+    group = rootProject.maven_group
+
+    repositories {
+        maven { name = "TerraformersMC"; url = "https://maven.terraformersmc.com/" }
+        maven { name = "FzzyMaven"; url = "https://maven.fzzyhmstrs.me/" }
+        maven { name = "CurseMaven"; url = "https://cursemaven.com" }
+        maven { name = "Modrinth"; url = "https://api.modrinth.com/maven" }
+        maven { name = "GeckoLib"; url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        it.options.encoding = "UTF-8"
+        it.options.release = 21
     }
 
     java {
         withSourcesJar()
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
-    }
-
-    tasks.withType(JavaCompile).configureEach {
-        it.options.release = 21
-    }
-
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                artifactId = base.archivesName.get()
-                from components.java
-            }
-        }
-        repositories {
-            // Add repositories to publish to here.
-        }
     }
 }

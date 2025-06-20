@@ -1,0 +1,30 @@
+{
+  "parent": "adorablehamsterpets:husbandry/green_bean_gardener",
+  "display": {
+    "icon": {
+      "id": "adorablehamsterpets:steamed_green_beans"
+    },
+    "title": {
+      "translate": "advancements.adorablehamsterpets.husbandry.steamy_greens.title"
+    },
+    "description": {
+      "translate": "advancements.adorablehamsterpets.husbandry.steamy_greens.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_steamed_green_beans": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["adorablehamsterpets:steamed_green_beans"]
+          }
+        ]
+      }
+    }
+  }
+}

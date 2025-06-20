@@ -1,0 +1,23 @@
+{
+  "parent": "adorablehamsterpets:husbandry/cheeky_storage",
+  "display": {
+    "icon": {
+      "id": "adorablehamsterpets:hamster_food_mix"
+    },
+    "title": {
+      "translate": "advancements.adorablehamsterpets.husbandry.pocket_paramedic.title"
+    },
+    "description": {
+      "translate": "advancements.adorablehamsterpets.husbandry.pocket_paramedic.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hamster_auto_fed": {
+      "trigger": "adorablehamsterpets:hamster_auto_fed"
+    }
+  }
+}

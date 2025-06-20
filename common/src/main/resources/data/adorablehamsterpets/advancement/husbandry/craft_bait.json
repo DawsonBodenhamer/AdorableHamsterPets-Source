@@ -1,0 +1,26 @@
+{
+  "parent": "adorablehamsterpets:husbandry/seed_money",
+  "display": {
+    "icon": {
+      "id": "adorablehamsterpets:sliced_cucumber"
+    },
+    "title": {
+      "translate": "advancements.adorablehamsterpets.husbandry.craft_bait.title"
+    },
+    "description": {
+      "translate": "advancements.adorablehamsterpets.husbandry.craft_bait.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "crafted_sliced_cucumber": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "adorablehamsterpets:sliced_cucumber"
+      }
+    }
+  }
+}

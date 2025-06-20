@@ -1,0 +1,30 @@
+{
+  "parent": "adorablehamsterpets:husbandry/root",
+  "display": {
+    "icon": {
+      "id": "adorablehamsterpets:cucumber_seeds"
+    },
+    "title": {
+      "translate": "advancements.adorablehamsterpets.husbandry.seed_money.title"
+    },
+    "description": {
+      "translate": "advancements.adorablehamsterpets.husbandry.seed_money.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_cucumber_seeds": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["adorablehamsterpets:cucumber_seeds"]
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "adorablehamsterpets:block/sunflower_block_bottom"
+    },
+    "half=upper,has_seeds=false": {
+      "model": "adorablehamsterpets:block/sunflower_block_top_no_seeds"
+    },
+    "half=upper,has_seeds=true": {
+      "model": "adorablehamsterpets:block/sunflower_block_top_with_seeds"
+    }
+  }
+}

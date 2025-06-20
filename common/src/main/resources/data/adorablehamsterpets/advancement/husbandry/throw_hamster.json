@@ -1,0 +1,23 @@
+{
+  "parent": "adorablehamsterpets:husbandry/shoulder_hamster",
+  "display": {
+    "icon": {
+      "id": "minecraft:creeper_head"
+    },
+    "title": {
+      "translate": "advancements.adorablehamsterpets.husbandry.throw_hamster.title"
+    },
+    "description": {
+      "translate": "advancements.adorablehamsterpets.husbandry.throw_hamster.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hamster_thrown": {
+      "trigger": "adorablehamsterpets:hamster_thrown"
+    }
+  }
+}

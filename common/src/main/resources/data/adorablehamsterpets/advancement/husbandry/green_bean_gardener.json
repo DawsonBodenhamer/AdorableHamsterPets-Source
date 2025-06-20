@@ -1,0 +1,30 @@
+{
+  "parent": "adorablehamsterpets:husbandry/root",
+  "display": {
+    "icon": {
+      "id": "adorablehamsterpets:green_bean_seeds"
+    },
+    "title": {
+      "translate": "advancements.adorablehamsterpets.husbandry.green_bean_gardener.title"
+    },
+    "description": {
+      "translate": "advancements.adorablehamsterpets.husbandry.green_bean_gardener.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_green_bean_seeds": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["adorablehamsterpets:green_bean_seeds"]
+          }
+        ]
+      }
+    }
+  }
+}

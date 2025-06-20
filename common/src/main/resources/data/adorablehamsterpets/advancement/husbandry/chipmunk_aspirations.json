@@ -1,0 +1,23 @@
+{
+  "parent": "adorablehamsterpets:husbandry/cheeky_storage",
+  "display": {
+    "icon": {
+      "id": "minecraft:bundle"
+    },
+    "title": {
+      "translate": "advancements.adorablehamsterpets.husbandry.chipmunk_aspirations.title"
+    },
+    "description": {
+      "translate": "advancements.adorablehamsterpets.husbandry.chipmunk_aspirations.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "pouch_filled": {
+      "trigger": "adorablehamsterpets:hamster_pouch_filled"
+    }
+  }
+}

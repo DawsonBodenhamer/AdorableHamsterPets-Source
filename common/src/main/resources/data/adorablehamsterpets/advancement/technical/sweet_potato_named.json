@@ -1,0 +1,24 @@
+{
+  "criteria": {
+    "named_a_hamster": {
+      "trigger": "minecraft:player_interacted_with_entity",
+      "conditions": {
+        "item": {
+          "items": ["minecraft:name_tag"]
+        },
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "adorablehamsterpets:hamster"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "rewards": {
+    "function": "adorablehamsterpets:technical/check_sweet_potato_name"
+  }
+}

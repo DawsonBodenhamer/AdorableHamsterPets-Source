@@ -2,8 +2,6 @@ package net.dawson.adorablehamsterpets.fabric;
 
 import net.fabricmc.api.ModInitializer;
 
-import net.dawson.adorablehamsterpets.AdorableHamsterPets;
-
 public final class AdorableHamsterPetsFabric implements ModInitializer {
     @Override
     public void onInitialize() {

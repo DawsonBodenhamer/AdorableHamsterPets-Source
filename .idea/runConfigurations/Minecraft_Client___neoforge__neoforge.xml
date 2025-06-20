@@ -9,7 +9,7 @@
       <option enabled="true" name="Make"/>
     </method>
     <envs>
-      <env name="MOD_CLASSES" value="main%%C:\Users\tweek\OneDrive\Documents\MY MINECRAFT MODS\Data\Repositories\Adorable Hamster Pets\neoforge\build\resources\main;main%%C:\Users\tweek\OneDrive\Documents\MY MINECRAFT MODS\Data\Repositories\Adorable Hamster Pets\neoforge\build\classes\java\main;main%%C:\Users\tweek\OneDrive\Documents\MY MINECRAFT MODS\Data\Repositories\Adorable Hamster Pets\neoforge\out\production\classes;main%%C:\Users\tweek\OneDrive\Documents\MY MINECRAFT MODS\Data\Repositories\Adorable Hamster Pets\neoforge\out\production\resources"/>
+      <env name="MOD_CLASSES" value="main%%C:\Users\tweek\OneDrive\Documents\MY MINECRAFT MODS\Data\Repositories\Adorable Hamster Pets\neoforge\build\resources\main;main%%C:\Users\tweek\OneDrive\Documents\MY MINECRAFT MODS\Data\Repositories\Adorable Hamster Pets\neoforge\build\classes\java\main"/>
     </envs>
     <shortenClasspath name="ARGS_FILE"/>
   <classpathModifications/></configuration>
