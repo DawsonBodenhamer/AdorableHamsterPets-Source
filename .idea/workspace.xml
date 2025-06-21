@@ -4,277 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="052c5d33-d6bb-405e-abe0-6cb2032d8642" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/modules/common/adorablehamsterpets.common.client.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/client/option/ModKeyBindings.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/client/sound/HamsterCleaningSoundInstance.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/client/sound/HamsterFlightSoundInstance.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/client/sound/HamsterThrowSoundInstance.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/HamsterModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/HamsterRenderer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/ModModelLayers.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/feature/HamsterShoulderFeatureRenderer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/layer/HamsterOverlayLayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/layer/HamsterPinkPetalOverlayLayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/model/HamsterShoulderModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/AdorableHamsterPetsClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/ModRegistries.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/advancement/criterion/AppliedPinkPetalCriterion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/advancement/criterion/CheekPouchUnlockedCriterion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/advancement/criterion/FedHamsterSteamedBeansCriterion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/advancement/criterion/FirstJoinCriterion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/advancement/criterion/HamsterAutoFedCriterion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/advancement/criterion/HamsterCreeperAlertCriterion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/advancement/criterion/HamsterDiamondAlertCriterion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/advancement/criterion/HamsterLedToDiamondCriterion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/advancement/criterion/HamsterOnShoulderCriterion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/advancement/criterion/HamsterPouchFilledCriterion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/advancement/criterion/HamsterThrownCriterion.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/advancement/criterion/ModCriteria.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/attachment/HamsterRenderState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/attachment/HamsterShoulderData.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/attachment/ModEntityAttachments.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/block/ModBlocks.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/block/custom/CucumberCropBlock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/block/custom/GreenBeansCropBlock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/block/custom/SunflowerBlock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/block/custom/WildCucumberBushBlock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/block/custom/WildGreenBeanBushBlock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/client/option/ModKeyBindings.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/client/sound/HamsterCleaningSoundInstance.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/client/sound/HamsterFlightSoundInstance.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/client/sound/HamsterThrowSoundInstance.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/command/ModCommands.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/component/ModDataComponentTypes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/config/AhpConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/config/Configs.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/AI/HamsterFleeGoal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/AI/HamsterFollowOwnerGoal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/AI/HamsterLookAroundGoal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/AI/HamsterLookAtEntityGoal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/AI/HamsterMateGoal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/AI/HamsterMeleeAttackGoal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/AI/HamsterSeekDiamondGoal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/AI/HamsterSitGoal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/AI/HamsterSleepGoal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/AI/HamsterTemptGoal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/AI/HamsterWanderAroundFarGoal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/ImplementedInventory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/ModEntities.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/HamsterModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/HamsterRenderer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/ModModelLayers.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/feature/HamsterShoulderFeatureRenderer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/layer/HamsterOverlayLayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/layer/HamsterPinkPetalOverlayLayer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/model/HamsterShoulderModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/custom/HamsterEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/custom/HamsterVariant.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/integration/jade/AHPJadePlugin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/integration/jade/HamsterDebugComponentProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/integration/jade/WildBushComponentProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/item/ModFoodComponents.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/item/ModItemGroups.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/item/ModItems.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/mixin/client/LivingEntityRendererInvoker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/mixin/client/PlayerEntityRendererMixin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/mixin/server/PlayerEntityMixin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/ModPackets.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/payload/SpawnAttackParticlesPayload.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/payload/SpawnSeekingDustPayload.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/payload/StartHamsterFlightSoundPayload.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/payload/StartHamsterThrowSoundPayload.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/payload/ThrowHamsterPayload.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/payload/UpdateHamsterRenderStatePayload.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/screen/HamsterInventoryScreen.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/screen/HamsterInventoryScreenHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/screen/ModScreenHandlers.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/screen/slot/HamsterSlot.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/sound/ModSounds.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/tag/ModItemTags.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/world/ModWorldGeneration.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/world/gen/ModEntitySpawns.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/world/gen/feature/ModConfiguredFeatures.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/world/gen/feature/ModPlacedFeatures.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/animations/anim_hamster.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/blockstates/sunflower_block.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/geo/hamster.geo.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/icon.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/lang/en_us_base.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/models/block/sunflower_block_bottom.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/models/block/sunflower_block_top_no_seeds.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/models/block/sunflower_block_top_with_seeds.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/models/item/hamster_guide_book.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/models/item/sunflower_block.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/alarm_orchestra_hit.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/cartoon_punches.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/cheese_eat.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/cheese_use.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/diamond_sparkle1.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/diamond_sparkle2.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/diamond_sparkle3.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_affection1.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_affection2.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_affection3.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_airborne_celebration.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_attack1.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_attack2.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_attack3.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_attack4.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_beg1.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_beg2.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_beg3.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_beg4.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_beg5.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_bounce.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_celebrate1.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_celebrate2.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_celebrate3.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_celebrate4.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_creeper_detect1.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_creeper_detect2.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_creeper_detect3.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_creeper_detect4.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_death1.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_death2.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_death3.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_death4.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_dismount.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_hurt1.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_hurt10.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_hurt2.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_hurt3.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_hurt4.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_hurt5.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_hurt6.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_hurt7.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_hurt8.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_hurt9.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_idle1.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_idle10.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_idle11.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_idle2.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_idle3.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_idle4.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_idle5.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_idle6.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_idle7.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_idle8.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_idle9.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_mount1.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_mount2.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_mount3.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_scratch.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_shocked.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_sleep1.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_sleep2.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_sleep3.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_sleep4.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_sleep5.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_sleep6.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_sleep7.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_sleep8.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_sleep9.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_sniff1.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_sniff2.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_sniff3.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_sniff4.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_throw.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_wake_up1.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_wake_up2.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_wake_up3.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/hamster_wow.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/block/cucumber_crop_stage0.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/block/cucumber_crop_stage1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/block/cucumber_crop_stage2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/block/cucumber_crop_stage3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/block/green_beans_crop_stage0.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/block/green_beans_crop_stage1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/block/green_beans_crop_stage2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/block/green_beans_crop_stage3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/block/sunflower_back.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/block/sunflower_bottom.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/block/sunflower_front_no_seeds.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/block/sunflower_front_with_seeds.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/block/sunflower_top.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/block/wild_cucumber_bush_seeded.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/block/wild_cucumber_bush_seedless.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/block/wild_green_bean_bush_seeded.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/block/wild_green_bean_bush_seedless.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/black.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/blue.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/chocolate.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/cream.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/dark_gray.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/lavender.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/light_gray.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/orange.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/overlay1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/overlay2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/overlay3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/overlay4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/overlay5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/overlay6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/overlay7.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/overlay8.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/overlay_pink_petal1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/overlay_pink_petal2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/overlay_pink_petal3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/entity/hamster/white.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/gui/advancements/background.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/gui/hamster_inventory_gui.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/item/cheese.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/item/cucumber.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/item/cucumber_seeds.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/item/green_bean_seeds.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/item/green_beans.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/item/hamster_food_mix.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/item/hamster_guide_book_texture.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/item/hamster_spawn_egg.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/item/sliced_cucumber.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/item/steamed_green_beans.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/item/sunflower_block.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/item/sunflower_seeds.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/item/wild_cucumber_bush.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/textures/item/wild_green_bean_bush.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/husbandry/canine_aspirations.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/husbandry/cheeky_storage.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/husbandry/chipmunk_aspirations.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/husbandry/craft_bait.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/husbandry/craft_food_mix.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/husbandry/green_bean_gardener.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/husbandry/impending_doom_squeak.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/husbandry/nose_for_treasure.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/husbandry/petal_pusher.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/husbandry/pocket_paramedic.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/husbandry/root.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/husbandry/seed_money.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/husbandry/shoulder_hamster.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/husbandry/steamy_greens.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/husbandry/sunflower_hoarder.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/husbandry/supercharged_squeaker.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/husbandry/tame_hamster.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/husbandry/throw_hamster.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/technical/crafted_guide_book.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/technical/has_received_initial_guidebook.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/technical/receive_guide_book.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/technical/sweet_potato_easter_egg_triggered_flag.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/advancement/technical/sweet_potato_named.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/function/debug/spawn_all_variants.mcfunction" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/function/debug/spawn_variants_circle_ai.mcfunction" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/function/debug/spawn_variants_circle_no_ai.mcfunction" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/function/technical/check_sweet_potato_name.mcfunction" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/function/technical/crafted_guide_book_fx.mcfunction" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/function/technical/give_guide_book.mcfunction" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/function/technical/sweet_potato_effects.mcfunction" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/data/adorablehamsterpets/tags/hamster_pouch_allowed.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/AdorableHamsterPetsDataGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/EnUsGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/ModLootTableProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/ModModelProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/ModRecipeProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/ModRegistryDataGenerator.java" afterDir="false" />
+    <list default="true" id="052c5d33-d6bb-405e-abe0-6cb2032d8642" name="Changes" comment="[REFACTOR] Migrate core registries and networking to Architectury API&#10;&#10;This commit refactors a significant portion of the mod's infrastructure from Fabric API to the Architectury API to support multi-loader builds.&#10;&#10;- [REFACTOR] Migrated Item, Block, Sound, Entity, and ScreenHandler registries to use Architectury's DeferredRegister system.&#10;- [REFACTOR] Replaced Fabric Networking API with Architectury's NetworkManager, centralizing packet registration and handling into a new `ModPackets` class.&#10;- [REFACTOR] Replaced Fabric event listeners (`CommandRegistrationCallback`, `PlayerEvent`) with their Architectury equivalents.&#10;- [REFACTOR] Replaced Fabric's `CompostingChanceRegistry` helper with direct calls to the vanilla `ComposterBlock` map, triggered by an Architectury `LifecycleEvent`.&#10;- [REFACTOR] Updated world generation to use Architectury's `BiomeModifications` API instead of Fabric's.&#10;- [CHORE] Consolidated biome-checking logic into `ModEntitySpawns` to act as a single source of truth.">
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/common/adorablehamsterpets.common.main.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/world/ModSpawnPlacements.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/world/ModSpawnPlacementsImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/neoforge/src/main/java/net/dawson/adorablehamsterpets/neoforge/world/ModSpawnPlacementsImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/md5-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" afterDir="false" />
@@ -282,438 +17,37 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-merged-dd95a7ae94/1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2/minecraft-merged-dd95a7ae94-1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-merged-dd95a7ae94/1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2/minecraft-merged-dd95a7ae94-1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-merged-dd95a7ae94/1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2/minecraft-merged-dd95a7ae94-1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2.jar.backup" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-merged-dd95a7ae94/1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2/minecraft-merged-dd95a7ae94-1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2.jar.backup" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-merged-eb8ff88086/1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2/minecraft-merged-eb8ff88086-1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-merged-eb8ff88086/1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2/minecraft-merged-eb8ff88086-1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-merged-eb8ff88086/1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2/minecraft-merged-eb8ff88086-1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2.jar.backup" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/minecraftMaven/net/minecraft/minecraft-merged-eb8ff88086/1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2/minecraft-merged-eb8ff88086-1.21.1-loom.mappings.1_21_1.layered+hash.40359-v2.jar.backup" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/com/terraformersmc/modmenu/11.0.1/modmenu-11.0.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/com/terraformersmc/modmenu/11.0.1/modmenu-11.0.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/curse/maven/jade-324717/6291536/jade-324717-6291536.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/curse/maven/jade-324717/6291536/jade-324717-6291536.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/dev/architectury/architectury-fabric/13.0.8/architectury-fabric-13.0.8.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/dev/architectury/architectury-fabric/13.0.8/architectury-fabric-13.0.8.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/dev/architectury/architectury/13.0.8/architectury-13.0.8.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/dev/architectury/architectury/13.0.8/architectury-13.0.8.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/me/fzzyhmstrs/fzzy_config/0.7.0+1.21/fzzy_config-0.7.0+1.21.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/me/fzzyhmstrs/fzzy_config/0.7.0+1.21/fzzy_config-0.7.0+1.21.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/me/lucko/fabric-permissions-api/0.3.1/fabric-permissions-api-0.3.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/me/lucko/fabric-permissions-api/0.3.1/fabric-permissions-api-0.3.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-api-base/0.4.42+6573ed8c19/fabric-api-base-0.4.42+6573ed8c19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-api-base/0.4.42+6573ed8c19/fabric-api-base-0.4.42+6573ed8c19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-api-lookup-api-v1/1.6.71+b559734419/fabric-api-lookup-api-v1-1.6.71+b559734419.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-api-lookup-api-v1/1.6.71+b559734419/fabric-api-lookup-api-v1-1.6.71+b559734419.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-api/0.116.2+1.21.1/fabric-api-0.116.2+1.21.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-api/0.116.2+1.21.1/fabric-api-0.116.2+1.21.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-biome-api-v1/13.0.31+d527f9fd19/fabric-biome-api-v1-13.0.31+d527f9fd19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-biome-api-v1/13.0.31+d527f9fd19/fabric-biome-api-v1-13.0.31+d527f9fd19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-block-api-v1/1.1.0+0bc3503219/fabric-block-api-v1-1.1.0+0bc3503219.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-block-api-v1/1.1.0+0bc3503219/fabric-block-api-v1-1.1.0+0bc3503219.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-block-view-api-v2/1.0.11+ebb2264e19/fabric-block-view-api-v2-1.0.11+ebb2264e19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-block-view-api-v2/1.0.11+ebb2264e19/fabric-block-view-api-v2-1.0.11+ebb2264e19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-blockrenderlayer-v1/1.1.52+0af3f5a719/fabric-blockrenderlayer-v1-1.1.52+0af3f5a719.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-blockrenderlayer-v1/1.1.52+0af3f5a719/fabric-blockrenderlayer-v1-1.1.52+0af3f5a719.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-client-tags-api-v1/1.1.15+6573ed8c19/fabric-client-tags-api-v1-1.1.15+6573ed8c19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-client-tags-api-v1/1.1.15+6573ed8c19/fabric-client-tags-api-v1-1.1.15+6573ed8c19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-command-api-v1/1.2.49+f71b366f19/fabric-command-api-v1-1.2.49+f71b366f19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-command-api-v1/1.2.49+f71b366f19/fabric-command-api-v1-1.2.49+f71b366f19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-command-api-v2/2.2.28+6ced4dd919/fabric-command-api-v2-2.2.28+6ced4dd919.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-command-api-v2/2.2.28+6ced4dd919/fabric-command-api-v2-2.2.28+6ced4dd919.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-commands-v0/0.2.66+df3654b319/fabric-commands-v0-0.2.66+df3654b319.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-commands-v0/0.2.66+df3654b319/fabric-commands-v0-0.2.66+df3654b319.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-content-registries-v0/8.0.19+b559734419/fabric-content-registries-v0-8.0.19+b559734419.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-content-registries-v0/8.0.19+b559734419/fabric-content-registries-v0-8.0.19+b559734419.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-convention-tags-v1/2.1.5+7f945d5b19/fabric-convention-tags-v1-2.1.5+7f945d5b19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-convention-tags-v1/2.1.5+7f945d5b19/fabric-convention-tags-v1-2.1.5+7f945d5b19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-convention-tags-v2/2.11.1+a406e79519/fabric-convention-tags-v2-2.11.1+a406e79519.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-convention-tags-v2/2.11.1+a406e79519/fabric-convention-tags-v2-2.11.1+a406e79519.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-crash-report-info-v1/0.2.29+0af3f5a719/fabric-crash-report-info-v1-0.2.29+0af3f5a719.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-crash-report-info-v1/0.2.29+0af3f5a719/fabric-crash-report-info-v1-0.2.29+0af3f5a719.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-data-attachment-api-v1/1.4.5+6116a37819/fabric-data-attachment-api-v1-1.4.5+6116a37819.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-data-attachment-api-v1/1.4.5+6116a37819/fabric-data-attachment-api-v1-1.4.5+6116a37819.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-data-generation-api-v1/20.2.30+16c4ae2519/fabric-data-generation-api-v1-20.2.30+16c4ae2519.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-data-generation-api-v1/20.2.30+16c4ae2519/fabric-data-generation-api-v1-20.2.30+16c4ae2519.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-dimensions-v1/4.0.0+6fc22b9919/fabric-dimensions-v1-4.0.0+6fc22b9919.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-dimensions-v1/4.0.0+6fc22b9919/fabric-dimensions-v1-4.0.0+6fc22b9919.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-entity-events-v1/1.8.0+2b27e0a419/fabric-entity-events-v1-1.8.0+2b27e0a419.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-entity-events-v1/1.8.0+2b27e0a419/fabric-entity-events-v1-1.8.0+2b27e0a419.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-events-interaction-v0/0.7.13+ba9dae0619/fabric-events-interaction-v0-0.7.13+ba9dae0619.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-events-interaction-v0/0.7.13+ba9dae0619/fabric-events-interaction-v0-0.7.13+ba9dae0619.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-game-rule-api-v1/1.0.53+6ced4dd919/fabric-game-rule-api-v1-1.0.53+6ced4dd919.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-game-rule-api-v1/1.0.53+6ced4dd919/fabric-game-rule-api-v1-1.0.53+6ced4dd919.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-gametest-api-v1/2.0.5+6fc22b9919/fabric-gametest-api-v1-2.0.5+6fc22b9919.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-gametest-api-v1/2.0.5+6fc22b9919/fabric-gametest-api-v1-2.0.5+6fc22b9919.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-item-api-v1/11.1.1+d5debaed19/fabric-item-api-v1-11.1.1+d5debaed19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-item-api-v1/11.1.1+d5debaed19/fabric-item-api-v1-11.1.1+d5debaed19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-item-group-api-v1/4.1.7+def88e3a19/fabric-item-group-api-v1-4.1.7+def88e3a19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-item-group-api-v1/4.1.7+def88e3a19/fabric-item-group-api-v1-4.1.7+def88e3a19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-key-binding-api-v1/1.0.47+0af3f5a719/fabric-key-binding-api-v1-1.0.47+0af3f5a719.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-key-binding-api-v1/1.0.47+0af3f5a719/fabric-key-binding-api-v1-1.0.47+0af3f5a719.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-keybindings-v0/0.2.45+df3654b319/fabric-keybindings-v0-0.2.45+df3654b319.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-keybindings-v0/0.2.45+df3654b319/fabric-keybindings-v0-0.2.45+df3654b319.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-lifecycle-events-v1/2.6.0+0865547519/fabric-lifecycle-events-v1-2.6.0+0865547519.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-lifecycle-events-v1/2.6.0+0865547519/fabric-lifecycle-events-v1-2.6.0+0865547519.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-loot-api-v2/3.0.15+3f89f5a519/fabric-loot-api-v2-3.0.15+3f89f5a519.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-loot-api-v2/3.0.15+3f89f5a519/fabric-loot-api-v2-3.0.15+3f89f5a519.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-loot-api-v3/1.0.3+3f89f5a519/fabric-loot-api-v3-1.0.3+3f89f5a519.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-loot-api-v3/1.0.3+3f89f5a519/fabric-loot-api-v3-1.0.3+3f89f5a519.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-message-api-v1/6.0.14+8aaf3aca19/fabric-message-api-v1-6.0.14+8aaf3aca19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-message-api-v1/6.0.14+8aaf3aca19/fabric-message-api-v1-6.0.14+8aaf3aca19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-model-loading-api-v1/2.0.0+fe474d6b19/fabric-model-loading-api-v1-2.0.0+fe474d6b19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-model-loading-api-v1/2.0.0+fe474d6b19/fabric-model-loading-api-v1-2.0.0+fe474d6b19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-networking-api-v1/4.3.0+c7469b2119/fabric-networking-api-v1-4.3.0+c7469b2119.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-networking-api-v1/4.3.0+c7469b2119/fabric-networking-api-v1-4.3.0+c7469b2119.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-object-builder-api-v1/15.2.1+40875a9319/fabric-object-builder-api-v1-15.2.1+40875a9319.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-object-builder-api-v1/15.2.1+40875a9319/fabric-object-builder-api-v1-15.2.1+40875a9319.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-particles-v1/4.0.2+6573ed8c19/fabric-particles-v1-4.0.2+6573ed8c19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-particles-v1/4.0.2+6573ed8c19/fabric-particles-v1-4.0.2+6573ed8c19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-recipe-api-v1/5.0.14+248df81c19/fabric-recipe-api-v1-5.0.14+248df81c19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-recipe-api-v1/5.0.14+248df81c19/fabric-recipe-api-v1-5.0.14+248df81c19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-registry-sync-v0/5.3.0+b7e751e819/fabric-registry-sync-v0-5.3.0+b7e751e819.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-registry-sync-v0/5.3.0+b7e751e819/fabric-registry-sync-v0-5.3.0+b7e751e819.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-renderer-api-v1/3.4.0+c705a49c19/fabric-renderer-api-v1-3.4.0+c705a49c19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-renderer-api-v1/3.4.0+c705a49c19/fabric-renderer-api-v1-3.4.0+c705a49c19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-renderer-indigo/1.7.0+c705a49c19/fabric-renderer-indigo-1.7.0+c705a49c19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-renderer-indigo/1.7.0+c705a49c19/fabric-renderer-indigo-1.7.0+c705a49c19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-renderer-registries-v1/3.2.68+df3654b319/fabric-renderer-registries-v1-3.2.68+df3654b319.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-renderer-registries-v1/3.2.68+df3654b319/fabric-renderer-registries-v1-3.2.68+df3654b319.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-rendering-data-attachment-v1/0.3.49+73761d2e19/fabric-rendering-data-attachment-v1-0.3.49+73761d2e19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-rendering-data-attachment-v1/0.3.49+73761d2e19/fabric-rendering-data-attachment-v1-0.3.49+73761d2e19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-rendering-fluids-v1/3.1.6+1daea21519/fabric-rendering-fluids-v1-3.1.6+1daea21519.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-rendering-fluids-v1/3.1.6+1daea21519/fabric-rendering-fluids-v1-3.1.6+1daea21519.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-rendering-v0/1.1.71+df3654b319/fabric-rendering-v0-1.1.71+df3654b319.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-rendering-v0/1.1.71+df3654b319/fabric-rendering-v0-1.1.71+df3654b319.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-rendering-v1/5.0.5+df16efd019/fabric-rendering-v1-5.0.5+df16efd019.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-rendering-v1/5.0.5+df16efd019/fabric-rendering-v1-5.0.5+df16efd019.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-resource-conditions-api-v1/4.3.0+8dc279b119/fabric-resource-conditions-api-v1-4.3.0+8dc279b119.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-resource-conditions-api-v1/4.3.0+8dc279b119/fabric-resource-conditions-api-v1-4.3.0+8dc279b119.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-resource-loader-v0/1.3.1+5b5275af19/fabric-resource-loader-v0-1.3.1+5b5275af19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-resource-loader-v0/1.3.1+5b5275af19/fabric-resource-loader-v0-1.3.1+5b5275af19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-screen-api-v1/2.0.25+8b68f1c719/fabric-screen-api-v1-2.0.25+8b68f1c719.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-screen-api-v1/2.0.25+8b68f1c719/fabric-screen-api-v1-2.0.25+8b68f1c719.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-screen-handler-api-v1/1.3.89+b559734419/fabric-screen-handler-api-v1-1.3.89+b559734419.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-screen-handler-api-v1/1.3.89+b559734419/fabric-screen-handler-api-v1-1.3.89+b559734419.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-sound-api-v1/1.0.23+6573ed8c19/fabric-sound-api-v1-1.0.23+6573ed8c19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-sound-api-v1/1.0.23+6573ed8c19/fabric-sound-api-v1-1.0.23+6573ed8c19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-transfer-api-v1/5.4.3+c24bd99419/fabric-transfer-api-v1-5.4.3+c24bd99419.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-transfer-api-v1/5.4.3+c24bd99419/fabric-transfer-api-v1-5.4.3+c24bd99419.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-transitive-access-wideners-v1/6.2.0+45b9699719/fabric-transitive-access-wideners-v1-6.2.0+45b9699719.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-api/fabric-transitive-access-wideners-v1/6.2.0+45b9699719/fabric-transitive-access-wideners-v1-6.2.0+45b9699719.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-language-kotlin/1.12.1+kotlin.2.0.20/fabric-language-kotlin-1.12.1+kotlin.2.0.20.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/net/fabricmc/fabric-language-kotlin/1.12.1+kotlin.2.0.20/fabric-language-kotlin-1.12.1+kotlin.2.0.20.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/software/bernie/geckolib/geckolib-fabric-1.21.1/4.7.5/geckolib-fabric-1.21.1-4.7.5.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2/software/bernie/geckolib/geckolib-fabric-1.21.1/4.7.5/geckolib-fabric-1.21.1-4.7.5.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge/dev/architectury/architectury-neoforge/13.0.8/architectury-neoforge-13.0.8.jar" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge/dev/architectury/architectury-neoforge/13.0.8/architectury-neoforge-13.0.8.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__blue_endless_jankson_1_2_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_electronwill_night_config_core_3_8_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_electronwill_night_config_toml_3_8_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_github_oshi_oshi_core_6_4_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_code_findbugs_jsr305_3_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_code_gson_gson_2_10_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_errorprone_error_prone_annotations_2_18_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_guava_failureaccess_1_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_guava_guava_32_1_2_jre.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_guava_listenablefuture_9999_0_empty_to_avoid_conflict_with_guava.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_j2objc_j2objc_annotations_2_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_ibm_icu_icu4j_73_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_machinezoo_noexception_noexception_1_7_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_mojang_authlib_6_0_54.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_mojang_blocklist_1_0_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_mojang_brigadier_1_3_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_mojang_datafixerupper_8_0_16.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_mojang_logging_1_2_7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_mojang_patchy_2_2_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_mojang_text2speech_1_17_9.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__commons_codec_commons_codec_1_16_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__commons_io_commons_io_2_15_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__commons_logging_commons_logging_1_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__cpw_mods_bootstraplauncher_2_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__cpw_mods_modlauncher_11_0_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__cpw_mods_securejarhandler_3_0_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__dev_architectury_architectury_injectables_1_0_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__dev_architectury_architectury_transformer_agent_5_2_87.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__dev_architectury_architectury_transformer_runtime_5_2_87.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__io_github_juuxel_unprotect_1_2_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__io_github_llamalad7_mixinextras_fabric_0_4_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__io_github_llamalad7_mixinextras_neoforge_0_4_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__io_netty_netty_buffer_4_1_97_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__io_netty_netty_codec_4_1_97_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__io_netty_netty_common_4_1_97_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__io_netty_netty_handler_4_1_97_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__io_netty_netty_resolver_4_1_97_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__io_netty_netty_transport_4_1_97_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__io_netty_netty_transport_classes_epoll_4_1_97_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__io_netty_netty_transport_native_epoll_linux_aarch_64_4_1_97_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__io_netty_netty_transport_native_epoll_linux_x86_64_4_1_97_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__io_netty_netty_transport_native_unix_common_4_1_97_Final.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__it_unimi_dsi_fastutil_8_5_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_com_terraformersmc_modmenu_11_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_curse_maven_jade_324717_6291536.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_dev_architectury_architectury_13_0_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_dev_architectury_architectury_fabric_13_0_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_me_fzzyhmstrs_fzzy_config_0_7_0_1_21.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_me_lucko_fabric_permissions_api_0_3_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_blue_endless_jankson_1_2_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_com_electronwill_night_config_core_3_8_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_com_electronwill_night_config_toml_3_8_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_com_google_code_findbugs_jsr305_3_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_com_google_code_gson_gson_2_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_com_google_errorprone_error_prone_annotations_2_11_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_com_google_guava_failureaccess_1_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_com_google_guava_guava_31_1_jre.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_com_google_guava_listenablefuture_9999_0_empty_to_avoid_conflict_with_guava.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_com_google_j2objc_j2objc_annotations_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_com_machinezoo_noexception_noexception_1_7_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_com_mojang_logging_1_1_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_commons_io_commons_io_2_11_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_cpw_mods_modlauncher_11_0_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_cpw_mods_securejarhandler_3_0_7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_curse_maven_jade_324717_6155158.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_dev_architectury_architectury_neoforge_13_0_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_me_fzzyhmstrs_fzzy_config_0_6_9_1_21_neoforge.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_net_fabricmc_sponge_mixin_0_14_0_mixin_0_8_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_net_jodah_typetools_0_6_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_net_minecraftforge_srgutils_0_4_15.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_net_minecrell_terminalconsoleappender_1_3_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_net_neoforged_JarJarFileSystems_0_4_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_net_neoforged_JarJarMetadata_0_4_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_net_neoforged_JarJarSelector_0_4_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_net_neoforged_accesstransformers_10_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_net_neoforged_accesstransformers_at_modlauncher_10_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_net_neoforged_bus_8_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_net_neoforged_coremods_7_0_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_net_neoforged_fancymodloader_loader_4_0_39.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_net_neoforged_mergetool_api_2_0_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_net_peanuuutz_tomlkt_tomlkt_jvm_0_3_7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_net_sf_jopt_simple_jopt_simple_5_0_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_antlr_antlr4_runtime_4_13_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_apache_commons_commons_lang3_3_12_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_apache_logging_log4j_log4j_api_2_22_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_apache_logging_log4j_log4j_core_2_22_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_apache_logging_log4j_log4j_slf4j2_impl_2_19_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_apache_maven_maven_artifact_3_8_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_checkerframework_checker_qual_3_12_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_codehaus_plexus_plexus_utils_3_3_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_jetbrains_annotations_13_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_jetbrains_annotations_23_0_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_jetbrains_kotlin_kotlin_reflect_2_0_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_jetbrains_kotlin_kotlin_stdlib_2_0_20.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_jetbrains_kotlin_kotlin_stdlib_jdk7_2_0_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_jetbrains_kotlin_kotlin_stdlib_jdk8_2_0_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_jetbrains_kotlinx_kotlinx_coroutines_core_jvm_1_8_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_jetbrains_kotlinx_kotlinx_coroutines_jdk8_1_8_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_jetbrains_kotlinx_kotlinx_serialization_core_jvm_1_7_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_jetbrains_kotlinx_kotlinx_serialization_json_jvm_1_7_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_jline_jline_reader_3_20_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_jline_jline_terminal_3_20_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_openjdk_nashorn_nashorn_core_15_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_ow2_asm_asm_9_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_ow2_asm_asm_analysis_9_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_ow2_asm_asm_commons_9_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_ow2_asm_asm_tree_9_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_ow2_asm_asm_util_9_6.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_org_slf4j_slf4j_api_2_0_9.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_software_bernie_geckolib_geckolib_neoforge_1_21_1_4_7_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_thedarkcolour_kfflang_neoforge_5_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_thedarkcolour_kfflib_neoforge_5_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_thedarkcolour_kffmod_neoforge_5_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge_thedarkcolour_kotlinforforge_neoforge_all_5_4_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_api_0_116_2_1_21_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_api_base_0_4_42_6573ed8c19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_api_lookup_api_v1_1_6_71_b559734419.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_biome_api_v1_13_0_31_d527f9fd19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_block_api_v1_1_1_0_0bc3503219.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_block_view_api_v2_1_0_11_ebb2264e19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_blockrenderlayer_v1_1_1_52_0af3f5a719.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_client_tags_api_v1_1_1_15_6573ed8c19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_command_api_v1_1_2_49_f71b366f19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_command_api_v2_2_2_28_6ced4dd919.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_commands_v0_0_2_66_df3654b319.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_content_registries_v0_8_0_19_b559734419.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_convention_tags_v1_2_1_5_7f945d5b19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_convention_tags_v2_2_11_1_a406e79519.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_crash_report_info_v1_0_2_29_0af3f5a719.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_data_attachment_api_v1_1_4_5_6116a37819.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_data_generation_api_v1_20_2_30_16c4ae2519.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_dimensions_v1_4_0_0_6fc22b9919.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_entity_events_v1_1_8_0_2b27e0a419.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_events_interaction_v0_0_7_13_ba9dae0619.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_game_rule_api_v1_1_0_53_6ced4dd919.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_gametest_api_v1_2_0_5_6fc22b9919.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_item_api_v1_11_1_1_d5debaed19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_item_group_api_v1_4_1_7_def88e3a19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_key_binding_api_v1_1_0_47_0af3f5a719.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_keybindings_v0_0_2_45_df3654b319.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_lifecycle_events_v1_2_6_0_0865547519.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_loot_api_v2_3_0_15_3f89f5a519.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_loot_api_v3_1_0_3_3f89f5a519.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_message_api_v1_6_0_14_8aaf3aca19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_model_loading_api_v1_2_0_0_fe474d6b19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_networking_api_v1_4_3_0_c7469b2119.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_object_builder_api_v1_15_2_1_40875a9319.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_particles_v1_4_0_2_6573ed8c19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_recipe_api_v1_5_0_14_248df81c19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_registry_sync_v0_5_3_0_b7e751e819.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_renderer_api_v1_3_4_0_c705a49c19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_renderer_indigo_1_7_0_c705a49c19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_renderer_registries_v1_3_2_68_df3654b319.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_rendering_data_attachment_v1_0_3_49_73761d2e19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_rendering_fluids_v1_3_1_6_1daea21519.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_rendering_v0_1_1_71_df3654b319.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_rendering_v1_5_0_5_df16efd019.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_resource_conditions_api_v1_4_3_0_8dc279b119.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_resource_loader_v0_1_3_1_5b5275af19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_screen_api_v1_2_0_25_8b68f1c719.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_screen_handler_api_v1_1_3_89_b559734419.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_sound_api_v1_1_0_23_6573ed8c19.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_transfer_api_v1_5_4_3_c24bd99419.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_api_fabric_transitive_access_wideners_v1_6_2_0_45b9699719.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_net_fabricmc_fabric_language_kotlin_1_12_1_kotlin_2_0_20.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__loom_mappings_1_21_1_layered_hash_40359_v2_software_bernie_geckolib_geckolib_fabric_1_21_1_4_7_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_fabricmc_dev_launch_injector_0_2_1_build_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_fabricmc_fabric_loader_0_16_14.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_fabricmc_sponge_mixin_0_15_2_mixin_0_8_7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_fabricmc_sponge_mixin_0_15_5_mixin_0_8_7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_java_dev_jna_jna_5_14_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_java_dev_jna_jna_platform_5_14_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_jodah_typetools_0_6_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_minecraft_minecraft_merged_dd95a7ae94_1_21_1_loom_mappings_1_21_1_layered_hash_40359_v2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_minecraft_minecraft_merged_eb8ff88086_1_21_1_loom_mappings_1_21_1_layered_hash_40359_v2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_minecraft_neoforge_21_1_172_minecraft_merged_1_21_1_loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_minecraftforge_srgutils_0_4_15.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_minecrell_terminalconsoleappender_1_3_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_neoforged_JarJarFileSystems_0_4_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_neoforged_JarJarMetadata_0_4_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_neoforged_JarJarSelector_0_4_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_neoforged_accesstransformers_10_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_neoforged_accesstransformers_at_modlauncher_10_0_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_neoforged_bus_8_0_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_neoforged_coremods_7_0_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_neoforged_fancymodloader_5afc7aa485424b87dc97cc5d51b22d595d396f63f1dcb82243a614d0eff54bc3_loader_4_0_39.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_neoforged_fancymodloader_earlydisplay_4_0_39.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_neoforged_mergetool_api_2_0_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_peanuuutz_tomlkt_tomlkt_jvm_0_3_7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__net_sf_jopt_simple_jopt_simple_5_0_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_antlr_antlr4_runtime_4_13_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_commons_commons_compress_1_26_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_commons_commons_lang3_3_14_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_httpcomponents_httpclient_4_5_13.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_httpcomponents_httpcore_4_4_16.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_logging_log4j_log4j_api_2_22_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_logging_log4j_log4j_core_2_22_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_logging_log4j_log4j_slf4j2_impl_2_22_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_apache_maven_maven_artifact_3_8_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_checkerframework_checker_qual_3_33_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_codehaus_plexus_plexus_utils_3_3_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jcraft_jorbis_0_0_17.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_annotations_23_0_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_annotations_25_0_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_reflect_2_0_20.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_2_0_20.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_jdk7_2_0_20.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlin_kotlin_stdlib_jdk8_2_0_20.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlinx_atomicfu_jvm_0_25_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlinx_kotlinx_coroutines_core_jvm_1_8_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlinx_kotlinx_coroutines_jdk8_1_8_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlinx_kotlinx_datetime_jvm_0_6_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlinx_kotlinx_io_bytestring_jvm_0_5_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlinx_kotlinx_io_core_jvm_0_5_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlinx_kotlinx_serialization_cbor_jvm_1_7_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlinx_kotlinx_serialization_core_jvm_1_7_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jetbrains_kotlinx_kotlinx_serialization_json_jvm_1_7_1.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jline_jline_reader_3_20_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_jline_jline_terminal_3_20_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_joml_joml_1_10_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_freetype_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_freetype_natives_windows_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_freetype_natives_windows_arm64_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_freetype_natives_windows_x86_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_glfw_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_glfw_natives_windows_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_glfw_natives_windows_arm64_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_glfw_natives_windows_x86_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_jemalloc_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_jemalloc_natives_windows_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_jemalloc_natives_windows_arm64_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_jemalloc_natives_windows_x86_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_natives_windows_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_natives_windows_arm64_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_natives_windows_x86_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_openal_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_openal_natives_windows_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_openal_natives_windows_arm64_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_openal_natives_windows_x86_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_opengl_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_opengl_natives_windows_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_opengl_natives_windows_arm64_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_opengl_natives_windows_x86_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_stb_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_stb_natives_windows_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_stb_natives_windows_arm64_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_stb_natives_windows_x86_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_tinyfd_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_tinyfd_natives_windows_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_tinyfd_natives_windows_arm64_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lwjgl_lwjgl_tinyfd_natives_windows_x86_3_3_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_lz4_lz4_java_1_8_0.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_openjdk_nashorn_nashorn_core_15_4.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_ow2_asm_asm_9_7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_ow2_asm_asm_9_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_ow2_asm_asm_analysis_9_7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_ow2_asm_asm_analysis_9_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_ow2_asm_asm_commons_9_7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_ow2_asm_asm_commons_9_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_ow2_asm_asm_tree_9_7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_ow2_asm_asm_tree_9_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_ow2_asm_asm_util_9_7.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_ow2_asm_asm_util_9_8.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__org_slf4j_slf4j_api_2_0_9.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/adorablehamsterpets.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/common/adorablehamsterpets.common.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/common/adorablehamsterpets.common.main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/common/adorablehamsterpets.common.test.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/fabric/adorablehamsterpets.fabric.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/fabric/adorablehamsterpets.fabric.main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/fabric/adorablehamsterpets.fabric.test.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/neoforge/adorablehamsterpets.neoforge.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/neoforge/adorablehamsterpets.neoforge.main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/neoforge/adorablehamsterpets.neoforge.test.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Client___neoforge__neoforge.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Client___neoforge__neoforge.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___fabric__fabric.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___fabric__fabric.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___neoforge__neoforge.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___neoforge__neoforge.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/AdorableHamsterPets.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.dev.architectury-architectury-13.0.8.jar" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.dev.architectury-architectury-13.0.8.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/client/option/ModKeyBindings.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/client/sound/HamsterCleaningSoundInstance.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/client/sound/HamsterFlightSoundInstance.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/client/sound/HamsterThrowSoundInstance.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/HamsterModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/HamsterRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/ModModelLayers.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/feature/HamsterShoulderFeatureRenderer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/layer/HamsterOverlayLayer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/layer/HamsterPinkPetalOverlayLayer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/model/HamsterShoulderModel.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/AdorableHamsterPets.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/AdorableHamsterPets.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/resources/adorablehamsterpets.mixins.json" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/resources/adorablehamsterpets.mixins.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/.gradle/architectury/.properties" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/.gradle/architectury/.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/.gradle/loom-cache/launch.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/.gradle/loom-cache/launch.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/.gradle/loom-cache/remapClasspath.txt" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/.gradle/loom-cache/remapClasspath.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.com.terraformersmc-modmenu-11.0.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.com.terraformersmc-modmenu-11.0.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.curse.maven-jade-324717-6291536.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.curse.maven-jade-324717-6291536.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.dev.architectury-architectury-fabric-13.0.8.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.dev.architectury-architectury-fabric-13.0.8.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.me.fzzyhmstrs-fzzy_config-0.7.0+1.21.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.me.fzzyhmstrs-fzzy_config-0.7.0+1.21.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.me.lucko-fabric-permissions-api-0.3.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.me.lucko-fabric-permissions-api-0.3.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc-fabric-language-kotlin-1.12.1+kotlin.2.0.20.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc-fabric-language-kotlin-1.12.1+kotlin.2.0.20.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-api-0.116.2+1.21.1.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-api-0.116.2+1.21.1.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-api-base-0.4.42+6573ed8c19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-api-base-0.4.42+6573ed8c19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-api-lookup-api-v1-1.6.71+b559734419.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-api-lookup-api-v1-1.6.71+b559734419.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-biome-api-v1-13.0.31+d527f9fd19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-biome-api-v1-13.0.31+d527f9fd19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-block-api-v1-1.1.0+0bc3503219.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-block-api-v1-1.1.0+0bc3503219.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-block-view-api-v2-1.0.11+ebb2264e19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-block-view-api-v2-1.0.11+ebb2264e19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-blockrenderlayer-v1-1.1.52+0af3f5a719.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-blockrenderlayer-v1-1.1.52+0af3f5a719.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-client-tags-api-v1-1.1.15+6573ed8c19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-client-tags-api-v1-1.1.15+6573ed8c19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-command-api-v1-1.2.49+f71b366f19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-command-api-v1-1.2.49+f71b366f19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-command-api-v2-2.2.28+6ced4dd919.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-command-api-v2-2.2.28+6ced4dd919.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-commands-v0-0.2.66+df3654b319.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-commands-v0-0.2.66+df3654b319.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-content-registries-v0-8.0.19+b559734419.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-content-registries-v0-8.0.19+b559734419.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-convention-tags-v1-2.1.5+7f945d5b19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-convention-tags-v1-2.1.5+7f945d5b19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-convention-tags-v2-2.11.1+a406e79519.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-convention-tags-v2-2.11.1+a406e79519.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-crash-report-info-v1-0.2.29+0af3f5a719.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-crash-report-info-v1-0.2.29+0af3f5a719.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-data-attachment-api-v1-1.4.5+6116a37819.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-data-attachment-api-v1-1.4.5+6116a37819.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-data-generation-api-v1-20.2.30+16c4ae2519.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-data-generation-api-v1-20.2.30+16c4ae2519.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-dimensions-v1-4.0.0+6fc22b9919.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-dimensions-v1-4.0.0+6fc22b9919.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-entity-events-v1-1.8.0+2b27e0a419.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-entity-events-v1-1.8.0+2b27e0a419.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-events-interaction-v0-0.7.13+ba9dae0619.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-events-interaction-v0-0.7.13+ba9dae0619.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-game-rule-api-v1-1.0.53+6ced4dd919.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-game-rule-api-v1-1.0.53+6ced4dd919.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-gametest-api-v1-2.0.5+6fc22b9919.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-gametest-api-v1-2.0.5+6fc22b9919.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-item-api-v1-11.1.1+d5debaed19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-item-api-v1-11.1.1+d5debaed19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-item-group-api-v1-4.1.7+def88e3a19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-item-group-api-v1-4.1.7+def88e3a19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-key-binding-api-v1-1.0.47+0af3f5a719.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-key-binding-api-v1-1.0.47+0af3f5a719.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-keybindings-v0-0.2.45+df3654b319.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-keybindings-v0-0.2.45+df3654b319.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-lifecycle-events-v1-2.6.0+0865547519.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-lifecycle-events-v1-2.6.0+0865547519.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-loot-api-v2-3.0.15+3f89f5a519.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-loot-api-v2-3.0.15+3f89f5a519.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-loot-api-v3-1.0.3+3f89f5a519.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-loot-api-v3-1.0.3+3f89f5a519.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-message-api-v1-6.0.14+8aaf3aca19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-message-api-v1-6.0.14+8aaf3aca19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-model-loading-api-v1-2.0.0+fe474d6b19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-model-loading-api-v1-2.0.0+fe474d6b19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-networking-api-v1-4.3.0+c7469b2119.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-networking-api-v1-4.3.0+c7469b2119.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-object-builder-api-v1-15.2.1+40875a9319.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-object-builder-api-v1-15.2.1+40875a9319.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-particles-v1-4.0.2+6573ed8c19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-particles-v1-4.0.2+6573ed8c19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-recipe-api-v1-5.0.14+248df81c19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-recipe-api-v1-5.0.14+248df81c19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-registry-sync-v0-5.3.0+b7e751e819.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-registry-sync-v0-5.3.0+b7e751e819.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-renderer-api-v1-3.4.0+c705a49c19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-renderer-api-v1-3.4.0+c705a49c19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-renderer-indigo-1.7.0+c705a49c19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-renderer-indigo-1.7.0+c705a49c19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-renderer-registries-v1-3.2.68+df3654b319.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-renderer-registries-v1-3.2.68+df3654b319.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-rendering-data-attachment-v1-0.3.49+73761d2e19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-rendering-data-attachment-v1-0.3.49+73761d2e19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-rendering-fluids-v1-3.1.6+1daea21519.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-rendering-fluids-v1-3.1.6+1daea21519.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-rendering-v0-1.1.71+df3654b319.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-rendering-v0-1.1.71+df3654b319.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-rendering-v1-5.0.5+df16efd019.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-rendering-v1-5.0.5+df16efd019.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-resource-conditions-api-v1-4.3.0+8dc279b119.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-resource-conditions-api-v1-4.3.0+8dc279b119.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-resource-loader-v0-1.3.1+5b5275af19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-resource-loader-v0-1.3.1+5b5275af19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-screen-api-v1-2.0.25+8b68f1c719.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-screen-api-v1-2.0.25+8b68f1c719.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-screen-handler-api-v1-1.3.89+b559734419.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-screen-handler-api-v1-1.3.89+b559734419.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-sound-api-v1-1.0.23+6573ed8c19.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-sound-api-v1-1.0.23+6573ed8c19.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-transfer-api-v1-5.4.3+c24bd99419.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-transfer-api-v1-5.4.3+c24bd99419.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-transitive-access-wideners-v1-6.2.0+45b9699719.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.net.fabricmc.fabric-api-fabric-transitive-access-wideners-v1-6.2.0+45b9699719.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.software.bernie.geckolib-geckolib-fabric-1.21.1-4.7.5.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2.software.bernie.geckolib-geckolib-fabric-1.21.1-4.7.5.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/HamsterRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/HamsterRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/custom/HamsterEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/custom/HamsterEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/logs/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/debug.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/AdorableHamsterPetsDataGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/AdorableHamsterPetsDataGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/EnUsGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/EnUsGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/ModLootTableProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/ModLootTableProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/ModModelProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/ModModelProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/ModRecipeProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/ModRecipeProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/ModRegistryDataGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/ModRegistryDataGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/AdorableHamsterPetsFabric.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/AdorableHamsterPetsFabric.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/kfflang-5.8.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/kfflib-5.8.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/libs/kffmod-5.8.0.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/.gradle/architectury/.properties" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/.gradle/architectury/.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/.gradle/loom-cache/forge_minecraft_classpath.txt" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/.gradle/loom-cache/forge_minecraft_classpath.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/.gradle/loom-cache/launch.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/.gradle/loom-cache/launch.cfg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/neoforge/.gradle/loom-cache/remapClasspath.txt" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/.gradle/loom-cache/remapClasspath.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge.dev.architectury-architectury-neoforge-13.0.8.jar" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_40359_v2_neoforge_21_1_172_forge.dev.architectury-architectury-neoforge-13.0.8.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/net/dawson/adorablehamsterpets/neoforge/AdorableHamsterPetsNeoForge.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/net/dawson/adorablehamsterpets/neoforge/AdorableHamsterPetsNeoForge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -780,20 +114,20 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Adorable Hamster Pets [build].executor": "Run",
-    "Gradle.Download Sources.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/tweek/OneDrive/Documents/MY MINECRAFT MODS/Data/Repositories/Adorable Hamster Pets/common/src/main/java/net/dawson/adorablehamsterpets",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Adorable Hamster Pets [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/tweek/OneDrive/Documents/MY MINECRAFT MODS/Data/Repositories/Adorable Hamster Pets/common/src/main/java/net/dawson/adorablehamsterpets&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\tweek\OneDrive\Documents\MY MINECRAFT MODS\Data\Repositories\Adorable Hamster Pets\common\src\main\java\net\dawson\adorablehamsterpets" />
@@ -838,6 +172,19 @@
       <option name="presentableId" value="Default" />
       <updated>1750188824967</updated>
     </task>
+    <task id="LOCAL-00001" summary="[REFACTOR] Migrate core registries and networking to Architectury API&#10;&#10;This commit refactors a significant portion of the mod's infrastructure from Fabric API to the Architectury API to support multi-loader builds.&#10;&#10;- [REFACTOR] Migrated Item, Block, Sound, Entity, and ScreenHandler registries to use Architectury's DeferredRegister system.&#10;- [REFACTOR] Replaced Fabric Networking API with Architectury's NetworkManager, centralizing packet registration and handling into a new `ModPackets` class.&#10;- [REFACTOR] Replaced Fabric event listeners (`CommandRegistrationCallback`, `PlayerEvent`) with their Architectury equivalents.&#10;- [REFACTOR] Replaced Fabric's `CompostingChanceRegistry` helper with direct calls to the vanilla `ComposterBlock` map, triggered by an Architectury `LifecycleEvent`.&#10;- [REFACTOR] Updated world generation to use Architectury's `BiomeModifications` API instead of Fabric's.&#10;- [CHORE] Consolidated biome-checking logic into `ModEntitySpawns` to act as a single source of truth.">
+      <option name="closed" value="true" />
+      <created>1750450802800</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1750450802800</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="[REFACTOR] Migrate core registries and networking to Architectury API&#10;&#10;This commit refactors a significant portion of the mod's infrastructure from Fabric API to the Architectury API to support multi-loader builds.&#10;&#10;- [REFACTOR] Migrated Item, Block, Sound, Entity, and ScreenHandler registries to use Architectury's DeferredRegister system.&#10;- [REFACTOR] Replaced Fabric Networking API with Architectury's NetworkManager, centralizing packet registration and handling into a new `ModPackets` class.&#10;- [REFACTOR] Replaced Fabric event listeners (`CommandRegistrationCallback`, `PlayerEvent`) with their Architectury equivalents.&#10;- [REFACTOR] Replaced Fabric's `CompostingChanceRegistry` helper with direct calls to the vanilla `ComposterBlock` map, triggered by an Architectury `LifecycleEvent`.&#10;- [REFACTOR] Updated world generation to use Architectury's `BiomeModifications` API instead of Fabric's.&#10;- [CHORE] Consolidated biome-checking logic into `ModEntitySpawns` to act as a single source of truth." />
+    <option name="LAST_COMMIT_MESSAGE" value="[REFACTOR] Migrate core registries and networking to Architectury API&#10;&#10;This commit refactors a significant portion of the mod's infrastructure from Fabric API to the Architectury API to support multi-loader builds.&#10;&#10;- [REFACTOR] Migrated Item, Block, Sound, Entity, and ScreenHandler registries to use Architectury's DeferredRegister system.&#10;- [REFACTOR] Replaced Fabric Networking API with Architectury's NetworkManager, centralizing packet registration and handling into a new `ModPackets` class.&#10;- [REFACTOR] Replaced Fabric event listeners (`CommandRegistrationCallback`, `PlayerEvent`) with their Architectury equivalents.&#10;- [REFACTOR] Replaced Fabric's `CompostingChanceRegistry` helper with direct calls to the vanilla `ComposterBlock` map, triggered by an Architectury `LifecycleEvent`.&#10;- [REFACTOR] Updated world generation to use Architectury's `BiomeModifications` API instead of Fabric's.&#10;- [CHORE] Consolidated biome-checking logic into `ModEntitySpawns` to act as a single source of truth." />
   </component>
 </project>

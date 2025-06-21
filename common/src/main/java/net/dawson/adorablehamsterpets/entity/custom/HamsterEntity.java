@@ -19,7 +19,7 @@ import net.dawson.adorablehamsterpets.screen.HamsterInventoryScreenHandler;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.dawson.adorablehamsterpets.tag.ModItemTags;
 import net.dawson.adorablehamsterpets.world.gen.ModEntitySpawns;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import dev.architectury.networking.NetworkManager;
 import dev.architectury.registry.menu.ExtendedMenuProvider;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketByteBuf;
@@ -575,15 +575,15 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 StartHamsterThrowSoundPayload throwPayload = new StartHamsterThrowSoundPayload(hamster.getId());
 
                 // Send to thrower and nearby players (existing logic)
-                ServerPlayNetworking.send(player, flightPayload);
-                ServerPlayNetworking.send(player, throwPayload);
+                NetworkManager.sendToPlayer(player, flightPayload);
+                NetworkManager.sendToPlayer(player, throwPayload);
                 double radius = 64.0;
                 Vec3d hamsterPos = hamster.getPos();
                 Box searchBox = new Box(hamsterPos.subtract(radius, radius, radius), hamsterPos.add(radius, radius, radius));
                 List<ServerPlayerEntity> nearbyPlayers = serverWorld.getPlayers(p -> p != player && searchBox.contains(p.getPos()));
                 for (ServerPlayerEntity nearbyPlayer : nearbyPlayers) {
-                    ServerPlayNetworking.send(nearbyPlayer, flightPayload);
-                    ServerPlayNetworking.send(nearbyPlayer, throwPayload);
+                    NetworkManager.sendToPlayers(nearbyPlayers, flightPayload);
+                    NetworkManager.sendToPlayers(nearbyPlayers, throwPayload);
                 }
                 // --- End 5c. Send S2C Packets ---
 

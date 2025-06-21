@@ -13,8 +13,13 @@ dependencies {
     // Architectury API
     modCompileOnly "dev.architectury:architectury:$rootProject.architectury_api_version"
 
+    // ── ExpectPlatform / injectables  (NEEDED FOR @ExpectPlatform) ─────
+    def injectablesVer = "1.0.13"
+    compileOnly         "dev.architectury:architectury-injectables:$injectablesVer"
+    annotationProcessor "dev.architectury:architectury-injectables:$injectablesVer"
+
     // GeckoLib API
-    modCompileOnly "software.bernie.geckolib:geckolib-common-$rootProject.minecraft_version:$rootProject.geckolib_version"
+    modCompileOnly "software.bernie.geckolib:geckolib-fabric-$rootProject.minecraft_version:$rootProject.geckolib_version"
 
     // Fzzy Config API
     modCompileOnly "me.fzzyhmstrs:fzzy_config:${rootProject.fzzy_config_version}"

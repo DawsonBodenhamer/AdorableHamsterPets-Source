@@ -11,7 +11,7 @@ import net.dawson.adorablehamsterpets.entity.custom.HamsterVariant;
 import net.dawson.adorablehamsterpets.networking.payload.SpawnAttackParticlesPayload;
 import net.dawson.adorablehamsterpets.networking.payload.SpawnSeekingDustPayload;
 import net.dawson.adorablehamsterpets.networking.payload.UpdateHamsterRenderStatePayload;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+import dev.architectury.networking.NetworkManager;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -99,7 +99,7 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
                 double boneZ = boneWorldPos.z();
 
                 AdorableHamsterPets.LOGGER.debug("[Renderer {}] renderFinal: Found bone 'left_foot'. Calculated Pos: ({}, {}, {}). Sending packet.", animatable.getId(), boneX, boneY, boneZ);
-                ClientPlayNetworking.send(new SpawnAttackParticlesPayload(boneX, boneY, boneZ));
+                NetworkManager.sendToServer(new SpawnAttackParticlesPayload(boneX, boneY, boneZ));
 
             }, () -> AdorableHamsterPets.LOGGER.error("[Renderer {}] renderFinal: Could not find 'left_foot' bone to spawn particles.", animatable.getId()));
 
@@ -117,7 +117,7 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
 
                 AdorableHamsterPets.LOGGER.debug("[Renderer {}] renderFinal: Found bone 'nose'. Particle Pos: ({}, {}, {}). Sending dust packet.", animatable.getId(), boneX, boneY, boneZ);
                 // Send hamster's entity ID along with particle coordinates
-                ClientPlayNetworking.send(new SpawnSeekingDustPayload(animatable.getId(), boneX, boneY, boneZ)); // UPDATED
+                NetworkManager.sendToServer(new SpawnSeekingDustPayload(animatable.getId(), boneX, boneY, boneZ)); // UPDATED
 
             }, () -> AdorableHamsterPets.LOGGER.error("[Renderer {}] renderFinal: Could not find 'nose' bone to spawn seeking dust.", animatable.getId()));
             this.shouldSpawnSeekingDust = false;
