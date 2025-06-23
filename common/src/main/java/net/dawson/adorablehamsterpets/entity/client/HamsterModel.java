@@ -2,6 +2,8 @@ package net.dawson.adorablehamsterpets.entity.client;
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimationState;
@@ -10,6 +12,7 @@ import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoRenderer;
 
 @SuppressWarnings("removal") // Suppress deprecation warnings for the old abstract methods
+@Environment(EnvType.CLIENT)
 public class HamsterModel extends GeoModel<HamsterEntity> {
 
     // --- 1. Constants for Scaling and Positioning ---

@@ -1,0 +1,26 @@
+{
+  "parent": "adorablehamsterpets:husbandry/sunflower_hoarder",
+  "display": {
+    "icon": {
+      "id": "adorablehamsterpets:hamster_food_mix"
+    },
+    "title": {
+      "translate": "advancements.adorablehamsterpets.husbandry.craft_food_mix.title"
+    },
+    "description": {
+      "translate": "advancements.adorablehamsterpets.husbandry.craft_food_mix.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "crafted_hamster_food_mix": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "adorablehamsterpets:hamster_food_mix_from_sunflower_seeds"
+      }
+    }
+  }
+}

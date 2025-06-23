@@ -1,0 +1,23 @@
+{
+  "parent": "adorablehamsterpets:husbandry/tame_hamster",
+  "display": {
+    "icon": {
+      "id": "adorablehamsterpets:cheese"
+    },
+    "title": {
+      "translate": "advancements.adorablehamsterpets.husbandry.shoulder_hamster.title"
+    },
+    "description": {
+      "translate": "advancements.adorablehamsterpets.husbandry.shoulder_hamster.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "hamster_on_shoulder": {
+      "trigger": "adorablehamsterpets:hamster_on_shoulder"
+    }
+  }
+}

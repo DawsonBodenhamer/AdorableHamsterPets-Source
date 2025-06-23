@@ -12,15 +12,26 @@ import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Manages the inventory screen for a Hamster entity.
+ * This screen handler synchronizes the hamster's 6-slot inventory with the client
+ * and handles item transfers between the hamster and the player.
+ */
 public class HamsterInventoryScreenHandler extends ScreenHandler {
     private final Inventory inventory;
     @Nullable
     private final HamsterEntity hamsterEntityInstance;
 
-    // This is now the single constructor for both server and client.
-    // The client receives the entity instance via the extended menu factory.
+    /**
+     * Constructs the screen handler. This single constructor is used by both the server
+     * and the client. On the client, the hamster entity is provided by Architectury's
+     * extended menu factory system.
+     *
+     * @param syncId The synchronization ID for the screen handler.
+     * @param playerInventory The player's inventory.
+     * @param hamsterEntity The hamster entity whose inventory is being opened. Can be null on the client if the entity isn't found.
+     */
     public HamsterInventoryScreenHandler(int syncId, PlayerInventory playerInventory, @Nullable HamsterEntity hamsterEntity) {
-        // CORRECTED: Call .get() on the RegistrySupplier
         super(ModScreenHandlers.HAMSTER_INVENTORY_SCREEN_HANDLER.get(), syncId);
 
         if (hamsterEntity != null) {
@@ -38,12 +49,27 @@ public class HamsterInventoryScreenHandler extends ScreenHandler {
         setupSlots(playerInventory);
     }
 
+    /**
+     * Returns the HamsterEntity instance associated with this screen handler.
+     * This is used by the client-side screen to know which entity to render.
+     *
+     * @return The hamster entity instance, or null if not available.
+     */
+    @Nullable
+    public HamsterEntity getHamsterEntity() {
+        return this.hamsterEntityInstance;
+    }
+
+    /**
+     * Sets up the slots for the hamster's inventory and the player's inventory.
+     * @param playerInventory The player's inventory.
+     */
     private void setupSlots(PlayerInventory playerInventory) {
-        // Hamster Cheek Pouch Slots
+        // --- Hamster Cheek Pouch Slots ---
         this.addSlot(new HamsterSlot(this.inventory, 0, 26, 95));
         this.addSlot(new HamsterSlot(this.inventory, 1, 44, 95));
         this.addSlot(new HamsterSlot(this.inventory, 2, 62, 95));
-        this.addSlot(new Slot(new SimpleInventory(1), 0, 80, 95) { // Gap Slot
+        this.addSlot(new Slot(new SimpleInventory(1), 0, 80, 95) { // Visual Gap Slot
             @Override public boolean canInsert(ItemStack stack) { return false; }
             @Override public boolean canTakeItems(PlayerEntity playerEntity) { return false; }
             @Override public boolean isEnabled() { return false; }
@@ -52,7 +78,7 @@ public class HamsterInventoryScreenHandler extends ScreenHandler {
         this.addSlot(new HamsterSlot(this.inventory, 4, 116, 95));
         this.addSlot(new HamsterSlot(this.inventory, 5, 134, 95));
 
-        // Player Inventory & Hotbar
+        // --- Player Inventory & Hotbar ---
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
                 this.addSlot(new Slot(playerInventory, j + i * 9 + 9, 8 + j * 18, 140 + i * 18));
@@ -71,45 +97,46 @@ public class HamsterInventoryScreenHandler extends ScreenHandler {
     @Override
     public ItemStack quickMove(PlayerEntity player, int slotIndex) {
         ItemStack itemStack = ItemStack.EMPTY;
-        // CORRECTED: Removed redundant cast and null check
         Slot slot = this.slots.get(slotIndex);
         if (slot.hasStack()) {
-            ItemStack itemStack2 = slot.getStack();
-            itemStack = itemStack2.copy();
+            ItemStack sourceStack = slot.getStack();
+            itemStack = sourceStack.copy();
 
             int hamsterInvSize = 6;
             int gapSlotIndex = 3;
-            int totalHamsterAreaSlots = hamsterInvSize + 1;
+            int totalHamsterAreaSlots = hamsterInvSize + 1; // Includes the gap slot
 
-            // CORRECTED: Inlined redundant local variable
+            // --- Case 1: Moving FROM Hamster Inventory TO Player ---
             if (slotIndex < totalHamsterAreaSlots && slotIndex != gapSlotIndex) {
-                if (!this.insertItem(itemStack2, totalHamsterAreaSlots, this.slots.size(), true)) {
+                if (!this.insertItem(sourceStack, totalHamsterAreaSlots, this.slots.size(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (slotIndex >= totalHamsterAreaSlots) {
-                if (this.hamsterEntityInstance != null && this.hamsterEntityInstance.isItemDisallowed(itemStack2)) {
+            }
+            // --- Case 2: Moving FROM Player Inventory TO Hamster ---
+            else if (slotIndex >= totalHamsterAreaSlots) {
+                if (this.hamsterEntityInstance != null && this.hamsterEntityInstance.isItemDisallowed(sourceStack)) {
                     return ItemStack.EMPTY;
                 }
-                if (!this.insertItem(itemStack2, 0, gapSlotIndex, false)) {
-                    if (!this.insertItem(itemStack2, gapSlotIndex + 1, totalHamsterAreaSlots, false)) {
-                        return ItemStack.EMPTY;
-                    }
+                // Try to insert into the hamster's inventory, skipping the gap
+                if (!this.insertItem(sourceStack, 0, gapSlotIndex, false) &&
+                        !this.insertItem(sourceStack, gapSlotIndex + 1, totalHamsterAreaSlots, false)) {
+                    return ItemStack.EMPTY;
                 }
             } else {
-                return ItemStack.EMPTY;
+                return ItemStack.EMPTY; // Clicked the gap slot
             }
 
-            if (itemStack2.isEmpty()) {
+            if (sourceStack.isEmpty()) {
                 slot.setStack(ItemStack.EMPTY);
             } else {
                 slot.markDirty();
             }
 
-            if (itemStack2.getCount() == itemStack.getCount()) {
+            if (sourceStack.getCount() == itemStack.getCount()) {
                 return ItemStack.EMPTY;
             }
 
-            slot.onTakeItem(player, itemStack2);
+            slot.onTakeItem(player, sourceStack);
         }
 
         return itemStack;

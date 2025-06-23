@@ -1,11 +1,13 @@
 package net.dawson.adorablehamsterpets.entity.client.feature;
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
-import net.dawson.adorablehamsterpets.attachment.HamsterShoulderData;
-import net.dawson.adorablehamsterpets.attachment.ModEntityAttachments;
+import net.dawson.adorablehamsterpets.component.HamsterShoulderData;
 import net.dawson.adorablehamsterpets.entity.client.ModModelLayers;
 import net.dawson.adorablehamsterpets.entity.client.model.HamsterShoulderModel;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterVariant;
+import net.dawson.adorablehamsterpets.mixin.server.PlayerEntityMixin;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
@@ -16,13 +18,17 @@ import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.EntityModelLoader;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 /**
  * Renders a Hamster model on the player's shoulder if shoulder data is present.
  * Handles scaling for baby/adult hamsters and texture variations.
  */
+@Environment(EnvType.CLIENT)
 public class HamsterShoulderFeatureRenderer
         extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
 
@@ -74,10 +80,16 @@ public class HamsterShoulderFeatureRenderer
                        AbstractClientPlayerEntity player, float limbAngle, float limbDistance,
                        float tickDelta, float animationProgress, float headYaw, float headPitch) {
 
-        HamsterShoulderData shoulderData = player.getAttached(ModEntityAttachments.HAMSTER_SHOULDER_DATA);
-        if (shoulderData == null) {
-            return; // No hamster data, nothing to render
+        NbtCompound shoulderNbt = ((PlayerEntityMixin)(Object)player).getHamsterShoulderEntity();
+        if (shoulderNbt.isEmpty()) {
+            return;
         }
+
+        Optional<HamsterShoulderData> shoulderDataOpt = HamsterShoulderData.fromNbt(shoulderNbt);
+        if (shoulderDataOpt.isEmpty()) {
+            return; // Failed to deserialize, do not render
+        }
+        HamsterShoulderData shoulderData = shoulderDataOpt.get();
 
         // --- Prepare model for rendering ---
         setCheekVisibility(shoulderData);

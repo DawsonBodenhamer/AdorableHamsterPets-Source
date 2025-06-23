@@ -38,12 +38,12 @@ public class AdorableHamsterPets {
 		CONFIG = Configs.AHP;
 
 		// --- Core Registries ---
+		ModEntities.register();
 		ModDataComponentTypes.registerDataComponentTypes();
 		ModSounds.register();
 		ModBlocks.register();
 		ModItems.register();
 		ModItemGroups.register();
-		ModEntities.register();
 		ModScreenHandlers.register();
 		ModCriteria.registerCriteria();
 		ModRegistries.initialize();
@@ -57,8 +57,6 @@ public class AdorableHamsterPets {
 
 		// --- Entity Attribute and Spawn Restriction Registration ---
 		EntityAttributeRegistry.register(ModEntities.HAMSTER, HamsterEntity::createHamsterAttributes);
-
-		// CORRECTED: The lambda signature for SpawnRestrictionRegistry is different.
 		ModSpawnPlacements.register(ModEntities.HAMSTER.get(), SpawnLocationTypes.ON_GROUND,
 				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				(type, world, reason, pos, random) -> AnimalEntity.isValidNaturalSpawn(type, world, reason, pos, random) ||

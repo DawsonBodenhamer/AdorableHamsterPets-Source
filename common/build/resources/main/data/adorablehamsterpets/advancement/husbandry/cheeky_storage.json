@@ -1,0 +1,23 @@
+{
+  "parent": "adorablehamsterpets:husbandry/craft_food_mix",
+  "display": {
+    "icon": {
+      "id": "minecraft:bundle"
+    },
+    "title": {
+      "translate": "advancements.adorablehamsterpets.husbandry.cheeky_storage.title"
+    },
+    "description": {
+      "translate": "advancements.adorablehamsterpets.husbandry.cheeky_storage.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "pouch_unlocked": {
+      "trigger": "adorablehamsterpets:cheek_pouch_unlocked"
+    }
+  }
+}

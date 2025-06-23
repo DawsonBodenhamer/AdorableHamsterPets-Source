@@ -26,10 +26,10 @@ public class HamsterInventoryScreen extends HandledScreen<HamsterInventoryScreen
         super(handler, inventory, title);
         this.player = inventory.player; // Store the player
 
-        // Adjust background height based on your texture file
-        this.backgroundHeight = 222; // Ensure this matches your texture height
+        // Adjust background height based on texture file
+        this.backgroundHeight = 222; // Needs to match texture height
 
-        // Adjust player inventory label Y position based on the new backgroundHeight and your layout
+        // Adjust player inventory label Y position based on the new backgroundHeight and layout
         this.playerInventoryTitleY = 139 - 11; // Position it just above the player inventory (Y=139 - approx text height)
     }
 
@@ -66,28 +66,26 @@ public class HamsterInventoryScreen extends HandledScreen<HamsterInventoryScreen
         int boxY = this.y + 12;
         int boxWidth = 59 - 8;
         int boxHeight = 69 - 18;
-        int size = 60; // increased size
+        int size = 60;
 
-        World world = this.player.getWorld();
-        Entity entity = world.getEntityById(this.handler.getEntityId());
+        // Get the entity instance directly from the handler
+        HamsterEntity hamster = this.handler.getHamsterEntity();
 
-        if (entity instanceof HamsterEntity hamster) {
-            // Call the static helper method using the SHIFTED box coordinates
-            // The internal rotation calculation will now use the center of this shifted box
+        if (hamster != null) {
+            // Call the static helper method using the box coordinates
             InventoryScreen.drawEntity(
                     context,
-                    boxX, // int x1 (original X)
-                    boxY, // int y1 (SHIFTED Y)
-                    boxX + boxWidth, // int x2 (original X + width)
-                    boxY + boxHeight, // int y2 (SHIFTED Y + height)
-                    size, // int size
-                    0.0625F, // float vertical offset constant
-                    (float)mouseX, // Pass the absolute mouseX
-                    (float)mouseY, // Pass the absolute mouseY
-                    (LivingEntity) hamster // The entity to render
+                    boxX,
+                    boxY,
+                    boxX + boxWidth,
+                    boxY + boxHeight,
+                    size,
+                    0.0625F,
+                    (float)mouseX,
+                    (float)mouseY,
+                    hamster // Pass the entity instance
             );
         }
-        // --- End Draw Entity ---
 
         // Draw tooltips last
         drawMouseoverTooltip(context, mouseX, mouseY);

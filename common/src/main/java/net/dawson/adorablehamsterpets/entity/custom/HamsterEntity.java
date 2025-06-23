@@ -3,9 +3,8 @@ package net.dawson.adorablehamsterpets.entity.custom;
 import dev.architectury.registry.menu.MenuRegistry;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
-import net.dawson.adorablehamsterpets.attachment.HamsterRenderState;
-import net.dawson.adorablehamsterpets.attachment.HamsterShoulderData;
-import net.dawson.adorablehamsterpets.attachment.ModEntityAttachments;
+import net.dawson.adorablehamsterpets.client.HamsterSoundManager;
+import net.dawson.adorablehamsterpets.component.HamsterShoulderData;
 import net.dawson.adorablehamsterpets.client.sound.HamsterCleaningSoundInstance;
 import net.dawson.adorablehamsterpets.config.AhpConfig;
 import net.dawson.adorablehamsterpets.config.Configs;
@@ -13,11 +12,13 @@ import net.dawson.adorablehamsterpets.entity.AI.*;
 import net.dawson.adorablehamsterpets.entity.ImplementedInventory;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.dawson.adorablehamsterpets.item.ModItems;
+import net.dawson.adorablehamsterpets.mixin.server.PlayerEntityMixin;
 import net.dawson.adorablehamsterpets.networking.payload.StartHamsterFlightSoundPayload;
 import net.dawson.adorablehamsterpets.networking.payload.StartHamsterThrowSoundPayload;
 import net.dawson.adorablehamsterpets.screen.HamsterInventoryScreenHandler;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.dawson.adorablehamsterpets.tag.ModItemTags;
+import net.dawson.adorablehamsterpets.util.HamsterRenderTracker;
 import net.dawson.adorablehamsterpets.world.gen.ModEntitySpawns;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.registry.menu.ExtendedMenuProvider;
@@ -340,23 +341,29 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
 
     /**
-     * Creates a HamsterEntity instance from shoulder data, loading variant, health, age, inventory, effects, and custom name.
-     * Does NOT set position or spawn the entity.
-     * @param world The server world.
-     * @param player The player the hamster belongs to.
-     * @param data The shoulder data.
-     * @return The created HamsterEntity, or null if creation failed.
+     * Creates a HamsterEntity instance from NBT data, typically from a player's shoulder.
+     * This method loads the hamster's variant, health, age, inventory, effects, and custom name.
+     * It does NOT set the entity's position or spawn it in the world.
+     *
+     * @param world The server world to create the entity in.
+     * @param player The player who owns the hamster.
+     * @param nbt The NbtCompound containing the hamster's data, usually from the player's DataTracker.
+     * @return A fully configured, but not yet spawned, HamsterEntity instance, or null if creation fails.
      */
     @Nullable
-    public static HamsterEntity createFromShoulderData(ServerWorld world, PlayerEntity player, HamsterShoulderData data) {
-        // --- 1. Create Hamster Instance ---
-        AdorableHamsterPets.LOGGER.debug("[HamsterEntity] createFromShoulderData called for player {} with data: {}", player.getName().getString(), data);
-        HamsterEntity hamster = ModEntities.HAMSTER.create(world);
-        // --- End 1. Create Hamster Instance ---
+    public static HamsterEntity createFromNbt(ServerWorld world, PlayerEntity player, NbtCompound nbt) {
+        Optional<HamsterShoulderData> dataOpt = HamsterShoulderData.fromNbt(nbt);
+        if (dataOpt.isEmpty()) {
+            AdorableHamsterPets.LOGGER.error("Failed to deserialize HamsterShoulderData from NBT: {}", nbt);
+            return null;
+        }
+        HamsterShoulderData data = dataOpt.get();
 
+        AdorableHamsterPets.LOGGER.debug("[HamsterEntity] createFromNbt called for player {} with data: {}", player.getName().getString(), data);
+        HamsterEntity hamster = ModEntities.HAMSTER.get().create(world);
 
         if (hamster != null) {
-            // --- 2. Load Core Data ---
+            // --- 1. Load Core Data ---
             hamster.setVariant(data.variantId());
             hamster.setHealth(data.health());
             hamster.setOwnerUuid(player.getUuid());
@@ -365,239 +372,169 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             hamster.throwCooldownEndTick = data.throwCooldownEndTick();
             hamster.steamedBeansCooldownEndTick = data.steamedBeansCooldownEndTick();
             hamster.autoEatCooldownTicks = data.autoEatCooldownTicks();
-            hamster.dataTracker.set(PINK_PETAL_TYPE, data.pinkPetalType());
-            hamster.dataTracker.set(CHEEK_POUCH_UNLOCKED, data.cheekPouchUnlocked());
-            hamster.dataTracker.set(ANIMATION_PERSONALITY_ID, data.animationPersonalityId());
-            // --- End 2. Load Core Data ---
+            hamster.getDataTracker().set(PINK_PETAL_TYPE, data.pinkPetalType());
+            hamster.getDataTracker().set(CHEEK_POUCH_UNLOCKED, data.cheekPouchUnlocked());
+            hamster.getDataTracker().set(ANIMATION_PERSONALITY_ID, data.animationPersonalityId());
 
-
-            // --- 2b. Load Custom Name ---
+            // --- 2. Load Custom Name ---
             data.customName().ifPresent(name -> {
-                if (!name.isEmpty()) { // Check if the name string is actually present
+                if (!name.isEmpty()) {
                     hamster.setCustomName(Text.literal(name));
-                    AdorableHamsterPets.LOGGER.debug("[HamsterEntity] Restored custom name '{}' from shoulder data.", name);
-                } else {
-                    AdorableHamsterPets.LOGGER.debug("[HamsterEntity] Custom name in shoulder data was empty, not setting name.");
                 }
             });
-            // --- End 2b. Load Custom Name ---
-
 
             // --- 3. Load Inventory ---
-            NbtCompound inventoryNbt = data.inventoryNbt();
             RegistryWrapper.WrapperLookup registries = world.getRegistryManager();
-            if (!inventoryNbt.isEmpty()) {
-                Inventories.readNbt(inventoryNbt, hamster.items, registries);
-                AdorableHamsterPets.LOGGER.debug("[HamsterEntity] Loaded inventory from NBT: {}", inventoryNbt);
-                hamster.updateCheekTrackers();
-            } else {
-                AdorableHamsterPets.LOGGER.debug("[HamsterEntity] No inventory NBT found in shoulder data, clearing inventory.");
-                hamster.items.clear();
+            if (!data.inventoryNbt().isEmpty()) {
+                Inventories.readNbt(data.inventoryNbt(), hamster.items, registries);
                 hamster.updateCheekTrackers();
             }
-            // --- End 3. Load Inventory ---
 
-
-            // --- 4. Load and Apply Active Status Effects ---
-            NbtList effectsList = data.activeEffectsNbt();
-            if (!effectsList.isEmpty()) {
-                AdorableHamsterPets.LOGGER.debug("[HamsterEntity] Loading {} active effects from NBT list.", effectsList.size());
+            // --- 4. Load Status Effects ---
+            NbtCompound effectsNbt = data.activeEffectsNbt();
+            if (effectsNbt.contains("active_effects", NbtElement.LIST_TYPE)) {
+                NbtList effectsList = effectsNbt.getList("active_effects", NbtElement.COMPOUND_TYPE);
                 for (NbtElement effectElement : effectsList) {
-                    if (effectElement instanceof NbtCompound effectNbt) {
-                        StatusEffectInstance effectInstance = StatusEffectInstance.fromNbt(effectNbt);
+                    if (effectElement instanceof NbtCompound effectInstanceNbt) {
+                        StatusEffectInstance effectInstance = StatusEffectInstance.fromNbt(effectInstanceNbt);
                         if (effectInstance != null) {
                             hamster.addStatusEffect(effectInstance);
-                        } else {
-                            AdorableHamsterPets.LOGGER.warn("[HamsterEntity] Failed to deserialize StatusEffectInstance from NBT: {}", effectNbt);
                         }
                     }
                 }
-            } else {
-                AdorableHamsterPets.LOGGER.debug("[HamsterEntity] No active effects NBT found in shoulder data.");
             }
-            // --- End 4. Load Active Status Effects ---
 
+            // --- 5. Load Seeking/Sulking Data ---
+            HamsterShoulderData.SeekingBehaviorData seekingData = data.seekingBehaviorData();
+            hamster.isPrimedToSeekDiamonds = seekingData.isPrimedToSeekDiamonds();
+            hamster.foundOreCooldownEndTick = seekingData.foundOreCooldownEndTick();
+            hamster.currentOreTarget = seekingData.currentOreTarget().orElse(null);
+            hamster.getDataTracker().set(IS_SULKING, seekingData.isSulking());
 
-            // --- 5. Reset Eating State ---
+            // --- 6. Reset Transient States ---
             hamster.isAutoEating = false;
             hamster.autoEatProgressTicks = 0;
-            // --- End 5. Reset Eating State ---
-
-            // --- 6. Load Seeking and Sulking Data from Nested Record ---
-            HamsterShoulderData.SeekingBehaviorData seekingData = data.seekingBehaviorData();
-            if (seekingData != null) { // Should always be non-null due to orElse(SeekingBehaviorData.empty()) in codec
-                hamster.isPrimedToSeekDiamonds = seekingData.isPrimedToSeekDiamonds();
-                hamster.foundOreCooldownEndTick = seekingData.foundOreCooldownEndTick();
-                hamster.currentOreTarget = seekingData.currentOreTarget().orElse(null);
-                hamster.dataTracker.set(IS_SULKING, seekingData.isSulking());
-            } else {
-                // Fallback if seekingData is somehow null, though orElse should prevent this.
-                hamster.isPrimedToSeekDiamonds = false;
-                hamster.foundOreCooldownEndTick = 0L;
-                hamster.currentOreTarget = null;
-                hamster.dataTracker.set(IS_SULKING, false);
-                AdorableHamsterPets.LOGGER.warn("[HamsterEntity] SeekingBehaviorData was null when loading from shoulder data. This should not happen.");
-            }
-            // --- End 6. Load Seeking and Sulking Data ---
-
-        } else {
-            AdorableHamsterPets.LOGGER.error("[HamsterEntity] Failed to create HamsterEntity instance in createFromShoulderData.");
+            // --- End 6. Reset Transient States ---
         }
         return hamster;
     }
 
     /**
-     * Spawns a HamsterEntity from shoulder data near the player, handling position and spawning.
-     * Uses createFromShoulderData to load the entity's state.
-     * @param world The server world.
-     * @param player The player dismounting the hamster.
-     * @param data The shoulder data.
+     * Spawns a HamsterEntity from NBT data near the player, handling position and spawning.
+     * This is typically called when a player dismounts a hamster from their shoulder.
+     *
+     * @param world The server world to spawn the entity in.
+     * @param player The player who is dismounting the hamster.
+     * @param nbt The NbtCompound containing the hamster's data.
+     * @param wasDiamondAlertActive True if the hamster should be primed for diamond seeking.
      */
-    public static void spawnFromShoulderData(ServerWorld world, PlayerEntity player, HamsterShoulderData data, boolean wasDiamondAlertActive) {
-        // --- Create and Configure Hamster ---
-        AdorableHamsterPets.LOGGER.debug("[HamsterEntity] spawnFromShoulderData called for player {} with data: {}, wasDiamondAlertActive: {}", player.getName().getString(), data, wasDiamondAlertActive);
-        HamsterEntity hamster = createFromShoulderData(world, player, data);
-        // --- End Create and Configure Hamster ---
+    public static void spawnFromNbt(ServerWorld world, PlayerEntity player, NbtCompound nbt, boolean wasDiamondAlertActive) {
+        // --- Create and Configure Hamster from NBT ---
+        HamsterEntity hamster = createFromNbt(world, player, nbt);
 
         if (hamster != null) {
             // --- Prime for Diamond Seeking (if applicable) ---
             if (wasDiamondAlertActive && Configs.AHP.enableIndependentDiamondSeeking) {
                 hamster.isPrimedToSeekDiamonds = true;
-                // hamster.primedToSeekTimer was removed, so no need to set it.
-                AdorableHamsterPets.LOGGER.debug("[HamsterEntity {}] Primed for diamond seeking.", hamster.getId());
+                AdorableHamsterPets.LOGGER.debug("[HamsterEntity {}] Primed for diamond seeking upon dismount.", hamster.getId());
             }
-            // --- End Prime for Diamond Seeking ---
 
             // --- Set Position for Normal Dismount ---
             double angle = Math.toRadians(player.getYaw());
             double offsetX = -Math.sin(angle) * 0.7;
             double offsetZ = Math.cos(angle) * 0.7;
             hamster.refreshPositionAndAngles(player.getX() + offsetX, player.getY() + 0.1, player.getZ() + offsetZ, player.getYaw(), player.getPitch());
-            // --- End Position Setting ---
 
             // --- Spawn Entity ---
-            AdorableHamsterPets.LOGGER.debug("[HamsterEntity] Spawning hamster entity from shoulder data...");
-            world.spawnEntityAndPassengers(hamster); // Spawn the fully configured hamster
-            AdorableHamsterPets.LOGGER.debug("[HamsterEntity] Spawned Hamster ID {} from shoulder data near Player {}", hamster.getId(), player.getName().getString());
-            // --- End Spawn Entity ---
+            world.spawnEntityAndPassengers(hamster);
+            AdorableHamsterPets.LOGGER.debug("[HamsterEntity] Spawned Hamster ID {} from NBT data near Player {}.", hamster.getId(), player.getName().getString());
         }
     }
 
     /**
      * Attempts to throw the hamster from the player's shoulder.
-     * Called server-side when the throw packet is received.
+     * This server-side logic is triggered when the throw packet is received. It validates the action,
+     * creates a hamster entity from the NBT data stored on the player, sets its state and velocity,
+     * and spawns it into the world.
+     *
      * @param player The player attempting the throw.
      */
     public static void tryThrowFromShoulder(ServerPlayerEntity player) {
         // --- 1. Initial Setup ---
         World world = player.getWorld();
-        UUID playerUuid = player.getUuid();
-        HamsterShoulderData shoulderData = player.getAttached(ModEntityAttachments.HAMSTER_SHOULDER_DATA);
-        final AhpConfig config = AdorableHamsterPets.CONFIG; // Access static config
-        // --- End 1. Initial Setup ---
+        // Cast player to the mixin interface to access custom methods
+        PlayerEntityMixin playerMixin = (PlayerEntityMixin)(Object)player;
+        NbtCompound shoulderNbt = playerMixin.getHamsterShoulderEntity();
+        final AhpConfig config = AdorableHamsterPets.CONFIG;
 
-        // --- Check Config Toggle ---
+        // --- 2. Check for Shoulder Data & Config ---
+        if (shoulderNbt.isEmpty()) {
+            AdorableHamsterPets.LOGGER.warn("[HamsterEntity] tryThrowFromShoulder: Player {} received throw packet but had no shoulder data.", player.getName().getString());
+            return;
+        }
         if (!config.enableHamsterThrowing) {
-            AdorableHamsterPets.LOGGER.debug("[HamsterEntity] tryThrowFromShoulder: Throwing disabled in config for player {}.", player.getName().getString());
-            // Send message
             player.sendMessage(Text.literal("Hamster throwing is disabled in config."), true);
             return;
         }
-        // --- End Check Config Toggle ---
 
-        if (shoulderData != null) {
-            AdorableHamsterPets.LOGGER.debug("[HamsterEntity] tryThrowFromShoulder: Player {} has shoulder data, proceeding.", player.getName().getString());
+        // --- 3. Create Hamster Instance from NBT ---
+        ServerWorld serverWorld = (ServerWorld) world;
+        HamsterEntity hamster = HamsterEntity.createFromNbt(serverWorld, player, shoulderNbt);
 
-            // --- 2. Create Hamster Instance ---
-            ServerWorld serverWorld = (ServerWorld) world;
-            HamsterEntity hamster = HamsterEntity.createFromShoulderData(serverWorld, player, shoulderData);
-            // --- End 2. Create Hamster Instance ---
-
-            if (hamster != null) {
-                AdorableHamsterPets.LOGGER.debug("[HamsterEntity] tryThrowFromShoulder: Hamster instance created with cooldownEndTick {} and isBaby={}.", hamster.throwCooldownEndTick, hamster.isBaby());
-
-                // --- 3. Check if Hamster is Baby ---
-                if (hamster.isBaby()) {
-                    player.sendMessage(
-                            Text.translatable("message.adorablehamsterpets.baby_throw_refusal")
-                                    .formatted(Formatting.RED),
-                            true // Send to action bar
-                    );
-                    AdorableHamsterPets.LOGGER.debug("[HamsterEntity] Hamster instance ID {} (from player {}) is a baby. Aborting throw.", hamster.getId(), player.getName().getString());
-                    // Re-attach data since the throw is aborted
-                    player.setAttached(ModEntityAttachments.HAMSTER_SHOULDER_DATA, shoulderData);
-                    return; // Stop the throw
-                }
-                // --- End 3. Baby Check ---
-
-                // --- 4. Check Specific Hamster's Cooldown ---
-                long currentTime = world.getTime();
-                // Use Config Value for Throw Cooldown Check
-                if (hamster.throwCooldownEndTick > currentTime) {
-                    long remainingTicks = hamster.throwCooldownEndTick - currentTime;
-                    long totalSecondsRemaining = remainingTicks / 20;
-                    long minutes = totalSecondsRemaining / 60;
-                    long seconds = totalSecondsRemaining % 60;
-                    player.sendMessage(Text.translatable("message.adorablehamsterpets.throw_cooldown", minutes, seconds).formatted(Formatting.RED), true);
-                    player.setAttached(ModEntityAttachments.HAMSTER_SHOULDER_DATA, shoulderData); // Re-attach data
-                    return;
-                }
-                // --- End 4. Hamster Cooldown Check ---
-
-                // --- 5. Proceed with Throw ---
-                player.removeAttached(ModEntityAttachments.HAMSTER_SHOULDER_DATA); // Now remove shoulder data
-
-                // --- 5a. Set Position and Velocity ---
-                hamster.refreshPositionAndAngles(player.getX(), player.getEyeY() - 0.1, player.getZ(), player.getYaw(), player.getPitch());
-                hamster.setThrown(true);
-                hamster.interactionCooldown = 10;
-                hamster.throwTicks = 0;
-
-                // --- Set Cooldown on the Hamster Instance ---
-                hamster.throwCooldownEndTick = currentTime + config.hamsterThrowCooldown.get();
-                AdorableHamsterPets.LOGGER.debug("[HamsterEntity] Set throw cooldown for hamster instance ID {} ending at tick {}.", hamster.getId(), hamster.throwCooldownEndTick);
-                // --- End Set Cooldown ---
-
-                float throwSpeed = 1.5f;
-                Vec3d lookVec = player.getRotationVec(1.0f);
-                Vec3d throwVec = new Vec3d(lookVec.x, lookVec.y + 0.1f, lookVec.z).normalize();
-                hamster.setVelocity(throwVec.multiply(throwSpeed));
-                hamster.velocityDirty = true;
-                // --- End 5a. Set Position and Velocity ---
-
-                // --- 5b. Spawn the entity ---
-                serverWorld.spawnEntity(hamster);
-                AdorableHamsterPets.LOGGER.debug("[HamsterEntity] tryThrowFromShoulder: Spawned thrown Hamster ID {}.", hamster.getId());
-                // --- End 5b. Spawn the entity ---
-
-                // --- 5c. Send S2C Packets ---
-                StartHamsterFlightSoundPayload flightPayload = new StartHamsterFlightSoundPayload(hamster.getId());
-                StartHamsterThrowSoundPayload throwPayload = new StartHamsterThrowSoundPayload(hamster.getId());
-
-                // Send to thrower and nearby players (existing logic)
-                NetworkManager.sendToPlayer(player, flightPayload);
-                NetworkManager.sendToPlayer(player, throwPayload);
-                double radius = 64.0;
-                Vec3d hamsterPos = hamster.getPos();
-                Box searchBox = new Box(hamsterPos.subtract(radius, radius, radius), hamsterPos.add(radius, radius, radius));
-                List<ServerPlayerEntity> nearbyPlayers = serverWorld.getPlayers(p -> p != player && searchBox.contains(p.getPos()));
-                for (ServerPlayerEntity nearbyPlayer : nearbyPlayers) {
-                    NetworkManager.sendToPlayers(nearbyPlayers, flightPayload);
-                    NetworkManager.sendToPlayers(nearbyPlayers, throwPayload);
-                }
-                // --- End 5c. Send S2C Packets ---
-
-                // Receive Throw Hamster Advancement
-                ModCriteria.HAMSTER_THROWN.trigger(player);
-                // --- End 5. Proceed with Throw ---
-
-            } else {
-                AdorableHamsterPets.LOGGER.error("[HamsterEntity] tryThrowFromShoulder: Failed to create HamsterEntity instance. Re-attaching data (attempt).");
-                // Ensure data is re-attached if hamster creation fails
-                player.setAttached(ModEntityAttachments.HAMSTER_SHOULDER_DATA, shoulderData);
+        if (hamster != null) {
+            // --- 4. Validate Throw Conditions (Baby, Cooldown) ---
+            if (hamster.isBaby()) {
+                player.sendMessage(Text.translatable("message.adorablehamsterpets.baby_throw_refusal").formatted(Formatting.RED), true);
+                // No need to re-attach data, as it was never removed.
+                return;
             }
+
+            long currentTime = world.getTime();
+            if (hamster.throwCooldownEndTick > currentTime) {
+                long remainingTicks = hamster.throwCooldownEndTick - currentTime;
+                long totalSecondsRemaining = remainingTicks / 20;
+                long minutes = totalSecondsRemaining / 60;
+                long seconds = totalSecondsRemaining % 60;
+                player.sendMessage(Text.translatable("message.adorablehamsterpets.throw_cooldown", minutes, seconds).formatted(Formatting.RED), true);
+                return;
+            }
+
+            // --- 5. Proceed with Throw ---
+            playerMixin.setHamsterShoulderEntity(new NbtCompound()); // Clear the shoulder data
+
+            // --- 5a. Set Position and Velocity ---
+            hamster.refreshPositionAndAngles(player.getX(), player.getEyeY() - 0.1, player.getZ(), player.getYaw(), player.getPitch());
+            hamster.setThrown(true);
+            hamster.interactionCooldown = 10;
+            hamster.throwTicks = 0;
+            hamster.throwCooldownEndTick = currentTime + config.hamsterThrowCooldown.get();
+
+            float throwSpeed = 1.5f;
+            Vec3d lookVec = player.getRotationVec(1.0f);
+            Vec3d throwVec = new Vec3d(lookVec.x, lookVec.y + 0.1f, lookVec.z).normalize();
+            hamster.setVelocity(throwVec.multiply(throwSpeed));
+            hamster.velocityDirty = true;
+
+            // --- 5b. Spawn Entity and Send Packets ---
+            serverWorld.spawnEntity(hamster);
+            AdorableHamsterPets.LOGGER.debug("[HamsterEntity] tryThrowFromShoulder: Spawned thrown Hamster ID {}.", hamster.getId());
+
+            StartHamsterFlightSoundPayload flightPayload = new StartHamsterFlightSoundPayload(hamster.getId());
+            StartHamsterThrowSoundPayload throwPayload = new StartHamsterThrowSoundPayload(hamster.getId());
+
+            NetworkManager.sendToPlayer(player, flightPayload);
+            NetworkManager.sendToPlayer(player, throwPayload);
+            double radius = 64.0;
+            Vec3d hamsterPos = hamster.getPos();
+            Box searchBox = new Box(hamsterPos.subtract(radius, radius, radius), hamsterPos.add(radius, radius, radius));
+            List<ServerPlayerEntity> nearbyPlayers = serverWorld.getPlayers(p -> p != player && searchBox.contains(p.getPos()));
+            NetworkManager.sendToPlayers(nearbyPlayers, flightPayload);
+            NetworkManager.sendToPlayers(nearbyPlayers, throwPayload);
+
+            ModCriteria.HAMSTER_THROWN.trigger(player);
         } else {
-            AdorableHamsterPets.LOGGER.warn("[HamsterEntity] tryThrowFromShoulder: Player {} received throw packet but had no shoulder data.", player.getName().getString());
+            AdorableHamsterPets.LOGGER.error("[HamsterEntity] tryThrowFromShoulder: Failed to create HamsterEntity instance from NBT. Clearing shoulder data as a precaution.");
+            playerMixin.setHamsterShoulderEntity(new NbtCompound()); // Clear potentially corrupted data
         }
     }
 
@@ -691,8 +628,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     @Unique private int sulkEntityEffectTicks = 0;
     @Unique private int sulkShockedSoundDelayTicks = 0;
     @Unique private int diamondSparkleSoundDelayTicks = 0;
-    @Nullable private HamsterCleaningSoundInstance cleaningSoundInstance;
-
 
 
     // --- Inventory ---
@@ -1006,52 +941,41 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
 
     // --- Shoulder Riding Data Handling ---
+    /**
+     * Captures the current state of this hamster into a {@link HamsterShoulderData} record.
+     * This record can then be serialized to NBT and stored on the player's DataTracker.
+     *
+     * @return A {@link HamsterShoulderData} record containing the hamster's current data.
+     */
     public HamsterShoulderData saveToShoulderData() {
-        // --- 1. Save Shoulder Data ---
-        AdorableHamsterPets.LOGGER.trace("[HamsterEntity {}] saveToShoulderData called", this.getId());
+        // --- 1. Update Trackers and Prepare NBT ---
         this.updateCheekTrackers();
-
-
-        // --- 1a. Save Inventory NBT ---
         NbtCompound inventoryNbt = new NbtCompound();
-        RegistryWrapper.WrapperLookup registries = null;
         if (this.getWorld() instanceof ServerWorld serverWorld) {
-            registries = serverWorld.getRegistryManager();
-            Inventories.writeNbt(inventoryNbt, this.items, registries);
-            AdorableHamsterPets.LOGGER.trace("[HamsterEntity {}] Saved inventory NBT: {}", this.getId(), inventoryNbt);
-        } else {
-            AdorableHamsterPets.LOGGER.warn("[HamsterEntity {}] Cannot save inventory NBT on client side or in non-server world!", this.getId());
+            Inventories.writeNbt(inventoryNbt, this.items, serverWorld.getRegistryManager());
         }
-        // --- End 1a. Save Inventory NBT ---
 
-
-        // --- 1b. Save Active Status Effects ---
+        // --- 2. Save Active Status Effects to a Compound Wrapper ---
+        NbtCompound effectsNbt = new NbtCompound();
         NbtList effectsList = new NbtList();
         for (StatusEffectInstance effectInstance : this.getStatusEffects()) {
-            NbtElement effectNbt = effectInstance.writeNbt();
-            effectsList.add(effectNbt);
+            effectsList.add(effectInstance.writeNbt());
         }
-        AdorableHamsterPets.LOGGER.trace("[HamsterEntity {}] Saved {} active effects to NBT list.", this.getId(), effectsList.size());
-        // --- End 1b. Save Active Status Effects ---
+        effectsNbt.put("active_effects", effectsList); // Store the list inside a compound
 
-
-        // --- 1c. Get Custom Name ---
+        // --- 3. Get Custom Name ---
         Optional<String> nameOptional = Optional.ofNullable(this.getCustomName()).map(Text::getString);
-        AdorableHamsterPets.LOGGER.trace("[HamsterEntity {}] Custom name to save: {}", this.getId(), nameOptional.orElse("None"));
-        // --- End 1c. Get Custom Name ---
 
-
-        // --- 1d. Create SeekingBehaviorData instance ---
+        // --- 4. Create SeekingBehaviorData instance ---
         HamsterShoulderData.SeekingBehaviorData seekingData = new HamsterShoulderData.SeekingBehaviorData(
                 this.isPrimedToSeekDiamonds,
                 this.foundOreCooldownEndTick,
                 Optional.ofNullable(this.currentOreTarget),
-                this.dataTracker.get(IS_SULKING)
+                this.getDataTracker().get(IS_SULKING)
         );
-        // --- End 1d. ---
 
-        // --- 1e. Create main HamsterShoulderData record ---
-        HamsterShoulderData data = new HamsterShoulderData(
+        // --- 5. Create and Return the Main Data Record ---
+        return new HamsterShoulderData(
                 this.getVariant(),
                 this.getHealth(),
                 inventoryNbt,
@@ -1060,18 +984,14 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 this.getBreedingAge(),
                 this.throwCooldownEndTick,
                 this.steamedBeansCooldownEndTick,
-                effectsList,
+                effectsNbt, // Pass the compound wrapper
                 this.autoEatCooldownTicks,
                 nameOptional,
-                this.dataTracker.get(PINK_PETAL_TYPE),
-                this.dataTracker.get(CHEEK_POUCH_UNLOCKED),
-                this.dataTracker.get(ANIMATION_PERSONALITY_ID),
-                seekingData // Pass the created seekingData instance
+                this.getDataTracker().get(PINK_PETAL_TYPE),
+                this.getDataTracker().get(CHEEK_POUCH_UNLOCKED),
+                this.getDataTracker().get(ANIMATION_PERSONALITY_ID),
+                seekingData
         );
-        AdorableHamsterPets.LOGGER.trace("[HamsterEntity {}] Returning shoulder data: {}", this.getId(), data);
-        return data;
-        // --- End 1e. ---
-        // --- End 1. Save Shoulder Data ---
     }
 
     // --- Entity Behavior ---
@@ -1373,22 +1293,26 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         if (this.isOwner(player)) {
             AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Player is owner. Processing owner interactions.", this.getId(), world.getTime());
             boolean isSneaking = player.isSneaking();
+            PlayerEntityMixin playerMixin = (PlayerEntityMixin)(Object)player; // Cast to mixin
 
             // --- 5a. Custom Owner Interactions ---
             // --- Shoulder Mounting with Cheese ---
             if (!isSneaking && stack.isOf(ModItems.CHEESE.get())) {
                 if (!world.isClient) {
-                    if (player.getAttached(ModEntityAttachments.HAMSTER_SHOULDER_DATA) == null) {
+                    // Check if shoulder is empty by checking the NBT compound from our DataTracker
+                    if (playerMixin.getHamsterShoulderEntity().isEmpty()) {
 
                         // --- Reset Sleep Sequence if Dozing ---
                         if (this.getDozingPhase() != DozingPhase.NONE) {
                             resetSleepSequence("Player mounted hamster with cheese.");
                         }
 
+                        // Create the data record and serialize it to NBT
                         HamsterShoulderData data = this.saveToShoulderData();
-                        player.setAttached(ModEntityAttachments.HAMSTER_SHOULDER_DATA, data);
+                        NbtCompound hamsterNbt = data.toNbt();
+                        // Set the player's DataTracker with the new NBT
+                        playerMixin.setHamsterShoulderEntity(hamsterNbt);
 
-                        // Store hamster's current position before discarding for cheese sound
                         BlockPos hamsterPosForCheeseSound = this.getBlockPos();
                         this.discard(); // Remove hamster from world
 
@@ -1397,16 +1321,13 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         }
                         player.sendMessage(Text.literal("Your hamster scurries onto your shoulder!"), true);
 
-                        // Play cheese use sound at the hamster's last known position
                         world.playSound(null, hamsterPosForCheeseSound, ModSounds.CHEESE_USE_SOUND.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 
-                        // Play hamster mount sound at the player's position (near their ear)
                         SoundEvent mountSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_SHOULDER_MOUNT_SOUNDS, this.random);
                         if (mountSound != null) {
                             world.playSound(null, player.getBlockPos(), mountSound, SoundCategory.PLAYERS, 1.0f, this.getSoundPitch());
                         }
 
-                        // Spawn cheese particles at the hamster's last known position
                         ((ServerWorld)world).spawnParticles(new ItemStackParticleEffect(ParticleTypes.ITEM, new ItemStack(ModItems.CHEESE.get())),
                                 hamsterPosForCheeseSound.getX() + 0.5, hamsterPosForCheeseSound.getY() + 0.5, hamsterPosForCheeseSound.getZ() + 0.5,
                                 8, 0.25D, 0.25D, 0.25D, 0.05);
@@ -1579,8 +1500,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         }
     }
 
-
-    // --- Get Variant Enum ---
+    // --- Hamster Breeding and Baby Variant Logic ---
     /**
      * Gets the HamsterVariant enum constant corresponding to this entity's current variant ID.
      * @return The HamsterVariant enum.
@@ -1589,15 +1509,33 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         return HamsterVariant.byId(this.getVariant());
     }
 
-    // --- Hamster Breeding and Baby Variant Logic ---
+    /**
+     * Creates a baby hamster, inheriting traits from its parents.
+     * <p>
+     * The baby's base color is randomly chosen from one of its parents. The overlay (white markings)
+     * follows specific inheritance rules to promote diversity:
+     * <ul>
+     *     <li>If both parents have an overlay, the baby is guaranteed to have one. The system first
+     *         tries to assign an overlay pattern that is different from both parents. If no different
+     *         overlay is available for the baby's inherited base color, it will pick any available
+     *         overlay for that color, potentially matching a parent's pattern.</li>
+     *     <li>If only one or neither parent has an overlay, the baby has a chance to inherit any
+     *         eligible overlay for its base color or to have no overlay at all (just the base color).</li>
+     *     <li>The {@code WHITE} base color is a special case and never receives an overlay.</li>
+     * </ul>
+     * The baby inherits the owner of the parent instance that initiated the breeding.
+     *
+     * @param world The server world where the child will be created.
+     * @param mate The other parent entity.
+     * @return A new {@code HamsterEntity} instance representing the baby, or {@code null} if creation fails.
+     */
     @Nullable
     @Override
     public PassiveEntity createChild(ServerWorld world, PassiveEntity mate) {
-        HamsterEntity baby = ModEntities.HAMSTER.create(world);
+        HamsterEntity baby = ModEntities.HAMSTER.get().create(world);
         if (baby == null) return null;
 
-        if (!(mate instanceof HamsterEntity mother)) { // mother is the 'other' parent
-            // Fallback if mate is not HamsterEntity (shouldn't happen with vanilla breeding)
+        if (!(mate instanceof HamsterEntity mother)) {
             int randomVariantId = this.random.nextInt(HamsterVariant.values().length);
             baby.setVariant(randomVariantId);
             baby.setBaby(true);
@@ -1605,85 +1543,62 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             return baby;
         }
 
-        // --- 1. Determine Baby's Base Color ---
-        HamsterEntity father = this; // 'this' is one parent
-        // Randomly select which parent provides the base color for the baby
+        HamsterEntity father = this;
         HamsterVariant parentProvidingBaseColor = this.random.nextBoolean() ? father.getVariantEnum() : mother.getVariantEnum();
         HamsterVariant babyBaseColorEnum = parentProvidingBaseColor.getBaseVariant();
 
-        // --- 2. Identify Parent Overlays ---
         @Nullable String fatherOverlayName = father.getVariantEnum().getOverlayTextureName();
         @Nullable String motherOverlayName = mother.getVariantEnum().getOverlayTextureName();
 
-        // --- 3. Get All Potential Variants (base + overlays) for Baby's Base Color ---
         List<HamsterVariant> allVariantsForBabyBase = HamsterVariant.getVariantsForBase(babyBaseColorEnum);
 
-        // --- 4. Build List of Eligible Overlay Names (including null for "no overlay") ---
-        // These are overlays NOT used by either parent.
+        // Build a list of overlay names that are NOT used by either parent.
         List<@Nullable String> eligibleOverlayNames = new ArrayList<>();
         for (HamsterVariant variant : allVariantsForBabyBase) {
-            @Nullable String candidateOverlay = variant.getOverlayTextureName(); // This can be null for the base variant itself
-
+            @Nullable String candidateOverlay = variant.getOverlayTextureName();
             boolean matchesFather = fatherOverlayName != null && fatherOverlayName.equals(candidateOverlay);
             boolean matchesMother = motherOverlayName != null && motherOverlayName.equals(candidateOverlay);
-
             if (!matchesFather && !matchesMother) {
                 eligibleOverlayNames.add(candidateOverlay);
             }
         }
 
-        // --- 5. Apply Conditional Overlay Rule ---
+        List<@Nullable String> finalSelectableOverlayNames = new ArrayList<>();
         boolean fatherHasOverlay = fatherOverlayName != null;
         boolean motherHasOverlay = motherOverlayName != null;
 
-        List<@Nullable String> finalSelectableOverlayNames = new ArrayList<>();
-
         if (fatherHasOverlay && motherHasOverlay) {
-            // Baby MUST have an overlay.
-            // Prioritize overlays from eligibleOverlayNames (those different from parents).
+            // Baby MUST have an overlay. Prioritize overlays different from parents.
             for (@Nullable String overlayName : eligibleOverlayNames) {
-                if (overlayName != null) { // Only add actual overlays, not 'null' (no overlay)
+                if (overlayName != null) {
                     finalSelectableOverlayNames.add(overlayName);
                 }
             }
-
-            // If no *different* overlay is available (finalSelectableOverlayNames is empty),
-            // it means eligibleOverlayNames only contained 'null' (no overlay).
-            // To satisfy "baby must have an overlay", we must pick an overlay,
-            // even if it means matching a parent's overlay type (relaxing rule 1 for this conflict).
-            // So, repopulate with ALL actual overlays for that base color.
-            if (finalSelectableOverlayNames.isEmpty() && babyBaseColorEnum != HamsterVariant.WHITE) { // WHITE has no overlays
-                AdorableHamsterPets.LOGGER.debug("Baby of base {} (parents {} & {} had overlays) must have an overlay, but no *different* overlay was available. Picking any overlay for the base.",
-                        babyBaseColorEnum, father.getVariantEnum(), mother.getVariantEnum());
+            // If no different overlay is available, relax the rule and allow any overlay for that base color.
+            if (finalSelectableOverlayNames.isEmpty() && babyBaseColorEnum != HamsterVariant.WHITE) {
                 for (HamsterVariant variant : allVariantsForBabyBase) {
-                    if (variant.getOverlayTextureName() != null) { // Ensure it's an overlay variant
+                    if (variant.getOverlayTextureName() != null) {
                         finalSelectableOverlayNames.add(variant.getOverlayTextureName());
                     }
                 }
             }
-            // If still empty (only for WHITE, which has no overlays), it will be handled by the fallback in step 6.
         } else {
-            // If one or neither parent has an overlay, baby CAN have no overlay.
-            // eligibleOverlayNames already correctly reflects this (includes null for base variant if eligible, and different overlays).
+            // If one or neither parent has an overlay, the baby can have no overlay.
             finalSelectableOverlayNames.addAll(eligibleOverlayNames);
         }
 
-        // --- 6. Select Final Baby Overlay and Construct Variant ---
         HamsterVariant babyFinalVariant;
         if (!finalSelectableOverlayNames.isEmpty()) {
             @Nullable String chosenOverlayName = finalSelectableOverlayNames.get(this.random.nextInt(finalSelectableOverlayNames.size()));
             babyFinalVariant = HamsterVariant.getVariantByBaseAndOverlay(babyBaseColorEnum, chosenOverlayName);
         } else {
-            // Extreme fallback: Should only happen if allVariantsForBabyBase was empty or for WHITE if logic above failed.
-            AdorableHamsterPets.LOGGER.warn("Baby variant selection fallback: No selectable overlay names for base {}. Parents: {} (overlay: {}), {} (overlay: {}). Defaulting to base color.",
-                    babyBaseColorEnum, father.getVariantEnum(), fatherOverlayName, mother.getVariantEnum(), motherOverlayName);
-            babyFinalVariant = babyBaseColorEnum; // Default to just the base color
+            // Fallback case
+            babyFinalVariant = babyBaseColorEnum;
         }
 
         baby.setVariant(babyFinalVariant.getId());
 
-        // --- 7. Standard Baby Setup ---
-        UUID ownerUUID = father.getOwnerUuid(); // Inherit owner from the 'this' parent (father)
+        UUID ownerUUID = father.getOwnerUuid();
         if (ownerUUID != null) {
             baby.setOwnerUuid(ownerUUID);
             baby.setTamed(true, true);
@@ -1692,7 +1607,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
         return baby;
     }
-// --- End {{HamsterEntity createChild Method}} ---
 
     @Override
     public boolean isBreedingItem(ItemStack stack) { return isIsFood(stack); } // Use helper
@@ -1968,9 +1882,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
         // --- Client-Side Render State Tick ---
         if (this.getWorld().isClient()) {
-            HamsterRenderState state = this.getAttachedOrCreate(ModEntityAttachments.HAMSTER_RENDER_STATE, HamsterRenderState::new);
-            state.tickClient();
-            this.tickCleaningSound();
+            HamsterSoundManager.tick(this);
         }
 
         // Call super.tick() *after* processing thrown state and timers
@@ -2428,7 +2340,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 .triggerableAnim("anim_hamster_wild_settle_sleep", WILD_SETTLE_SLEEP_ANIM)
                 .triggerableAnim("anim_hamster_sulk", SULK_ANIM)
                 .setParticleKeyframeHandler(event -> {
-                    // --- Logic for Handling Attack Particles ---
+
+                    // --- Handle Attack Particles ---
                     if ("attack_poof".equals(event.getKeyframeData().getEffect())) {
                         if (this.getWorld().isClient()) {
                             var renderer = net.minecraft.client.MinecraftClient.getInstance().getEntityRenderDispatcher().getRenderer(this);
@@ -2437,7 +2350,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                             }
                         }
                     }
-                    // --- Logic for Handling Sniffing Particles ---
+                    // --- Handle Sniffing Particles ---
                     if ("seeking_dust".equals(event.getKeyframeData().getEffect())) {
                         if (this.getWorld().isClient()) {
                             var renderer = MinecraftClient.getInstance().getEntityRenderDispatcher().getRenderer(this);
@@ -2447,43 +2360,38 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         }
                     }
                 })
-                // --- Logic for Handling Bounce and Step Sounds ---
+                // --- Handle Step and Begging Bounce Sounds ---
                 .setSoundKeyframeHandler(event -> {
-                    if (!this.getWorld().isClient()) return; // Should always be client, but good practice
+                    if (!this.getWorld().isClient()) return;
                     String soundEffect = event.getKeyframeData().getSound();
-                    AdorableHamsterPets.LOGGER.debug("[SoundKeyframe] Hamster ID: {}, Effect: '{}'", this.getId(), soundEffect);
-                    // --- Handle Step Sounds ---
+                    // Handle Step Sounds
                     if ("hamster_step_sound".equals(soundEffect)) {
-                        HamsterRenderState state = this.getAttachedOrCreate(ModEntityAttachments.HAMSTER_RENDER_STATE, HamsterRenderState::new);
-                        if (!state.isSoundDelayed()) {
-                            BlockPos pos = this.getBlockPos();
-                            BlockState blockState = this.getWorld().getBlockState(pos.down());
+                        BlockPos pos = this.getBlockPos(); // If the block below the hamster is air, check one block further
+                        BlockState blockState = this.getWorld().getBlockState(pos.down());
 
-                            if (blockState.isAir()) { // If the block below the hamster is air, check one block further
-                                blockState = this.getWorld().getBlockState(pos.down(2));
-                            }
-                            if (!blockState.isAir()) {
-                                BlockSoundGroup group = blockState.getSoundGroup();
-                                SoundEvent stepSound = group.getStepSound();
+                        if (blockState.isAir()) {
+                            blockState = this.getWorld().getBlockState(pos.down(2));
+                        }
+                        if (!blockState.isAir()) {
+                            BlockSoundGroup group = blockState.getSoundGroup();
+                            SoundEvent stepSound = group.getStepSound();
 
-                                // Determine volume based on block type
-                                float volume = blockState.isOf(Blocks.GRAVEL)
-                                        ? (DEFAULT_FOOTSTEP_VOLUME * GRAVEL_VOLUME_MODIFIER)
-                                        : DEFAULT_FOOTSTEP_VOLUME;
-                                MinecraftClient.getInstance().getSoundManager().play(
-                                        new PositionedSoundInstance(
-                                                stepSound,              // The dynamic sound from the block
-                                                SoundCategory.NEUTRAL,
-                                                volume,                   // Use the calculated volume
-                                                group.getPitch() * 1.5F,  // Pitch from the block's sound group
-                                                this.random,
-                                                this.getX(), this.getY(), this.getZ()
-                                        )
-                                );
-                            }
+                            float volume = blockState.isOf(Blocks.GRAVEL)
+                                    ? (DEFAULT_FOOTSTEP_VOLUME * GRAVEL_VOLUME_MODIFIER)
+                                    : DEFAULT_FOOTSTEP_VOLUME;
+                            MinecraftClient.getInstance().getSoundManager().play(
+                                    new PositionedSoundInstance(
+                                            stepSound,
+                                            SoundCategory.NEUTRAL,
+                                            volume,
+                                            group.getPitch() * 1.5F,
+                                            this.random,
+                                            this.getX(), this.getY(), this.getZ()
+                                    )
+                            );
                         }
                     }
-                    // --- Handle Begging Bounce Sounds ---
+                    // Handle Begging Bounce Sounds
                     String effect = event.getKeyframeData().getSound();
                     AdorableHamsterPets.LOGGER.debug("[SoundKeyframe] Hamster ID: {}, Effect: '{}'", this.getId(), effect);
 
@@ -2708,18 +2616,13 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         if (this.getWorld().isClient()) {
             return; // Server-side only
         }
-        // Get the render state attachment
-        HamsterRenderState renderState = this.getAttached(ModEntityAttachments.HAMSTER_RENDER_STATE);
-        // Only play the fallback sound if the hamster is NOT being rendered by any player
-        if (renderState == null || !renderState.isBeingRenderedByAnyPlayer()) {
+        // Query the tracker to see if any player is rendering this hamster
+        if (!HamsterRenderTracker.isBeingRendered(this.getId())) {
             try {
                 BlockSoundGroup group = state.getSoundGroup();
-
-                // Determine volume based on block type
                 float volume = state.isOf(Blocks.GRAVEL)
                         ? (DEFAULT_FOOTSTEP_VOLUME * GRAVEL_VOLUME_MODIFIER)
                         : DEFAULT_FOOTSTEP_VOLUME;
-
                 this.playSound(group.getStepSound(), volume, group.getPitch() * 1.5F);
             } catch (Exception ex) {
                 AdorableHamsterPets.LOGGER.warn("Error playing fallback step sound", ex);
@@ -3041,26 +2944,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     }
 
     /**
-     * Manages the lifecycle of the cleaning sound on the client.
-     * If the hamster is cleaning and no sound is playing, it starts a new
-     * {@link HamsterCleaningSoundInstance}. This ensures the sound loops
-     * correctly for the duration of the cleaning animation.
-     */
-    private void tickCleaningSound() {
-        if (!this.getWorld().isClient()) return;
-
-        // Check the synchronized DataTracker to decide if a sound should be playing
-        boolean shouldBeCleaning = this.dataTracker.get(IS_CLEANING);
-        boolean isSoundPlaying = this.cleaningSoundInstance != null && !this.cleaningSoundInstance.isDone();
-
-        // If it should be cleaning but no sound is playing, start one.
-        if (shouldBeCleaning && !isSoundPlaying) {
-            this.cleaningSoundInstance = new HamsterCleaningSoundInstance(this);
-            MinecraftClient.getInstance().getSoundManager().play(this.cleaningSoundInstance);
-        }
-    }
-
-    /**
      * Writes the necessary extra data to the network buffer when the extended menu is opened.
      * For the hamster inventory, this is the entity's integer ID, which the client
      * will use to find the correct hamster entity in its world.
@@ -3071,5 +2954,20 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     public void saveExtraData(PacketByteBuf buf) {
         // Write the entity's ID to the buffer. This is the "extra data" the client needs.
         buf.writeInt(this.getId());
+    }
+
+    @Override
+    public void onRemoved() {
+        // --- 1. Call Superclass Method ---
+        super.onRemoved();
+
+        // --- 2. Clean Up Trackers ---
+        if (this.getWorld().isClient()) {
+            // On the client, notify the sound manager to stop any associated sounds.
+            HamsterSoundManager.onHamsterRemoved(this.getId());
+        } else {
+            // On the server, remove from the render tracker to prevent memory leaks.
+            net.dawson.adorablehamsterpets.util.HamsterRenderTracker.onEntityUnload(this.getId());
+        }
     }
 }

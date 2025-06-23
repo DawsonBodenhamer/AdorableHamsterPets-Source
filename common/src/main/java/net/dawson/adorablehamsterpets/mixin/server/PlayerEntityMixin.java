@@ -2,17 +2,20 @@ package net.dawson.adorablehamsterpets.mixin.server;
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
-import net.dawson.adorablehamsterpets.attachment.HamsterShoulderData;
-import net.dawson.adorablehamsterpets.attachment.ModEntityAttachments;
 import net.dawson.adorablehamsterpets.config.AhpConfig;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -36,17 +39,18 @@ import java.util.List;
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity {
 
+    // --- 1. DataTracker Definition ---
+    @Unique
+    private static final TrackedData<NbtCompound> HAMSTER_SHOULDER_ENTITY = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
+
     // --- Constants and Static Utilities ---
     @Unique
-    private static final int CHECK_INTERVAL_TICKS = 20; // How often to check for diamonds/creepers
+    private static final int CHECK_INTERVAL_TICKS = 20;
     @Unique
     private static final List<String> DISMOUNT_MESSAGE_KEYS = Arrays.asList(
-            "message.adorablehamsterpets.dismount.1",
-            "message.adorablehamsterpets.dismount.2",
-            "message.adorablehamsterpets.dismount.3",
-            "message.adorablehamsterpets.dismount.4",
-            "message.adorablehamsterpets.dismount.5",
-            "message.adorablehamsterpets.dismount.6"
+            "message.adorablehamsterpets.dismount.1", "message.adorablehamsterpets.dismount.2",
+            "message.adorablehamsterpets.dismount.3", "message.adorablehamsterpets.dismount.4",
+            "message.adorablehamsterpets.dismount.5", "message.adorablehamsterpets.dismount.6"
     );
 
     // --- Fields ---
@@ -63,23 +67,72 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     @Unique
     private boolean adorablehamsterpets$isDiamondAlertConditionMet = false;
 
-    /**
-     * Constructor for the mixin.
-     * @param entityType The entity type.
-     * @param world The world.
-     */
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
 
+    // --- 2. DataTracker Registration ---
+    @Inject(method = "initDataTracker", at = @At("TAIL"))
+    private void adorablehamsterpets$initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
+        builder.add(HAMSTER_SHOULDER_ENTITY, new NbtCompound());
+    }
+
+    // --- 3. NBT Read/Write ---
+    @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
+    private void adorablehamsterpets$writeNbt(NbtCompound nbt, CallbackInfo ci) {
+        if (!this.getHamsterShoulderEntity().isEmpty()) {
+            nbt.put("ShoulderHamster", this.getHamsterShoulderEntity());
+        }
+    }
+
+    @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
+    private void adorablehamsterpets$readNbt(NbtCompound nbt, CallbackInfo ci) {
+        if (nbt.contains("ShoulderHamster", 10)) {
+            this.setHamsterShoulderEntity(nbt.getCompound("ShoulderHamster"));
+        }
+    }
+
+    // --- Player Removal Cleanup ---
     /**
-     * Injects logic into the player's tick method to handle shoulder hamster features.
-     * This includes dismounting, diamond detection, and creeper detection.
-     * @param ci CallbackInfo for the injection.
+     * Injects into the entity's remove method.
+     * When a player is removed from the world (e.g., disconnects), this ensures they are
+     * cleaned up from the server-side render tracker to prevent memory leaks.
      */
+    @Inject(method = "remove(Lnet/minecraft/entity/Entity$RemovalReason;)V", at = @At("HEAD"))
+    private void adorablehamsterpets$onRemove(Entity.RemovalReason reason, CallbackInfo ci) {
+        if (!this.getWorld().isClient()) {
+            net.dawson.adorablehamsterpets.util.HamsterRenderTracker.onPlayerDisconnect(this.getUuid());
+        }
+    }
+
+    // --- 4. Public Accessors for the DataTracker ---
+
+    /**
+     * Retrieves the NBT data for the hamster currently on the player's shoulder.
+     * This data is stored in a custom {@link TrackedData} field and synced from server to client.
+     *
+     * @return An {@link NbtCompound} containing the shoulder hamster's data. Returns an empty compound if no hamster is on the shoulder.
+     */
+    @Unique
+    public NbtCompound getHamsterShoulderEntity() {
+        return this.getDataTracker().get(HAMSTER_SHOULDER_ENTITY);
+    }
+
+    /**
+     * Sets the NBT data for the hamster on the player's shoulder.
+     * This updates the custom {@link TrackedData} field, which is then synced to clients.
+     *
+     * @param nbt The {@link NbtCompound} to set. Use an empty compound to remove the shoulder hamster.
+     */
+    @Unique
+    public void setHamsterShoulderEntity(NbtCompound nbt) {
+        this.getDataTracker().set(HAMSTER_SHOULDER_ENTITY, nbt);
+    }
+
+    // --- 5. Tick Logic ---
     @Inject(method = "tick", at = @At("TAIL"))
     private void adorablehamsterpets$onTick(CallbackInfo ci) {
-        // --- Initial Setup and Server-Side Check ---
+        // --- 1. Initial Setup and Server-Side Check ---
         PlayerEntity self = (PlayerEntity) (Object) this;
         World world = self.getWorld();
         if (world.isClient) {
@@ -87,74 +140,63 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         }
         Random random = world.getRandom();
         final AhpConfig config = AdorableHamsterPets.CONFIG;
-        // --- End Initial Setup ---
+        // --- End 1. Initial Setup and Server-Side Check ---
 
-        // --- Cooldown Decrement ---
+        // --- 2. Cooldown Decrement ---
         if (adorablehamsterpets$diamondSoundCooldownTicks > 0) adorablehamsterpets$diamondSoundCooldownTicks--;
         if (adorablehamsterpets$creeperSoundCooldownTicks > 0) adorablehamsterpets$creeperSoundCooldownTicks--;
-        // --- End Cooldown Decrement ---
+        // --- End 2. Cooldown Decrement ---
 
-        HamsterShoulderData shoulderData = self.getAttached(ModEntityAttachments.HAMSTER_SHOULDER_DATA);
-        if (shoulderData != null) {
-            // --- Handle Player Sneaking for Dismount ---
+        NbtCompound shoulderNbt = this.getHamsterShoulderEntity();
+        if (!shoulderNbt.isEmpty()) {
+            // --- 3. Handle Player Sneaking for Dismount ---
             if (self.isSneaking()) {
-                AdorableHamsterPets.LOGGER.debug("[PlayerTickMixin] Player {} is sneaking. Dismounting hamster.", self.getName().getString());
-                // Pass the flag to spawnFromShoulderData or handle priming here
-                HamsterEntity.spawnFromShoulderData((ServerWorld) world, self, shoulderData, this.adorablehamsterpets$isDiamondAlertConditionMet);
-                this.adorablehamsterpets$isDiamondAlertConditionMet = false; // Reset player's flag after use
+                HamsterEntity.spawnFromNbt((ServerWorld) world, self, shoulderNbt, this.adorablehamsterpets$isDiamondAlertConditionMet);
+                this.adorablehamsterpets$isDiamondAlertConditionMet = false;
 
-                self.removeAttached(ModEntityAttachments.HAMSTER_SHOULDER_DATA);
+                this.setHamsterShoulderEntity(new NbtCompound()); // Clear the data
 
-                // Play dismount sound at player's location
                 world.playSound(null, self.getBlockPos(), ModSounds.HAMSTER_DISMOUNT.get(), SoundCategory.PLAYERS, 0.7f, 1.0f + random.nextFloat() * 0.2f);
 
-                // Send dismount message if enabled
                 if (config.enableShoulderDismountMessages && !DISMOUNT_MESSAGE_KEYS.isEmpty()) {
                     String chosenKey;
                     if (DISMOUNT_MESSAGE_KEYS.size() == 1) {
                         chosenKey = DISMOUNT_MESSAGE_KEYS.get(0);
                     } else {
                         List<String> availableKeys = new ArrayList<>(DISMOUNT_MESSAGE_KEYS);
-                        availableKeys.remove(this.adorablehamsterpets$lastDismountMessageKey); // Avoid immediate repeat
+                        availableKeys.remove(this.adorablehamsterpets$lastDismountMessageKey);
                         chosenKey = availableKeys.isEmpty() ? this.adorablehamsterpets$lastDismountMessageKey : availableKeys.get(random.nextInt(availableKeys.size()));
                     }
                     self.sendMessage(Text.translatable(chosenKey), true);
                     this.adorablehamsterpets$lastDismountMessageKey = chosenKey;
                 }
-
-                // Reset detection timers and cooldowns as hamster is no longer on shoulder
-                adorablehamsterpets$diamondCheckTimer = 0;
-                adorablehamsterpets$creeperCheckTimer = 0;
-                adorablehamsterpets$diamondSoundCooldownTicks = 0;
-                adorablehamsterpets$creeperSoundCooldownTicks = 0;
-                return; // Interaction handled, no further shoulder checks needed this tick
+                return;
             }
-            // --- End Handle Player Sneaking for Dismount ---
+            // --- End 3. Handle Player Sneaking for Dismount ---
 
-            // --- Shoulder Diamond Detection ---
+            // --- 4. Shoulder Diamond Detection ---
             if (config.enableShoulderDiamondDetection) {
                 adorablehamsterpets$diamondCheckTimer++;
                 if (adorablehamsterpets$diamondCheckTimer >= CHECK_INTERVAL_TICKS) {
                     adorablehamsterpets$diamondCheckTimer = 0;
                     if (isDiamondNearby(self, config.shoulderDiamondDetectionRadius.get())) {
-                        this.adorablehamsterpets$isDiamondAlertConditionMet = true; // SET FLAG
+                        this.adorablehamsterpets$isDiamondAlertConditionMet = true;
                         if (adorablehamsterpets$diamondSoundCooldownTicks == 0) {
                             world.playSound(null, self.getBlockPos(),
                                     ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_DIAMOND_SNIFF_SOUNDS, random),
                                     SoundCategory.NEUTRAL, 2.5f, 1.0f);
                             self.sendMessage(Text.translatable("message.adorablehamsterpets.diamond_nearby").formatted(Formatting.AQUA), true);
                             adorablehamsterpets$diamondSoundCooldownTicks = random.nextBetween(140, 200);
-
                             ModCriteria.HAMSTER_DIAMOND_ALERT_TRIGGERED.trigger((ServerPlayerEntity) self);
                         }
                     } else {
-                        this.adorablehamsterpets$isDiamondAlertConditionMet = false; // RESET FLAG
+                        this.adorablehamsterpets$isDiamondAlertConditionMet = false;
                     }
                 }
             }
-            // --- End Shoulder Diamond Detection ---
+            // --- End 4. Shoulder Diamond Detection ---
 
-            // --- Shoulder Creeper Detection ---
+            // --- 5. Shoulder Creeper Detection ---
             if (config.enableShoulderCreeperDetection) {
                 adorablehamsterpets$creeperCheckTimer++;
                 if (adorablehamsterpets$creeperCheckTimer >= CHECK_INTERVAL_TICKS) {
@@ -165,33 +207,31 @@ public abstract class PlayerEntityMixin extends LivingEntity {
                                     ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_CREEPER_DETECT_SOUNDS, random),
                                     SoundCategory.NEUTRAL, 1.0f, 1.0f);
                             self.sendMessage(Text.translatable("message.adorablehamsterpets.creeper_detected").formatted(Formatting.RED), true);
-                            adorablehamsterpets$creeperSoundCooldownTicks = random.nextBetween(100, 160); // 5-8 seconds
-
-                            // --- Trigger Advancement Criterion ---
+                            adorablehamsterpets$creeperSoundCooldownTicks = random.nextBetween(100, 160);
                             ModCriteria.HAMSTER_CREEPER_ALERT_TRIGGERED.trigger((ServerPlayerEntity) self);
-                            // --- End Trigger ---
                         }
                     }
                 }
             }
-            // --- End Shoulder Creeper Detection ---
+            // --- End 5. Shoulder Creeper Detection ---
         }
     }
 
     /**
-     * Checks if diamond ore is nearby the player.
+     * Scans a spherical area around the player for diamond ore blocks.
+     * This check is performed periodically when a hamster is on the player's shoulder.
+     *
      * @param player The player to check around.
-     * @param radius The radius to check within.
-     * @return True if diamond ore is found, false otherwise.
+     * @param radius The radius of the sphere to scan, in blocks.
+     * @return {@code true} if {@link Blocks#DIAMOND_ORE} or {@link Blocks#DEEPSLATE_DIAMOND_ORE} is found within the radius, otherwise {@code false}.
      */
     @Unique
     private boolean isDiamondNearby(PlayerEntity player, double radius) {
         World world = player.getWorld();
         BlockPos center = player.getBlockPos();
-        int intRadius = (int) Math.ceil(radius); // Ensure radius covers partial blocks
+        int intRadius = (int) Math.ceil(radius);
 
         for (BlockPos checkPos : BlockPos.iterate(center.add(-intRadius, -intRadius, -intRadius), center.add(intRadius, intRadius, intRadius))) {
-            // More accurate distance check for a sphere
             if (checkPos.getSquaredDistance(center) <= radius * radius) {
                 BlockState state = world.getBlockState(checkPos);
                 if (state.isOf(Blocks.DIAMOND_ORE) || state.isOf(Blocks.DEEPSLATE_DIAMOND_ORE)) {
@@ -203,10 +243,12 @@ public abstract class PlayerEntityMixin extends LivingEntity {
     }
 
     /**
-     * Checks if any nearby creepers are targeting the player.
-     * @param player The player to check.
-     * @param radius The radius to check for creepers within.
-     * @return True if a creeper is targeting the player, false otherwise.
+     * Checks for nearby creepers that are actively targeting the player.
+     * This is used for the shoulder hamster's creeper alert feature.
+     *
+     * @param player The player being targeted.
+     * @param radius The search radius for creepers.
+     * @return {@code true} if at least one creeper is found with the player as its current attack target, otherwise {@code false}.
      */
     @Unique
     private boolean creeperSeesPlayer(PlayerEntity player, double radius) {
@@ -215,7 +257,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
         List<CreeperEntity> nearbyCreepers = world.getEntitiesByClass(
                 CreeperEntity.class,
                 searchBox,
-                // Creeper must be alive, targeting the player, and generally valid
                 creeper -> creeper.isAlive() && creeper.getTarget() == player && EntityPredicates.VALID_ENTITY.test(creeper)
         );
         return !nearbyCreepers.isEmpty();

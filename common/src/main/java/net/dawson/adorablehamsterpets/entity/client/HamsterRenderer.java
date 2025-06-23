@@ -2,16 +2,15 @@ package net.dawson.adorablehamsterpets.entity.client;
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.AdorableHamsterPetsClient;
-import net.dawson.adorablehamsterpets.attachment.HamsterRenderState;
-import net.dawson.adorablehamsterpets.attachment.ModEntityAttachments;
 import net.dawson.adorablehamsterpets.entity.client.layer.HamsterOverlayLayer;
 import net.dawson.adorablehamsterpets.entity.client.layer.HamsterPinkPetalOverlayLayer;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterVariant;
 import net.dawson.adorablehamsterpets.networking.payload.SpawnAttackParticlesPayload;
 import net.dawson.adorablehamsterpets.networking.payload.SpawnSeekingDustPayload;
-import net.dawson.adorablehamsterpets.networking.payload.UpdateHamsterRenderStatePayload;
 import dev.architectury.networking.NetworkManager;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -22,6 +21,7 @@ import org.joml.Vector3d;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
+@Environment(EnvType.CLIENT)
 public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
 
     private final float adultShadowRadius;
@@ -54,23 +54,18 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
     @Override
     public void render(HamsterEntity entity, float entityYaw, float partialTick, MatrixStack poseStack,
                        VertexConsumerProvider bufferSource, int packedLight) {
+        // --- 1. Set Shadow Radius ---
         if (entity.isBaby()) {
             this.shadowRadius = this.adultShadowRadius * 0.5f;
         } else {
             this.shadowRadius = this.adultShadowRadius;
         }
 
-        // --- Render Tracking Logic ---
+        // --- 2. Report to Client-Side Tracker ---
+        // Adds the entity's ID to a set to determine which entities are no longer being rendered.
         AdorableHamsterPetsClient.onHamsterRendered(entity.getId());
-        HamsterRenderState state = entity.getAttachedOrCreate(ModEntityAttachments.HAMSTER_RENDER_STATE, HamsterRenderState::new);
 
-        if (!state.isClientRendering()) {
-            state.setClientRendering(true);
-            state.startSoundDelay();
-            ClientPlayNetworking.send(new UpdateHamsterRenderStatePayload(entity.getId(), true));
-        }
-        // --- End Render Tracking Logic ---
-
+        // --- 3. Call Superclass Method ---
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 

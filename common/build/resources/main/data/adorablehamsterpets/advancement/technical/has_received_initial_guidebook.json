@@ -1,0 +1,7 @@
+{
+  "criteria": {
+    "received": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

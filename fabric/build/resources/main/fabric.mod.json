@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "adorablehamsterpets",
-  "version": "2.0.0",
+  "version": "2.0.0+fabric",
   "name": "Adorable Hamster Pets",
   "description": "Sure, you’ve got dragons and machines, but let’s be honest— no respectable mod pack is complete without tiny fluffy hamsters running around.",
   "authors": [
@@ -22,7 +22,7 @@
       "net.dawson.adorablehamsterpets.fabric.client.AdorableHamsterPetsFabricClient"
     ],
     "fabric-datagen": [
-      "net.dawson.adorablehamsterpets.AdorableHamsterPetsDataGenerator"
+      "net.dawson.adorablehamsterpets.datagen.AdorableHamsterPetsDataGenerator"
     ],
     "jade": [
       "net.dawson.adorablehamsterpets.integration.jade.AHPJadePlugin"
@@ -38,7 +38,7 @@
     "java": ">=21",
     "fabric-api": "*",
     "architectury": ">=13.0.8",
-    "geckolib": ">=4.7.5",
+    "geckolib": ">=4.7.3",
     "fzzy_config": ">=0.7.0"
   },
   "suggests": {

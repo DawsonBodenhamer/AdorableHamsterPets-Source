@@ -4,6 +4,7 @@ import dev.architectury.networking.NetworkManager;
 import net.dawson.adorablehamsterpets.AdorableHamsterPetsClient;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.networking.payload.*;
+import net.dawson.adorablehamsterpets.util.HamsterRenderTracker;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -52,7 +53,6 @@ public class ModPackets {
     }
 
     // --- Server-Side Packet Handling Logic ---
-
     private static void handleSpawnAttackParticles(SpawnAttackParticlesPayload payload, NetworkManager.PacketContext context) {
         ServerPlayerEntity player = (ServerPlayerEntity) context.getPlayer();
         ServerWorld world = player.getServerWorld();
@@ -83,30 +83,10 @@ public class ModPackets {
     }
 
     private static void handleUpdateRenderState(UpdateHamsterRenderStatePayload payload, NetworkManager.PacketContext context) {
-        // TODO: Refactor to be cross-platform after removing Fabric Attachment API.
-        //
-        // Purpose: This handler's job is to let the server know which specific players are currently
-        // rendering a specific hamster. This information is used by the server-side footstep sound logic
-        // in HamsterEntity to decide whether to play the fallback server sound (if no one is rendering the
-        // hamster) or to rely on the client-side animation keyframed sounds (if at least one player is rendering it).
-        //
-        // Problem: The original implementation used Fabric's AttachmentType API to attach a
-        // 'HamsterRenderState' object directly to the hamster entity on the server. This is not a
-        // cross-platform solution and must be replaced.
-        //
-        // Possible Solution: (Double-Check With Research Assistant First)
-        // 1. Create a new server-side manager class (e.g., `HamsterRenderTracker`).
-        // 2. This manager will hold a static Map<Integer, Set<UUID>> to map hamster entity IDs
-        //    to a set of UUIDs of the players who are currently rendering them.
-        // 3. This handler will be updated to call methods on the new tracker, for example:
-        //    if (payload.isRendering()) {
-        //        HamsterRenderTracker.addPlayer(payload.hamsterEntityId(), context.getPlayer().getUuid());
-        //    } else {
-        //        HamsterRenderTracker.removePlayer(payload.hamsterEntityId(), context.getPlayer().getUuid());
-        //    }
-        // 4. The `HamsterEntity#playStepSound` method will be updated to query this manager:
-        //    `if (HamsterRenderTracker.isBeingRendered(this.getId())) { ... }`
-        // 5. IMPORTANT: The manager must listen for player disconnect and entity unload events
-        //    to clear entries from the map, preventing memory leaks.
+        if (payload.isRendering()) {
+            HamsterRenderTracker.addPlayer(payload.hamsterEntityId(), context.getPlayer().getUuid());
+        } else {
+            HamsterRenderTracker.removePlayer(payload.hamsterEntityId(), context.getPlayer().getUuid());
+        }
     }
 }

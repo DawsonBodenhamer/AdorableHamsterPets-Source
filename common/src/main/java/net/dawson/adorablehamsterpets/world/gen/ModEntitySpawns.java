@@ -116,9 +116,7 @@ public class ModEntitySpawns {
     }
 
     // --- Biome Helper Methods ---
-    // These helpers are kept public static so that HamsterEntity can use them for variant selection.
-    // They take a RegistryEntry<Biome> because that is what HamsterEntity has access to during initialization.
-
+    @SafeVarargs
     public static boolean matchesAnyBiomeKey(Identifier id, RegistryKey<Biome>... keysToMatch) {
         if (id == null) return false;
         for (RegistryKey<Biome> k : keysToMatch) {

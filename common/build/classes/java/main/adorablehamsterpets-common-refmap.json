@@ -1,0 +1,34 @@
+{
+  "mappings": {
+    "net/dawson/adorablehamsterpets/mixin/client/LivingEntityRendererInvoker": {
+      "addFeature": "method_4046(Lnet/minecraft/class_3887;)Z"
+    },
+    "net/dawson/adorablehamsterpets/mixin/client/PlayerEntityRendererMixin": {
+      "<init>": "Lnet/minecraft/class_1007;<init>(Lnet/minecraft/class_5617$class_5618;Z)V"
+    },
+    "net/dawson/adorablehamsterpets/mixin/server/PlayerEntityMixin": {
+      "initDataTracker": "Lnet/minecraft/class_1657;method_5693(Lnet/minecraft/class_2945$class_9222;)V",
+      "readCustomDataFromNbt": "Lnet/minecraft/class_1657;method_5749(Lnet/minecraft/class_2487;)V",
+      "remove(Lnet/minecraft/entity/Entity$RemovalReason;)V": "Lnet/minecraft/class_1657;method_5650(Lnet/minecraft/class_1297$class_5529;)V",
+      "tick": "Lnet/minecraft/class_1657;method_5773()V",
+      "writeCustomDataToNbt": "Lnet/minecraft/class_1657;method_5652(Lnet/minecraft/class_2487;)V"
+    }
+  },
+  "data": {
+    "named:intermediary": {
+      "net/dawson/adorablehamsterpets/mixin/client/LivingEntityRendererInvoker": {
+        "addFeature": "method_4046(Lnet/minecraft/class_3887;)Z"
+      },
+      "net/dawson/adorablehamsterpets/mixin/client/PlayerEntityRendererMixin": {
+        "<init>": "Lnet/minecraft/class_1007;<init>(Lnet/minecraft/class_5617$class_5618;Z)V"
+      },
+      "net/dawson/adorablehamsterpets/mixin/server/PlayerEntityMixin": {
+        "initDataTracker": "Lnet/minecraft/class_1657;method_5693(Lnet/minecraft/class_2945$class_9222;)V",
+        "readCustomDataFromNbt": "Lnet/minecraft/class_1657;method_5749(Lnet/minecraft/class_2487;)V",
+        "remove(Lnet/minecraft/entity/Entity$RemovalReason;)V": "Lnet/minecraft/class_1657;method_5650(Lnet/minecraft/class_1297$class_5529;)V",
+        "tick": "Lnet/minecraft/class_1657;method_5773()V",
+        "writeCustomDataToNbt": "Lnet/minecraft/class_1657;method_5652(Lnet/minecraft/class_2487;)V"
+      }
+    }
+  }
+}

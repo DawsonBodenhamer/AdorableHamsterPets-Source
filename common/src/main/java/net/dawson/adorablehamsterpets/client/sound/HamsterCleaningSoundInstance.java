@@ -12,7 +12,7 @@ public class HamsterCleaningSoundInstance extends AbstractSoundInstance implemen
     private boolean done = false;
 
     public HamsterCleaningSoundInstance(HamsterEntity hamster) {
-        super(ModSounds.HAMSTER_SCRATCH, SoundCategory.NEUTRAL, hamster.getRandom());
+        super(ModSounds.HAMSTER_SCRATCH.get(), SoundCategory.NEUTRAL, hamster.getRandom());
         this.hamster = hamster;
         this.x = hamster.getX();
         this.y = hamster.getY();

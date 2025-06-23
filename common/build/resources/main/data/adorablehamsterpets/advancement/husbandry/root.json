@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "id": "adorablehamsterpets:hamster_spawn_egg"
+    },
+    "title": {
+      "translate": "advancements.adorablehamsterpets.husbandry.root.title"
+    },
+    "description": {
+      "translate": "advancements.adorablehamsterpets.husbandry.root.description"
+    },
+    "background": "adorablehamsterpets:textures/gui/advancements/background.png",
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "always_unlock": {
+      "trigger": "minecraft:location"
+    }
+  }
+}

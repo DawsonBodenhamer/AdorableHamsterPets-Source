@@ -10,6 +10,9 @@ dependencies {
     // Depend on Fabric Loader here to use the Fabric @Environment annotations
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
 
+    // This dependency is only used during compilation and for specific tasks like runDatagen
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
+
     // Architectury API
     modCompileOnly "dev.architectury:architectury:$rootProject.architectury_api_version"
 
@@ -23,4 +26,7 @@ dependencies {
 
     // Fzzy Config API
     modCompileOnly "me.fzzyhmstrs:fzzy_config:${rootProject.fzzy_config_version}"
+
+    // Jade API
+    modCompileOnly "curse.maven:jade-324717:${rootProject.jade_version_fabric}"
 }

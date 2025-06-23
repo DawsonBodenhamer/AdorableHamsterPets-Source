@@ -1,5 +1,7 @@
 package net.dawson.adorablehamsterpets.entity.client.model;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumer;
@@ -11,6 +13,7 @@ import net.minecraft.client.util.math.MatrixStack;
  * Defines geometry and UV mapping for a 32x32 texture.
  * Model definitions updated from Blockbench export.
  */
+@Environment(EnvType.CLIENT)
 public class HamsterShoulderModel extends EntityModel<AbstractClientPlayerEntity> {
 
     // --- Fields ---

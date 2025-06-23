@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="052c5d33-d6bb-405e-abe0-6cb2032d8642" name="Changes" comment="[REFACTOR] Migrate core registries and networking to Architectury API&#10;&#10;This commit refactors a significant portion of the mod's infrastructure from Fabric API to the Architectury API to support multi-loader builds.&#10;&#10;- [REFACTOR] Migrated Item, Block, Sound, Entity, and ScreenHandler registries to use Architectury's DeferredRegister system.&#10;- [REFACTOR] Replaced Fabric Networking API with Architectury's NetworkManager, centralizing packet registration and handling into a new `ModPackets` class.&#10;- [REFACTOR] Replaced Fabric event listeners (`CommandRegistrationCallback`, `PlayerEvent`) with their Architectury equivalents.&#10;- [REFACTOR] Replaced Fabric's `CompostingChanceRegistry` helper with direct calls to the vanilla `ComposterBlock` map, triggered by an Architectury `LifecycleEvent`.&#10;- [REFACTOR] Updated world generation to use Architectury's `BiomeModifications` API instead of Fabric's.&#10;- [CHORE] Consolidated biome-checking logic into `ModEntitySpawns` to act as a single source of truth.">
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/common/adorablehamsterpets.common.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/world/ModSpawnPlacements.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/world/ModSpawnPlacementsImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/neoforge/src/main/java/net/dawson/adorablehamsterpets/neoforge/world/ModSpawnPlacementsImpl.java" afterDir="false" />
+    <list default="true" id="052c5d33-d6bb-405e-abe0-6cb2032d8642" name="Changes" comment="[FIX] Implement @ExpectPlatform for spawn restrictions&#10;&#10;Replaces the Fabric-only spawn restriction logic with a cross-platform&#10;@ExpectPlatform bridge, ensuring compatibility with NeoForge.&#10;&#10;- Adds the common `ModSpawnPlacements` class with the `@ExpectPlatform` method.&#10;- Implements the Fabric-specific version in `fabric/.../ModSpawnPlacementsImpl.java` using `SpawnRestriction.register`.&#10;- Implements the NeoForge-specific version in `neoforge/.../ModSpawnPlacementsImpl.java` using the `RegisterSpawnPlacementsEvent`.&#10;- Updates the main NeoForge entrypoint to correctly register the event listener to the mod event bus.">
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/client/GuideBookUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/client/HamsterSoundManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/util/HamsterRenderTracker.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/md5-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" afterDir="false" />
@@ -17,37 +15,64 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___fabric__fabric.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___fabric__fabric.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___neoforge__neoforge.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___neoforge__neoforge.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/client/option/ModKeyBindings.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/client/sound/HamsterCleaningSoundInstance.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/client/sound/HamsterFlightSoundInstance.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/client/sound/HamsterThrowSoundInstance.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/HamsterModel.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/HamsterRenderer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/ModModelLayers.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/feature/HamsterShoulderFeatureRenderer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/layer/HamsterOverlayLayer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/layer/HamsterPinkPetalOverlayLayer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/client/java/net/dawson/adorablehamsterpets/entity/client/model/HamsterShoulderModel.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.0+common-transformProductionFabric.jar" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.0+common-transformProductionFabric.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.0+common-transformProductionNeoForge.jar" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.0+common-transformProductionNeoForge.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build/resources/main/adorablehamsterpets.mixins.json" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/resources/main/adorablehamsterpets.mixins.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/AdorableHamsterPets.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/AdorableHamsterPets.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/AdorableHamsterPetsClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/AdorableHamsterPetsClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/attachment/HamsterRenderState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/attachment/HamsterShoulderData.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/component/HamsterShoulderData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/attachment/ModEntityAttachments.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/client/option/ModKeyBindings.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/client/option/ModKeyBindings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/client/sound/HamsterCleaningSoundInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/client/sound/HamsterCleaningSoundInstance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/component/ModDataComponentTypes.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/component/ModDataComponentTypes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/HamsterModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/HamsterModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/HamsterRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/HamsterRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/ModModelLayers.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/ModModelLayers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/feature/HamsterShoulderFeatureRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/feature/HamsterShoulderFeatureRenderer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/layer/HamsterOverlayLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/layer/HamsterOverlayLayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/layer/HamsterPinkPetalOverlayLayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/layer/HamsterPinkPetalOverlayLayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/model/HamsterShoulderModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/client/model/HamsterShoulderModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/custom/HamsterEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/custom/HamsterEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/run/logs/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/debug.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/AdorableHamsterPetsDataGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/AdorableHamsterPetsDataGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/EnUsGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/EnUsGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/ModLootTableProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/ModLootTableProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/ModModelProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/ModModelProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/ModRecipeProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/ModRecipeProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/ModRegistryDataGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/ModRegistryDataGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/AdorableHamsterPetsFabric.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/AdorableHamsterPetsFabric.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/.gradle/loom-cache/remapClasspath.txt" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/.gradle/loom-cache/remapClasspath.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/net/dawson/adorablehamsterpets/neoforge/AdorableHamsterPetsNeoForge.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/net/dawson/adorablehamsterpets/neoforge/AdorableHamsterPetsNeoForge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/item/ModItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/item/ModItems.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/mixin/server/PlayerEntityMixin.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/mixin/server/PlayerEntityMixin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/ModPackets.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/ModPackets.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/payload/SpawnAttackParticlesPayload.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/payload/SpawnAttackParticlesPayload.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/payload/SpawnSeekingDustPayload.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/payload/SpawnSeekingDustPayload.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/payload/StartHamsterFlightSoundPayload.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/payload/StartHamsterFlightSoundPayload.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/payload/StartHamsterThrowSoundPayload.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/payload/StartHamsterThrowSoundPayload.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/payload/ThrowHamsterPayload.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/payload/ThrowHamsterPayload.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/payload/UpdateHamsterRenderStatePayload.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/networking/payload/UpdateHamsterRenderStatePayload.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/screen/HamsterInventoryScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/screen/HamsterInventoryScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/screen/HamsterInventoryScreenHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/screen/HamsterInventoryScreenHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/world/gen/ModEntitySpawns.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/world/gen/ModEntitySpawns.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/.gradle/loom-cache/remapClasspath.txt" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/.gradle/loom-cache/remapClasspath.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/classes/java/main/net/dawson/adorablehamsterpets/fabric/AdorableHamsterPetsFabric.class" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/classes/java/main/net/dawson/adorablehamsterpets/fabric/AdorableHamsterPetsFabric.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/resources/main/adorablehamsterpets.accesswidener" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/resources/main/fabric.mod.json" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/resources/main/fabric.mod.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/AdorableHamsterPetsDataGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/datagen/AdorableHamsterPetsDataGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/EnUsGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/datagen/EnUsGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/ModLootTableProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/datagen/ModLootTableProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/ModModelProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/datagen/ModModelProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/ModRecipeProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/datagen/ModRecipeProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/ModRegistryDataGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/datagen/ModRegistryDataGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/resources/adorablehamsterpets.accesswidener" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/resources/fabric.mod.json" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/resources/fabric.mod.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/classes/java/main/net/dawson/adorablehamsterpets/neoforge/AdorableHamsterPetsNeoForge.class" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build/classes/java/main/net/dawson/adorablehamsterpets/neoforge/AdorableHamsterPetsNeoForge.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/resources/main/META-INF/neoforge.mods.toml" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build/resources/main/META-INF/neoforge.mods.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,12 +90,36 @@
         <task path="$PROJECT_DIR$">
           <activation />
         </task>
+        <task path="$PROJECT_DIR$/fabric">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$/common">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="adorablehamsterpets" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="adorablehamsterpets" type="f1a62948:ProjectNode" />
+                <item name="fabric" type="2d1252cf:ModuleNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="adorablehamsterpets" type="f1a62948:ProjectNode" />
+                <item name="fabric" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="adorablehamsterpets" type="f1a62948:ProjectNode" />
+                <item name="fabric" type="2d1252cf:ModuleNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="loom" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -117,6 +166,8 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Gradle.Adorable Hamster Pets [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Adorable Hamster Pets:fabric [:fabric:dev.architectury.transformer.TransformerRuntime.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Adorable Hamster Pets:fabric [runDatagen].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
@@ -134,7 +185,7 @@
       <recent name="C:\Users\tweek\OneDrive\Documents\MY MINECRAFT MODS\Data\Repositories\Adorable Hamster Pets\common\src\main\java\net\dawson\adorablehamsterpets\entity" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Adorable Hamster Pets [build]">
+  <component name="RunManager" selected="Gradle.Adorable Hamster Pets:fabric [runDatagen]">
     <configuration name="Adorable Hamster Pets [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -157,8 +208,40 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="Adorable Hamster Pets:fabric [runDatagen]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/fabric" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--debug --stacktrace --scan --warning-mode all" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="runDatagen" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.Data Generation (:fabric)" />
+      <item itemvalue="Application.Minecraft Client (:fabric)" />
+      <item itemvalue="Application.Minecraft Client (:neoforge)" />
+      <item itemvalue="Application.Minecraft Server (:fabric)" />
+      <item itemvalue="Application.Minecraft Server (:neoforge)" />
+      <item itemvalue="Gradle.Adorable Hamster Pets [build]" />
+      <item itemvalue="Gradle.Adorable Hamster Pets:fabric [runDatagen]" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Adorable Hamster Pets:fabric [runDatagen]" />
         <item itemvalue="Gradle.Adorable Hamster Pets [build]" />
       </list>
     </recent_temporary>
@@ -180,11 +263,31 @@
       <option name="project" value="LOCAL" />
       <updated>1750450802800</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="[FIX] Implement @ExpectPlatform for spawn restrictions&#10;&#10;Replaces the Fabric-only spawn restriction logic with a cross-platform&#10;@ExpectPlatform bridge, ensuring compatibility with NeoForge.&#10;&#10;- Adds the common `ModSpawnPlacements` class with the `@ExpectPlatform` method.&#10;- Implements the Fabric-specific version in `fabric/.../ModSpawnPlacementsImpl.java` using `SpawnRestriction.register`.&#10;- Implements the NeoForge-specific version in `neoforge/.../ModSpawnPlacementsImpl.java` using the `RegisterSpawnPlacementsEvent`.&#10;- Updates the main NeoForge entrypoint to correctly register the event listener to the mod event bus.">
+      <option name="closed" value="true" />
+      <created>1750534167702</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1750534167702</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="[REFACTOR] Migrate core registries and networking to Architectury API&#10;&#10;This commit refactors a significant portion of the mod's infrastructure from Fabric API to the Architectury API to support multi-loader builds.&#10;&#10;- [REFACTOR] Migrated Item, Block, Sound, Entity, and ScreenHandler registries to use Architectury's DeferredRegister system.&#10;- [REFACTOR] Replaced Fabric Networking API with Architectury's NetworkManager, centralizing packet registration and handling into a new `ModPackets` class.&#10;- [REFACTOR] Replaced Fabric event listeners (`CommandRegistrationCallback`, `PlayerEvent`) with their Architectury equivalents.&#10;- [REFACTOR] Replaced Fabric's `CompostingChanceRegistry` helper with direct calls to the vanilla `ComposterBlock` map, triggered by an Architectury `LifecycleEvent`.&#10;- [REFACTOR] Updated world generation to use Architectury's `BiomeModifications` API instead of Fabric's.&#10;- [CHORE] Consolidated biome-checking logic into `ModEntitySpawns` to act as a single source of truth." />
-    <option name="LAST_COMMIT_MESSAGE" value="[REFACTOR] Migrate core registries and networking to Architectury API&#10;&#10;This commit refactors a significant portion of the mod's infrastructure from Fabric API to the Architectury API to support multi-loader builds.&#10;&#10;- [REFACTOR] Migrated Item, Block, Sound, Entity, and ScreenHandler registries to use Architectury's DeferredRegister system.&#10;- [REFACTOR] Replaced Fabric Networking API with Architectury's NetworkManager, centralizing packet registration and handling into a new `ModPackets` class.&#10;- [REFACTOR] Replaced Fabric event listeners (`CommandRegistrationCallback`, `PlayerEvent`) with their Architectury equivalents.&#10;- [REFACTOR] Replaced Fabric's `CompostingChanceRegistry` helper with direct calls to the vanilla `ComposterBlock` map, triggered by an Architectury `LifecycleEvent`.&#10;- [REFACTOR] Updated world generation to use Architectury's `BiomeModifications` API instead of Fabric's.&#10;- [CHORE] Consolidated biome-checking logic into `ModEntitySpawns` to act as a single source of truth." />
+    <MESSAGE value="[FIX] Implement @ExpectPlatform for spawn restrictions&#10;&#10;Replaces the Fabric-only spawn restriction logic with a cross-platform&#10;@ExpectPlatform bridge, ensuring compatibility with NeoForge.&#10;&#10;- Adds the common `ModSpawnPlacements` class with the `@ExpectPlatform` method.&#10;- Implements the Fabric-specific version in `fabric/.../ModSpawnPlacementsImpl.java` using `SpawnRestriction.register`.&#10;- Implements the NeoForge-specific version in `neoforge/.../ModSpawnPlacementsImpl.java` using the `RegisterSpawnPlacementsEvent`.&#10;- Updates the main NeoForge entrypoint to correctly register the event listener to the mod event bus." />
+    <option name="LAST_COMMIT_MESSAGE" value="[FIX] Implement @ExpectPlatform for spawn restrictions&#10;&#10;Replaces the Fabric-only spawn restriction logic with a cross-platform&#10;@ExpectPlatform bridge, ensuring compatibility with NeoForge.&#10;&#10;- Adds the common `ModSpawnPlacements` class with the `@ExpectPlatform` method.&#10;- Implements the Fabric-specific version in `fabric/.../ModSpawnPlacementsImpl.java` using `SpawnRestriction.register`.&#10;- Implements the NeoForge-specific version in `neoforge/.../ModSpawnPlacementsImpl.java` using the `RegisterSpawnPlacementsEvent`.&#10;- Updates the main NeoForge entrypoint to correctly register the event listener to the mod event bus." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/custom/HamsterEntity.java</url>
+          <line>2371</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -1,0 +1,34 @@
+{
+  "parent": "adorablehamsterpets:husbandry/tame_hamster",
+  "display": {
+    "icon": {
+      "id": "minecraft:pink_petals"
+    },
+    "title": {
+      "translate": "advancements.adorablehamsterpets.husbandry.petal_pusher.title"
+    },
+    "description": {
+      "translate": "advancements.adorablehamsterpets.husbandry.petal_pusher.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "applied_petal": {
+      "trigger": "adorablehamsterpets:applied_pink_petal",
+      "conditions": {
+        "hamster": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "adorablehamsterpets:hamster"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

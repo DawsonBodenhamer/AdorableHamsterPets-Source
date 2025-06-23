@@ -17,6 +17,7 @@ import net.dawson.adorablehamsterpets.entity.client.ModModelLayers;
 import net.dawson.adorablehamsterpets.entity.client.model.HamsterShoulderModel;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.item.ModItems;
+import net.dawson.adorablehamsterpets.mixin.server.PlayerEntityMixin;
 import net.dawson.adorablehamsterpets.networking.payload.StartHamsterFlightSoundPayload;
 import net.dawson.adorablehamsterpets.networking.payload.StartHamsterThrowSoundPayload;
 import net.dawson.adorablehamsterpets.networking.payload.ThrowHamsterPayload;
@@ -78,7 +79,7 @@ public class AdorableHamsterPetsClient {
                 client.player.sendMessage(Text.literal("Hamster throwing is disabled in config."), true);
             } else {
                 boolean lookingAtReachableBlock = client.crosshairTarget != null && client.crosshairTarget.getType() == HitResult.Type.BLOCK;
-                boolean hasShoulderHamsterClient = true; // Placeholder for component system
+                boolean hasShoulderHamsterClient = !((PlayerEntityMixin)(Object)client.player).getHamsterShoulderEntity().isEmpty();
 
                 if (!lookingAtReachableBlock && hasShoulderHamsterClient) {
                     dev.architectury.networking.NetworkManager.sendToServer(new ThrowHamsterPayload());

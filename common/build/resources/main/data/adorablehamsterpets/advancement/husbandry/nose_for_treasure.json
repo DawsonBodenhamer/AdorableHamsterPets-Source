@@ -1,0 +1,23 @@
+{
+  "parent": "adorablehamsterpets:husbandry/shoulder_hamster",
+  "display": {
+    "icon": {
+      "id": "minecraft:diamond"
+    },
+    "title": {
+      "translate": "advancements.adorablehamsterpets.husbandry.nose_for_treasure.title"
+    },
+    "description": {
+      "translate": "advancements.adorablehamsterpets.husbandry.nose_for_treasure.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "diamond_alert": {
+      "trigger": "adorablehamsterpets:hamster_diamond_alert_triggered"
+    }
+  }
+}

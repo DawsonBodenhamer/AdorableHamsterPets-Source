@@ -1,0 +1,29 @@
+{
+  "parent": "adorablehamsterpets:husbandry/root",
+  "display": {
+    "icon": {
+      "id": "adorablehamsterpets:hamster_guide_book"
+    },
+    "title": {
+      "translate": "advancements.adorablehamsterpets.technical.crafted_guide_book.title"
+    },
+    "description": {
+      "translate": "advancements.adorablehamsterpets.technical.crafted_guide_book.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": true
+  },
+  "criteria": {
+    "crafted_the_book": {
+      "trigger": "minecraft:recipe_crafted",
+      "conditions": {
+        "recipe_id": "adorablehamsterpets:hamster_guide_book_from_crafting"
+      }
+    }
+  },
+  "rewards": {
+    "function": "adorablehamsterpets:technical/crafted_guide_book_fx"
+  }
+}
