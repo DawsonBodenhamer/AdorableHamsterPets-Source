@@ -17,7 +17,7 @@ import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
-@Environment(EnvType.CLIENT)
+
 public class HamsterOverlayLayer extends GeoRenderLayer<HamsterEntity> {
 
     public HamsterOverlayLayer(GeoRenderer<HamsterEntity> entityRendererIn) {

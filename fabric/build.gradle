@@ -17,20 +17,6 @@ loom {
             sourceSet project(':common').sourceSets.main
         }
     }
-
-    // ── Datagen Run Configuration ──────────────────────────────
-    runs {
-        datagen {                      // this name creates the Gradle task `runDatagen`
-            inherit server             // clone the normal server run
-            name "Data Generation"     // appears in IDE launch configs
-            runDir "build/datagen"     // working directory (anything outside src/ is fine)
-
-            // tell Fabric-API we’re doing data-gen and where to drop the JSON
-            vmArg "-Dfabric-api.datagen"
-            vmArg "-Dfabric-api.datagen.modid=adorablehamsterpets"
-            vmArg "-Dfabric-api.datagen.output-dir=${file('src/main/generated')}"
-        }
-    }
 }
 
 configurations {

@@ -21,7 +21,7 @@ import org.joml.Vector3d;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
-@Environment(EnvType.CLIENT)
+
 public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
 
     private final float adultShadowRadius;

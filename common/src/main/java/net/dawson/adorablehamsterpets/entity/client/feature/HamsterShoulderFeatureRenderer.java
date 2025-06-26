@@ -28,7 +28,7 @@ import java.util.Optional;
  * Renders a Hamster model on the player's shoulder if shoulder data is present.
  * Handles scaling for baby/adult hamsters and texture variations.
  */
-@Environment(EnvType.CLIENT)
+
 public class HamsterShoulderFeatureRenderer
         extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
 

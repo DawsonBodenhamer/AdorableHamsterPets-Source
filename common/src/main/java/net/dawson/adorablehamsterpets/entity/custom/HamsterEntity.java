@@ -3,9 +3,8 @@ package net.dawson.adorablehamsterpets.entity.custom;
 import dev.architectury.registry.menu.MenuRegistry;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
-import net.dawson.adorablehamsterpets.client.HamsterSoundManager;
-import net.dawson.adorablehamsterpets.component.HamsterShoulderData;
 import net.dawson.adorablehamsterpets.client.sound.HamsterCleaningSoundInstance;
+import net.dawson.adorablehamsterpets.component.HamsterShoulderData;
 import net.dawson.adorablehamsterpets.config.AhpConfig;
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.AI.*;
@@ -628,6 +627,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     @Unique private int sulkEntityEffectTicks = 0;
     @Unique private int sulkShockedSoundDelayTicks = 0;
     @Unique private int diamondSparkleSoundDelayTicks = 0;
+    @Unique @Nullable private HamsterCleaningSoundInstance cleaningSoundInstance;
 
 
     // --- Inventory ---
@@ -1882,7 +1882,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
         // --- Client-Side Render State Tick ---
         if (this.getWorld().isClient()) {
-            HamsterSoundManager.tick(this);
+            this.tickCleaningSound();
         }
 
         // Call super.tick() *after* processing thrown state and timers
@@ -2956,17 +2956,36 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         buf.writeInt(this.getId());
     }
 
+    /**
+     * Manages the lifecycle of the cleaning sound on the client.
+     * If the hamster is cleaning and no sound is playing, it starts a new
+     * {@link HamsterCleaningSoundInstance}. This ensures the sound loops
+     * correctly for the duration of the cleaning animation.
+     */
+    private void tickCleaningSound() {
+        if (!this.getWorld().isClient()) return;
+
+        boolean shouldBeCleaning = this.getDataTracker().get(HamsterEntity.IS_CLEANING);
+        boolean isSoundPlaying = this.cleaningSoundInstance != null && !this.cleaningSoundInstance.isDone();
+
+        if (shouldBeCleaning && !isSoundPlaying) {
+            this.cleaningSoundInstance = new HamsterCleaningSoundInstance(this);
+            MinecraftClient.getInstance().getSoundManager().play(this.cleaningSoundInstance);
+        }
+    }
+
+    /**
+     * Called when this entity is removed from the world.
+     * This override ensures that any server-side tracking or client-side sounds
+     * associated with this specific hamster instance are properly cleaned up to prevent memory leaks.
+     */
     @Override
     public void onRemoved() {
         // --- 1. Call Superclass Method ---
         super.onRemoved();
 
         // --- 2. Clean Up Trackers ---
-        if (this.getWorld().isClient()) {
-            // On the client, notify the sound manager to stop any associated sounds.
-            HamsterSoundManager.onHamsterRemoved(this.getId());
-        } else {
-            // On the server, remove from the render tracker to prevent memory leaks.
+        if (!this.getWorld().isClient()) {
             net.dawson.adorablehamsterpets.util.HamsterRenderTracker.onEntityUnload(this.getId());
         }
     }

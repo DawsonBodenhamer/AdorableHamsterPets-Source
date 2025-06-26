@@ -13,7 +13,7 @@ import net.minecraft.client.util.math.MatrixStack;
  * Defines geometry and UV mapping for a 32x32 texture.
  * Model definitions updated from Blockbench export.
  */
-@Environment(EnvType.CLIENT)
+
 public class HamsterShoulderModel extends EntityModel<AbstractClientPlayerEntity> {
 
     // --- Fields ---

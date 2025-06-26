@@ -4,7 +4,6 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.block.ModBlocks;
-import net.dawson.adorablehamsterpets.client.GuideBookUtil;
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.minecraft.client.MinecraftClient;
@@ -61,7 +60,10 @@ public class ModItems {
                     if (itemStack.contains(DataComponentTypes.WRITTEN_BOOK_CONTENT)) {
                         // Defer client-side screen opening to a helper class
                         if (world.isClient) {
-                            GuideBookUtil.openScreen(itemStack);
+                            BookScreen.Contents contents = BookScreen.Contents.create(itemStack);
+                            if (contents != null) {
+                                MinecraftClient.getInstance().setScreen(new BookScreen(contents));
+                            }
                         }
                         user.incrementStat(Stats.USED.getOrCreateStat(this));
                         return TypedActionResult.success(itemStack, world.isClient());
