@@ -88,14 +88,6 @@ public class AdorableHamsterPets {
 		// --- Events ---
 		PlayerEvent.PLAYER_JOIN.register(AdorableHamsterPets::onPlayerJoin);
 		CommandRegistrationEvent.EVENT.register(ModCommands::register);
-		// --- Runtime-Only Registrations ---
-		// CORRECTED: Guard platform-specific calls to prevent them from running during datagen
-		if (!Platform.isDataGen()) {
-			ModSpawnPlacements.register(ModEntities.HAMSTER.get(), net.minecraft.entity.SpawnLocationTypes.ON_GROUND,
-					Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-					(type, world, reason, pos, random) -> AnimalEntity.isValidNaturalSpawn(type, world, reason, pos, random) ||
-							ModEntitySpawns.VALID_SPAWN_BLOCKS.contains(world.getBlockState(pos.down()).getBlock()));
-		}
 	}
 
 	private static void onPlayerJoin(ServerPlayerEntity player) {

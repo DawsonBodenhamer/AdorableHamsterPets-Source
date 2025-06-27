@@ -5,45 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="052c5d33-d6bb-405e-abe0-6cb2032d8642" name="Changes" comment="[REFACTOR] Moved datagen back to the fabric module, by reverting to previous commit.">
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/workspace-id.txt.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/workspace-id.txt.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Data_Generation___fabric__fabric.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Data_Generation___fabric__fabric.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___fabric__fabric.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___fabric__fabric.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___neoforge__neoforge.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___neoforge__neoforge.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/.gradle/loom-cache/remapClasspath.txt" beforeDir="false" afterPath="$PROJECT_DIR$/common/.gradle/loom-cache/remapClasspath.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/common/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/AdorableHamsterPets.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/AdorableHamsterPets.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/datagen/AdorableHamsterPetsDataGenerator$ModWorldGenerator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/datagen/AdorableHamsterPetsDataGenerator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/datagen/EnUsGenerator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/datagen/ModLootTableProvider.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/datagen/ModModelProvider.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/datagen/ModRecipeProvider.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/datagen/ModRegistryDataGenerator.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/datagen/config/adorablehamsterpets/main.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/datagen/config/fabric/indigo-renderer.properties" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/datagen/config/fabric/indigo-renderer.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/datagen/config/fzzy_config/keybinds.toml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/datagen/data/fabricDefaultResourcePacks.dat" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/datagen/data/fabricDefaultResourcePacks.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/datagen/logs/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/datagen/logs/debug.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/datagen/logs/latest.log" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/datagen/logs/latest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/loom-cache/argFiles/runDatagen" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/loom-cache/argFiles/runDatagen" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/resources/main/fabric.mod.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/resources/fabric.mod.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/src/main/resources/fabric.mod.json" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/resources/fabric.mod.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,12 +87,12 @@
   <component name="GitRewordedCommitMessages">
     <option name="commitMessagesMapping">
       <RewordedCommitMessageMapping>
-        <option name="originalMessage" value="[REFACTOR] Finalize common module and fix build crashes&#10;&#10;This commit completes the major refactoring of the common module, resolving the final build crashes.&#10;&#10;- Replaced the Fabric-only AttachmentType system with a vanilla DataTracker on PlayerEntity for shoulder-riding, mimicking the vanilla parrot implementation.&#10;- Refactored all `getAttached`/`setAttached` calls in `HamsterEntity`, `PlayerEntityMixin`, and `HamsterShoulderFeatureRenderer` to use the new DataTracker system.&#10;- Replaced the client-side `HamsterRenderState` attachment with a server-side `HamsterRenderTracker` utility to manage footstep sounds in a cross-platform way.&#10;- Moved all datagen provider classes into the `common` module and configured the build script to make the Fabric API available only for that task.&#10;- Cleaned up all remaining Fabric API imports from the common module." />
-        <option name="rewordedMessage" value="[REFACTOR] Finalize common module and fix build crashes&#10;&#10;This commit completes the major refactoring of the common module, resolving the final build crashes.&#10;&#10;- Replaced the Fabric-only AttachmentType system with a vanilla DataTracker on PlayerEntity for shoulder-riding, mimicking the vanilla parrot implementation.&#10;- Refactored all `getAttached`/`setAttached` calls in `HamsterEntity`, `PlayerEntityMixin`, and `HamsterShoulderFeatureRenderer` to use the new DataTracker system.&#10;- Replaced the client-side `HamsterRenderState` attachment with a server-side `HamsterRenderTracker` utility to manage footstep sounds in a cross-platform way.&#10;- Moved all datagen provider classes into the `common` module and configured the build script to make the Fabric API available only for that task.&#10;- Cleaned up all remaining Fabric API imports from the common module." />
+        <option name="originalMessage" value="[REFACTOR] Moved datagen back to the fabric module, by reverting to previous commit." />
+        <option name="rewordedMessage" value="[REFACTOR] Moved datagen back to the fabric module, by reverting to previous commit." />
       </RewordedCommitMessageMapping>
     </option>
     <option name="currentCommit" value="1" />
-    <option name="onto" value="88cc8e186323d90b93b8f334397d5cde8dacfb12" />
+    <option name="onto" value="069282525d17b3841175425092bdc37e631424ea" />
   </component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
@@ -354,7 +317,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751030494889</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="[REFACTOR] Moved datagen back to the fabric module, by reverting to previous commit.">
+      <option name="closed" value="true" />
+      <created>1751036097290</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1751036097290</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
