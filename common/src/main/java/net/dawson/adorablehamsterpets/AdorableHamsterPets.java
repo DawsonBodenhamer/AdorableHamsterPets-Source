@@ -3,6 +3,7 @@ package net.dawson.adorablehamsterpets;
 import dev.architectury.event.events.common.CommandRegistrationEvent;
 import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.registry.CreativeTabRegistry;
+import dev.architectury.platform.Platform;
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
 import net.dawson.adorablehamsterpets.block.ModBlocks;
@@ -34,6 +35,10 @@ public class AdorableHamsterPets {
 
 	public static AhpConfig CONFIG;
 
+	/**
+	 * The main initialization method for the mod.
+	 * This method is called by platform-specific entrypoints to register all common features.
+	 */
 	public static void init() {
 		CONFIG = Configs.AHP;
 
@@ -83,6 +88,14 @@ public class AdorableHamsterPets {
 		// --- Events ---
 		PlayerEvent.PLAYER_JOIN.register(AdorableHamsterPets::onPlayerJoin);
 		CommandRegistrationEvent.EVENT.register(ModCommands::register);
+		// --- Runtime-Only Registrations ---
+		// CORRECTED: Guard platform-specific calls to prevent them from running during datagen
+		if (!Platform.isDataGen()) {
+			ModSpawnPlacements.register(ModEntities.HAMSTER.get(), net.minecraft.entity.SpawnLocationTypes.ON_GROUND,
+					Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+					(type, world, reason, pos, random) -> AnimalEntity.isValidNaturalSpawn(type, world, reason, pos, random) ||
+							ModEntitySpawns.VALID_SPAWN_BLOCKS.contains(world.getBlockState(pos.down()).getBlock()));
+		}
 	}
 
 	private static void onPlayerJoin(ServerPlayerEntity player) {

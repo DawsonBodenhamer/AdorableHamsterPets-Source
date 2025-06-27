@@ -6,26 +6,9 @@ loom {
     accessWidenerPath = file("src/main/resources/adorablehamsterpets.accesswidener")
 }
 
-fabricApi {
-    configureDataGeneration {
-        client = true
-    }
-}
-
-tasks {
-    jar {
-        // Exclude the fabric.mod.json from the common JAR to prevent conflicts.
-        // It's only needed in common/resources for the runDatagen task.
-        exclude("fabric.mod.json")
-    }
-}
-
 dependencies {
     // Depend on Fabric Loader here to use the Fabric @Environment annotations
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-
-    // This dependency is only used during compilation and for specific tasks like runDatagen
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${rootProject.fabric_api_version}"
 
     // Architectury API
     modCompileOnly "dev.architectury:architectury:$rootProject.architectury_api_version"
@@ -43,9 +26,4 @@ dependencies {
 
     // Jade API
     modCompileOnly "curse.maven:jade-324717:${rootProject.jade_version_fabric}"
-
-    // --- Extra class-path for runDatagen ---
-    modRuntimeOnly "dev.architectury:architectury-fabric:$architectury_api_version"
-    modRuntimeOnly "software.bernie.geckolib:geckolib-fabric-$minecraft_version:$geckolib_version"
-    modRuntimeOnly "me.fzzyhmstrs:fzzy_config:$fzzy_config_version"
 }
