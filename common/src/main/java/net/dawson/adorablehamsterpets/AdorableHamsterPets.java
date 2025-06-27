@@ -21,6 +21,7 @@ import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.dawson.adorablehamsterpets.world.ModSpawnPlacements;
 import net.dawson.adorablehamsterpets.world.ModWorldGeneration;
 import net.dawson.adorablehamsterpets.world.gen.ModEntitySpawns;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.advancement.AdvancementProgress;
 import net.minecraft.advancement.PlayerAdvancementTracker;
 import net.minecraft.entity.SpawnLocationTypes;
@@ -42,7 +43,8 @@ public class AdorableHamsterPets {
 	public static void init() {
 		CONFIG = Configs.AHP;
 
-		// --- Core Registries ---
+
+		// --- Core Registries (Needed for both runtime and datagen) ---
 		ModEntities.register();
 		ModDataComponentTypes.registerDataComponentTypes();
 		ModSounds.register();
@@ -51,43 +53,55 @@ public class AdorableHamsterPets {
 		ModItemGroups.register();
 		ModScreenHandlers.register();
 		ModCriteria.registerCriteria();
-		ModRegistries.initialize();
 
-		// --- Networking Registration ---
-		ModPackets.register();
 
-		// --- World Gen & Spawns ---
-		ModWorldGeneration.generateModWorldGen();
-		ModEntitySpawns.initialize();
+		// --- Runtime-only Initializations ---
+		// We check if the data generation API is NOT loaded. If it is loaded, we are in a datagen environment
+		// and should skip runtime-only logic to prevent crashes.
+		if (System.getProperty("fabric-api.datagen") == null) {
+			ModRegistries.initialize();
 
-		// --- Entity Attribute and Spawn Restriction Registration ---
-		EntityAttributeRegistry.register(ModEntities.HAMSTER, HamsterEntity::createHamsterAttributes);
-		ModSpawnPlacements.register(ModEntities.HAMSTER.get(), SpawnLocationTypes.ON_GROUND,
-				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-				(type, world, reason, pos, random) -> AnimalEntity.isValidNaturalSpawn(type, world, reason, pos, random) ||
-						ModEntitySpawns.VALID_SPAWN_BLOCKS.contains(world.getBlockState(pos.down()).getBlock()));
 
-		// --- Creative Tab Population ---
-		CreativeTabRegistry.modify(ModItemGroups.ADORABLE_HAMSTER_PETS_GROUP, (featureSet, output, hasPermissions) -> {
-			output.add(ModItems.CHEESE.get());
-			output.add(ModItems.HAMSTER_FOOD_MIX.get());
-			output.add(ModItems.CUCUMBER.get());
-			output.add(ModItems.CUCUMBER_SEEDS.get());
-			output.add(ModItems.SLICED_CUCUMBER.get());
-			output.add(ModItems.GREEN_BEANS.get());
-			output.add(ModItems.GREEN_BEAN_SEEDS.get());
-			output.add(ModItems.STEAMED_GREEN_BEANS.get());
-			output.add(ModItems.SUNFLOWER_SEEDS.get());
-			output.add(ModItems.HAMSTER_SPAWN_EGG.get());
-			output.add(ModItems.HAMSTER_GUIDE_BOOK.get());
-			output.add(ModItems.SUNFLOWER_BLOCK_ITEM.get());
-			output.add(ModItems.WILD_GREEN_BEAN_BUSH_ITEM.get());
-			output.add(ModItems.WILD_CUCUMBER_BUSH_ITEM.get());
-		});
+			// --- Networking Registration ---
+			ModPackets.register();
 
-		// --- Events ---
-		PlayerEvent.PLAYER_JOIN.register(AdorableHamsterPets::onPlayerJoin);
-		CommandRegistrationEvent.EVENT.register(ModCommands::register);
+
+			// --- World Gen & Spawns ---
+			ModWorldGeneration.generateModWorldGen();
+			ModEntitySpawns.initialize();
+
+
+			// --- Entity Attribute and Spawn Restriction Registration ---
+			EntityAttributeRegistry.register(ModEntities.HAMSTER, HamsterEntity::createHamsterAttributes);
+			ModSpawnPlacements.register(ModEntities.HAMSTER.get(), SpawnLocationTypes.ON_GROUND,
+					Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+					(type, world, reason, pos, random) -> AnimalEntity.isValidNaturalSpawn(type, world, reason, pos, random) ||
+							ModEntitySpawns.VALID_SPAWN_BLOCKS.contains(world.getBlockState(pos.down()).getBlock()));
+
+
+			// --- Creative Tab Population ---
+			CreativeTabRegistry.modify(ModItemGroups.ADORABLE_HAMSTER_PETS_GROUP, (featureSet, output, hasPermissions) -> {
+				output.add(ModItems.CHEESE.get());
+				output.add(ModItems.HAMSTER_FOOD_MIX.get());
+				output.add(ModItems.CUCUMBER.get());
+				output.add(ModItems.CUCUMBER_SEEDS.get());
+				output.add(ModItems.SLICED_CUCUMBER.get());
+				output.add(ModItems.GREEN_BEANS.get());
+				output.add(ModItems.GREEN_BEAN_SEEDS.get());
+				output.add(ModItems.STEAMED_GREEN_BEANS.get());
+				output.add(ModItems.SUNFLOWER_SEEDS.get());
+				output.add(ModItems.HAMSTER_SPAWN_EGG.get());
+				output.add(ModItems.HAMSTER_GUIDE_BOOK.get());
+				output.add(ModItems.SUNFLOWER_BLOCK_ITEM.get());
+				output.add(ModItems.WILD_GREEN_BEAN_BUSH_ITEM.get());
+				output.add(ModItems.WILD_CUCUMBER_BUSH_ITEM.get());
+			});
+
+
+			// --- Events ---
+			PlayerEvent.PLAYER_JOIN.register(AdorableHamsterPets::onPlayerJoin);
+			CommandRegistrationEvent.EVENT.register(ModCommands::register);
+		}
 	}
 
 	private static void onPlayerJoin(ServerPlayerEntity player) {

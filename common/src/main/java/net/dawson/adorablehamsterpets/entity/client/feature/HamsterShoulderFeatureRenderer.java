@@ -5,9 +5,7 @@ import net.dawson.adorablehamsterpets.component.HamsterShoulderData;
 import net.dawson.adorablehamsterpets.entity.client.ModModelLayers;
 import net.dawson.adorablehamsterpets.entity.client.model.HamsterShoulderModel;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterVariant;
-import net.dawson.adorablehamsterpets.mixin.server.PlayerEntityMixin;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.OverlayTexture;
@@ -80,7 +78,8 @@ public class HamsterShoulderFeatureRenderer
                        AbstractClientPlayerEntity player, float limbAngle, float limbDistance,
                        float tickDelta, float animationProgress, float headYaw, float headPitch) {
 
-        NbtCompound shoulderNbt = ((PlayerEntityMixin)(Object)player).getHamsterShoulderEntity();
+        // Use the safe accessor interface
+        NbtCompound shoulderNbt = ((PlayerEntityAccessor) player).getHamsterShoulderEntity();
         if (shoulderNbt.isEmpty()) {
             return;
         }

@@ -30,6 +30,10 @@ Adorable Hamster Pets introduces, against potentially better judgment, hamsters 
 
 ---
 
+### <font color="orange">Quick announcement— Neoforge, Forge (maybe) and 1.20, 1.21.1-6 are in the works right now! Join the discord to check my progress.</font>
+
+---
+
 <p> <img src="https://i.imgur.com/GxXluZP.png" alt="Adorable Hamster Pets Banner Image" width="2000"/> </p>
 
 

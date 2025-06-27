@@ -45,7 +45,7 @@ public class HamsterModel extends GeoModel<HamsterEntity> {
 
     @Override
     public Identifier getAnimationResource(HamsterEntity animatable) {
-        return Identifier.of(AdorableHamsterPets.MOD_ID, "animations/anim_hamster.json");
+        return Identifier.of(AdorableHamsterPets.MOD_ID, "animations/anim_hamster.animation.json");
     }
 
     @Override

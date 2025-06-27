@@ -69,5 +69,9 @@
     "registry_name": "OFF",
     "block_properties": false,
     "mod_name": true
+  },
+  "adorablehamsterpets": {
+    "hamster_debug_info": true,
+    "wild_bush_tooltips": true
   }
 }

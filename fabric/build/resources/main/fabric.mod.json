@@ -48,6 +48,9 @@
   "custom": {
     "fzzy_config": [
       "adorablehamsterpets:main"
-    ]
+    ],
+    "architectury": {
+      "common": "net.dawson.adorablehamsterpets.AdorableHamsterPets"
+    }
   }
 }

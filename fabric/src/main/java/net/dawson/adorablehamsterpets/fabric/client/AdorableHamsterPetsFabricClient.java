@@ -1,10 +1,13 @@
 package net.dawson.adorablehamsterpets.fabric.client;
 
+
+import net.dawson.adorablehamsterpets.AdorableHamsterPetsClient;
 import net.fabricmc.api.ClientModInitializer;
+
 
 public final class AdorableHamsterPetsFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        // This entrypoint is suitable for setting up client-specific logic, such as rendering.
+        AdorableHamsterPetsClient.init();
     }
 }

@@ -18,6 +18,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.0.0] - 2025-06-27
+
+# Neoforge support has arrived!
+
+### Added
+- The mod is now fully compatible with the NeoForge mod loader, in addition to Fabric. This was achieved through a complete migration to the Architectury toolchain.
+
+### Changed
+- **Complete Refactor to Architectury API:** The entire mod has been refactored from a Fabric-only project to a cross-platform Architectury project. This makes the codebase platform-agnostic and ensures future features can be developed for both loaders simultaneously. Key changes include:
+  - Replaced all Fabric API registries (for Items, Blocks, Entities, etc.) with Architectury's deferred registration system.
+  - Replaced the Fabric Networking API with the Architectury Networking API, centralizing all packet handling into a single `ModPackets` class.
+  - Replaced Fabric-specific events (Player Join, Commands) with their cross-platform Architectury equivalents.
+  - Replaced the Fabric-only `AttachmentType` system for shoulder riding with a vanilla `DataTracker` system, mimicking the vanilla parrot mechanic for better stability and compatibility.
+  - Implemented an `@ExpectPlatform` bridge to handle loader-specific spawn restriction logic, keeping the common codebase clean.
+- **Rebalanced Wild Bush Spawning:** The spawn locations for Wild Cucumber Bushes and Wild Green Bean Bushes have been adjusted. Cucumber Bushes (for the essential taming item) are now much more common and appear in a wider variety of temperate biomes. Green Bean Bushes (for the optional buff item) are now less common and are focused in more specific "lush" or "wet" biomes.
+
+---
+
 ## [1.2.1] - 2025-06-12
 
 ### Fixed
