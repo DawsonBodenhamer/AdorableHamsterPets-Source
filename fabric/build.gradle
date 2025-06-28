@@ -67,11 +67,11 @@ processResources {
 }
 
 shadowJar {
-    exclude "architectury.common.json"
-    from sourceSets.main.output
-    from project(":common").sourceSets.main.output
-    configurations = [project.configurations.shadowCommon]
+    exclude "architectury.common.json"       // keep
+    configurations = [project.configurations.shadowCommon]  // transformed common code
+    from(sourceSets.main.output)             // ADD → include Fabric classes
     archiveClassifier = "dev-shadow"
+    dependsOn project(':common').tasks.named('transformProductionFabric')
 }
 
 remapJar {

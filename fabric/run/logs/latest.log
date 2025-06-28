@@ -1,5 +1,5 @@
-[08:53:48] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.1 with Fabric Loader 0.16.14
-[08:53:48] [main/INFO] (FabricLoader) Loading 64 mods:
+[10:16:01] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.1 with Fabric Loader 0.16.14
+[10:16:01] [main/INFO] (FabricLoader) Loading 64 mods:
 	- adorablehamsterpets 2.0.0+fabric
 	- architectury 13.0.8
 	- fabric-api 0.116.2+1.21.1
@@ -57,18 +57,18 @@
 	- fabricloader 0.16.14
 	- fzzy_config 0.7.0+1.21
 	- geckolib 4.7.3
-	- generated_b792760 1.0.0
+	- generated_277e340 1.0.0
 	- jade 15.10.0+fabric
 	- java 21
 	- minecraft 1.21.1
 	- mixinextras 0.4.1
 	- modmenu 11.0.1
 	- placeholder-api 2.4.2+1.21
-[08:53:48] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/tweek/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.5+mixin.0.8.7/22f9eb729e216a091673a574a5906dc1b9027fb3/sponge-mixin-0.15.5+mixin.0.8.7.jar Service=Knot/Fabric Env=CLIENT
-[08:53:48] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
-[08:53:48] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
-[08:53:48] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
-[08:53:49] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
-[08:53:50] [Datafixer Bootstrap/INFO] (Minecraft) 226 Datafixer optimizations took 278 milliseconds
-[08:53:54] [Render thread/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
-[08:53:54] [Render thread/INFO] (Minecraft) Setting user: Player427
+[10:16:01] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/tweek/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.5+mixin.0.8.7/22f9eb729e216a091673a574a5906dc1b9027fb3/sponge-mixin-0.15.5+mixin.0.8.7.jar Service=Knot/Fabric Env=CLIENT
+[10:16:01] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[10:16:01] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
+[10:16:01] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
+[10:16:02] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
+[10:16:03] [Datafixer Bootstrap/INFO] (Minecraft) 226 Datafixer optimizations took 295 milliseconds
+[10:16:07] [Render thread/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[10:16:07] [Render thread/INFO] (Minecraft) Setting user: Player415

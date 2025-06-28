@@ -35,7 +35,7 @@ allprojects {
         maven { name = "FzzyMaven"; url = "https://maven.fzzyhmstrs.me/" }
         maven { name = "CurseMaven"; url = "https://cursemaven.com" }
         maven { name = "Modrinth"; url = "https://api.modrinth.com/maven" }
-        maven { name = "GeckoLib"; url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
+        maven { name = "GeckoLib"; url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
     }
 
     tasks.withType(JavaCompile).configureEach {

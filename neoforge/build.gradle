@@ -29,14 +29,14 @@ configurations {
 
 repositories {
     maven {
-        url "https://maven.neoforged.net/releases/"
+        url = "https://maven.neoforged.net/releases/"
         content {
             includeGroupAndSubgroups "net.neoforged"
             includeGroupAndSubgroups "cpw.mods"
         }
     }
     maven {
-        url "https://thedarkcolour.github.io/KotlinForForge/"
+        url = "https://thedarkcolour.github.io/KotlinForForge/"
     }
 }
 

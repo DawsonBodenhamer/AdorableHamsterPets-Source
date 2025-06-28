@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="052c5d33-d6bb-405e-abe0-6cb2032d8642" name="Changes" comment="[FIX] Attempt to resolve Architectury @ExpectPlatform crash&#10;&#10;This commit includes several changes aimed at fixing the AssertionError&#10;crash during Fabric client launch and addressing mixin load errors.&#10;&#10;- [FIX] Removed `architectury {compileOnly()}` from root/build.gradle`&#10;- [REF] Updated file structure in fabric module.&#10;&#10;Pushing this state to the repository for community review.">
-      <change afterPath="$PROJECT_DIR$/.idea/AdorableHamsterPets.iml" afterDir="false" />
+    <list default="true" id="052c5d33-d6bb-405e-abe0-6cb2032d8642" name="Changes" comment="[FIX] Attempt to resolve Architectury @ExpectPlatform crash&#10;&#10;This commit includes several changes aimed at fixing the AssertionError&#10;crash during Fabric client launch and addressing mixin load errors.&#10;&#10;- [FIX] Updated abric/build.gradle shadowJar block. &#10;&#10;Pushing this state to the repository for community review.">
+      <change afterPath="$PROJECT_DIR$/post.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/md5-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" afterDir="false" />
@@ -16,12 +16,10 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/workspace-id.txt.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/workspace-id.txt.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___fabric__fabric.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___fabric__fabric.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___neoforge__neoforge.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___neoforge__neoforge.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/libs/adorablehamsterpets-2.0.0+adorablehamsterpets-sources.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/adorablehamsterpets-2.0.0+adorablehamsterpets-sources.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/libs/adorablehamsterpets-2.0.0+adorablehamsterpets.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/adorablehamsterpets-2.0.0+adorablehamsterpets.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
@@ -33,25 +31,12 @@
       <change beforePath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.0+common-transformProductionNeoForge.jar" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.0+common-transformProductionNeoForge.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.0+common.jar" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.0+common.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/.gradle/architectury/.properties" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/.gradle/architectury/.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/.gradle/architectury/.transforms" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/.gradle/architectury/.transforms" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/.gradle/loom-cache/launch.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/.gradle/loom-cache/launch.cfg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/build/devlibs/adorablehamsterpets-2.0.0+fabric-dev.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/devlibs/adorablehamsterpets-2.0.0+fabric-dev.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/build/devlibs/adorablehamsterpets-2.0.0+fabric-sources.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/devlibs/adorablehamsterpets-2.0.0+fabric-sources.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/build/libs/adorablehamsterpets-2.0.0+fabric-dev-shadow.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/libs/adorablehamsterpets-2.0.0+fabric-dev-shadow.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/build/libs/adorablehamsterpets-2.0.0+fabric-sources.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/libs/adorablehamsterpets-2.0.0+fabric-sources.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/build/libs/adorablehamsterpets-2.0.0+fabric.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/libs/adorablehamsterpets-2.0.0+fabric.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/loom-cache/argFiles/runClient" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/loom-cache/argFiles/runClient" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/tmp/compileJava/compileTransaction/stash-dir/AdorableHamsterPetsDataGenerator$ModWorldGenerator.class.uniqueId1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/tmp/compileJava/compileTransaction/stash-dir/AdorableHamsterPetsDataGenerator.class.uniqueId7" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/tmp/compileJava/compileTransaction/stash-dir/AdorableHamsterPetsFabric.class.uniqueId5" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/tmp/compileJava/compileTransaction/stash-dir/AdorableHamsterPetsFabricClient.class.uniqueId0" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/tmp/compileJava/compileTransaction/stash-dir/EnUsGenerator.class.uniqueId2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/tmp/compileJava/compileTransaction/stash-dir/ModLootTableProvider.class.uniqueId8" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/tmp/compileJava/compileTransaction/stash-dir/ModModelProvider.class.uniqueId4" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/tmp/compileJava/compileTransaction/stash-dir/ModRecipeProvider.class.uniqueId9" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/tmp/compileJava/compileTransaction/stash-dir/ModRegistryDataGenerator.class.uniqueId3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/tmp/compileJava/compileTransaction/stash-dir/ModSpawnPlacementsImpl.class.uniqueId6" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/run/.architectury-transformer/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/.architectury-transformer/debug.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/run/logs/debug-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/debug-1.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/run/logs/debug-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/debug-2.log.gz" afterDir="false" />
@@ -61,15 +46,11 @@
       <change beforePath="$PROJECT_DIR$/fabric/run/logs/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/debug.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/run/logs/latest.log" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/latest.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/neoforge/.gradle/architectury/.properties" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/.gradle/architectury/.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/.gradle/architectury/.transforms" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/.gradle/architectury/.transforms" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/.gradle/loom-cache/forge_minecraft_classpath.txt" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/.gradle/loom-cache/forge_minecraft_classpath.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/.gradle/loom-cache/launch.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/.gradle/loom-cache/launch.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/neoforge/build/devlibs/adorablehamsterpets-2.0.0+neoforge-dev.jar" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build/devlibs/adorablehamsterpets-2.0.0+neoforge-dev.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/neoforge/build/devlibs/adorablehamsterpets-2.0.0+neoforge-sources.jar" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build/devlibs/adorablehamsterpets-2.0.0+neoforge-sources.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/neoforge/build/libs/adorablehamsterpets-2.0.0+neoforge-dev-shadow.jar" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build/libs/adorablehamsterpets-2.0.0+neoforge-dev-shadow.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/neoforge/build/libs/adorablehamsterpets-2.0.0+neoforge-sources.jar" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build/libs/adorablehamsterpets-2.0.0+neoforge-sources.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/build/libs/adorablehamsterpets-2.0.0+neoforge.jar" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build/libs/adorablehamsterpets-2.0.0+neoforge.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,6 +163,8 @@
     "Gradle.Adorable Hamster Pets:common [runDatagen].executor": "Run",
     "Gradle.Adorable Hamster Pets:fabric [:fabric:dev.architectury.transformer.TransformerRuntime.main()].executor": "Run",
     "Gradle.Adorable Hamster Pets:fabric [runDatagen].executor": "Run",
+    "Gradle.AdorableHamsterPets:fabric [:fabric:dev.architectury.transformer.TransformerRuntime.main()].executor": "Run",
+    "Gradle.AdorableHamsterPets:neoforge [:neoforge:dev.architectury.transformer.TransformerRuntime.main()].executor": "Run",
     "Gradle.Download Sources.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -202,6 +185,9 @@
       <recent name="C:\Users\tweek\OneDrive\Documents\MY MINECRAFT MODS\Data\Repositories\Adorable Hamster Pets\common\src\main\resources" />
       <recent name="C:\Users\tweek\OneDrive\Documents\MY MINECRAFT MODS\Data\Repositories\Adorable Hamster Pets\common\src\main\java\net\dawson\adorablehamsterpets" />
       <recent name="C:\Users\tweek\OneDrive\Documents\MY MINECRAFT MODS\Data\Repositories\Adorable Hamster Pets\common\src\main\java\net\dawson\adorablehamsterpets\entity" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\mods\Data\Repositories\AdorableHamsterPets" />
     </key>
   </component>
   <component name="RunManager" selected="Application.Minecraft Client (:fabric)">
@@ -412,7 +398,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751115772154</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="[FIX] Attempt to resolve Architectury @ExpectPlatform crash&#10;&#10;This commit includes several changes aimed at fixing the AssertionError&#10;crash during Fabric client launch and addressing mixin load errors.&#10;&#10;- [FIX] Updated abric/build.gradle shadowJar block. &#10;&#10;Pushing this state to the repository for community review.">
+      <option name="closed" value="true" />
+      <created>1751119448372</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1751119448372</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -438,7 +432,8 @@
     <MESSAGE value="[CHORE] Preparing to remove datagen. Considering manual resource generation using AI." />
     <MESSAGE value="[FIX] Attempt to resolve Architectury @ExpectPlatform crash&#10;&#10;This commit includes several changes aimed at fixing the AssertionError&#10;crash during Fabric client launch and addressing mixin load errors.&#10;&#10;- [FIX] Corrected an IllegalClassLoadError by moving the&#10;  PlayerEntityAccessor interface out of the mixin package and into a&#10;  dedicated `accessor` package to prevent direct referencing from&#10;  non-mixin code.&#10;- [REF] Updated PlayerEntityMixin to implement the relocated accessor&#10;  interface, providing the proper link for the mixin system.&#10;- [FIX] Updated HamsterShoulderFeatureRenderer to use the safe accessor&#10;  interface instead of an illegal direct cast to the mixin class.&#10;- [CHORE] The build still fails with an AssertionError, indicating the&#10;  platform-specific implementation for ModSpawnPlacements is not being&#10;  used. Pushing this state to the repository for community review." />
     <MESSAGE value="[FIX] Attempt to resolve Architectury @ExpectPlatform crash&#10;&#10;This commit includes several changes aimed at fixing the AssertionError&#10;crash during Fabric client launch and addressing mixin load errors.&#10;&#10;- [FIX] Removed `architectury {compileOnly()}` from root/build.gradle`&#10;- [REF] Updated file structure in fabric module.&#10;&#10;Pushing this state to the repository for community review." />
-    <option name="LAST_COMMIT_MESSAGE" value="[FIX] Attempt to resolve Architectury @ExpectPlatform crash&#10;&#10;This commit includes several changes aimed at fixing the AssertionError&#10;crash during Fabric client launch and addressing mixin load errors.&#10;&#10;- [FIX] Removed `architectury {compileOnly()}` from root/build.gradle`&#10;- [REF] Updated file structure in fabric module.&#10;&#10;Pushing this state to the repository for community review." />
+    <MESSAGE value="[FIX] Attempt to resolve Architectury @ExpectPlatform crash&#10;&#10;This commit includes several changes aimed at fixing the AssertionError&#10;crash during Fabric client launch and addressing mixin load errors.&#10;&#10;- [FIX] Updated abric/build.gradle shadowJar block. &#10;&#10;Pushing this state to the repository for community review." />
+    <option name="LAST_COMMIT_MESSAGE" value="[FIX] Attempt to resolve Architectury @ExpectPlatform crash&#10;&#10;This commit includes several changes aimed at fixing the AssertionError&#10;crash during Fabric client launch and addressing mixin load errors.&#10;&#10;- [FIX] Updated abric/build.gradle shadowJar block. &#10;&#10;Pushing this state to the repository for community review." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
