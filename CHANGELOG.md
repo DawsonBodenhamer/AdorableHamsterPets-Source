@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # Neoforge support has arrived!
 
 ### Added
-- The mod is now fully compatible with the NeoForge mod loader, in addition to Fabric. This was achieved through a complete migration to the Architectury toolchain.
+- **Architectury Multi-Loader Support:** The entire mod has been refactored from a Fabric-only project to an Architectury project, enabling official support for both Fabric and NeoForge from a common codebase.
 
 ### Changed
 - **Complete Refactor to Architectury API:** The entire mod has been refactored from a Fabric-only project to a cross-platform Architectury project. This makes the codebase platform-agnostic and ensures future features can be developed for both loaders simultaneously. Key changes include:

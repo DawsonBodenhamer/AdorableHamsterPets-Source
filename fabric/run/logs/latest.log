@@ -1,5 +1,5 @@
-[10:16:01] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.1 with Fabric Loader 0.16.14
-[10:16:01] [main/INFO] (FabricLoader) Loading 64 mods:
+[13:27:33] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.1 with Fabric Loader 0.16.14
+[13:27:33] [main/INFO] (FabricLoader) Loading 64 mods:
 	- adorablehamsterpets 2.0.0+fabric
 	- architectury 13.0.8
 	- fabric-api 0.116.2+1.21.1
@@ -57,18 +57,197 @@
 	- fabricloader 0.16.14
 	- fzzy_config 0.7.0+1.21
 	- geckolib 4.7.3
-	- generated_277e340 1.0.0
+	- generated_0ff99f0 1.0.0
 	- jade 15.10.0+fabric
 	- java 21
 	- minecraft 1.21.1
 	- mixinextras 0.4.1
 	- modmenu 11.0.1
 	- placeholder-api 2.4.2+1.21
-[10:16:01] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/tweek/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.5+mixin.0.8.7/22f9eb729e216a091673a574a5906dc1b9027fb3/sponge-mixin-0.15.5+mixin.0.8.7.jar Service=Knot/Fabric Env=CLIENT
-[10:16:01] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
-[10:16:01] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
-[10:16:01] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
-[10:16:02] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
-[10:16:03] [Datafixer Bootstrap/INFO] (Minecraft) 226 Datafixer optimizations took 295 milliseconds
-[10:16:07] [Render thread/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
-[10:16:07] [Render thread/INFO] (Minecraft) Setting user: Player415
+[13:27:33] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/tweek/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.5+mixin.0.8.7/22f9eb729e216a091673a574a5906dc1b9027fb3/sponge-mixin-0.15.5+mixin.0.8.7.jar Service=Knot/Fabric Env=CLIENT
+[13:27:33] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[13:27:33] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
+[13:27:33] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
+[13:27:34] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
+[13:27:35] [Datafixer Bootstrap/INFO] (Minecraft) 226 Datafixer optimizations took 291 milliseconds
+[13:27:39] [Render thread/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[13:27:39] [Render thread/INFO] (Minecraft) Setting user: Player344
+[13:27:39] [Render thread/INFO] (fzzy_config) Loaded config adorablehamsterpets:main in 254ms
+[13:27:40] [Render thread/ERROR] (Minecraft) No data fixer registered for hamster
+[13:27:40] [Render thread/INFO] (adorablehamsterpets) Registering Data Component Types for adorablehamsterpets
+[13:27:40] [Render thread/INFO] (adorablehamsterpets) Registering Mod Criteria for adorablehamsterpets
+[13:27:40] [Render thread/INFO] (NetworkManagerImpl) Registering C2S receiver with id adorablehamsterpets:throw_hamster
+[13:27:40] [Render thread/INFO] (NetworkManagerImpl) Registering C2S receiver with id adorablehamsterpets:spawn_attack_particles
+[13:27:40] [Render thread/INFO] (NetworkManagerImpl) Registering C2S receiver with id adorablehamsterpets:spawn_seeking_dust
+[13:27:40] [Render thread/INFO] (NetworkManagerImpl) Registering C2S receiver with id adorablehamsterpets:update_hamster_render_state
+[13:27:40] [Render thread/INFO] (NetworkManagerImpl) Registering S2C receiver with id adorablehamsterpets:start_hamster_flight_sound
+[13:27:40] [Render thread/INFO] (NetworkManagerImpl) Registering S2C receiver with id adorablehamsterpets:start_hamster_throw_sound
+[13:27:40] [Render thread/INFO] (adorablehamsterpets) Registering Biome Modifications for adorablehamsterpets
+[13:27:40] [Render thread/INFO] (Indigo) [Indigo] Registering Indigo renderer!
+[13:27:40] [Render thread/INFO] (Mod Menu/Update Checker) Checking mod updates...
+[13:27:40] [Render thread/INFO] (fzzy_config) Loaded config fzzy_config:keybinds in 23ms
+[13:27:40] [Render thread/INFO] (NetworkManagerImpl) Registering S2C receiver with id architectury:spawn_entity_packet
+[13:27:40] [Render thread/INFO] (Minecraft) Backend library: LWJGL version 3.3.3-snapshot
+[13:27:41] [Render thread/INFO] (Minecraft) Reloading ResourceManager: vanilla, fabric, adorablehamsterpets, fabric-api, fabric-api-base, fabric-api-lookup-api-v1, fabric-biome-api-v1, fabric-block-api-v1, fabric-block-view-api-v2, fabric-blockrenderlayer-v1, fabric-client-tags-api-v1, fabric-command-api-v1, fabric-command-api-v2, fabric-commands-v0, fabric-content-registries-v0, fabric-convention-tags-v1, fabric-convention-tags-v2, fabric-crash-report-info-v1, fabric-data-attachment-api-v1, fabric-data-generation-api-v1, fabric-dimensions-v1, fabric-entity-events-v1, fabric-events-interaction-v0, fabric-game-rule-api-v1, fabric-gametest-api-v1, fabric-item-api-v1, fabric-item-group-api-v1, fabric-key-binding-api-v1, fabric-keybindings-v0, fabric-language-kotlin, fabric-lifecycle-events-v1, fabric-loot-api-v2, fabric-loot-api-v3, fabric-message-api-v1, fabric-model-loading-api-v1, fabric-networking-api-v1, fabric-object-builder-api-v1, fabric-particles-v1, fabric-recipe-api-v1, fabric-registry-sync-v0, fabric-renderer-api-v1, fabric-renderer-indigo, fabric-renderer-registries-v1, fabric-rendering-data-attachment-v1, fabric-rendering-fluids-v1, fabric-rendering-v0, fabric-rendering-v1, fabric-resource-conditions-api-v1, fabric-resource-loader-v0, fabric-screen-api-v1, fabric-screen-handler-api-v1, fabric-sound-api-v1, fabric-transfer-api-v1, fabric-transitive-access-wideners-v1, fabricloader, fzzy_config, generated_0ff99f0, jade, modmenu, placeholder-api
+[13:27:41] [Worker-Main-13/INFO] (Minecraft) Found unifont_all_no_pua-15.1.05.hex, loading
+[13:27:41] [Worker-Main-3/INFO] (Minecraft) Found unifont_jp_patch-15.1.05.hex, loading
+[13:27:41] [Render thread/INFO] (Jade) Start loading plugin from Jade: snownee.jade.addon.core.CorePlugin
+[13:27:41] [Render thread/INFO] (Jade) Bootstrapped plugin from snownee.jade.addon.core.CorePlugin in 51.98 ms
+[13:27:41] [Render thread/INFO] (Jade) Loaded plugin from snownee.jade.addon.core.CorePlugin in 63.63 ms
+[13:27:41] [Render thread/INFO] (Jade) Start loading plugin from Jade: snownee.jade.addon.vanilla.VanillaPlugin
+[13:27:41] [Render thread/INFO] (Jade) Bootstrapped plugin from snownee.jade.addon.vanilla.VanillaPlugin in 24.94 ms
+[13:27:41] [Render thread/INFO] (Jade) Loaded plugin from snownee.jade.addon.vanilla.VanillaPlugin in 32.24 ms
+[13:27:41] [Render thread/INFO] (Jade) Start loading plugin from Jade: snownee.jade.addon.universal.UniversalPlugin
+[13:27:41] [Render thread/INFO] (Jade) Bootstrapped plugin from snownee.jade.addon.universal.UniversalPlugin in 6.647 ms
+[13:27:41] [Render thread/INFO] (Jade) Loaded plugin from snownee.jade.addon.universal.UniversalPlugin in 7.001 ms
+[13:27:41] [Render thread/INFO] (Jade) Start loading plugin from Jade: snownee.jade.addon.access.AccessibilityPlugin
+[13:27:41] [Render thread/INFO] (Jade) Bootstrapped plugin from snownee.jade.addon.access.AccessibilityPlugin in 3.335 ms
+[13:27:41] [Render thread/INFO] (Jade) Loaded plugin from snownee.jade.addon.access.AccessibilityPlugin in 3.524 ms
+[13:27:41] [Render thread/INFO] (Jade) Start loading plugin from Jade: snownee.jade.addon.debug.DebugPlugin
+[13:27:41] [Render thread/INFO] (Jade) Bootstrapped plugin from snownee.jade.addon.debug.DebugPlugin in 2.702 ms
+[13:27:41] [Render thread/INFO] (Jade) Loaded plugin from snownee.jade.addon.debug.DebugPlugin in 2.873 ms
+[13:27:41] [Render thread/INFO] (Jade) Start loading plugin from Adorable Hamster Pets: net.dawson.adorablehamsterpets.integration.jade.AHPJadePlugin
+[13:27:41] [Render thread/INFO] (Jade) Bootstrapped plugin from net.dawson.adorablehamsterpets.integration.jade.AHPJadePlugin in 2.424 ms
+[13:27:41] [Render thread/INFO] (Jade) Loaded plugin from net.dawson.adorablehamsterpets.integration.jade.AHPJadePlugin in 2.534 ms
+[13:27:42] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:item.goat_horn.play
+[13:27:42] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:entity.goat.screaming.horn_break
+[13:27:42] [Render thread/INFO] (Minecraft) OpenAL initialized on device OpenAL Soft on Speakers (USBAudio2.0)
+[13:27:42] [Render thread/INFO] (Minecraft) Sound engine started
+[13:27:42] [Render thread/INFO] (Minecraft) Created: 1024x512x4 minecraft:textures/atlas/blocks.png-atlas
+[13:27:42] [Render thread/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
+[13:27:42] [Render thread/INFO] (Minecraft) Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
+[13:27:42] [Render thread/INFO] (Minecraft) Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
+[13:27:42] [Render thread/INFO] (Minecraft) Created: 1024x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
+[13:27:42] [Render thread/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
+[13:27:42] [Render thread/INFO] (Minecraft) Created: 128x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
+[13:27:42] [Render thread/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
+[13:27:42] [Render thread/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
+[13:27:42] [Render thread/INFO] (Minecraft) Created: 512x256x0 minecraft:textures/atlas/particles.png-atlas
+[13:27:42] [Render thread/INFO] (Minecraft) Created: 512x256x0 minecraft:textures/atlas/paintings.png-atlas
+[13:27:42] [Render thread/INFO] (Minecraft) Created: 256x128x0 minecraft:textures/atlas/mob_effects.png-atlas
+[13:27:42] [Render thread/INFO] (Minecraft) Created: 64x64x0 minecraft:textures/atlas/map_decorations.png-atlas
+[13:27:42] [Render thread/INFO] (Minecraft) Created: 1024x512x0 minecraft:textures/atlas/gui.png-atlas
+[13:27:42] [Render thread/WARN] (Minecraft) Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.
+[13:27:55] [Render thread/WARN] (Minecraft) Missing data pack generated_e7a2c65
+[13:27:55] [Render thread/INFO] (Minecraft) Found new data pack generated_0ff99f0, loading it automatically
+[13:27:56] [Render thread/INFO] (Minecraft) Loaded 1295 recipes
+[13:27:56] [Render thread/INFO] (Minecraft) Loaded 1427 advancements
+[13:27:56] [Render thread/INFO] (Jade) LootTableMineableCollector took 3.167 ms
+[13:27:56] [Render thread/INFO] (BiomeModificationImpl) Applied 256 biome modifications to 64 of 64 new biomes in 11.69 ms
+[13:27:56] [Server thread/INFO] (Minecraft) Starting integrated minecraft server version 1.21.1
+[13:27:56] [Server thread/INFO] (Minecraft) Generating keypair
+[13:27:56] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[13:27:56] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
+[13:27:57] [Render thread/INFO] (Minecraft) Time elapsed: 160 ms
+[13:27:57] [Server thread/INFO] (Minecraft) Changing view distance to 32, from 10
+[13:27:57] [Server thread/INFO] (Minecraft) Changing simulation distance to 12, from 0
+[13:27:57] [Server thread/INFO] (Minecraft) Player344[local:E:04b7fcc5] logged in with entity id 5 at (75.5555901944441, -60.0, 79.29165619269473)
+[13:27:57] [Server thread/INFO] (Minecraft) Player344 joined the game
+[13:27:59] [Render thread/INFO] (Minecraft) Loaded 4 advancements
+[13:27:59] [Render thread/INFO] (Minecraft) Loaded 11 advancements
+[13:27:59] [Render thread/INFO] (Jade) Received config from the server: 
+[13:28:03] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[13:28:03] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[13:28:03] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[13:28:03] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[13:30:08] [Render thread/INFO] (fzzy_config) Saved config main to file C:\mods\Data\Repositories\AdorableHamsterPets\fabric\run\config\adorablehamsterpets\main.toml
+[13:30:08] [Render thread/INFO] (fzzy_config) $$$$$$$$$$$$$$$$$$$$$$$$$$
+[13:30:08] [Render thread/INFO] (fzzy_config) Completed updates for configs: [adorablehamsterpets.main]
+[13:30:08] [Render thread/INFO] (fzzy_config) Updates made by: Player344
+[13:30:08] [Render thread/INFO] (fzzy_config) -------------------------
+[13:30:08] [Render thread/INFO] (fzzy_config)   Updated scope [adorablehamsterpets.main.enableAutoGuidebookDelivery] at [28/06/25 13:28]: [Enable Auto Guidebook Delivery], [true] to [false]
+[13:30:08] [Render thread/INFO] (fzzy_config)   Updated scope [adorablehamsterpets.main.cleaningChanceDenominator] at [28/06/25 13:28]: [Cleaning Frequency], [1200] to [461]
+[13:30:08] [Render thread/INFO] (fzzy_config)   Updated scope [adorablehamsterpets.main.cleaningChanceDenominator] at [28/06/25 13:28]: [Cleaning Frequency], [461] to [300]
+[13:30:08] [Render thread/INFO] (fzzy_config)   Updated scope [adorablehamsterpets.main.hamsterThrowCooldown] at [28/06/25 13:28]: [Throw Cooldown (Ticks)], [2400] to [20]
+[13:30:08] [Render thread/INFO] (fzzy_config)   Updated scope [adorablehamsterpets.main.steamedGreenBeansBuffCooldown] at [28/06/25 13:28]: [Green Bean Buff Cooldown (Ticks)], [6000] to [20]
+[13:30:08] [Render thread/INFO] (fzzy_config)   Updated scope [adorablehamsterpets.main.tamingChanceDenominator] at [28/06/25 13:28]: [Taming Chance], [3] to [1]
+[13:30:08] [Render thread/INFO] (fzzy_config)   Updated scope [adorablehamsterpets.main.shoulderDiamondDetectionRadius] at [28/06/25 13:29]: [Diamond Detection Radius (Blocks)], [10.0] to [20.0]
+[13:30:08] [Render thread/INFO] (fzzy_config)   Updated scope [adorablehamsterpets.main.diamondSeekRadius] at [28/06/25 13:29]: [Diamond Seek Scan Radius (Blocks)], [10] to [20]
+[13:30:08] [Render thread/INFO] (fzzy_config)   Updated scope [adorablehamsterpets.main.requireDaytimeForTamedSleep] at [28/06/25 13:29]: [Require Daytime?], [true] to [false]
+[13:30:08] [Render thread/INFO] (fzzy_config)   Updated scope [adorablehamsterpets.main.tamedQuiescentSitMinSeconds] at [28/06/25 13:29]: [Min Sit Time Before Drowsy (Secs)], [120] to [9]
+[13:30:08] [Render thread/INFO] (fzzy_config)   Updated scope [adorablehamsterpets.main.tamedQuiescentSitMaxSeconds] at [28/06/25 13:29]: [Max Sit Time Before Drowsy (Secs)], [180] to [13]
+[13:30:08] [Render thread/INFO] (fzzy_config)   Updated scope [adorablehamsterpets.main.wildGreenBeanBushRarity] at [28/06/25 13:30]: [Green Bean Bush Rarity], [24] to [15]
+[13:30:08] [Render thread/INFO] (fzzy_config)   Updated scope [adorablehamsterpets.main.wildGreenBeanBushRarity] at [28/06/25 13:30]: [Green Bean Bush Rarity], [15] to [13]
+[13:30:08] [Render thread/INFO] (fzzy_config)   Updated scope [adorablehamsterpets.main.wildCucumberBushRarity] at [28/06/25 13:30]: [Cucumber Bush Rarity], [24] to [13]
+[13:30:08] [Render thread/INFO] (fzzy_config) $$$$$$$$$$$$$$$$$$$$$$$$$$
+[13:30:12] [Server thread/INFO] (Minecraft) Player344 has made the advancement [Best Friends Forever]
+[13:30:12] [Server thread/INFO] (Minecraft) Player344 has reached the goal [A Furry Shadow]
+[13:30:12] [Render thread/INFO] (Minecraft) [System] [CHAT] Player344 has made the advancement [Best Friends Forever]
+[13:30:12] [Render thread/INFO] (Minecraft) [System] [CHAT] Player344 has reached the goal [A Furry Shadow]
+[13:30:12] [Render thread/INFO] (Minecraft) Loaded 23 advancements
+[13:30:14] [Render thread/ERROR] (Minecraft) Unreported exception thrown!
+java.lang.RuntimeException: Mixin transformation of net.dawson.adorablehamsterpets.mixin.server.PlayerEntityMixin failed
+	at net.fabricmc.loader.impl.launch.knot.KnotClassDelegate.getPostMixinClassByteArray(KnotClassDelegate.java:427) ~[fabric-loader-0.16.14.jar:?]
+	at net.fabricmc.loader.impl.launch.knot.KnotClassDelegate.tryLoadClass(KnotClassDelegate.java:323) ~[fabric-loader-0.16.14.jar:?]
+	at net.fabricmc.loader.impl.launch.knot.KnotClassDelegate.loadClass(KnotClassDelegate.java:218) ~[fabric-loader-0.16.14.jar:?]
+	at net.fabricmc.loader.impl.launch.knot.KnotClassLoader.loadClass(KnotClassLoader.java:119) ~[fabric-loader-0.16.14.jar:?]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526) ~[?:?]
+	at knot/net.dawson.adorablehamsterpets.entity.custom.HamsterEntity.interactMob(HamsterEntity.java:1296) ~[10806763783480856908.jar:?]
+	at knot/net.minecraft.entity.mob.MobEntity.interact(MobEntity.java:1265) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.entity.player.PlayerEntity.interact(PlayerEntity.java:1121) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.client.network.ClientPlayerInteractionManager.interactEntity(ClientPlayerInteractionManager.java:421) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.client.MinecraftClient.doItemUse(MinecraftClient.java:1837) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.client.MinecraftClient.handleInputEvents(MinecraftClient.java:2111) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.client.MinecraftClient.tick(MinecraftClient.java:1938) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.client.MinecraftClient.render(MinecraftClient.java:1246) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.client.MinecraftClient.run(MinecraftClient.java:882) [minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.client.main.Main.main(Main.java:256) [minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at net.fabricmc.loader.impl.game.minecraft.MinecraftGameProvider.launch(MinecraftGameProvider.java:480) [fabric-loader-0.16.14.jar:?]
+	at net.fabricmc.loader.impl.launch.knot.Knot.launch(Knot.java:74) [fabric-loader-0.16.14.jar:?]
+	at net.fabricmc.loader.impl.launch.knot.KnotClient.main(KnotClient.java:23) [fabric-loader-0.16.14.jar:?]
+	at net.fabricmc.devlaunchinjector.Main.main(Main.java:86) [dev-launch-injector-0.2.1+build.8.jar:?]
+	at dev.architectury.transformer.TransformerRuntime.main(TransformerRuntime.java:220) [architectury-transformer-5.2.87-runtime.jar:5.2.87]
+Caused by: org.spongepowered.asm.mixin.transformer.throwables.IllegalClassLoadError: Illegal classload request for net.dawson.adorablehamsterpets.mixin.server.PlayerEntityMixin. Mixin is defined in adorablehamsterpets.mixins.json and cannot be referenced directly
+	at org.spongepowered.asm.mixin.transformer.MixinProcessor.applyMixins(MixinProcessor.java:334) ~[sponge-mixin-0.15.5+mixin.0.8.7.jar:0.15.5+mixin.0.8.7]
+	at org.spongepowered.asm.mixin.transformer.MixinTransformer.transformClass(MixinTransformer.java:234) ~[sponge-mixin-0.15.5+mixin.0.8.7.jar:0.15.5+mixin.0.8.7]
+	at org.spongepowered.asm.mixin.transformer.MixinTransformer.transformClassBytes(MixinTransformer.java:202) ~[sponge-mixin-0.15.5+mixin.0.8.7.jar:0.15.5+mixin.0.8.7]
+	at net.fabricmc.loader.impl.launch.knot.KnotClassDelegate.getPostMixinClassByteArray(KnotClassDelegate.java:422) ~[fabric-loader-0.16.14.jar:?]
+	... 19 more
+[13:30:14] [Server thread/ERROR] (Minecraft) Failed to handle packet net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket@62953c0e, suppressing error
+java.lang.RuntimeException: Mixin transformation of net.dawson.adorablehamsterpets.mixin.server.PlayerEntityMixin failed
+	at net.fabricmc.loader.impl.launch.knot.KnotClassDelegate.getPostMixinClassByteArray(KnotClassDelegate.java:427) ~[fabric-loader-0.16.14.jar:?]
+	at net.fabricmc.loader.impl.launch.knot.KnotClassDelegate.tryLoadClass(KnotClassDelegate.java:323) ~[fabric-loader-0.16.14.jar:?]
+	at net.fabricmc.loader.impl.launch.knot.KnotClassDelegate.loadClass(KnotClassDelegate.java:218) ~[fabric-loader-0.16.14.jar:?]
+	at net.fabricmc.loader.impl.launch.knot.KnotClassLoader.loadClass(KnotClassLoader.java:119) ~[fabric-loader-0.16.14.jar:?]
+	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:526) ~[?:?]
+	at knot/net.dawson.adorablehamsterpets.entity.custom.HamsterEntity.interactMob(HamsterEntity.java:1296) ~[10806763783480856908.jar:?]
+	at knot/net.minecraft.entity.mob.MobEntity.interact(MobEntity.java:1265) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.entity.player.PlayerEntity.interact(PlayerEntity.java:1121) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.server.network.ServerPlayNetworkHandler$1.processInteract(ServerPlayNetworkHandler.java:1617) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.server.network.ServerPlayNetworkHandler$1.interact(ServerPlayNetworkHandler.java:1628) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket$InteractHandler.handle(PlayerInteractEntityC2SPacket.java:124) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket.handle(PlayerInteractEntityC2SPacket.java:74) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.server.network.ServerPlayNetworkHandler.onPlayerInteractEntity(ServerPlayNetworkHandler.java:1610) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket.apply(PlayerInteractEntityC2SPacket.java:61) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket.apply(PlayerInteractEntityC2SPacket.java:15) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.network.NetworkThreadUtils.method_11072(NetworkThreadUtils.java:27) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.server.ServerTask.run(ServerTask.java:18) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.util.thread.ThreadExecutor.executeTask(ThreadExecutor.java:162) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.util.thread.ReentrantThreadExecutor.executeTask(ReentrantThreadExecutor.java:23) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.server.MinecraftServer.executeTask(MinecraftServer.java:864) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.server.MinecraftServer.executeTask(MinecraftServer.java:173) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.util.thread.ThreadExecutor.runTask(ThreadExecutor.java:136) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.server.MinecraftServer.runOneTask(MinecraftServer.java:846) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.server.MinecraftServer.runTask(MinecraftServer.java:840) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.util.thread.ThreadExecutor.runTasks(ThreadExecutor.java:145) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.server.MinecraftServer.runTasks(MinecraftServer.java:810) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.server.MinecraftServer.runTasksTillTickEnd(MinecraftServer.java:815) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.server.MinecraftServer.runServer(MinecraftServer.java:702) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at knot/net.minecraft.server.MinecraftServer.method_29739(MinecraftServer.java:281) ~[minecraft-merged-ebc50e261a-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar:?]
+	at java.base/java.lang.Thread.run(Thread.java:1583) [?:?]
+Caused by: org.spongepowered.asm.mixin.transformer.throwables.IllegalClassLoadError: Illegal classload request for net.dawson.adorablehamsterpets.mixin.server.PlayerEntityMixin. Mixin is defined in adorablehamsterpets.mixins.json and cannot be referenced directly
+	at org.spongepowered.asm.mixin.transformer.MixinProcessor.applyMixins(MixinProcessor.java:334) ~[sponge-mixin-0.15.5+mixin.0.8.7.jar:0.15.5+mixin.0.8.7]
+	at org.spongepowered.asm.mixin.transformer.MixinTransformer.transformClass(MixinTransformer.java:234) ~[sponge-mixin-0.15.5+mixin.0.8.7.jar:0.15.5+mixin.0.8.7]
+	at org.spongepowered.asm.mixin.transformer.MixinTransformer.transformClassBytes(MixinTransformer.java:202) ~[sponge-mixin-0.15.5+mixin.0.8.7.jar:0.15.5+mixin.0.8.7]
+	at net.fabricmc.loader.impl.launch.knot.KnotClassDelegate.getPostMixinClassByteArray(KnotClassDelegate.java:422) ~[fabric-loader-0.16.14.jar:?]
+	... 29 more
+[13:30:14] [Server thread/INFO] (Minecraft) Stopping server
+[13:30:14] [Server thread/INFO] (Minecraft) Saving players
+[13:30:14] [Server thread/INFO] (Minecraft) Saving worlds
+[13:30:14] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[13:30:14] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[13:30:14] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[13:30:14] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (New World): All chunks are saved
+[13:30:14] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[13:30:14] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[13:30:14] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage: All dimensions are saved

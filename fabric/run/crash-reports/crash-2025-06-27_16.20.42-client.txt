@@ -4,7 +4,7 @@
 Time: 2025-06-27 16:20:42
 Description: Initializing game
 
-java.lang.RuntimeException: Could not execute entrypoint stage 'main' due to errors, provided by 'adorablehamsterpets' at 'net.dawson.adorablehamsterpets.AdorableHamsterPetsFabric'!
+java.lang.RuntimeException: Could not execute entrypoint stage 'main' due to errors, provided by 'adorablehamsterpets' at 'net.dawson.adorablehamsterpets.fabric.AdorableHamsterPetsFabric'!
 	at net.fabricmc.loader.impl.FabricLoaderImpl.lambda$invokeEntrypoints$2(FabricLoaderImpl.java:403)
 	at net.fabricmc.loader.impl.util.ExceptionUtil.gatherExceptions(ExceptionUtil.java:33)
 	at net.fabricmc.loader.impl.FabricLoaderImpl.invokeEntrypoints(FabricLoaderImpl.java:401)
@@ -18,7 +18,7 @@ java.lang.RuntimeException: Could not execute entrypoint stage 'main' due to err
 Caused by: java.lang.AssertionError
 	at knot//net.dawson.adorablehamsterpets.world.ModSpawnPlacements.register(ModSpawnPlacements.java:18)
 	at knot//net.dawson.adorablehamsterpets.AdorableHamsterPets.init(AdorableHamsterPets.java:76)
-	at knot//net.dawson.adorablehamsterpets.AdorableHamsterPetsFabric.onInitialize(AdorableHamsterPetsFabric.java:14)
+	at knot//net.dawson.adorablehamsterpets.fabric.AdorableHamsterPetsFabric.onInitialize(AdorableHamsterPetsFabric.java:14)
 	at net.fabricmc.loader.impl.FabricLoaderImpl.invokeEntrypoints(FabricLoaderImpl.java:399)
 	... 7 more
 

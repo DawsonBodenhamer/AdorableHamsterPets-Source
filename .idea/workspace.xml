@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="052c5d33-d6bb-405e-abe0-6cb2032d8642" name="Changes" comment="[FIX] Attempt to resolve Architectury @ExpectPlatform crash&#10;&#10;This commit includes several changes aimed at fixing the AssertionError&#10;crash during Fabric client launch and addressing mixin load errors.&#10;&#10;- [FIX] Updated abric/build.gradle shadowJar block. &#10;&#10;Pushing this state to the repository for community review.">
-      <change afterPath="$PROJECT_DIR$/post.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/md5-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" afterDir="false" />
@@ -19,25 +18,62 @@
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___fabric__fabric.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___fabric__fabric.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___neoforge__neoforge.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___neoforge__neoforge.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/libs/adorablehamsterpets-2.0.0+adorablehamsterpets-sources.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/adorablehamsterpets-2.0.0+adorablehamsterpets-sources.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/libs/adorablehamsterpets-2.0.0+adorablehamsterpets.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/adorablehamsterpets-2.0.0+adorablehamsterpets.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/adorablehamsterpets-2.0.0+adorablehamsterpets-sources.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/adorablehamsterpets-2.0.0+adorablehamsterpets.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/.gradle/.architectury-transformer/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/common/.gradle/.architectury-transformer/debug.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/jar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/sourcesJar/MANIFEST.MF" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/common/build/devlibs/adorablehamsterpets-2.0.0+common-dev.jar" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/devlibs/adorablehamsterpets-2.0.0+common-dev.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/devlibs/adorablehamsterpets-2.0.0+common-sources.jar" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/devlibs/adorablehamsterpets-2.0.0+common-sources.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.0+common-sources.jar" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.0+common-sources.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build/devlibs/adorablehamsterpets-2.0.0+common-sources.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.0+common-sources.jar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.0+common-transformProductionFabric.jar" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.0+common-transformProductionFabric.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.0+common-transformProductionNeoForge.jar" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.0+common-transformProductionNeoForge.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.0+common.jar" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.0+common.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.0+common.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build/tmp/remapJar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build/tmp/remapSourcesJar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build/tmp/sourcesJar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build/tmp/transformProductionFabric/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build/tmp/transformProductionNeoForge/MANIFEST.MF" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/.gradle/architectury/.properties" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/.gradle/architectury/.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/devlibs/adorablehamsterpets-2.0.0+fabric-dev.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/devlibs/adorablehamsterpets-2.0.0+fabric-dev.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/devlibs/adorablehamsterpets-2.0.0+fabric-sources.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/devlibs/adorablehamsterpets-2.0.0+fabric-sources.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/libs/adorablehamsterpets-2.0.0+fabric-dev-shadow.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/libs/adorablehamsterpets-2.0.0+fabric-dev-shadow.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/libs/adorablehamsterpets-2.0.0+fabric-sources.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/libs/adorablehamsterpets-2.0.0+fabric-sources.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/libs/adorablehamsterpets-2.0.0+fabric.jar" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/libs/adorablehamsterpets-2.0.0+fabric.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/classes/java/main/net/dawson/adorablehamsterpets/AdorableHamsterPetsFabric.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/classes/java/main/net/dawson/adorablehamsterpets/client/AdorableHamsterPetsFabricClient.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/classes/java/main/net/dawson/adorablehamsterpets/datagen/AdorableHamsterPetsDataGenerator$ModWorldGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/classes/java/main/net/dawson/adorablehamsterpets/datagen/AdorableHamsterPetsDataGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/classes/java/main/net/dawson/adorablehamsterpets/datagen/EnUsGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/classes/java/main/net/dawson/adorablehamsterpets/datagen/ModLootTableProvider.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/classes/java/main/net/dawson/adorablehamsterpets/datagen/ModModelProvider.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/classes/java/main/net/dawson/adorablehamsterpets/datagen/ModRecipeProvider.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/classes/java/main/net/dawson/adorablehamsterpets/datagen/ModRegistryDataGenerator.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/devlibs/adorablehamsterpets-2.0.0+fabric-dev.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/devlibs/adorablehamsterpets-2.0.0+fabric-sources.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/libs/adorablehamsterpets-2.0.0+fabric-dev-shadow.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/libs/adorablehamsterpets-2.0.0+fabric-sources.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/libs/adorablehamsterpets-2.0.0+fabric.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/processIncludeJars/placeholder-api-2.4.2+1.21.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/resources/main/.cache/778697c168689b3784c0d9817e227a51696dbe36" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/resources/main/.cache/778697c168689b3784c0d9817e227a51696dbe36" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/resources/main/.cache/7b2c916d0b6db1227c89a5ae36cf1922bcd1040b" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/resources/main/.cache/7b2c916d0b6db1227c89a5ae36cf1922bcd1040b" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/resources/main/.cache/862d3fadba81080532b21d34d1b76a9b86b2c5b4" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/resources/main/.cache/862d3fadba81080532b21d34d1b76a9b86b2c5b4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/resources/main/.cache/87e66e82680f26ae4626e4314dd69903e74f411d" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/resources/main/.cache/87e66e82680f26ae4626e4314dd69903e74f411d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/resources/main/.cache/95c4d4df1763b8da1f13204a97c9f5ec3d7fc3ba" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/resources/main/.cache/95c4d4df1763b8da1f13204a97c9f5ec3d7fc3ba" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/tmp/jar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/tmp/remapJar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/tmp/remapSourcesJar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/tmp/shadowJar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/tmp/sourcesJar/MANIFEST.MF" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/run/.architectury-transformer/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/.architectury-transformer/debug.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/config/adorablehamsterpets/main.toml" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/config/adorablehamsterpets/main.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/config/fabric/indigo-renderer.properties" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/config/fabric/indigo-renderer.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/config/jade/usernamecache.json" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/config/jade/usernamecache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/crash-reports/crash-2025-06-27_16.15.20-client.txt" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/crash-reports/crash-2025-06-27_16.15.20-client.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/crash-reports/crash-2025-06-27_16.20.42-client.txt" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/crash-reports/crash-2025-06-27_16.20.42-client.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/crash-reports/crash-2025-06-27_16.33.27-client.txt" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/crash-reports/crash-2025-06-27_16.33.27-client.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/data/fabricDefaultResourcePacks.dat" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/data/fabricDefaultResourcePacks.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/logs/2025-06-28-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/2025-06-28-1.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/logs/2025-06-28-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/2025-06-28-2.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/logs/2025-06-28-3.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/2025-06-28-3.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/logs/2025-06-28-4.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/2025-06-28-4.log.gz" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/logs/2025-06-28-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/2025-06-28-5.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/run/logs/debug-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/debug-1.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/run/logs/debug-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/debug-2.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/run/logs/debug-3.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/debug-3.log.gz" afterDir="false" />
@@ -45,12 +81,57 @@
       <change beforePath="$PROJECT_DIR$/fabric/run/logs/debug-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/debug-5.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/run/logs/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/debug.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/run/logs/latest.log" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/latest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/saves/New World/DIM-1/data/raids.dat" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/saves/New World/DIM-1/data/raids.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/saves/New World/DIM1/data/raids_end.dat" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/saves/New World/DIM1/data/raids_end.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/saves/New World/data/raids.dat" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/saves/New World/data/raids.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/saves/New World/entities/r.-1.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/saves/New World/entities/r.-1.-1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/saves/New World/entities/r.-1.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/saves/New World/entities/r.-1.0.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/saves/New World/entities/r.0.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/saves/New World/entities/r.0.-1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/saves/New World/entities/r.0.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/saves/New World/entities/r.0.0.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/saves/New World/level.dat" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/saves/New World/level.dat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/saves/New World/level.dat_old" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/saves/New World/level.dat_old" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/saves/New World/region/r.-1.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/saves/New World/region/r.-1.-1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/saves/New World/region/r.-1.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/saves/New World/region/r.-1.0.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/saves/New World/region/r.-1.1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/saves/New World/region/r.-1.1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/saves/New World/region/r.0.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/saves/New World/region/r.0.-1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/saves/New World/region/r.0.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/saves/New World/region/r.0.0.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/saves/New World/region/r.0.1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/saves/New World/region/r.0.1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/saves/New World/region/r.1.-1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/saves/New World/region/r.1.-1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/saves/New World/region/r.1.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/saves/New World/region/r.1.0.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/saves/New World/region/r.1.1.mca" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/saves/New World/region/r.1.1.mca" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/run/usercache.json" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/usercache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/generated/.cache/778697c168689b3784c0d9817e227a51696dbe36" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/generated/.cache/778697c168689b3784c0d9817e227a51696dbe36" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/generated/.cache/7b2c916d0b6db1227c89a5ae36cf1922bcd1040b" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/generated/.cache/7b2c916d0b6db1227c89a5ae36cf1922bcd1040b" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/generated/.cache/862d3fadba81080532b21d34d1b76a9b86b2c5b4" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/generated/.cache/862d3fadba81080532b21d34d1b76a9b86b2c5b4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/generated/.cache/87e66e82680f26ae4626e4314dd69903e74f411d" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/generated/.cache/87e66e82680f26ae4626e4314dd69903e74f411d" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/generated/.cache/95c4d4df1763b8da1f13204a97c9f5ec3d7fc3ba" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/generated/.cache/95c4d4df1763b8da1f13204a97c9f5ec3d7fc3ba" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/AdorableHamsterPetsFabric.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/AdorableHamsterPetsFabric.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/client/AdorableHamsterPetsFabricClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/client/AdorableHamsterPetsFabricClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/AdorableHamsterPetsDataGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/AdorableHamsterPetsDataGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/EnUsGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/EnUsGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/ModLootTableProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/ModLootTableProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/ModModelProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/ModModelProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/ModRecipeProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/ModRecipeProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/datagen/ModRegistryDataGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/datagen/ModRegistryDataGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/neoforge/.gradle/architectury/.properties" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/.gradle/architectury/.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/build/devlibs/adorablehamsterpets-2.0.0+neoforge-dev.jar" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build/devlibs/adorablehamsterpets-2.0.0+neoforge-dev.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/build/devlibs/adorablehamsterpets-2.0.0+neoforge-sources.jar" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build/devlibs/adorablehamsterpets-2.0.0+neoforge-sources.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/build/libs/adorablehamsterpets-2.0.0+neoforge-dev-shadow.jar" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build/libs/adorablehamsterpets-2.0.0+neoforge-dev-shadow.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/build/libs/adorablehamsterpets-2.0.0+neoforge-sources.jar" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build/libs/adorablehamsterpets-2.0.0+neoforge-sources.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/classes/java/main/net/dawson/adorablehamsterpets/neoforge/AdorableHamsterPetsNeoForge.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/classes/java/main/net/dawson/adorablehamsterpets/neoforge/world/ModSpawnPlacementsImpl$SpawnPlacementData.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/classes/java/main/net/dawson/adorablehamsterpets/neoforge/world/ModSpawnPlacementsImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/devlibs/adorablehamsterpets-2.0.0+neoforge-dev.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/devlibs/adorablehamsterpets-2.0.0+neoforge-sources.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/libs/adorablehamsterpets-2.0.0+neoforge-dev-shadow.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/libs/adorablehamsterpets-2.0.0+neoforge-sources.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/libs/adorablehamsterpets-2.0.0+neoforge.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/resources/main/META-INF/neoforge.mods.toml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/tmp/jar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/tmp/remapJar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/tmp/remapSourcesJar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/tmp/shadowJar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/tmp/sourcesJar/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/net/dawson/adorablehamsterpets/neoforge/AdorableHamsterPetsNeoForge.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/net/dawson/adorablehamsterpets/neoforge/AdorableHamsterPetsNeoForge.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/net/dawson/adorablehamsterpets/neoforge/world/ModSpawnPlacementsImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/net/dawson/adorablehamsterpets/world/neoforge/ModSpawnPlacementsImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/post.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -406,7 +487,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751119448372</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="[FIX] Attempt to resolve Architectury @ExpectPlatform crash&#10;&#10;This commit includes several changes aimed at fixing the AssertionError&#10;crash during Fabric client launch and addressing mixin load errors.&#10;&#10;- [FIX] Updated abric/build.gradle shadowJar block. &#10;&#10;Pushing this state to the repository for community review.">
+      <option name="closed" value="true" />
+      <created>1751128807714</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1751128807714</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

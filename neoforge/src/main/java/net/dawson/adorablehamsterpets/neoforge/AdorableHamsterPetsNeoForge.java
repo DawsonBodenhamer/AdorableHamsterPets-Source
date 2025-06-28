@@ -1,7 +1,7 @@
 package net.dawson.adorablehamsterpets.neoforge;
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
-import net.dawson.adorablehamsterpets.neoforge.world.ModSpawnPlacementsImpl;
+import net.dawson.adorablehamsterpets.world.neoforge.ModSpawnPlacementsImpl;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 
