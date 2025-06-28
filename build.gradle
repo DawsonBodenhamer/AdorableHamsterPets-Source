@@ -23,10 +23,6 @@ allprojects {
     apply plugin: "java"
     apply plugin: "architectury-plugin"
 
-    architectury {
-        compileOnly()
-    }
-
     base {
         archivesName = rootProject.archives_base_name
     }

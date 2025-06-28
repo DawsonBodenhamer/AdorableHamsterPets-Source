@@ -1,4 +1,4 @@
-package net.dawson.adorablehamsterpets.fabric.datagen;
+package net.dawson.adorablehamsterpets.datagen;
 
 import net.dawson.adorablehamsterpets.world.gen.feature.ModConfiguredFeatures;
 import net.dawson.adorablehamsterpets.world.gen.feature.ModPlacedFeatures;

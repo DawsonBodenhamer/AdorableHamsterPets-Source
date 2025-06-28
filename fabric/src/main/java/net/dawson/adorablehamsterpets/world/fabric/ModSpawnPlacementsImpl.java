@@ -1,4 +1,4 @@
-package net.dawson.adorablehamsterpets.fabric.world;
+package net.dawson.adorablehamsterpets.world.fabric;
 
 import net.dawson.adorablehamsterpets.world.ModSpawnPlacements;
 import net.minecraft.entity.EntityType;

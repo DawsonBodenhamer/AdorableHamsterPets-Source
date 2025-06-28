@@ -1,4 +1,4 @@
-package net.dawson.adorablehamsterpets.fabric.client;
+package net.dawson.adorablehamsterpets.client;
 
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPetsClient;

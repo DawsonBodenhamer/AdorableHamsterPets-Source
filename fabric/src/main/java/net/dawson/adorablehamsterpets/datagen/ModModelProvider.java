@@ -1,4 +1,4 @@
-package net.dawson.adorablehamsterpets.fabric.datagen;
+package net.dawson.adorablehamsterpets.datagen;
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.block.ModBlocks;

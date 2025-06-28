@@ -1,4 +1,4 @@
-package net.dawson.adorablehamsterpets.fabric.datagen;
+package net.dawson.adorablehamsterpets.datagen;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
