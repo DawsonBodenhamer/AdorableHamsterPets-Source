@@ -227,6 +227,8 @@ public class AdorableHamsterPetsClient {
         if (!(entity instanceof HamsterEntity)) return;
 
         var renderer = client.getEntityRenderDispatcher().getRenderer(entity);
+        // THIS LINE CAUSES THE COMPILATION ERROR:
+        // "Inconvertible types; cannot cast 'net.minecraft.client.render.entity.EntityRenderer<capture<? super net.minecraft.entity.Entity>>' to 'net.dawson.adorablehamsterpets.entity.client.HamsterRenderer'"
         if (renderer instanceof HamsterRenderer hamsterRenderer) {
             switch (payload.particleId()) {
                 case "attack_poof":
