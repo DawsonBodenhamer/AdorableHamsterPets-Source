@@ -3,12 +3,14 @@ package net.dawson.adorablehamsterpets.entity.client;
 import dev.architectury.networking.NetworkManager;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.AdorableHamsterPetsClient;
+import net.dawson.adorablehamsterpets.client.sound.HamsterCleaningSoundInstance;
 import net.dawson.adorablehamsterpets.entity.client.layer.HamsterOverlayLayer;
 import net.dawson.adorablehamsterpets.entity.client.layer.HamsterPinkPetalOverlayLayer;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterVariant;
 import net.dawson.adorablehamsterpets.networking.payload.SpawnAttackParticlesPayload;
 import net.dawson.adorablehamsterpets.networking.payload.SpawnSeekingDustPayload;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -19,16 +21,18 @@ import org.joml.Vector3d;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
 
     private final float adultShadowRadius;
 
-    // --- 1. New Fields for Particle Spawning ---
+    // --- 1. Fields ---
     private boolean shouldSpawnAttackParticles = false;
     private boolean shouldSpawnSeekingDust = false;
-    // Don't need to store particleSpawnPos here, calculation and sending will be immediate in renderFinal
-    // --- End 1. New Fields ---
+    private static final Map<Integer, HamsterCleaningSoundInstance> activeCleaningSounds = new HashMap<>();
 
     public HamsterRenderer(EntityRendererFactory.Context ctx) {
         super(ctx, new HamsterModel());
@@ -52,18 +56,31 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
     @Override
     public void render(HamsterEntity entity, float entityYaw, float partialTick, MatrixStack poseStack,
                        VertexConsumerProvider bufferSource, int packedLight) {
-        // --- 1. Set Shadow Radius ---
+        // --- 1.1. Manage Cleaning Sound ---
+        boolean isCleaning = entity.getDataTracker().get(HamsterEntity.IS_CLEANING);
+        HamsterCleaningSoundInstance sound = activeCleaningSounds.get(entity.getId());
+
+        if (isCleaning && (sound == null || sound.isDone())) {
+            sound = new HamsterCleaningSoundInstance(entity);
+            activeCleaningSounds.put(entity.getId(), sound);
+            MinecraftClient.getInstance().getSoundManager().play(sound);
+        } else if (!isCleaning && sound != null) {
+            sound.stop();
+            activeCleaningSounds.remove(entity.getId());
+        }
+
+        // --- 1.2. Set Shadow Radius ---
         if (entity.isBaby()) {
             this.shadowRadius = this.adultShadowRadius * 0.5f;
         } else {
             this.shadowRadius = this.adultShadowRadius;
         }
 
-        // --- 2. Report to Client-Side Tracker ---
+        // --- 1.3. Report to Client-Side Tracker ---
         // Adds the entity's ID to a set to determine which entities are no longer being rendered.
         AdorableHamsterPetsClient.onHamsterRendered(entity.getId());
 
-        // --- 3. Call Superclass Method ---
+        // --- 1.4. Call Superclass Method ---
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 

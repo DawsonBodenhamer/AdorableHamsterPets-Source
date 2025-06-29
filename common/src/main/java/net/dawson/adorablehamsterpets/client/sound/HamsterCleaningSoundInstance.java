@@ -28,6 +28,10 @@ public class HamsterCleaningSoundInstance extends AbstractSoundInstance implemen
         this.attenuationType = AttenuationType.LINEAR;
     }
 
+    public void stop() {
+        this.done = true;
+    }
+
     @Override
     public boolean isDone() {
         return this.done;

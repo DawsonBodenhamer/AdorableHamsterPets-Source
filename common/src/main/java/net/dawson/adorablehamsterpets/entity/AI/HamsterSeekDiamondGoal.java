@@ -15,6 +15,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.minecraft.advancement.AdvancementEntry;
@@ -108,7 +109,7 @@ public class HamsterSeekDiamondGoal extends Goal {
         diamondOres.sort(Comparator.comparingDouble(pos -> pos.getSquaredDistance(hamster.getPos())));
         goldOres.sort(Comparator.comparingDouble(pos -> pos.getSquaredDistance(hamster.getPos())));
 
-        if (!goldOres.isEmpty() && this.world.random.nextFloat() < 0.33f) {
+        if (!goldOres.isEmpty() && this.world.random.nextFloat() < Configs.AHP.goldMistakeChance.get()) {
             this.targetOrePos = goldOres.get(0);
             this.isSeekingGold = true;
         } else {
@@ -242,13 +243,27 @@ public class HamsterSeekDiamondGoal extends Goal {
                 // Send message to the owner
                 sendMessageToOwner(owner);
             }
+
+            // --- Startled Jump & Sound Logic ---
+            // Calculate a vector pointing away from the target ore
+            Vec3d awayFromOre = this.hamster.getPos().subtract(Vec3d.ofCenter(this.targetOrePos)).normalize();
+            // Apply a small backward and upward velocity
+            this.hamster.setVelocity(awayFromOre.x * 0.1, 0.5, awayFromOre.z * 0.1);
+            this.hamster.velocityDirty = true; // Mark velocity for client sync
+            // Play a random bounce sound at the hamster's location
+            SoundEvent bounceSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_BOUNCE_SOUNDS, this.hamster.getRandom());
+            if (bounceSound != null) {
+                this.world.playSound(null, this.hamster.getBlockPos(), bounceSound, SoundCategory.NEUTRAL, 0.6f, this.hamster.getSoundPitch());
+            }
+            // --- End Startled Jump & Sound Logic ---
+
             this.hamster.setSulking(true);
             this.hamster.triggerAnimOnServer("mainController", "anim_hamster_sulk");
 
         } else {
             this.currentState = SeekingState.CELEBRATING_DIAMOND;
             this.hamster.setCelebratingDiamond(true); // Triggers begging animation
-            AdorableHamsterPets.LOGGER.info("Hamster {} reached CELEBRATING_DIAMOND state for ore at {}", this.hamster.getId(), this.targetOrePos);
+            AdorableHamsterPets.LOGGER.debug("Hamster {} reached CELEBRATING_DIAMOND state for ore at {}", this.hamster.getId(), this.targetOrePos);
 
             if (this.hamster.getOwner() instanceof ServerPlayerEntity serverPlayerOwner) {
                 ModCriteria.HAMSTER_LED_TO_DIAMOND.trigger(serverPlayerOwner, this.hamster, this.targetOrePos);
@@ -316,7 +331,7 @@ public class HamsterSeekDiamondGoal extends Goal {
         AdvancementEntry advancement = owner.server.getAdvancementLoader().get(advId);
 
         if (advancement == null) {
-            AdorableHamsterPets.LOGGER.error("Could not find advancement: {}", advId);
+            AdorableHamsterPets.LOGGER.debug("[GoldMessage] CRITICAL: Could not find advancement '{}'. Message will not be sent. Check file path and JSON validity.", advId);
             return;
         }
 

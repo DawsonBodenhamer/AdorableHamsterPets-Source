@@ -194,6 +194,10 @@ public class AhpConfig extends Config {
     @Translatable.Desc("How far a hamster scans once it’s decided to play prospector.")
     public ValidatedInt diamondSeekRadius = new ValidatedInt(10, 20, 5);
 
+    @Translatable.Name("Gold 'Mistake' Chance")
+    @Translatable.Desc("The probability (0.0 to 1.0) that a hamster will seek gold instead of diamond, if both are available. At 0.5, it's a coin toss. At 1.0, it's guaranteed hamster sulking.")
+    public ValidatedFloat goldMistakeChance = new ValidatedFloat(0.33f, 1.0f, 0.0f);
+
     @Translatable.Name("Enable Cooldown?")
     @Translatable.Desc("Force a cool-down after striking it rich. Off by default, since this can't happen again anyway without another mount/dismount on the shoulder.")
     public boolean enableIndependentDiamondSeekCooldown = false;

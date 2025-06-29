@@ -33,35 +33,25 @@ public class HamsterTemptGoal extends TemptGoal {
     @Override
     public boolean canStart() {
         // --- 1. Sitting Check ---
-        // If the hamster is currently sitting (which includes sleeping or knocked out),
-        // it cannot be tempted to move.
-        if (this.hamster.isSitting()) {
+        if (this.hamster.isSitting() || this.hamster.isCelebratingDiamond()) {
             return false;
         }
         // --- End 1. Sitting Check ---
 
         // --- 2. Superclass Logic ---
-        // If not sitting, defer to the vanilla TemptGoal's canStart logic,
-        // which handles cooldowns and finding the closest tempting player.
         return super.canStart();
-        // --- End 2. Superclass Logic ---
     }
 
     @Override
     public boolean shouldContinue() {
         // --- 1. Sitting Check ---
-        // If the hamster has started sitting (e.g., player commanded it to sit)
-        // while being tempted, the goal should stop.
-        if (this.hamster.isSitting()) {
+        if (this.hamster.isSitting() || this.hamster.isCelebratingDiamond()) {
             return false;
         }
         // --- End 1. Sitting Check ---
 
         // --- 2. Superclass Logic ---
-        // If not sitting, defer to the vanilla TemptGoal's shouldContinue logic,
-        // which includes scare checks and re-evaluating player temptation.
         return super.shouldContinue();
-        // --- End 2. Superclass Logic ---
     }
 
     @Override
@@ -86,7 +76,6 @@ public class HamsterTemptGoal extends TemptGoal {
             // If no valid tempting player, ensure begging state is off.
             this.hamster.setBegging(false);
         }
-        // --- End Begging State Logic ---
     }
 
     @Override

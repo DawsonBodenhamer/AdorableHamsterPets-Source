@@ -50,6 +50,14 @@ public class ModPackets {
         NetworkManager.registerReceiver(NetworkManager.Side.S2C, StartHamsterThrowSoundPayload.ID, StartHamsterThrowSoundPayload.CODEC,
                 (payload, context) -> context.queue(() -> AdorableHamsterPetsClient.handleStartThrowSound(payload))
         );
+
+        NetworkManager.registerReceiver(NetworkManager.Side.S2C, HamsterAnimationSoundPayload.ID, HamsterAnimationSoundPayload.CODEC,
+                (payload, context) -> context.queue(() -> AdorableHamsterPetsClient.handleAnimationSound(payload))
+        );
+
+        NetworkManager.registerReceiver(NetworkManager.Side.S2C, HamsterAnimationParticlePayload.ID, HamsterAnimationParticlePayload.CODEC,
+                (payload, context) -> context.queue(() -> AdorableHamsterPetsClient.handleAnimationParticle(payload))
+        );
     }
 
     // --- Server-Side Packet Handling Logic ---

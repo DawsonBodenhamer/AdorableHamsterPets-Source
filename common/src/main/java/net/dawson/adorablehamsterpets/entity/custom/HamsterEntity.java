@@ -1,10 +1,11 @@
 package net.dawson.adorablehamsterpets.entity.custom;
 
+import dev.architectury.networking.NetworkManager;
+import dev.architectury.registry.menu.ExtendedMenuProvider;
 import dev.architectury.registry.menu.MenuRegistry;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
-import net.dawson.adorablehamsterpets.client.sound.HamsterCleaningSoundInstance;
 import net.dawson.adorablehamsterpets.component.HamsterShoulderData;
 import net.dawson.adorablehamsterpets.config.AhpConfig;
 import net.dawson.adorablehamsterpets.config.Configs;
@@ -12,7 +13,8 @@ import net.dawson.adorablehamsterpets.entity.AI.*;
 import net.dawson.adorablehamsterpets.entity.ImplementedInventory;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.dawson.adorablehamsterpets.item.ModItems;
-import net.dawson.adorablehamsterpets.mixin.server.PlayerEntityMixin;
+import net.dawson.adorablehamsterpets.networking.payload.HamsterAnimationParticlePayload;
+import net.dawson.adorablehamsterpets.networking.payload.HamsterAnimationSoundPayload;
 import net.dawson.adorablehamsterpets.networking.payload.StartHamsterFlightSoundPayload;
 import net.dawson.adorablehamsterpets.networking.payload.StartHamsterThrowSoundPayload;
 import net.dawson.adorablehamsterpets.screen.HamsterInventoryScreenHandler;
@@ -20,18 +22,14 @@ import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.dawson.adorablehamsterpets.tag.ModItemTags;
 import net.dawson.adorablehamsterpets.util.HamsterRenderTracker;
 import net.dawson.adorablehamsterpets.world.gen.ModEntitySpawns;
-import dev.architectury.networking.NetworkManager;
-import dev.architectury.registry.menu.ExtendedMenuProvider;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.screen.ScreenHandler;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.AttackWithOwnerGoal;
+import net.minecraft.entity.ai.goal.RevengeGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.TrackOwnerAttackerGoal;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -48,12 +46,14 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.EntityEffectParticleEffect;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleEffect;
@@ -62,7 +62,9 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerChunkManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
@@ -76,7 +78,9 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.ServerWorldAccess;
@@ -93,6 +97,7 @@ import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 import static net.dawson.adorablehamsterpets.sound.ModSounds.HAMSTER_CELEBRATE_SOUNDS;
 import static net.dawson.adorablehamsterpets.sound.ModSounds.getRandomSoundFrom;
@@ -628,7 +633,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     @Unique private int sulkEntityEffectTicks = 0;
     @Unique private int sulkShockedSoundDelayTicks = 0;
     @Unique private int diamondSparkleSoundDelayTicks = 0;
-    @Unique @Nullable private HamsterCleaningSoundInstance cleaningSoundInstance;
 
 
     // --- Inventory ---
@@ -1886,14 +1890,21 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         }
         // --- End 3. Tamed Hamster "Path to Slumber" State Machine ---
 
-        // --- Client-Side Render State Tick ---
-        if (this.getWorld().isClient()) {
-            this.tickCleaningSound();
-        }
-
         // Call super.tick() *after* processing thrown state and timers
         super.tick();
 
+        // --- Apply extra gravity during sulking jump ---
+        // This runs on the server to ensure physics are authoritative.
+        if (!this.getWorld().isClient()) {
+            // If the hamster is sulking, not on the ground, and is currently falling (negative Y velocity)
+            if (this.isSulking() && !this.isOnGround() && this.getVelocity().y < 0) {
+                // Apply an extra downward force to make it fall faster.
+                // -0.08 is the standard gravity value, so adding it again effectively doubles it.
+                this.setVelocity(this.getVelocity().add(0.0, -1.0, 0.0));
+                this.velocityDirty = true; // Ensure client sees the change
+            }
+        }
+        // --- END Apply extra gravity during sulking jump ---
 
         // --- 4. Server-Side Logic ---
         World world = this.getWorld();
@@ -2346,90 +2357,36 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 .triggerableAnim("anim_hamster_wild_settle_sleep", WILD_SETTLE_SLEEP_ANIM)
                 .triggerableAnim("anim_hamster_sulk", SULK_ANIM)
                 .setParticleKeyframeHandler(event -> {
+                    if (this.getWorld().isClient()) return; // Server-side only
 
-                    // --- Handle Attack Particles ---
-                    if ("attack_poof".equals(event.getKeyframeData().getEffect())) {
-                        if (this.getWorld().isClient()) {
-                            var renderer = net.minecraft.client.MinecraftClient.getInstance().getEntityRenderDispatcher().getRenderer(this);
-                            if (renderer instanceof net.dawson.adorablehamsterpets.entity.client.HamsterRenderer hamsterRenderer) {
-                                hamsterRenderer.triggerAttackParticleSpawn();
-                            }
-                        }
-                    }
-                    // --- Handle Sniffing Particles ---
-                    if ("seeking_dust".equals(event.getKeyframeData().getEffect())) {
-                        if (this.getWorld().isClient()) {
-                            var renderer = MinecraftClient.getInstance().getEntityRenderDispatcher().getRenderer(this);
-                            if (renderer instanceof net.dawson.adorablehamsterpets.entity.client.HamsterRenderer hamsterRenderer) {
-                                hamsterRenderer.triggerSeekingDustSpawn();
-                            }
+                    String particleId = event.getKeyframeData().getEffect();
+                    if ("attack_poof".equals(particleId) || "seeking_dust".equals(particleId)) {
+                        HamsterAnimationParticlePayload payload = new HamsterAnimationParticlePayload(this.getId(), particleId);
+                        if (this.getWorld().getChunkManager() instanceof ServerChunkManager scm) {
+                            List<ServerPlayerEntity> trackingPlayers = scm.chunkLoadingManager.getPlayersWatchingChunk(this.getChunkPos());
+                            NetworkManager.sendToPlayers(trackingPlayers, payload);
                         }
                     }
                 })
-                // --- Handle Step and Begging Bounce Sounds ---
                 .setSoundKeyframeHandler(event -> {
-                    if (!this.getWorld().isClient()) return;
+                    if (this.getWorld().isClient()) return;
+
                     String soundEffect = event.getKeyframeData().getSound();
-                    // Handle Step Sounds
-                    if ("hamster_step_sound".equals(soundEffect)) {
-                        BlockPos pos = this.getBlockPos(); // If the block below the hamster is air, check one block further
-                        BlockState blockState = this.getWorld().getBlockState(pos.down());
-
-                        if (blockState.isAir()) {
-                            blockState = this.getWorld().getBlockState(pos.down(2));
-                        }
-                        if (!blockState.isAir()) {
-                            BlockSoundGroup group = blockState.getSoundGroup();
-                            SoundEvent stepSound = group.getStepSound();
-
-                            float volume = blockState.isOf(Blocks.GRAVEL)
-                                    ? (DEFAULT_FOOTSTEP_VOLUME * GRAVEL_VOLUME_MODIFIER)
-                                    : DEFAULT_FOOTSTEP_VOLUME;
-                            MinecraftClient.getInstance().getSoundManager().play(
-                                    new PositionedSoundInstance(
-                                            stepSound,
-                                            SoundCategory.NEUTRAL,
-                                            volume,
-                                            group.getPitch() * 1.5F,
-                                            this.random,
-                                            this.getX(), this.getY(), this.getZ()
-                                    )
-                            );
-                        }
-                    }
-                    // Handle Begging Bounce Sounds
-                    String effect = event.getKeyframeData().getSound();
-                    AdorableHamsterPets.LOGGER.debug("[SoundKeyframe] Hamster ID: {}, Effect: '{}'", this.getId(), effect);
-
-                    if ("hamster_beg_bounce".equals(effect)) {
-                        if (this.getWorld().isClient()) {
-                            SoundEvent bounceSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_BOUNCE_SOUNDS, this.random);
-                            if (bounceSound != null) {
-                                float basePitch = this.getSoundPitch();
-                                float randomPitchAddition = this.random.nextFloat() * 0.2f;
-                                float finalPitch = (basePitch * 1.2f) + randomPitchAddition; // Base pitch adjustment + random positive addition
-
-                                MinecraftClient.getInstance().getSoundManager().play(
-                                        new PositionedSoundInstance(
-                                                bounceSound,            // SoundEvent
-                                                SoundCategory.NEUTRAL,  // Category
-                                                0.6f,                   // Volume
-                                                finalPitch,             // Pitch
-                                                this.random,            // Random
-                                                this.getX(),            // X position
-                                                this.getY(),            // Y position
-                                                this.getZ()             // Z position
-                                        )
-                                );
-                                AdorableHamsterPets.LOGGER.debug("[SoundKeyframe CLIENT] Played bounce sound: {} at pitch {}", bounceSound.getId().getPath(), finalPitch);
-                            } else {
-                                AdorableHamsterPets.LOGGER.debug("[SoundKeyframe CLIENT] Could not get random bounce sound for 'hamster_beg_bounce'.");
-                            }
+                    if ("hamster_step_sound".equals(soundEffect) || "hamster_beg_bounce".equals(soundEffect)) {
+                        HamsterAnimationSoundPayload payload = new HamsterAnimationSoundPayload(this.getId(), soundEffect);
+                        if (this.getWorld().getChunkManager() instanceof ServerChunkManager scm) {
+                            List<ServerPlayerEntity> trackingPlayers = scm.chunkLoadingManager.getPlayersWatchingChunk(this.getChunkPos());
+                            NetworkManager.sendToPlayers(trackingPlayers, payload);
                         }
                     }
                 })
         );
     }
+
+
+
+
+
 
 
     @Override
@@ -2960,24 +2917,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     public void saveExtraData(PacketByteBuf buf) {
         // Write the entity's ID to the buffer. This is the "extra data" the client needs.
         buf.writeInt(this.getId());
-    }
-
-    /**
-     * Manages the lifecycle of the cleaning sound on the client.
-     * If the hamster is cleaning and no sound is playing, it starts a new
-     * {@link HamsterCleaningSoundInstance}. This ensures the sound loops
-     * correctly for the duration of the cleaning animation.
-     */
-    private void tickCleaningSound() {
-        if (!this.getWorld().isClient()) return;
-
-        boolean shouldBeCleaning = this.getDataTracker().get(HamsterEntity.IS_CLEANING);
-        boolean isSoundPlaying = this.cleaningSoundInstance != null && !this.cleaningSoundInstance.isDone();
-
-        if (shouldBeCleaning && !isSoundPlaying) {
-            this.cleaningSoundInstance = new HamsterCleaningSoundInstance(this);
-            MinecraftClient.getInstance().getSoundManager().play(this.cleaningSoundInstance);
-        }
     }
 
     /**

@@ -1,0 +1,63 @@
+{
+  "adorablehamsterpets:husbandry/nose_for_treasure": {
+    "criteria": {
+      "diamond_alert": "2025-06-29 10:47:33 -0500"
+    },
+    "done": true
+  },
+  "adorablehamsterpets:husbandry/root": {
+    "criteria": {
+      "always_unlock": "2025-06-29 10:47:33 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/gold_ingot_from_blasting_gold_ore": {
+    "criteria": {
+      "has_gold_ore": "2025-06-29 10:47:32 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/diamond_from_smelting_diamond_ore": {
+    "criteria": {
+      "has_diamond_ore": "2025-06-29 10:47:32 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/gold_ingot_from_smelting_gold_ore": {
+    "criteria": {
+      "has_gold_ore": "2025-06-29 10:47:32 -0500"
+    },
+    "done": true
+  },
+  "adorablehamsterpets:recipes/misc/hamster_guide_book_from_crafting": {
+    "criteria": {
+      "has_sliced_cucumber": "2025-06-29 10:47:32 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/crafting_table": {
+    "criteria": {
+      "unlock_right_away": "2025-06-29 10:47:32 -0500"
+    },
+    "done": true
+  },
+  "adorablehamsterpets:technical/hamster_found_gold_first_time": {
+    "criteria": {
+      "found_gold": "2025-06-29 10:47:53 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/diamond_from_blasting_diamond_ore": {
+    "criteria": {
+      "has_diamond_ore": "2025-06-29 10:47:32 -0500"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:plains": "2025-06-29 10:47:33 -0500"
+    },
+    "done": false
+  },
+  "DataVersion": 3955
+}

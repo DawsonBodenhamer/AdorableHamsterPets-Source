@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" factoryName="Application" name="Data Generation (:fabric)" type="Application">
-    <option name="MAIN_CLASS_NAME" value="net.fabricmc.devlaunchinjector.Main"/>
+    <option name="MAIN_CLASS_NAME" value="dev.architectury.transformer.TransformerRuntime"/>
     <module name="adorablehamsterpets.fabric.main"/>
-    <option name="PROGRAM_PARAMETERS" value="nogui"/>
-    <option name="VM_PARAMETERS" value="-Dfabric.dli.config=C:\Users\tweek\OneDrive\Documents\MY@@0020MINECRAFT@@0020MODS\Data\Repositories\Adorable@@0020Hamster@@0020Pets\fabric\.gradle\loom-cache\launch.cfg -Dfabric.dli.env=server -Dfabric-api.datagen -Dfabric-api.datagen.modid=adorablehamsterpets &quot;-Dfabric-api.datagen.output-dir=C:\Users\tweek\OneDrive\Documents\MY MINECRAFT MODS\Data\Repositories\Adorable Hamster Pets\fabric\src\main\generated&quot; -Dfabric.dli.main=net.fabricmc.loader.impl.launch.knot.KnotServer"/>
+    <option name="PROGRAM_PARAMETERS" value=""/>
+    <option name="VM_PARAMETERS" value="-Dfabric.dli.config=C:\mods\Data\Repositories\AdorableHamsterPets\fabric\.gradle\loom-cache\launch.cfg -Dfabric.dli.env=client -Dfabric-api.datagen -Dfabric-api.datagen.output-dir=C:\mods\Data\Repositories\AdorableHamsterPets\fabric\src\main\generated -Dfabric.dli.main=net.fabricmc.loader.impl.launch.knot.KnotClient -Darchitectury.main.class=C:\mods\Data\Repositories\AdorableHamsterPets\fabric\.gradle\architectury\.main_class -Darchitectury.runtime.transformer=C:\mods\Data\Repositories\AdorableHamsterPets\fabric\.gradle\architectury\.transforms -Darchitectury.properties=C:\mods\Data\Repositories\AdorableHamsterPets\fabric\.gradle\architectury\.properties -Djdk.attach.allowAttachSelf=true -javaagent:C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\architectury\architectury-transformer-agent.jar"/>
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/fabric/build/datagen/"/>
     <method v="2">
       <option enabled="true" name="Make"/>

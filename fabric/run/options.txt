@@ -122,14 +122,14 @@ key_key.hotbar.7:key.keyboard.7
 key_key.hotbar.8:key.keyboard.8
 key_key.hotbar.9:key.keyboard.9
 key_key.modmenu.open_menu:key.keyboard.unknown
+key_key.adorablehamsterpets.throw_hamster:key.keyboard.g
 key_key.jade.config:key.keyboard.keypad.0
 key_key.jade.show_overlay:key.keyboard.keypad.1
 key_key.jade.toggle_liquid:key.keyboard.keypad.2
 key_key.jade.narrate:key.keyboard.keypad.5
 key_key.jade.show_details_alternative:key.keyboard.unknown
-key_key.adorablehamsterpets.throw_hamster:key.keyboard.g
 soundCategory_master:1.0
-soundCategory_music:0.14788732394366197
+soundCategory_music:0.0
 soundCategory_record:1.0
 soundCategory_weather:1.0
 soundCategory_block:1.0

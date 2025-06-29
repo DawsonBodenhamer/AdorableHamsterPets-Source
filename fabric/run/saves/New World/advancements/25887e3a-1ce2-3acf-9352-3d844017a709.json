@@ -1,0 +1,81 @@
+{
+  "adorablehamsterpets:husbandry/nose_for_treasure": {
+    "criteria": {
+      "diamond_alert": "2025-06-29 10:55:16 -0500"
+    },
+    "done": true
+  },
+  "adorablehamsterpets:husbandry/shoulder_hamster": {
+    "criteria": {
+      "hamster_on_shoulder": "2025-06-29 10:55:15 -0500"
+    },
+    "done": true
+  },
+  "adorablehamsterpets:husbandry/root": {
+    "criteria": {
+      "always_unlock": "2025-06-29 10:54:57 -0500"
+    },
+    "done": true
+  },
+  "adorablehamsterpets:husbandry/tame_hamster": {
+    "criteria": {
+      "tamed_hamster": "2025-06-29 10:55:11 -0500"
+    },
+    "done": true
+  },
+  "minecraft:husbandry/tame_an_animal": {
+    "criteria": {
+      "tamed_animal": "2025-06-29 10:55:11 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/gold_ingot_from_blasting_gold_ore": {
+    "criteria": {
+      "has_gold_ore": "2025-06-29 10:54:56 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/diamond_from_smelting_diamond_ore": {
+    "criteria": {
+      "has_diamond_ore": "2025-06-29 10:54:56 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/gold_ingot_from_smelting_gold_ore": {
+    "criteria": {
+      "has_gold_ore": "2025-06-29 10:54:56 -0500"
+    },
+    "done": true
+  },
+  "adorablehamsterpets:recipes/misc/hamster_guide_book_from_crafting": {
+    "criteria": {
+      "has_sliced_cucumber": "2025-06-29 10:54:56 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/decorations/crafting_table": {
+    "criteria": {
+      "unlock_right_away": "2025-06-29 10:54:56 -0500"
+    },
+    "done": true
+  },
+  "adorablehamsterpets:technical/hamster_found_gold_first_time": {
+    "criteria": {
+      "found_gold": "2025-06-29 10:55:21 -0500"
+    },
+    "done": true
+  },
+  "minecraft:recipes/misc/diamond_from_blasting_diamond_ore": {
+    "criteria": {
+      "has_diamond_ore": "2025-06-29 10:54:56 -0500"
+    },
+    "done": true
+  },
+  "minecraft:adventure/adventuring_time": {
+    "criteria": {
+      "minecraft:plains": "2025-06-29 10:54:57 -0500"
+    },
+    "done": false
+  },
+  "DataVersion": 3955
+}

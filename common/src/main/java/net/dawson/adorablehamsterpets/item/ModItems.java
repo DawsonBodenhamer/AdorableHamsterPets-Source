@@ -36,41 +36,7 @@ public class ModItems {
 
     // --- 2. Change Item fields to RegistrySuppliers ---
     public static final RegistrySupplier<Item> HAMSTER_GUIDE_BOOK = registerItem("hamster_guide_book",
-            () -> new Item(new Item.Settings().maxCount(1)) {
-                @Override
-                public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-                    if (Configs.AHP.enableItemTooltips) {
-                        tooltip.add(Text.translatable("tooltip.adorablehamsterpets.hamster_guide_book.hint1").formatted(Formatting.GRAY));
-                    }
-                    WrittenBookContentComponent content = stack.get(DataComponentTypes.WRITTEN_BOOK_CONTENT);
-                    if (content != null && !content.title().raw().isEmpty()) {
-                        tooltip.add(Text.literal("Adorable Hamster Pets").formatted(Formatting.BLUE, Formatting.ITALIC));
-                    }
-                    super.appendTooltip(stack, context, tooltip, type);
-                }
-
-                @Override
-                public boolean isUsedOnRelease(ItemStack stack) {
-                    return true;
-                }
-
-                @Override
-                public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-                    ItemStack itemStack = user.getStackInHand(hand);
-                    if (itemStack.contains(DataComponentTypes.WRITTEN_BOOK_CONTENT)) {
-                        // Defer client-side screen opening to a helper class
-                        if (world.isClient) {
-                            BookScreen.Contents contents = BookScreen.Contents.create(itemStack);
-                            if (contents != null) {
-                                MinecraftClient.getInstance().setScreen(new BookScreen(contents));
-                            }
-                        }
-                        user.incrementStat(Stats.USED.getOrCreateStat(this));
-                        return TypedActionResult.success(itemStack, world.isClient());
-                    }
-                    return TypedActionResult.pass(itemStack);
-                }
-            });
+            () -> new net.dawson.adorablehamsterpets.item.custom.HamsterGuideBook(new Item.Settings().maxCount(1)));
 
     public static final RegistrySupplier<Item> HAMSTER_SPAWN_EGG = registerItem("hamster_spawn_egg",
             () -> new SpawnEggItem(ModEntities.HAMSTER.get(), 0x9c631f, 0xffffff, new Item.Settings()));

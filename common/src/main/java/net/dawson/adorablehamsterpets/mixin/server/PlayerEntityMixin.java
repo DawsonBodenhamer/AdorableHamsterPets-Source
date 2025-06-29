@@ -17,6 +17,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -96,7 +97,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         if (nbt.contains("ShoulderHamster", 10)) {
             this.setHamsterShoulderEntity(nbt.getCompound("ShoulderHamster"));
         }
-        this.adorablehamsterpets$lastGoldMessageIndex = nbt.getInt("LastGoldMessageIndex");
+        if (nbt.contains("LastGoldMessageIndex", NbtElement.INT_TYPE)) {
+            this.adorablehamsterpets$lastGoldMessageIndex = nbt.getInt("LastGoldMessageIndex");
+        } else {
+            this.adorablehamsterpets$lastGoldMessageIndex = -1; // Default to -1 if tag doesn't exist
+        }
     }
 
     // --- Player Removal Cleanup ---
