@@ -57,6 +57,14 @@ public class HamsterMeleeAttackGoal extends MeleeAttackGoal {
         // Logging moved to attack() method for better context
     }
 
+    @Override
+    public boolean canStart() {
+        // Check the master sitting state
+        if (this.hamster.isSitting()) {
+            return false;
+        }
+        return super.canStart();
+    }
 
     @Override
     public void start() {

@@ -10,4 +10,7 @@ import net.minecraft.nbt.NbtCompound;
 public interface PlayerEntityAccessor {
     NbtCompound getHamsterShoulderEntity();
     void setHamsterShoulderEntity(NbtCompound nbt);
+
+    int ahp_getLastGoldMessageIndex();
+    void ahp_setLastGoldMessageIndex(int index);
 }

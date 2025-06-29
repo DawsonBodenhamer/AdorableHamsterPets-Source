@@ -67,6 +67,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     private String adorablehamsterpets$lastDismountMessageKey = "";
     @Unique
     private boolean adorablehamsterpets$isDiamondAlertConditionMet = false;
+    @Unique
+    private int adorablehamsterpets$lastGoldMessageIndex = -1;
 
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
@@ -84,6 +86,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         if (!this.getHamsterShoulderEntity().isEmpty()) {
             nbt.put("ShoulderHamster", this.getHamsterShoulderEntity());
         }
+        if (this.adorablehamsterpets$lastGoldMessageIndex != -1) {
+            nbt.putInt("LastGoldMessageIndex", this.adorablehamsterpets$lastGoldMessageIndex);
+        }
     }
 
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
@@ -91,6 +96,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         if (nbt.contains("ShoulderHamster", 10)) {
             this.setHamsterShoulderEntity(nbt.getCompound("ShoulderHamster"));
         }
+        this.adorablehamsterpets$lastGoldMessageIndex = nbt.getInt("LastGoldMessageIndex");
     }
 
     // --- Player Removal Cleanup ---
@@ -261,5 +267,17 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                 creeper -> creeper.isAlive() && creeper.getTarget() == player && EntityPredicates.VALID_ENTITY.test(creeper)
         );
         return !nearbyCreepers.isEmpty();
+    }
+
+    @Unique
+    @Override
+    public int ahp_getLastGoldMessageIndex() {
+        return this.adorablehamsterpets$lastGoldMessageIndex;
+    }
+
+    @Unique
+    @Override
+    public void ahp_setLastGoldMessageIndex(int index) {
+        this.adorablehamsterpets$lastGoldMessageIndex = index;
     }
 }

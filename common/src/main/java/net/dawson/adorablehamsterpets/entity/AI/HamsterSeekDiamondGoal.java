@@ -11,8 +11,18 @@ import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
+import net.minecraft.advancement.AdvancementEntry;
+import net.minecraft.advancement.AdvancementProgress;
+import net.minecraft.advancement.PlayerAdvancementTracker;
+import net.minecraft.util.Formatting;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -225,14 +235,16 @@ public class HamsterSeekDiamondGoal extends Goal {
 
         if (this.isSeekingGold) {
             this.currentState = SeekingState.SULKING_AT_GOLD;
-            // Attempt to face owner if nearby
-            if (this.hamster.getOwner() instanceof ServerPlayerEntity owner && this.hamster.squaredDistanceTo(owner) < 36.0) { // Within 6 blocks
-                this.hamster.getLookControl().lookAt(owner, 30.0f, 30.0f);
+            if (this.hamster.getOwner() instanceof ServerPlayerEntity owner) {
+                if (this.hamster.squaredDistanceTo(owner) < 36.0) {
+                    this.hamster.getLookControl().lookAt(owner, 30.0f, 30.0f);
+                }
+                // Send message to the owner
+                sendMessageToOwner(owner);
             }
-            // The actual setSulking and triggerAnimOnServer will happen immediately after.
-            // Not sure if the "sulk" triggerable anim will allow the hamster to turn or not, we'll have to test
             this.hamster.setSulking(true);
             this.hamster.triggerAnimOnServer("mainController", "anim_hamster_sulk");
+
         } else {
             this.currentState = SeekingState.CELEBRATING_DIAMOND;
             this.hamster.setCelebratingDiamond(true); // Triggers begging animation
@@ -276,5 +288,67 @@ public class HamsterSeekDiamondGoal extends Goal {
         }
         this.currentState = SeekingState.IDLE;
         this.targetOrePos = null;
+    }
+
+    /**
+     * Selects and sends a humorous message to the hamster's owner about finding gold.
+     * <p>
+     * This method implements specific logic to enhance the player experience:
+     * <ul>
+     *     <li><b>First-Time Experience:</b> It checks if the player has the
+     *     {@code adorablehamsterpets:technical/hamster_found_gold_first_time} advancement.
+     *     If not, it sends a specific, predetermined message (index 0) and grants the
+     *     advancement to ensure this "first-time" message is only seen once per player.</li>
+     *     <li><b>Subsequent Experiences:</b> For all subsequent times, it retrieves the index of the
+     *     last message shown from the player's persistent NBT data (via the {@link PlayerEntityAccessor}).
+     *     It then randomly selects a new message from the available pool, guaranteeing it will not be the
+     *     same as the one shown immediately prior.</li>
+     *     <li><b>State Persistence:</b> The index of the newly displayed message is saved back to the
+     *     player's NBT data, ensuring the "don't repeat" logic works across game sessions.</li>
+     * </ul>
+     * The method also triggers the {@link ModCriteria#HAMSTER_FOUND_GOLD} criterion on every execution.
+     *
+     * @param owner The player who owns the hamster and will receive the message.
+     */
+    private void sendMessageToOwner(ServerPlayerEntity owner) {
+        PlayerAdvancementTracker tracker = owner.getAdvancementTracker();
+        Identifier advId = Identifier.of(AdorableHamsterPets.MOD_ID, "technical/hamster_found_gold_first_time");
+        AdvancementEntry advancement = owner.server.getAdvancementLoader().get(advId);
+
+        if (advancement == null) {
+            AdorableHamsterPets.LOGGER.error("Could not find advancement: {}", advId);
+            return;
+        }
+
+        AdvancementProgress progress = tracker.getProgress(advancement);
+        int messageIndex;
+
+        if (!progress.isDone()) {
+            // First time ever for this player
+            messageIndex = 0;
+            // Grant the advancement so this block doesn't run again
+            for (String criterion : advancement.value().criteria().keySet()) {
+                tracker.grantCriterion(advancement, criterion);
+            }
+        } else {
+            // Subsequent times
+            PlayerEntityAccessor accessor = (PlayerEntityAccessor) owner;
+            int lastIndex = accessor.ahp_getLastGoldMessageIndex();
+
+            List<Integer> possibleIndices = IntStream.range(0, 7).boxed().collect(Collectors.toList());
+            if (lastIndex >= 0 && lastIndex < 7) {
+                possibleIndices.remove(Integer.valueOf(lastIndex));
+            }
+
+            messageIndex = possibleIndices.get(this.world.random.nextInt(possibleIndices.size()));
+        }
+
+        // Save the new index and send the message
+        ((PlayerEntityAccessor) owner).ahp_setLastGoldMessageIndex(messageIndex);
+        String messageKey = "message.adorablehamsterpets.found_gold_mistake." + (messageIndex + 1);
+        owner.sendMessage(Text.translatable(messageKey).formatted(Formatting.GOLD), true);
+
+        // Trigger the criterion for any other potential uses
+        ModCriteria.HAMSTER_FOUND_GOLD.trigger(owner);
     }
 }

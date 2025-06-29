@@ -1,0 +1,11 @@
+{
+  "criteria": {
+    "found_gold": {
+      "trigger": "adorablehamsterpets:hamster_found_gold"
+    }
+  },
+  "rewards": {},
+  "display": {
+    "hidden": true
+  }
+}

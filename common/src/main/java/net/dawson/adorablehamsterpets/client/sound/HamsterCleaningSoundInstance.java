@@ -21,7 +21,7 @@ public class HamsterCleaningSoundInstance extends AbstractSoundInstance implemen
         // --- Properties ---
         this.repeat = true; // Loop the sound
         this.repeatDelay = 0;
-        this.volume = 1.0F;
+        this.volume = 2.0F;
         this.pitch = 1.0F;
 
         this.relative = false;

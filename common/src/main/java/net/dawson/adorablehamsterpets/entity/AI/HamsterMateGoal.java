@@ -23,16 +23,13 @@ public class HamsterMateGoal extends Goal {
 
     @Override
     public boolean canStart() {
-        // --- Add Logging ---
+        // Check the master sitting state
+        if (this.hamster.isSitting()) {
+            return false;
+        }
         boolean inLove = this.hamster.isInCustomLove();
-        AdorableHamsterPets.LOGGER.debug("[MateGoal {} Tick {}] canStart() check. isInCustomLove() = {}", this.hamster.getId(), this.hamster.getWorld().getTime(), inLove);
-        // --- End Logging ---
-
         if (inLove) {
             this.targetMate = this.getNearbyMate();
-            // --- Add Logging ---
-            AdorableHamsterPets.LOGGER.debug("[MateGoal {} Tick {}] Found potential mate: {}", this.hamster.getId(), this.hamster.getWorld().getTime(), this.targetMate != null ? this.targetMate.getId() : "null");
-            // --- End Logging ---
             return this.targetMate != null;
         }
         return false;

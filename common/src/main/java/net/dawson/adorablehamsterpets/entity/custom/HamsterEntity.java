@@ -2,6 +2,7 @@ package net.dawson.adorablehamsterpets.entity.custom;
 
 import dev.architectury.registry.menu.MenuRegistry;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
+import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
 import net.dawson.adorablehamsterpets.client.sound.HamsterCleaningSoundInstance;
 import net.dawson.adorablehamsterpets.component.HamsterShoulderData;
@@ -462,8 +463,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         // --- 1. Initial Setup ---
         World world = player.getWorld();
         // Cast player to the mixin interface to access custom methods
-        PlayerEntityMixin playerMixin = (PlayerEntityMixin)(Object)player;
-        NbtCompound shoulderNbt = playerMixin.getHamsterShoulderEntity();
+        PlayerEntityAccessor playerAccessor = (PlayerEntityAccessor) player;
+        NbtCompound shoulderNbt = playerAccessor.getHamsterShoulderEntity();
         final AhpConfig config = AdorableHamsterPets.CONFIG;
 
         // --- 2. Check for Shoulder Data & Config ---
@@ -499,7 +500,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             }
 
             // --- 5. Proceed with Throw ---
-            playerMixin.setHamsterShoulderEntity(new NbtCompound()); // Clear the shoulder data
+            playerAccessor.setHamsterShoulderEntity(new NbtCompound()); // Clear the shoulder data
 
             // --- 5a. Set Position and Velocity ---
             hamster.refreshPositionAndAngles(player.getX(), player.getEyeY() - 0.1, player.getZ(), player.getYaw(), player.getPitch());
@@ -533,7 +534,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             ModCriteria.HAMSTER_THROWN.trigger(player);
         } else {
             AdorableHamsterPets.LOGGER.error("[HamsterEntity] tryThrowFromShoulder: Failed to create HamsterEntity instance from NBT. Clearing shoulder data as a precaution.");
-            playerMixin.setHamsterShoulderEntity(new NbtCompound()); // Clear potentially corrupted data
+            playerAccessor.setHamsterShoulderEntity(new NbtCompound()); // Clear potentially corrupted data
         }
     }
 
@@ -678,7 +679,13 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     public void setVariant(int variantId) { this.dataTracker.set(VARIANT, variantId); }
     public boolean isSleeping() { return this.dataTracker.get(IS_SLEEPING); }
     public void setSleeping(boolean sleeping) { this.dataTracker.set(IS_SLEEPING, sleeping); }
-    @Override public boolean isSitting() {  return this.dataTracker.get(IS_SITTING) || this.dataTracker.get(IS_SLEEPING) || this.dataTracker.get(IS_KNOCKED_OUT); }
+    @Override
+    public boolean isSitting() {
+        return this.dataTracker.get(IS_SITTING)
+                || this.dataTracker.get(IS_SLEEPING)
+                || this.dataTracker.get(IS_KNOCKED_OUT)
+                || this.dataTracker.get(IS_SULKING);
+    }
     public boolean isBegging() { return this.dataTracker.get(IS_BEGGING); }
     public void setBegging(boolean value) { this.dataTracker.set(IS_BEGGING, value); }
     public boolean isInLove() { return this.dataTracker.get(IS_IN_LOVE); }
@@ -733,7 +740,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             this.sulkEntityEffectTicks = 0;
         }
     }
-
 
     // --- Inventory Implementation ---
     @Override
@@ -1164,7 +1170,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         if (this.isSulking()) {
             if (!world.isClient()) {
                 this.setSulking(false); // Turn off sulking
-                this.setSitting(false, true); // Make sure sitting doesn't get turned on
+                this.setSitting(false, true); // Ensure sitting is also cleared
                 SoundEvent affectionSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_AFFECTION_SOUNDS, this.random);
                 if (affectionSound != null) {
                     world.playSound(null, this.getBlockPos(), affectionSound, SoundCategory.NEUTRAL, 1.0f, this.getSoundPitch());
@@ -1293,14 +1299,14 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         if (this.isOwner(player)) {
             AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Player is owner. Processing owner interactions.", this.getId(), world.getTime());
             boolean isSneaking = player.isSneaking();
-            PlayerEntityMixin playerMixin = (PlayerEntityMixin)(Object)player; // Cast to mixin
+            PlayerEntityAccessor playerAccessor = (PlayerEntityAccessor) player;
 
             // --- 5a. Custom Owner Interactions ---
             // --- Shoulder Mounting with Cheese ---
             if (!isSneaking && stack.isOf(ModItems.CHEESE.get())) {
                 if (!world.isClient) {
                     // Check if shoulder is empty by checking the NBT compound from our DataTracker
-                    if (playerMixin.getHamsterShoulderEntity().isEmpty()) {
+                    if (playerAccessor.getHamsterShoulderEntity().isEmpty()) {
 
                         // --- Reset Sleep Sequence if Dozing ---
                         if (this.getDozingPhase() != DozingPhase.NONE) {
@@ -1311,7 +1317,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         HamsterShoulderData data = this.saveToShoulderData();
                         NbtCompound hamsterNbt = data.toNbt();
                         // Set the player's DataTracker with the new NBT
-                        playerMixin.setHamsterShoulderEntity(hamsterNbt);
+                        playerAccessor.setHamsterShoulderEntity(hamsterNbt);
 
                         BlockPos hamsterPosForCheeseSound = this.getBlockPos();
                         this.discard(); // Remove hamster from world
