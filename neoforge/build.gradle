@@ -1,7 +1,6 @@
 plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
 }
-evaluationDependsOn ':common'
 
 architectury {
     platformSetupLoomIde()
@@ -10,72 +9,65 @@ architectury {
 
 loom {
     accessWidenerPath = project(":common").loom.accessWidenerPath
-
-    mods {
-        main {
-            sourceSet sourceSets.main
-            sourceSet project(':common').sourceSets.main
-        }
-    }
 }
 
 configurations {
-    common
-    shadowCommon
+    common {
+        canBeResolved = true
+        canBeConsumed = false
+    }
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
     developmentNeoForge.extendsFrom common
+
+    shadowBundle {
+        canBeResolved = true
+        canBeConsumed = false
+    }
 }
 
 repositories {
     maven {
-        url = "https://maven.neoforged.net/releases/"
-        content {
-            includeGroupAndSubgroups "net.neoforged"
-            includeGroupAndSubgroups "cpw.mods"
-        }
+        name = 'NeoForged'
+        url = 'https://maven.neoforged.net/releases'
     }
+    // Kotlin for Forge is needed by Fzzy Config on NeoForge
     maven {
         url = "https://thedarkcolour.github.io/KotlinForForge/"
     }
 }
 
 dependencies {
-    neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
+    neoForge "net.neoforged:neoforge:$rootProject.neoforge_version"
     modImplementation "dev.architectury:architectury-neoforge:$rootProject.architectury_api_version"
 
-    // GeckoLib
+    // Add our mod's dependencies for NeoForge
     modImplementation "software.bernie.geckolib:geckolib-neoforge-$rootProject.minecraft_version:$rootProject.geckolib_version"
-
-    // Jade
     modImplementation "curse.maven:jade-324717:${rootProject.jade_version_neoforge}"
+    modImplementation "me.fzzyhmstrs:fzzy_config:${rootProject.fzzy_config_version}+neoforge"
+    modRuntimeOnly "thedarkcolour:kotlinforforge:${rootProject.kff_version}"
 
-    // Fzzy Config and its runtime dependencies
-    modRuntimeOnly "me.fzzyhmstrs:fzzy_config:${rootProject.fzzy_config_version}+neoforge"
-    modRuntimeOnly "maven.modrinth:kotlin-for-forge:${rootProject.kff_version}"
-
-    common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
+    // Standard Architectury setup to include the common project
+    common(project(path: ':common', configuration: 'namedElements')) { transitive false }
+    shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')
 }
 
 processResources {
-    inputs.property "version", project.version
+    inputs.property 'version', project.version
 
-    filesMatching("META-INF/neoforge.mods.toml") {
-        expand "version": project.version
+    filesMatching('META-INF/neoforge.mods.toml') {
+        expand version: project.version
     }
 }
 
 shadowJar {
+    configurations = [project.configurations.shadowBundle]
+    archiveClassifier = 'dev-shadow'
     exclude "fabric.mod.json"
-    exclude "architectury.common.json"
-
-    configurations = [project.configurations.shadowCommon]
-    archiveClassifier = "dev-shadow"
 }
 
 remapJar {
-    input.set shadowJar.archiveFile
+    inputFile.set shadowJar.archiveFile
     dependsOn shadowJar
 }
 
@@ -83,10 +75,4 @@ sourcesJar {
     def commonSources = project(":common").sourcesJar
     dependsOn commonSources
     from commonSources.archiveFile.map { zipTree(it) }
-}
-
-components.java {
-    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
-        skip()
-    }
 }

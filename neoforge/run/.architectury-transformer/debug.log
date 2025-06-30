@@ -1,7 +1,7 @@
 [Architectury Transformer] Architectury Runtime 5.2.87
 [Architectury Transformer DEBUG] Closed File Systems for C:\mods\Data\Repositories\AdorableHamsterPets\common\build\devlibs\adorablehamsterpets-2.0.0+common-dev.jar
 [Architectury Transformer DEBUG] Preparing tiny remapper prepared transformer: dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Provided 94 classpath jar(s):
+[Architectury Transformer DEBUG] Provided 97 classpath jar(s):
 [Architectury Transformer DEBUG]  - C:\Users\tweek\.gradle\caches\fabric-loom\1.21.1\neoforge\21.1.172\client-extra.jar
 [Architectury Transformer DEBUG]  - C:\Users\tweek\.gradle\caches\modules-2\files-2.1\dev.architectury\architectury-injectables\1.0.10\62db2a366d662606d1b23ad02ccc3212ed37ec3\architectury-injectables-1.0.10.jar
 [Architectury Transformer DEBUG]  - C:\Users\tweek\.gradle\caches\modules-2\files-2.1\net.fabricmc\fabric-loader\0.16.14\5778d47f536bf2c63ed2abc1a56f5a1c129e34a\fabric-loader-0.16.14.jar
@@ -96,56 +96,59 @@
 [Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge\dev\architectury\architectury-neoforge\13.0.8\architectury-neoforge-13.0.8.jar
 [Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge\software\bernie\geckolib\geckolib-neoforge-1.21.1\4.7.3\geckolib-neoforge-1.21.1-4.7.3.jar
 [Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge\curse\maven\jade-324717\6155158\jade-324717-6155158.jar
-[Architectury Transformer] Read classpath in 863.3 ms
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge\me\fzzyhmstrs\fzzy_config\0.7.0+1.21+neoforge\fzzy_config-0.7.0+1.21+neoforge.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge\org\jetbrains\kotlin\kotlin-stdlib\2.0.20\kotlin-stdlib-2.0.20.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge\org\jetbrains\annotations\13.0\annotations-13.0.jar
+[Architectury Transformer] Read classpath in 916.8 ms
 [Architectury Transformer DEBUG] Closed File Systems for C:\mods\Data\Repositories\AdorableHamsterPets\common\build\devlibs\adorablehamsterpets-2.0.0+common-dev.jar
-[Architectury Transformer DEBUG] Transforming 6 transformer(s) from C:\mods\Data\Repositories\AdorableHamsterPets\common\build\devlibs\adorablehamsterpets-2.0.0+common-dev.jar to C:\Users\tweek\AppData\Local\Temp\12539397517888839417.jar: 
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformExpectPlatform@8317c52
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.RemapInjectables@76f2bbc1
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformPlatformOnly@68e965f5
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeAnnotations@6f27a732
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment@6c779568
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.GenerateFakeNeoForgeMod@f381794
-[Architectury Transformer DEBUG] Transforming from C:\mods\Data\Repositories\AdorableHamsterPets\common\build\devlibs\adorablehamsterpets-2.0.0+common-dev.jar to C:\Users\tweek\AppData\Local\Temp\12539397517888839417.jar with 6 transformer(s) on dev.architectury.transformer.handler.SimpleTransformerHandler
+[Architectury Transformer DEBUG] Transforming 6 transformer(s) from C:\mods\Data\Repositories\AdorableHamsterPets\common\build\devlibs\adorablehamsterpets-2.0.0+common-dev.jar to C:\Users\tweek\AppData\Local\Temp\13534908650543386428.jar: 
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformExpectPlatform@f381794
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.RemapInjectables@2cdd0d4b
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformPlatformOnly@7e9131d5
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeAnnotations@2e1d27ba
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment@61d6015a
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.GenerateFakeNeoForgeMod@2525ff7e
+[Architectury Transformer DEBUG] Transforming from C:\mods\Data\Repositories\AdorableHamsterPets\common\build\devlibs\adorablehamsterpets-2.0.0+common-dev.jar to C:\Users\tweek\AppData\Local\Temp\13534908650543386428.jar with 6 transformer(s) on dev.architectury.transformer.handler.SimpleTransformerHandler
 [Architectury Transformer DEBUG] Remapping with 1 mapping provider(s):
-[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x0000024a0102fa90@306cf3ea
+[Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformNeoForgeEnvironment$$Lambda/0x00000278f902fa90@52102734
 [Architectury Transformer DEBUG] Remapping Classes:
 [Architectury Transformer DEBUG] net/fabricmc/api/EnvType -> net/neoforged/api/distmarker/Dist
 [Architectury Transformer DEBUG] net/fabricmc/api/Environment -> net/neoforged/api/distmarker/OnlyIn
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/AdorableHamsterPetsClient with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/ModRegistries with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/AdorableHamsterPets with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/ModRegistries with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/accessor/PlayerEntityAccessor with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterLedToDiamondCriterion$Conditions with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/FirstJoinCriterion with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/FedHamsterSteamedBeansCriterion$Conditions with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterLedToDiamondCriterion with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/FedHamsterSteamedBeansCriterion$Conditions with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterLedToDiamondCriterion$Conditions with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterOnShoulderCriterion$Conditions with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/FirstJoinCriterion$Conditions with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/CheekPouchUnlockedCriterion$Conditions with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterCreeperAlertCriterion$Conditions with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/AppliedPinkPetalCriterion with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/FirstJoinCriterion$Conditions with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterPouchFilledCriterion with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterFoundGoldCriterion$Conditions with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterFoundGoldCriterion with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterPouchFilledCriterion$Conditions with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterAutoFedCriterion with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/FedHamsterSteamedBeansCriterion with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterDiamondAlertCriterion$Conditions with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/ModCriteria with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterOnShoulderCriterion with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterCreeperAlertCriterion$Conditions with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterPouchFilledCriterion$Conditions with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterFoundGoldCriterion with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterFoundGoldCriterion$Conditions with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/AppliedPinkPetalCriterion with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterThrownCriterion with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterOnShoulderCriterion with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterDiamondAlertCriterion with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterAutoFedCriterion$Conditions with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/FedHamsterSteamedBeansCriterion with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/ModCriteria with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterDiamondAlertCriterion$Conditions with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/AppliedPinkPetalCriterion$Conditions with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterCreeperAlertCriterion with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/CheekPouchUnlockedCriterion with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterAutoFedCriterion$Conditions with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterCreeperAlertCriterion with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterThrownCriterion$Conditions with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/block/ModBlocks with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/block/custom/SunflowerBlock with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/block/custom/GreenBeansCropBlock with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/block/custom/WildGreenBeanBushBlock with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/block/custom/CucumberCropBlock with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/block/custom/GreenBeansCropBlock with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/block/custom/WildCucumberBushBlock with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/client/option/ModKeyBindings with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/client/sound/HamsterFlightSoundInstance with maxs=true frames=true
@@ -161,14 +164,14 @@
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/ModEntities with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterSeekDiamondGoal with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterMateGoal with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterLookAtEntityGoal with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterSleepGoal with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterLookAtEntityGoal with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterSeekDiamondGoal$SeekingState with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterFollowOwnerGoal with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterSitGoal with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterWanderAroundFarGoal with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterFleeGoal with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterMeleeAttackGoal with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterFleeGoal with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterTemptGoal with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterLookAroundGoal with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/client/HamsterRenderer with maxs=true frames=true
@@ -193,13 +196,13 @@
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$11 with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$9 with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$2 with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$6 with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$3 with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$7 with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$1 with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$8 with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$3 with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$6 with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$7 with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$4 with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$5 with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$8 with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModFoodComponents with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/custom/HamsterGuideBook with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/mixin/client/LivingEntityRendererInvoker with maxs=true frames=true
@@ -208,8 +211,8 @@
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/networking/ModPackets with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/networking/payload/ThrowHamsterPayload with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/networking/payload/StartHamsterFlightSoundPayload with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/networking/payload/HamsterAnimationSoundPayload with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/networking/payload/UpdateHamsterRenderStatePayload with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/networking/payload/HamsterAnimationSoundPayload with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/networking/payload/StartHamsterThrowSoundPayload with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/screen/HamsterInventoryScreenHandler with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/screen/ModScreenHandlers with maxs=true frames=true
@@ -219,13 +222,13 @@
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/sound/ModSounds with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/tag/ModItemTags with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/util/HamsterRenderTracker with maxs=true frames=true
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/world/ModSpawnPlacements with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/world/ModWorldGeneration with maxs=true frames=true
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/world/ModSpawnPlacements with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/world/gen/ModEntitySpawns with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/world/gen/feature/ModPlacedFeatures with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/world/gen/feature/ModConfiguredFeatures with maxs=true frames=true
-[Architectury Transformer DEBUG] Closed File Systems for C:\Users\tweek\AppData\Local\Temp\12539397517888839417.jar
+[Architectury Transformer DEBUG] Closed File Systems for C:\Users\tweek\AppData\Local\Temp\13534908650543386428.jar
 [Architectury Transformer] Listening at C:\mods\Data\Repositories\AdorableHamsterPets\common\build\devlibs\adorablehamsterpets-2.0.0+common-dev.jar
-[Architectury Transformer DEBUG] Temporary jar [C:\Users\tweek\AppData\Local\Temp\12539397517888839417.jar] contains packages: net.dawson.adorablehamsterpets.tag, net.dawson.adorablehamsterpets.entity.client.layer, net.dawson.adorablehamsterpets.advancement.criterion, net.dawson.adorablehamsterpets.world, net.dawson.adorablehamsterpets.block.custom, net.dawson.adorablehamsterpets.entity.client.model, net.dawson.adorablehamsterpets.entity.client, net.dawson.adorablehamsterpets, net.dawson.adorablehamsterpets.entity.client.feature, net.dawson.adorablehamsterpets.command, net.dawson.adorablehamsterpets.sound, net.dawson.adorablehamsterpets.util, net.dawson.adorablehamsterpets.entity, net.dawson.adorablehamsterpets.integration.jade, net.dawson.adorablehamsterpets.mixin.server, net.dawson.adorablehamsterpets.entity.AI, net.dawson.adorablehamsterpets.networking.payload, net.dawson.adorablehamsterpets.networking, net.dawson.adorablehamsterpets.entity.custom, net.dawson.adorablehamsterpets.client.sound, net.dawson.adorablehamsterpets.screen, net.dawson.adorablehamsterpets.screen.slot, net.dawson.adorablehamsterpets.mixin.client, net.dawson.adorablehamsterpets.client.option, net.dawson.adorablehamsterpets.accessor, net.dawson.adorablehamsterpets.config, net.dawson.adorablehamsterpets.world.gen.feature, net.dawson.adorablehamsterpets.world.gen, net.dawson.adorablehamsterpets.component, net.dawson.adorablehamsterpets.item.custom, net.dawson.adorablehamsterpets.item, net.dawson.adorablehamsterpets.block
+[Architectury Transformer DEBUG] Temporary jar [C:\Users\tweek\AppData\Local\Temp\13534908650543386428.jar] contains packages: net.dawson.adorablehamsterpets.tag, net.dawson.adorablehamsterpets.entity.client.layer, net.dawson.adorablehamsterpets.advancement.criterion, net.dawson.adorablehamsterpets.world, net.dawson.adorablehamsterpets.block.custom, net.dawson.adorablehamsterpets.entity.client.model, net.dawson.adorablehamsterpets.entity.client, net.dawson.adorablehamsterpets, net.dawson.adorablehamsterpets.entity.client.feature, net.dawson.adorablehamsterpets.command, net.dawson.adorablehamsterpets.sound, net.dawson.adorablehamsterpets.util, net.dawson.adorablehamsterpets.entity, net.dawson.adorablehamsterpets.integration.jade, net.dawson.adorablehamsterpets.mixin.server, net.dawson.adorablehamsterpets.entity.AI, net.dawson.adorablehamsterpets.networking.payload, net.dawson.adorablehamsterpets.networking, net.dawson.adorablehamsterpets.entity.custom, net.dawson.adorablehamsterpets.client.sound, net.dawson.adorablehamsterpets.screen, net.dawson.adorablehamsterpets.screen.slot, net.dawson.adorablehamsterpets.mixin.client, net.dawson.adorablehamsterpets.client.option, net.dawson.adorablehamsterpets.accessor, net.dawson.adorablehamsterpets.config, net.dawson.adorablehamsterpets.world.gen.feature, net.dawson.adorablehamsterpets.world.gen, net.dawson.adorablehamsterpets.component, net.dawson.adorablehamsterpets.item.custom, net.dawson.adorablehamsterpets.item, net.dawson.adorablehamsterpets.block
 [Architectury Transformer DEBUG] Closed File Systems for C:\mods\Data\Repositories\AdorableHamsterPets\common\build\devlibs\adorablehamsterpets-2.0.0+common-dev.jar
 [Architectury Transformer DEBUG] Classpath entry [C:\mods\Data\Repositories\AdorableHamsterPets\neoforge\build\resources\main] contains packages: 
