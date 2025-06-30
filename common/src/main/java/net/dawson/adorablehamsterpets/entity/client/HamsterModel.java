@@ -16,7 +16,8 @@ import software.bernie.geckolib.renderer.GeoRenderer;
 public class HamsterModel extends GeoModel<HamsterEntity> {
 
     // --- 1. Constants for Scaling and Positioning ---
-    private static final float ADULT_SCALE = 1.0f;
+    private static final float ADULT_SCALE = 0.8f;
+    private static final float ADULT_HEAD_SCALE = 1.0f;
     private static final float BABY_SCALE = 0.5f;
     private static final float BABY_HEAD_SCALE = 1.2f;
     // --- End 1. Constants ---
@@ -104,9 +105,9 @@ public class HamsterModel extends GeoModel<HamsterEntity> {
                 rootBone.setScaleY(ADULT_SCALE);
                 rootBone.setScaleZ(ADULT_SCALE);
 
-                headParentBone.setScaleX(ADULT_SCALE);
-                headParentBone.setScaleY(ADULT_SCALE);
-                headParentBone.setScaleZ(ADULT_SCALE);
+                headParentBone.setScaleX(ADULT_HEAD_SCALE);
+                headParentBone.setScaleY(ADULT_HEAD_SCALE);
+                headParentBone.setScaleZ(ADULT_HEAD_SCALE);
             }
         }
         // --- End Baby/Adult Scaling Logic ---

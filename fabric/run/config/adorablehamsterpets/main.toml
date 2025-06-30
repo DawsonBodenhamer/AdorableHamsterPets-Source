@@ -39,7 +39,7 @@ enableIndependentDiamondSeeking = true
 # How far a hamster scans once it’s decided to play prospector.
 diamondSeekRadius = 20
 # The probability (0.0 to 1.0) that a hamster will seek gold instead of diamond, if both are available. At 0.5, it's a coin toss. At 1.0, it's guaranteed hamster sulking.
-goldMistakeChance = 1.0
+goldMistakeChance = 0.33333334
 # Force a cool-down after striking it rich. Off by default, since this can't happen again anyway without another mount/dismount on the shoulder.
 enableIndependentDiamondSeekCooldown = false
 # Cooldown before your hamster can go on another treasure hunt. (20 ticks = 1 s)

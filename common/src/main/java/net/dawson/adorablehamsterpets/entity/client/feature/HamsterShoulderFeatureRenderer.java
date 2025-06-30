@@ -31,12 +31,12 @@ public class HamsterShoulderFeatureRenderer
         extends FeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
 
     // --- 1. Constants ---
-    private static final float BABY_SCALE = 0.5f;
-    private static final float ADULT_SCALE = 0.8f;
+    private static final float BABY_SCALE = 0.4f;
+    private static final float ADULT_SCALE = 0.7f;
     private static final float BABY_Y_OFFSET_SNEAKING = -0.55F;
-    private static final float BABY_Y_OFFSET_STANDING = -0.75F;
+    private static final float BABY_Y_OFFSET_STANDING = -0.60F;
     private static final float ADULT_Y_OFFSET_SNEAKING = -0.85F;
-    private static final float ADULT_Y_OFFSET_STANDING = -1.13F;
+    private static final float ADULT_Y_OFFSET_STANDING = -1.05F;
     // --- End 1. Constants ---
 
     // --- 2. Fields ---

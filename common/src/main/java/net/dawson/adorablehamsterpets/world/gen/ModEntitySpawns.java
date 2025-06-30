@@ -106,7 +106,7 @@ public class ModEntitySpawns {
                 BiomeKeys.MEADOW, BiomeKeys.OLD_GROWTH_BIRCH_FOREST, BiomeKeys.WINDSWEPT_HILLS,
                 BiomeKeys.WINDSWEPT_GRAVELLY_HILLS, BiomeKeys.WINDSWEPT_FOREST,
                 BiomeKeys.WINDSWEPT_SAVANNA, BiomeKeys.STONY_PEAKS, BiomeKeys.JUNGLE,
-                BiomeKeys.SPARSE_JUNGLE, BiomeKeys.BAMBOO_JUNGLE, BiomeKeys.STONY_SHORE,
+                BiomeKeys.SPARSE_JUNGLE, BiomeKeys.BAMBOO_JUNGLE, BiomeKeys.STONY_SHORE, BiomeKeys.MUSHROOM_FIELDS,
                 // Include keys for biomes that are also covered by tags, for completeness
                 BiomeKeys.FOREST, BiomeKeys.BIRCH_FOREST, BiomeKeys.DARK_FOREST,
                 BiomeKeys.TAIGA, BiomeKeys.OLD_GROWTH_PINE_TAIGA, BiomeKeys.OLD_GROWTH_SPRUCE_TAIGA,

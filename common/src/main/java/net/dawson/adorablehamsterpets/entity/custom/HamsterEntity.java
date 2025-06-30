@@ -13,7 +13,6 @@ import net.dawson.adorablehamsterpets.entity.AI.*;
 import net.dawson.adorablehamsterpets.entity.ImplementedInventory;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.dawson.adorablehamsterpets.item.ModItems;
-import net.dawson.adorablehamsterpets.networking.payload.HamsterAnimationParticlePayload;
 import net.dawson.adorablehamsterpets.networking.payload.HamsterAnimationSoundPayload;
 import net.dawson.adorablehamsterpets.networking.payload.StartHamsterFlightSoundPayload;
 import net.dawson.adorablehamsterpets.networking.payload.StartHamsterThrowSoundPayload;
@@ -97,7 +96,6 @@ import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 import static net.dawson.adorablehamsterpets.sound.ModSounds.HAMSTER_CELEBRATE_SOUNDS;
 import static net.dawson.adorablehamsterpets.sound.ModSounds.getRandomSoundFrom;
@@ -240,58 +238,43 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     // --- Hamster Spawning In Different Biomes ---
     // Determine Which Hamster Variant for Each Biome
     private static HamsterVariant determineVariantForBiome(RegistryEntry<Biome> biomeEntry, net.minecraft.util.math.random.Random random) {
-        String biomeKeyStr = biomeEntry.getKey().map(key -> key.getValue().toString()).orElse("UNKNOWN");
-        AdorableHamsterPets.LOGGER.trace("[DetermineVariant] Checking biome: {}", biomeKeyStr);
-
         // --- 1. Specific Rare Biomes First ---
         if (ModEntitySpawns.isIceSpikesBiome(biomeEntry)) {
-            AdorableHamsterPets.LOGGER.trace("  - Matched: Ice Spikes Key");
             if (random.nextInt(10) < 3) {
-                AdorableHamsterPets.LOGGER.trace("    - Ice Spikes Roll: White");
                 return getRandomVariant(WHITE_VARIANTS, random);
             } else {
-                AdorableHamsterPets.LOGGER.trace("    - Ice Spikes Roll: Blue");
                 return getRandomVariant(BLUE_VARIANTS, random);
             }
         } else if (ModEntitySpawns.isCherryGroveBiome(biomeEntry)) {
-            AdorableHamsterPets.LOGGER.trace("  - Matched: Cherry Grove Key");
+            return getRandomVariant(LAVENDER_VARIANTS, random);
+        } else if (biomeEntry.matchesKey(BiomeKeys.MUSHROOM_FIELDS)) {
             return getRandomVariant(LAVENDER_VARIANTS, random);
         }
         // --- End 1. Specific Rare Biomes First ---
 
         // --- 2. General Biome Categories ---
         else if (ModEntitySpawns.isSnowyBiome(biomeEntry)) {
-            AdorableHamsterPets.LOGGER.trace("  - Matched: Snowy Keys (excluding Ice Spikes)");
             return getRandomVariant(WHITE_VARIANTS, random);
         } else if (ModEntitySpawns.isOldGrowthBirchForest(biomeEntry)) {
-            AdorableHamsterPets.LOGGER.trace("  - Matched: Old Growth Birch Forest Key");
             return getRandomVariant(CREAM_VARIANTS, random);
         } else if (ModEntitySpawns.isCaveBiome(biomeEntry)) {
-            AdorableHamsterPets.LOGGER.trace("  - Matched: Cave Keys (Lush/Dripstone/DeepDark)");
             int chance = random.nextInt(4);
             if (chance < 2) { return getRandomVariant(BLACK_VARIANTS, random); }
             else if (chance == 2) { return getRandomVariant(DARK_GRAY_VARIANTS, random); }
             else { return getRandomVariant(LIGHT_GRAY_VARIANTS, random); }
         } else if (ModEntitySpawns.isSwampBiome(biomeEntry)) {
-            AdorableHamsterPets.LOGGER.trace("  - Matched: Swamp Keys");
             return getRandomVariant(BLACK_VARIANTS, random);
         } else if (ModEntitySpawns.isDesertBiome(biomeEntry)) {
-            AdorableHamsterPets.LOGGER.trace("  - Matched: Desert Key");
             return getRandomVariant(CREAM_VARIANTS, random);
         } else if (biomeEntry.isIn(BiomeTags.IS_BADLANDS)) {
-            AdorableHamsterPets.LOGGER.trace("  - Matched: BiomeTags.IS_BADLANDS");
             return getRandomVariant(ORANGE_VARIANTS, random);
         } else if (biomeEntry.isIn(BiomeTags.IS_BEACH) && !ModEntitySpawns.isSnowyBiome(biomeEntry)) {
-            AdorableHamsterPets.LOGGER.trace("  - Matched: BiomeTags.IS_BEACH (non-snowy)");
             return getRandomVariant(CREAM_VARIANTS, random);
         } else if ((biomeEntry.isIn(BiomeTags.IS_FOREST) || biomeEntry.isIn(BiomeTags.IS_TAIGA) || ModEntitySpawns.isJungleBiome(biomeEntry)) && !ModEntitySpawns.isSnowyBiome(biomeEntry) && !ModEntitySpawns.isCherryGroveBiome(biomeEntry) && !ModEntitySpawns.isOldGrowthBirchForest(biomeEntry)) {
-            AdorableHamsterPets.LOGGER.trace("  - Matched: BiomeTags.IS_FOREST/IS_TAIGA/IS_JUNGLE (non-snowy, non-cherry, non-old-birch)");
             return getRandomVariant(CHOCOLATE_VARIANTS, random);
         } else if (biomeEntry.isIn(BiomeTags.IS_SAVANNA) || ModEntitySpawns.isPlainsBiome(biomeEntry)) {
-            AdorableHamsterPets.LOGGER.trace("  - Matched: BiomeTags.IS_SAVANNA or Plains Keys");
             return getRandomVariant(ORANGE_VARIANTS, random);
         } else if ((biomeEntry.isIn(BiomeTags.IS_MOUNTAIN) || biomeEntry.matchesKey(BiomeKeys.STONY_SHORE) || ModEntitySpawns.isWindsweptOrStonyPeaks(biomeEntry)) && !ModEntitySpawns.isSnowyBiome(biomeEntry) && !ModEntitySpawns.isIceSpikesBiome(biomeEntry)) {
-            AdorableHamsterPets.LOGGER.trace("  - Matched: BiomeTags.IS_MOUNTAIN or specific stony/windswept keys (non-snowy, non-ice-spikes)");
             boolean lightOrDarkGrayChance = random.nextBoolean();
             if (lightOrDarkGrayChance) { return getRandomVariant(DARK_GRAY_VARIANTS, random); }
             else { return getRandomVariant(LIGHT_GRAY_VARIANTS, random); }
@@ -300,7 +283,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
         // --- 3. Default Fallback ---
         else {
-            AdorableHamsterPets.LOGGER.trace("  - No specific tags/keys matched. Using default ORANGE.");
             return getRandomVariant(ORANGE_VARIANTS, random);
         }
     }
@@ -633,6 +615,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     @Unique private int sulkEntityEffectTicks = 0;
     @Unique private int sulkShockedSoundDelayTicks = 0;
     @Unique private int diamondSparkleSoundDelayTicks = 0;
+    @Unique public transient String particleEffectId = null;
+    @Unique public transient String soundEffectId = null;
 
 
     // --- Inventory ---
@@ -2356,29 +2340,18 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 .triggerableAnim("anim_hamster_settle_sleep3", SETTLE_SLEEP3_ANIM)
                 .triggerableAnim("anim_hamster_wild_settle_sleep", WILD_SETTLE_SLEEP_ANIM)
                 .triggerableAnim("anim_hamster_sulk", SULK_ANIM)
+
+                // --- Handle Keyframe Particles ---
                 .setParticleKeyframeHandler(event -> {
-                    if (this.getWorld().isClient()) return; // Server-side only
-
-                    String particleId = event.getKeyframeData().getEffect();
-                    if ("attack_poof".equals(particleId) || "seeking_dust".equals(particleId)) {
-                        HamsterAnimationParticlePayload payload = new HamsterAnimationParticlePayload(this.getId(), particleId);
-                        if (this.getWorld().getChunkManager() instanceof ServerChunkManager scm) {
-                            List<ServerPlayerEntity> trackingPlayers = scm.chunkLoadingManager.getPlayersWatchingChunk(this.getChunkPos());
-                            NetworkManager.sendToPlayers(trackingPlayers, payload);
-                        }
-                    }
+                    // Sets a transient flag on the entity with the particle effect's ID.
+                    // The renderer polls this flag each frame to spawn particles on the client.
+                    this.particleEffectId = event.getKeyframeData().getEffect();
                 })
-                .setSoundKeyframeHandler(event -> {
-                    if (this.getWorld().isClient()) return;
 
-                    String soundEffect = event.getKeyframeData().getSound();
-                    if ("hamster_step_sound".equals(soundEffect) || "hamster_beg_bounce".equals(soundEffect)) {
-                        HamsterAnimationSoundPayload payload = new HamsterAnimationSoundPayload(this.getId(), soundEffect);
-                        if (this.getWorld().getChunkManager() instanceof ServerChunkManager scm) {
-                            List<ServerPlayerEntity> trackingPlayers = scm.chunkLoadingManager.getPlayersWatchingChunk(this.getChunkPos());
-                            NetworkManager.sendToPlayers(trackingPlayers, payload);
-                        }
-                    }
+                // --- Handle Keyframe Sounds ---
+                .setSoundKeyframeHandler(event -> {
+                    // This just sets a flag. The renderer will handle it on the client.
+                    this.soundEffectId = event.getKeyframeData().getSound();
                 })
         );
     }

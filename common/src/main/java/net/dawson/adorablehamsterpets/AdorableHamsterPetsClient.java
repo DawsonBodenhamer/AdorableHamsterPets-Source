@@ -20,6 +20,7 @@ import net.dawson.adorablehamsterpets.entity.client.ModModelLayers;
 import net.dawson.adorablehamsterpets.entity.client.model.HamsterShoulderModel;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.item.ModItems;
+import net.dawson.adorablehamsterpets.networking.ModPackets;
 import net.dawson.adorablehamsterpets.networking.payload.*;
 import net.dawson.adorablehamsterpets.screen.HamsterInventoryScreen;
 import net.dawson.adorablehamsterpets.screen.ModScreenHandlers;
@@ -29,16 +30,21 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.BookScreen;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
+import org.joml.Matrix4f;
+import org.joml.Vector3d;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -58,6 +64,9 @@ public class AdorableHamsterPetsClient {
 
         // --- Screens and Handlers ---
         MenuRegistry.registerScreenFactory(ModScreenHandlers.HAMSTER_INVENTORY_SCREEN_HANDLER.get(), HamsterInventoryScreen::new);
+
+        // --- Server to Client Packets ---
+        ModPackets.registerS2CPackets();
 
         // --- Keybinds ---
         ModKeyBindings.registerKeyInputs();
@@ -141,103 +150,6 @@ public class AdorableHamsterPetsClient {
         Entity entity = client.world.getEntityById(payload.hamsterEntityId());
         if (entity instanceof HamsterEntity hamster) {
             client.getSoundManager().play(new HamsterThrowSoundInstance(ModSounds.HAMSTER_THROW.get(), SoundCategory.PLAYERS, hamster));
-        }
-    }
-
-    /**
-     * Handles incoming sound requests from the server, triggered by animation keyframes.
-     * <p>
-     * This method is called on the client thread when a {@link HamsterAnimationSoundPayload}
-     * is received. It looks up the specified hamster entity in the client's world and
-     * plays a sound based on the provided sound ID. This approach ensures that all
-     * client-side sound classes (like {@code PositionedSoundInstance}) are only ever
-     * referenced on the client, preventing server-side crashes.
-     *
-     * @param payload The data packet containing the target hamster's entity ID and the
-     *                string identifier for the sound to be played (e.g., "hamster_step_sound").
-     */
-    public static void handleAnimationSound(HamsterAnimationSoundPayload payload) {
-        MinecraftClient client = MinecraftClient.getInstance();
-        if (client.world == null || client.player == null) return;
-
-        Entity entity = client.world.getEntityById(payload.hamsterEntityId());
-        if (!(entity instanceof HamsterEntity hamster)) return;
-
-        switch (payload.soundId()) {
-            case "hamster_step_sound":
-                BlockPos pos = hamster.getBlockPos();
-                BlockState blockState = hamster.getWorld().getBlockState(pos.down());
-
-                if (blockState.isAir()) {
-                    blockState = hamster.getWorld().getBlockState(pos.down(2));
-                }
-                if (!blockState.isAir()) {
-                    BlockSoundGroup group = blockState.getSoundGroup();
-                    SoundEvent stepSound = group.getStepSound();
-
-                    float volume = blockState.isOf(Blocks.GRAVEL)
-                            ? (0.10F * 0.60F)   // If GRAVEL, set the volume to 60% of the default (0.06F).
-                            : 0.10F;            // If not GRAVEL, use the default volume (0.10F).
-                    client.getSoundManager().play(
-                            new PositionedSoundInstance(
-                                    stepSound, SoundCategory.NEUTRAL, volume,
-                                    group.getPitch() * 1.5F, hamster.getRandom(),
-                                    hamster.getX(), hamster.getY(), hamster.getZ()
-                            )
-                    );
-                }
-                break;
-
-            case "hamster_beg_bounce":
-                SoundEvent bounceSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_BOUNCE_SOUNDS, hamster.getRandom());
-                if (bounceSound != null) {
-                    float basePitch = hamster.getSoundPitch();
-                    float randomPitchAddition = hamster.getRandom().nextFloat() * 0.2f;
-                    float finalPitch = (basePitch * 1.2f) + randomPitchAddition;
-
-                    client.getSoundManager().play(
-                            new PositionedSoundInstance(
-                                    bounceSound, SoundCategory.NEUTRAL, 0.6f, finalPitch,
-                                    hamster.getRandom(), hamster.getX(), hamster.getY(), hamster.getZ()
-                            )
-                    );
-                }
-                break;
-        }
-    }
-
-    /**
-     * Handles incoming particle requests from the server, triggered by animation keyframes.
-     * <p>
-     * This method is called on the client thread when a {@link HamsterAnimationParticlePayload}
-     * is received. It finds the appropriate {@link HamsterRenderer} for the target entity
-     * and calls a method on it to trigger the particle spawning logic in the next render frame.
-     * This client-side handling is necessary because only the client can accurately calculate
-     * the world position of an animated bone, which is then sent back to the server for
-     * authoritative particle spawning.
-     *
-     * @param payload The data packet containing the target hamster's entity ID and the
-     *                string identifier for the particle effect (e.g., "attack_poof").
-     */
-    public static void handleAnimationParticle(HamsterAnimationParticlePayload payload) {
-        MinecraftClient client = MinecraftClient.getInstance();
-        if (client.world == null || client.player == null) return;
-
-        Entity entity = client.world.getEntityById(payload.hamsterEntityId());
-        if (!(entity instanceof HamsterEntity)) return;
-
-        var renderer = client.getEntityRenderDispatcher().getRenderer(entity);
-        // THIS LINE CAUSES THE COMPILATION ERROR:
-        // "Inconvertible types; cannot cast 'net.minecraft.client.render.entity.EntityRenderer<capture<? super net.minecraft.entity.Entity>>' to 'net.dawson.adorablehamsterpets.entity.client.HamsterRenderer'"
-        if (renderer instanceof HamsterRenderer hamsterRenderer) {
-            switch (payload.particleId()) {
-                case "attack_poof":
-                    hamsterRenderer.triggerAttackParticleSpawn();
-                    break;
-                case "seeking_dust":
-                    hamsterRenderer.triggerSeekingDustSpawn();
-                    break;
-            }
         }
     }
 }

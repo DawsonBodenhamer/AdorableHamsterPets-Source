@@ -6,10 +6,9 @@ import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.block.ModBlocks;
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ingame.BookScreen;
+import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.WrittenBookContentComponent;
+import net.minecraft.component.type.FoodComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
@@ -19,12 +18,9 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.world.World;
-import net.dawson.adorablehamsterpets.sound.ModSounds;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -168,7 +164,7 @@ public class ModItems {
 
                 @Override
                 public SoundEvent getEatSound() {
-                    return ModSounds.CHEESE_EAT_SOUND.get();
+                    return ModSounds.CHEESE_EAT1.get();
                 }
 
                 @Override
@@ -179,6 +175,29 @@ public class ModItems {
                 @Override
                 public int getMaxUseTime(ItemStack stack, LivingEntity user) {
                     return 20; // Custom eating time
+                }
+
+                @Override
+                public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
+                    if (user instanceof PlayerEntity player) {
+                        FoodComponent foodComponent = stack.get(DataComponentTypes.FOOD);
+                        if (foodComponent != null) {
+                            player.getHungerManager().eat(foodComponent);
+                        }
+
+                        player.incrementStat(Stats.USED.getOrCreateStat(this));
+
+                        SoundEvent randomEatSound = ModSounds.getRandomSoundFrom(ModSounds.CHEESE_EAT_SOUNDS, world.random);
+                        if (randomEatSound != null) {
+                            world.playSound(null, player.getX(), player.getY(), player.getZ(), randomEatSound, player.getSoundCategory(), 1.2F, 1.0F + (world.random.nextFloat() - world.random.nextFloat()) * 0.4F);
+                        }
+                    }
+
+                    if (!(user instanceof PlayerEntity player) || !player.getAbilities().creativeMode) {
+                        stack.decrement(1);
+                    }
+
+                    return stack;
                 }
             });
 

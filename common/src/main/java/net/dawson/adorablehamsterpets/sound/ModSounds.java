@@ -102,9 +102,11 @@ public class ModSounds {
     public static final RegistrySupplier<SoundEvent> HAMSTER_WAKE_UP2 = registerSoundEvent("hamster_wake_up2");
     public static final RegistrySupplier<SoundEvent> HAMSTER_WAKE_UP3 = registerSoundEvent("hamster_wake_up3");
 
-    // --- Item Interaction Sounds ---
+    // --- Cheese Sounds ---
     public static final RegistrySupplier<SoundEvent> CHEESE_USE_SOUND = registerSoundEvent("cheese_use");
-    public static final RegistrySupplier<SoundEvent> CHEESE_EAT_SOUND = registerSoundEvent("cheese_eat");
+    public static final RegistrySupplier<SoundEvent> CHEESE_EAT1 = registerSoundEvent("cheese_eat1");
+    public static final RegistrySupplier<SoundEvent> CHEESE_EAT2 = registerSoundEvent("cheese_eat2");
+    public static final RegistrySupplier<SoundEvent> CHEESE_EAT3 = registerSoundEvent("cheese_eat3");
 
     // --- Shoulder Mount/Dismount Sounds ---
     public static final RegistrySupplier<SoundEvent> HAMSTER_MOUNT1 = registerSoundEvent("hamster_mount1");
@@ -144,6 +146,7 @@ public class ModSounds {
     public static final List<RegistrySupplier<SoundEvent>> HAMSTER_CELEBRATE_SOUNDS = List.of(HAMSTER_CELEBRATE1, HAMSTER_CELEBRATE2, HAMSTER_CELEBRATE3, HAMSTER_CELEBRATE4);
     public static final List<RegistrySupplier<SoundEvent>> HAMSTER_FLYING_SOUNDS = List.of(HAMSTER_WOW, HAMSTER_AIRBORNE_CELEBRATION);
     public static final List<RegistrySupplier<SoundEvent>> HAMSTER_WAKE_UP_SOUNDS = List.of(HAMSTER_WAKE_UP1, HAMSTER_WAKE_UP2, HAMSTER_WAKE_UP3);
+    public static final List<RegistrySupplier<SoundEvent>> CHEESE_EAT_SOUNDS = List.of(CHEESE_EAT1, CHEESE_EAT2, CHEESE_EAT3);
     public static final List<RegistrySupplier<SoundEvent>> HAMSTER_SHOULDER_MOUNT_SOUNDS = List.of(HAMSTER_MOUNT1, HAMSTER_MOUNT2, HAMSTER_MOUNT3);
     public static final List<RegistrySupplier<SoundEvent>> HAMSTER_BOUNCE_SOUNDS = List.of(HAMSTER_BOUNCE);
     public static final List<RegistrySupplier<SoundEvent>> HAMSTER_AFFECTION_SOUNDS = List.of(HAMSTER_AFFECTION1, HAMSTER_AFFECTION2, HAMSTER_AFFECTION3);

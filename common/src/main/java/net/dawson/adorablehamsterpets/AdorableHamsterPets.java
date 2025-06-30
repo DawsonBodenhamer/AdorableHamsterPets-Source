@@ -60,8 +60,8 @@ public class AdorableHamsterPets {
 			ModRegistries.initialize();
 
 
-			// --- Networking Registration ---
-			ModPackets.register();
+			// --- Networking Client to Server Registration ---
+			ModPackets.registerC2SPackets();
 
 
 			// --- World Gen & Spawns ---

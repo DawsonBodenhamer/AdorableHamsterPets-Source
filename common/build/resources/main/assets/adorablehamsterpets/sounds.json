@@ -253,11 +253,17 @@
       "adorablehamsterpets:cheese_use"
     ]
   },
-  "cheese_eat": {
+  "cheese_eat1": {
     "subtitle": "subtitles.adorablehamsterpets.cheese_eat",
-    "sounds": [
-      "adorablehamsterpets:cheese_eat"
-    ]
+    "sounds": [ "adorablehamsterpets:cheese_eat1" ]
+  },
+  "cheese_eat2": {
+    "subtitle": "subtitles.adorablehamsterpets.cheese_eat",
+    "sounds": [ "adorablehamsterpets:cheese_eat2" ]
+  },
+  "cheese_eat3": {
+    "subtitle": "subtitles.adorablehamsterpets.cheese_eat",
+    "sounds": [ "adorablehamsterpets:cheese_eat3" ]
   },
   "hamster_mount1": {
     "subtitle": "subtitles.adorablehamsterpets.hamster_mount",

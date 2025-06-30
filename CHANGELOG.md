@@ -24,6 +24,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - **Architectury Multi-Loader Support:** The entire mod has been refactored from a Fabric-only project to an Architectury project, enabling official support for both Fabric and NeoForge from a common codebase.
+- A new configuration option, "Gold 'Mistake' Chance", to control the probability of a hamster mistakenly finding gold instead of diamond.
+- A startled jump, complete with a bounce sound effect, that plays when a hamster "mistakenly" finds gold ore.
+- A new message that appears when a hamster finds gold, in case that feature might be confusing for new players who expected it to find diamond.
+- Two additional sound variants for eating cheese to make the audio feel more natural.
 
 ### Changed
 - **Complete Refactor to Architectury API:** The entire mod has been refactored from a Fabric-only project to a cross-platform Architectury project. This makes the codebase platform-agnostic and ensures future features can be developed for both loaders simultaneously. Key changes include:
@@ -32,7 +36,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Replaced Fabric-specific events (Player Join, Commands) with their cross-platform Architectury equivalents.
   - Replaced the Fabric-only `AttachmentType` system for shoulder riding with a vanilla `DataTracker` system, mimicking the vanilla parrot mechanic for better stability and compatibility.
   - Implemented an `@ExpectPlatform` bridge to handle loader-specific spawn restriction logic, keeping the common codebase clean.
-- **Rebalanced Wild Bush Spawning:** The spawn locations for Wild Cucumber Bushes and Wild Green Bean Bushes have been adjusted. Cucumber Bushes (for the essential taming item) are now much more common and appear in a wider variety of temperate biomes. Green Bean Bushes (for the optional buff item) are now less common and are focused in more specific "lush" or "wet" biomes.
+- Adjusted spawn locations for Wild Cucumber Bushes and Wild Green Bean Bushes. Cucumber Bushes (for the essential taming item) are now much more common and appear in a wider variety of temperate biomes. Green Bean Bushes (for the optional buff item) are now less common and are focused in more specific "lush" or "wet" biomes.
+- Lavender hamsters now spawn in Mushroom Fields as well as Cherry Groves, making them more discoverable and it just seems to fit. They are almost the color of Mycelium after all.
+- The base hamster model has been scaled down to 80% of its original size for improved aesthetics.
+- The shoulder-mounted hamster model has been scaled down to 90% of its original size and raised slightly for improved aesthetics.
+- The volume of the hamster cleaning sound has been doubled.
+- The volume of the cheese eating sound effect has been increased by 20%. Hehe.
+- 
+### Fixed
+- **Resolved a critical server crash** caused by client-side classes (`Screen`, `SoundInstance`, `MinecraftClient`) being referenced in common code. All client-only logic for the guidebook, sounds, and particles is now correctly handled on the client, allowing the mod to run on dedicated servers.
+- Fixed multiple crashes caused by illegally casting to a Mixin class (`PlayerEntityMixin`) instead of its proper accessor interface (`PlayerEntityAccessor`) when interacting with or throwing a hamster.
+- Fixed a bug where `HamsterTemptGoal` would incorrectly activate while a hamster was in the "sulking" state.
 
 ---
 
