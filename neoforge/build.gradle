@@ -31,7 +31,6 @@ repositories {
         name = 'NeoForged'
         url = 'https://maven.neoforged.net/releases'
     }
-    // Kotlin for Forge is needed by Fzzy Config on NeoForge
     maven {
         url = "https://thedarkcolour.github.io/KotlinForForge/"
     }
@@ -44,8 +43,19 @@ dependencies {
     // Add our mod's dependencies for NeoForge
     modImplementation "software.bernie.geckolib:geckolib-neoforge-$rootProject.minecraft_version:$rootProject.geckolib_version"
     modImplementation "curse.maven:jade-324717:${rootProject.jade_version_neoforge}"
-    modImplementation "me.fzzyhmstrs:fzzy_config:${rootProject.fzzy_config_version}+neoforge"
-    modRuntimeOnly "thedarkcolour:kotlinforforge:${rootProject.kff_version}"
+
+    // --- START: Dependency Conflict Resolution ---
+    // 1. Implement Fzzy Config but EXCLUDE its transitive dependency on kotlinforforge.
+    //    This prevents Gradle from pulling in a version we don't control.
+    modImplementation("me.fzzyhmstrs:fzzy_config:${rootProject.fzzy_config_version}+neoforge") {
+        exclude group: 'thedarkcolour', module: 'kotlinforforge'
+    }
+
+    // 2. Now, explicitly declare the EXACT version of Kotlin for Forge we need.
+    //    The logs indicated Fzzy Config uses 5.4.0. We use 'modRuntimeOnly' as it's a language provider.
+    modRuntimeOnly "thedarkcolour:kotlinforforge-neoforge:5.4.0"
+    // --- END: Dependency Conflict Resolution ---
+
 
     // Standard Architectury setup to include the common project
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }

@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="052c5d33-d6bb-405e-abe0-6cb2032d8642" name="Changes" comment="[CHORE] Prepare for Neoforge testing&#10;&#10;This commit focuses on critical server-side compatibility fixes, quality-of-life improvements, and polishing the ore-seeking feature.&#10;&#10;- [FIX] Resolved multiple server crashes by correctly separating client/server logic for packet registration, item interactions, and keyframe events.&#10;- [FIX] Prevented AI goals from activating during the hamster's sulking state.&#10;- [FEAT] Added a config option for the gold ore &quot;mistake&quot; chance.&#10;- [FEAT] Added a startled jump and multiple new messages to the gold-finding event.&#10;- [STYLE] Adjusted hamster model scale, shoulder position, and various sound effect volumes.">
-      <change afterPath="$PROJECT_DIR$/common/src/main/resources/assets/adorablehamsterpets/sounds/cheese_eat1.ogg" afterDir="false" />
+    <list default="true" id="052c5d33-d6bb-405e-abe0-6cb2032d8642" name="Changes" comment="[CHORE] Pushing to GitHub so Deep Research can access">
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/md5-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" afterDir="false" />
@@ -13,18 +12,16 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Client___neoforge__neoforge.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Client___neoforge__neoforge.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___fabric__fabric.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___fabric__fabric.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___neoforge__neoforge.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___neoforge__neoforge.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/world/gen/ModEntitySpawns.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/world/gen/ModEntitySpawns.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/.gradle/architectury/.properties" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/.gradle/architectury/.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/neoforge/.gradle/architectury/.properties" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/.gradle/architectury/.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/.gradle/loom-cache/remapClasspath.txt" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/.gradle/loom-cache/remapClasspath.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/neoforge/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/loom-cache/argFiles/runClient" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build/loom-cache/argFiles/runClient" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/neoforge/run/.architectury-transformer/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/run/.architectury-transformer/debug.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/neoforge/run/logs/debug-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/run/logs/debug-1.log.gz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/neoforge/run/logs/debug-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/run/logs/debug-2.log.gz" afterDir="false" />
@@ -437,7 +434,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751243395974</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="[CHORE] Pushing to GitHub so Deep Research can access">
+      <option name="closed" value="true" />
+      <created>1751295924805</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1751295924805</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -466,8 +471,8 @@
     <MESSAGE value="[FIX] Attempt to resolve Architectury @ExpectPlatform crash&#10;&#10;This commit includes several changes aimed at fixing the AssertionError&#10;crash during Fabric client launch and addressing mixin load errors.&#10;&#10;- [FIX] Updated abric/build.gradle shadowJar block. &#10;&#10;Pushing this state to the repository for community review." />
     <MESSAGE value="[REFACTOR] Complete migration to Architectury multi-loader structure&#10;&#10;This commit finalizes the full migration of the project from a Fabric-only setup to a modern Architectury workspace, enabling multi-loader support for Fabric (still need to test NeoForge).&#10;&#10;- [FIX] Resolved a cascade of build script and classpath errors, including `ClassNotFoundException` for entrypoints and `AssertionError` on `@ExpectPlatform` stubs.&#10;- [FIX] Corrected the Gradle build process to produce a valid, non-empty JAR file for distribution." />
     <MESSAGE value="[FIX] Resolve mixin-related crashes and improve AI state handling&#10;&#10;This session addresses several critical crashes caused by illegal mixin classloading and refines AI behavior, particularly for the new sulking state. It also adds a dynamic messaging system for the ore-seeking feature.&#10;&#10;- [FIX] Corrected `IllegalClassLoadError` crashes by replacing direct casts to `PlayerEntityMixin` with the `PlayerEntityAccessor` interface in `HamsterEntity` and `AdorableHamsterPetsClient`.&#10;- [REF] Centralized AI interruption logic by updating `HamsterEntity.isSitting()` to include the sulking state. This prevents goals like `TemptGoal`, `FollowOwnerGoal`, `MeleeAttackGoal`, and `MateGoal` from running while a hamster is sulking.&#10;- [FEAT] Implemented a dynamic messaging system for when a hamster finds gold ore. The first occurrence per player shows a unique message, with subsequent occurrences randomly selecting from a pool of alternatives, avoiding immediate repeats.&#10;- [FEAT] Added a new advancement and player NBT data to track the first-time gold discovery and the last message shown.&#10;- [STYLE] Increased the volume of the looping hamster cleaning sound for better audibility." />
-    <MESSAGE value="[CHORE] Pushing to GitHub so Deep Research can access" />
     <MESSAGE value="[CHORE] Prepare for Neoforge testing&#10;&#10;This commit focuses on critical server-side compatibility fixes, quality-of-life improvements, and polishing the ore-seeking feature.&#10;&#10;- [FIX] Resolved multiple server crashes by correctly separating client/server logic for packet registration, item interactions, and keyframe events.&#10;- [FIX] Prevented AI goals from activating during the hamster's sulking state.&#10;- [FEAT] Added a config option for the gold ore &quot;mistake&quot; chance.&#10;- [FEAT] Added a startled jump and multiple new messages to the gold-finding event.&#10;- [STYLE] Adjusted hamster model scale, shoulder position, and various sound effect volumes." />
-    <option name="LAST_COMMIT_MESSAGE" value="[CHORE] Prepare for Neoforge testing&#10;&#10;This commit focuses on critical server-side compatibility fixes, quality-of-life improvements, and polishing the ore-seeking feature.&#10;&#10;- [FIX] Resolved multiple server crashes by correctly separating client/server logic for packet registration, item interactions, and keyframe events.&#10;- [FIX] Prevented AI goals from activating during the hamster's sulking state.&#10;- [FEAT] Added a config option for the gold ore &quot;mistake&quot; chance.&#10;- [FEAT] Added a startled jump and multiple new messages to the gold-finding event.&#10;- [STYLE] Adjusted hamster model scale, shoulder position, and various sound effect volumes." />
+    <MESSAGE value="[CHORE] Pushing to GitHub so Deep Research can access" />
+    <option name="LAST_COMMIT_MESSAGE" value="[CHORE] Pushing to GitHub so Deep Research can access" />
   </component>
 </project>
