@@ -518,7 +518,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             NetworkManager.sendToPlayers(nearbyPlayers, flightPayload);
             NetworkManager.sendToPlayers(nearbyPlayers, throwPayload);
 
-            ModCriteria.HAMSTER_THROWN.trigger(player);
+            ModCriteria.HAMSTER_THROWN.get().trigger(player);
         } else {
             AdorableHamsterPets.LOGGER.error("[HamsterEntity] tryThrowFromShoulder: Failed to create HamsterEntity instance from NBT. Clearing shoulder data as a precaution.");
             playerAccessor.setHamsterShoulderEntity(new NbtCompound()); // Clear potentially corrupted data
@@ -822,7 +822,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 }
             }
             if (allSlotsFilled) {
-                ModCriteria.HAMSTER_POUCH_FILLED.trigger(serverPlayerOwner, this);
+                ModCriteria.HAMSTER_POUCH_FILLED.get().trigger(serverPlayerOwner, this);
             }
         }
         // --- End Trigger ---
@@ -1229,7 +1229,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
                 // Trigger advancement criterion
                 if (player instanceof ServerPlayerEntity serverPlayer) {
-                    ModCriteria.APPLIED_PINK_PETAL.trigger(serverPlayer, this);
+                    ModCriteria.APPLIED_PINK_PETAL.get().trigger(serverPlayer, this);
                 }
             }
             return ActionResult.success(world.isClient()); // Consume interaction
@@ -1311,7 +1311,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         this.discard(); // Remove hamster from world
 
                         if (player instanceof ServerPlayerEntity serverPlayer) {
-                            ModCriteria.HAMSTER_ON_SHOULDER.trigger(serverPlayer);
+                            ModCriteria.HAMSTER_ON_SHOULDER.get().trigger(serverPlayer);
                         }
                         player.sendMessage(Text.literal("Your hamster scurries onto your shoulder!"), true);
 
@@ -1992,7 +1992,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 AdorableHamsterPets.LOGGER.trace("[HamsterTick {}] Auto-eat finished. Healed. Cooldown set to 60.", this.getId());
 
                 if (this.getOwner() instanceof ServerPlayerEntity serverPlayerOwner) {
-                    ModCriteria.HAMSTER_AUTO_FED.trigger(serverPlayerOwner, this);
+                    ModCriteria.HAMSTER_AUTO_FED.get().trigger(serverPlayerOwner, this);
                 }
             }
             // --- End Stage 3 ---
@@ -2772,7 +2772,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
                 // Trigger Fed Steamed Beans Criterion
                 if (player instanceof ServerPlayerEntity serverPlayer) {
-                    ModCriteria.FED_HAMSTER_STEAMED_BEANS.trigger(serverPlayer, this);
+                    ModCriteria.FED_HAMSTER_STEAMED_BEANS.get().trigger(serverPlayer, this);
                 }
             }
         }
@@ -2803,7 +2803,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     this.dataTracker.set(CHEEK_POUCH_UNLOCKED, true);
                     AdorableHamsterPets.LOGGER.debug("Hamster {} cheek pouch unlocked by food mix.", this.getId());
                     if (player instanceof ServerPlayerEntity serverPlayer) {
-                        ModCriteria.CHEEK_POUCH_UNLOCKED.trigger(serverPlayer, this);
+                        ModCriteria.CHEEK_POUCH_UNLOCKED.get().trigger(serverPlayer, this);
                     }
                     world.playSound(null, this.getBlockPos(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.NEUTRAL, 0.5f, 1.5f);
                     if (!world.isClient) {

@@ -1,6 +1,7 @@
 package net.dawson.adorablehamsterpets;
 
 import dev.architectury.event.events.common.CommandRegistrationEvent;
+import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
@@ -50,7 +51,7 @@ public class AdorableHamsterPets {
 		ModItems.register();
 		ModItemGroups.register();
 		ModScreenHandlers.register();
-		ModCriteria.registerCriteria();
+		ModCriteria.register();
 
 
 		// --- Runtime-only Initializations ---
@@ -69,37 +70,47 @@ public class AdorableHamsterPets {
 			ModEntitySpawns.initialize();
 
 
-			// --- Entity Attribute and Spawn Restriction Registration ---
+			// --- Entity Attribute Registration ---
 			EntityAttributeRegistry.register(ModEntities.HAMSTER, HamsterEntity::createHamsterAttributes);
-			ModSpawnPlacements.register(ModEntities.HAMSTER.get(), SpawnLocationTypes.ON_GROUND,
-					Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-					(type, world, reason, pos, random) -> AnimalEntity.isValidNaturalSpawn(type, world, reason, pos, random) ||
-							ModEntitySpawns.VALID_SPAWN_BLOCKS.contains(world.getBlockState(pos.down()).getBlock()));
-
-
-			// --- Creative Tab Population ---
-			CreativeTabRegistry.modify(ModItemGroups.ADORABLE_HAMSTER_PETS_GROUP, (featureSet, output, hasPermissions) -> {
-				output.add(ModItems.CHEESE.get());
-				output.add(ModItems.HAMSTER_FOOD_MIX.get());
-				output.add(ModItems.CUCUMBER.get());
-				output.add(ModItems.CUCUMBER_SEEDS.get());
-				output.add(ModItems.SLICED_CUCUMBER.get());
-				output.add(ModItems.GREEN_BEANS.get());
-				output.add(ModItems.GREEN_BEAN_SEEDS.get());
-				output.add(ModItems.STEAMED_GREEN_BEANS.get());
-				output.add(ModItems.SUNFLOWER_SEEDS.get());
-				output.add(ModItems.HAMSTER_SPAWN_EGG.get());
-				output.add(ModItems.HAMSTER_GUIDE_BOOK.get());
-				output.add(ModItems.SUNFLOWER_BLOCK_ITEM.get());
-				output.add(ModItems.WILD_GREEN_BEAN_BUSH_ITEM.get());
-				output.add(ModItems.WILD_CUCUMBER_BUSH_ITEM.get());
-			});
 
 
 			// --- Events ---
 			PlayerEvent.PLAYER_JOIN.register(AdorableHamsterPets::onPlayerJoin);
 			CommandRegistrationEvent.EVENT.register(ModCommands::register);
+			LifecycleEvent.SETUP.register(AdorableHamsterPets::onSetup);
 		}
+	}
+
+	/**
+	 * This method is called during the SETUP lifecycle event, after all registries are frozen.
+	 * It's the safe place to register things that require fully-realized registry objects,
+	 * like spawn placements.
+	 */
+	private static void onSetup() {
+		// --- Spawn Restriction Registration ---
+		ModSpawnPlacements.register(ModEntities.HAMSTER.get(), SpawnLocationTypes.ON_GROUND,
+				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
+				(type, world, reason, pos, random) -> AnimalEntity.isValidNaturalSpawn(type, world, reason, pos, random) ||
+						ModEntitySpawns.VALID_SPAWN_BLOCKS.contains(world.getBlockState(pos.down()).getBlock()));
+
+		// --- Creative Tab Population (Moved here for NeoForge) ---
+		// By the time this runs, all items and item groups are guaranteed to be registered.
+		CreativeTabRegistry.modify(ModItemGroups.ADORABLE_HAMSTER_PETS_GROUP, (featureSet, output, hasPermissions) -> {
+			output.add(ModItems.CHEESE.get());
+			output.add(ModItems.HAMSTER_FOOD_MIX.get());
+			output.add(ModItems.CUCUMBER.get());
+			output.add(ModItems.CUCUMBER_SEEDS.get());
+			output.add(ModItems.SLICED_CUCUMBER.get());
+			output.add(ModItems.GREEN_BEANS.get());
+			output.add(ModItems.GREEN_BEAN_SEEDS.get());
+			output.add(ModItems.STEAMED_GREEN_BEANS.get());
+			output.add(ModItems.SUNFLOWER_SEEDS.get());
+			output.add(ModItems.HAMSTER_SPAWN_EGG.get());
+			output.add(ModItems.HAMSTER_GUIDE_BOOK.get());
+			output.add(ModItems.SUNFLOWER_BLOCK_ITEM.get());
+			output.add(ModItems.WILD_GREEN_BEAN_BUSH_ITEM.get());
+			output.add(ModItems.WILD_CUCUMBER_BUSH_ITEM.get());
+		});
 	}
 
 	private static void onPlayerJoin(ServerPlayerEntity player) {
@@ -111,7 +122,7 @@ public class AdorableHamsterPets {
 			if (flagAdvancementEntry != null) {
 				AdvancementProgress flagProgress = advancementTracker.getProgress(flagAdvancementEntry);
 				if (!flagProgress.isDone()) {
-					ModCriteria.FIRST_JOIN_GUIDEBOOK_CHECK.trigger(player);
+					ModCriteria.FIRST_JOIN_GUIDEBOOK_CHECK.get().trigger(player);
 					for (String criterion : flagAdvancementEntry.value().criteria().keySet()) {
 						advancementTracker.grantCriterion(flagAdvancementEntry, criterion);
 					}

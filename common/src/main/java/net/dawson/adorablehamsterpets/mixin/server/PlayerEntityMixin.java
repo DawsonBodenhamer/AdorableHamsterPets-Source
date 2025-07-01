@@ -199,7 +199,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                                     SoundCategory.NEUTRAL, 2.5f, 1.0f);
                             self.sendMessage(Text.translatable("message.adorablehamsterpets.diamond_nearby").formatted(Formatting.AQUA), true);
                             adorablehamsterpets$diamondSoundCooldownTicks = random.nextBetween(140, 200);
-                            ModCriteria.HAMSTER_DIAMOND_ALERT_TRIGGERED.trigger((ServerPlayerEntity) self);
+                            ModCriteria.HAMSTER_DIAMOND_ALERT_TRIGGERED.get().trigger((ServerPlayerEntity) self);
                         }
                     } else {
                         this.adorablehamsterpets$isDiamondAlertConditionMet = false;
@@ -220,7 +220,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                                     SoundCategory.NEUTRAL, 1.0f, 1.0f);
                             self.sendMessage(Text.translatable("message.adorablehamsterpets.creeper_detected").formatted(Formatting.RED), true);
                             adorablehamsterpets$creeperSoundCooldownTicks = random.nextBetween(100, 160);
-                            ModCriteria.HAMSTER_CREEPER_ALERT_TRIGGERED.trigger((ServerPlayerEntity) self);
+                            ModCriteria.HAMSTER_CREEPER_ALERT_TRIGGERED.get().trigger((ServerPlayerEntity) self);
                         }
                     }
                 }

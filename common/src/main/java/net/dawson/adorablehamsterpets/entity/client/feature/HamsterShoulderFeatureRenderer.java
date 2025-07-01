@@ -37,14 +37,13 @@ public class HamsterShoulderFeatureRenderer
     private static final float BABY_Y_OFFSET_STANDING = -0.60F;
     private static final float ADULT_Y_OFFSET_SNEAKING = -0.85F;
     private static final float ADULT_Y_OFFSET_STANDING = -1.05F;
-    // --- End 1. Constants ---
 
-    // --- 2. Fields ---
-    private final HamsterShoulderModel hamsterShoulderModel;
-    /** Reference to the 'closed_eyes' model part for visibility control. May be null if not found. */
+    // --- 2. Fields (Lazy Initialization) ---
+    private final EntityModelLoader modelLoader;
     @Nullable
-    private final ModelPart closedEyesPart;
-    // --- End 2. Fields ---
+    private HamsterShoulderModel hamsterShoulderModel;
+    @Nullable
+    private ModelPart closedEyesPart;
 
     // --- 3. Constructor ---
     public HamsterShoulderFeatureRenderer(
@@ -52,25 +51,8 @@ public class HamsterShoulderFeatureRenderer
             EntityModelLoader modelLoader
     ) {
         super(context);
-        this.hamsterShoulderModel = new HamsterShoulderModel(modelLoader.getModelPart(ModModelLayers.HAMSTER_SHOULDER_LAYER));
-
-        ModelPart tempClosedEyes = null;
-        try {
-            // Path from the HamsterShoulderModel's 'root' bone to 'closed_eyes':
-            // root -> body_parent -> body_child -> head_parent -> head_child -> closed_eyes
-            tempClosedEyes = this.hamsterShoulderModel.root
-                    .getChild("body_parent")
-                    .getChild("body_child")
-                    .getChild("head_parent")
-                    .getChild("head_child")
-                    .getChild("closed_eyes");
-        } catch (Exception e) {
-            AdorableHamsterPets.LOGGER.error("[ShoulderRender] Failed to get 'closed_eyes' ModelPart in constructor. Eyes may not hide as intended.", e);
-            // tempClosedEyes remains null
-        }
-        this.closedEyesPart = tempClosedEyes;
+        this.modelLoader = modelLoader; // Store the loader, but don't use it yet.
     }
-    // --- End 3. Constructor ---
 
     // --- 4. Public Methods (Overrides from FeatureRenderer) ---
     @Override
@@ -78,9 +60,14 @@ public class HamsterShoulderFeatureRenderer
                        AbstractClientPlayerEntity player, float limbAngle, float limbDistance,
                        float tickDelta, float animationProgress, float headYaw, float headPitch) {
 
+        // --- Lazy Initialization Block ---
+        if (this.hamsterShoulderModel == null) {
+            this.initializeModels();
+        }
+
         // Use the safe accessor interface
         NbtCompound shoulderNbt = ((PlayerEntityAccessor) player).getHamsterShoulderEntity();
-        if (shoulderNbt.isEmpty()) {
+        if (shoulderNbt.isEmpty() || this.hamsterShoulderModel == null) { // Add null check for safety
             return;
         }
 
@@ -100,9 +87,26 @@ public class HamsterShoulderFeatureRenderer
         // Render on the player's right shoulder (can be adapted for left if needed)
         renderShoulderHamster(matrices, vertexConsumers, light, player, shoulderData);
     }
-    // --- End 4. Public Methods ---
 
     // --- 5. Private Helper Methods ---
+    /**
+     * Initializes the model and its parts. Called only once from the render method.
+     */
+    private void initializeModels() {
+        try {
+            this.hamsterShoulderModel = new HamsterShoulderModel(this.modelLoader.getModelPart(ModModelLayers.HAMSTER_SHOULDER_LAYER));
+            this.closedEyesPart = this.hamsterShoulderModel.root
+                    .getChild("body_parent")
+                    .getChild("body_child")
+                    .getChild("head_parent")
+                    .getChild("head_child")
+                    .getChild("closed_eyes");
+        } catch (Exception e) {
+            AdorableHamsterPets.LOGGER.error("[ShoulderRender] Failed to initialize shoulder model lazily. Feature will be disabled.", e);
+            // hamsterShoulderModel will remain null, preventing further render attempts.
+        }
+    }
+
     /**
      * Renders the hamster model on the player's shoulder with appropriate transformations and textures.
      */
@@ -122,19 +126,16 @@ public class HamsterShoulderFeatureRenderer
 
         matrices.translate(xOffset, yOffset, 0.0F);
         matrices.scale(scaleFactor, scaleFactor, scaleFactor);
-        // --- End Scale and Position ---
 
         // --- Get Variant and Textures ---
         HamsterVariant variant = HamsterVariant.byId(shoulderData.variantId());
         Identifier baseTextureId = getTextureId(variant.getBaseTextureName());
         @Nullable String overlayTextureName = variant.getOverlayTextureName();
         int pinkPetalType = shoulderData.pinkPetalType();
-        // --- End Get Variant ---
 
         // --- Render Base Model ---
         RenderLayer baseRenderLayer = RenderLayer.getEntityCutoutNoCull(baseTextureId);
         this.hamsterShoulderModel.render(matrices, vertexConsumers.getBuffer(baseRenderLayer), light, OverlayTexture.DEFAULT_UV);
-        // --- End Render Base Model ---
 
         // --- Render Overlay Model (if applicable) ---
         if (overlayTextureName != null) {
@@ -142,7 +143,6 @@ public class HamsterShoulderFeatureRenderer
             RenderLayer overlayRenderLayer = RenderLayer.getEntityTranslucent(overlayTextureId); // Translucent for overlays
             this.hamsterShoulderModel.render(matrices, vertexConsumers.getBuffer(overlayRenderLayer), light, OverlayTexture.DEFAULT_UV);
         }
-        // --- End Render Overlay Model ---
 
         // --- Render Pink Petal Overlay (if applicable) ---
         if (pinkPetalType > 0 && pinkPetalType <= 3) {
@@ -150,8 +150,6 @@ public class HamsterShoulderFeatureRenderer
             RenderLayer petalRenderLayer = RenderLayer.getEntityTranslucent(petalTextureId); // Use translucent
             this.hamsterShoulderModel.render(matrices, vertexConsumers.getBuffer(petalRenderLayer), light, OverlayTexture.DEFAULT_UV);
         }
-        // --- End Render Pink Petal Overlay ---
-
         matrices.pop(); // Restore matrix state
     }
 
@@ -184,5 +182,4 @@ public class HamsterShoulderFeatureRenderer
     private Identifier getTextureId(String textureName) {
         return Identifier.of(AdorableHamsterPets.MOD_ID, "textures/entity/hamster/" + textureName + ".png");
     }
-    // --- End 5. Private Helper Methods ---
 }

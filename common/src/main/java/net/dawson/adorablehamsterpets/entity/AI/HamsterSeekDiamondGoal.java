@@ -266,7 +266,7 @@ public class HamsterSeekDiamondGoal extends Goal {
             AdorableHamsterPets.LOGGER.debug("Hamster {} reached CELEBRATING_DIAMOND state for ore at {}", this.hamster.getId(), this.targetOrePos);
 
             if (this.hamster.getOwner() instanceof ServerPlayerEntity serverPlayerOwner) {
-                ModCriteria.HAMSTER_LED_TO_DIAMOND.trigger(serverPlayerOwner, this.hamster, this.targetOrePos);
+                ModCriteria.HAMSTER_LED_TO_DIAMOND.get().trigger(serverPlayerOwner, this.hamster, this.targetOrePos);
             }
         }
     }
@@ -364,6 +364,6 @@ public class HamsterSeekDiamondGoal extends Goal {
         owner.sendMessage(Text.translatable(messageKey).formatted(Formatting.GOLD), true);
 
         // Trigger the criterion for any other potential uses
-        ModCriteria.HAMSTER_FOUND_GOLD.trigger(owner);
+        ModCriteria.HAMSTER_FOUND_GOLD.get().trigger(owner);
     }
 }

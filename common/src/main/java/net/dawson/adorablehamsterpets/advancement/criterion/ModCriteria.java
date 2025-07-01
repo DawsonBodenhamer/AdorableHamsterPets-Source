@@ -1,35 +1,39 @@
+// --- ModCriteria.java ---
 package net.dawson.adorablehamsterpets.advancement.criterion;
 
+
+import dev.architectury.registry.registries.DeferredRegister;
+import dev.architectury.registry.registries.RegistrySupplier;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.minecraft.advancement.criterion.Criterion;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
+import net.minecraft.registry.RegistryKeys;
+
 
 public class ModCriteria {
-    public static final HamsterOnShoulderCriterion HAMSTER_ON_SHOULDER = register("hamster_on_shoulder", new HamsterOnShoulderCriterion());
-    public static final HamsterThrownCriterion HAMSTER_THROWN = register("hamster_thrown", new HamsterThrownCriterion());
-    public static final FirstJoinCriterion FIRST_JOIN_GUIDEBOOK_CHECK = register("first_join_guidebook_check", new FirstJoinCriterion());
-    public static final FedHamsterSteamedBeansCriterion FED_HAMSTER_STEAMED_BEANS = register("fed_hamster_steamed_beans", new FedHamsterSteamedBeansCriterion());
-    public static final CheekPouchUnlockedCriterion CHEEK_POUCH_UNLOCKED = register("cheek_pouch_unlocked", new CheekPouchUnlockedCriterion());
-    public static final AppliedPinkPetalCriterion APPLIED_PINK_PETAL = register("applied_pink_petal", new AppliedPinkPetalCriterion());
-    public static final HamsterAutoFedCriterion HAMSTER_AUTO_FED = register("hamster_auto_fed", new HamsterAutoFedCriterion());
-    public static final HamsterDiamondAlertCriterion HAMSTER_DIAMOND_ALERT_TRIGGERED = register("hamster_diamond_alert_triggered", new HamsterDiamondAlertCriterion());
-    public static final HamsterCreeperAlertCriterion HAMSTER_CREEPER_ALERT_TRIGGERED = register("hamster_creeper_alert_triggered", new HamsterCreeperAlertCriterion());
-    public static final HamsterPouchFilledCriterion HAMSTER_POUCH_FILLED = register("hamster_pouch_filled", new HamsterPouchFilledCriterion());
-    public static final HamsterLedToDiamondCriterion HAMSTER_LED_TO_DIAMOND = register("hamster_led_to_diamond", new HamsterLedToDiamondCriterion());
-    public static final HamsterFoundGoldCriterion HAMSTER_FOUND_GOLD = register("hamster_found_gold", new HamsterFoundGoldCriterion());
 
 
-    private static <T extends Criterion<?>> T register(String name, T criterion) {
-        return Registry.register(Registries.CRITERION, Identifier.of(AdorableHamsterPets.MOD_ID, name), criterion);
-    }
+    // --- 1. DeferredRegister for Criteria ---
+    public static final DeferredRegister<Criterion<?>> CRITERIA = DeferredRegister.create(AdorableHamsterPets.MOD_ID, RegistryKeys.CRITERION);
 
-    /**
-     * Registers all custom criteria for the mod.
-     */
-    public static void registerCriteria() {
+
+    // --- 2. Change all fields to RegistrySuppliers ---
+    public static final RegistrySupplier<HamsterOnShoulderCriterion> HAMSTER_ON_SHOULDER = CRITERIA.register("hamster_on_shoulder", HamsterOnShoulderCriterion::new);
+    public static final RegistrySupplier<HamsterThrownCriterion> HAMSTER_THROWN = CRITERIA.register("hamster_thrown", HamsterThrownCriterion::new);
+    public static final RegistrySupplier<FirstJoinCriterion> FIRST_JOIN_GUIDEBOOK_CHECK = CRITERIA.register("first_join_guidebook_check", FirstJoinCriterion::new);
+    public static final RegistrySupplier<FedHamsterSteamedBeansCriterion> FED_HAMSTER_STEAMED_BEANS = CRITERIA.register("fed_hamster_steamed_beans", FedHamsterSteamedBeansCriterion::new);
+    public static final RegistrySupplier<CheekPouchUnlockedCriterion> CHEEK_POUCH_UNLOCKED = CRITERIA.register("cheek_pouch_unlocked", CheekPouchUnlockedCriterion::new);
+    public static final RegistrySupplier<AppliedPinkPetalCriterion> APPLIED_PINK_PETAL = CRITERIA.register("applied_pink_petal", AppliedPinkPetalCriterion::new);
+    public static final RegistrySupplier<HamsterAutoFedCriterion> HAMSTER_AUTO_FED = CRITERIA.register("hamster_auto_fed", HamsterAutoFedCriterion::new);
+    public static final RegistrySupplier<HamsterDiamondAlertCriterion> HAMSTER_DIAMOND_ALERT_TRIGGERED = CRITERIA.register("hamster_diamond_alert_triggered", HamsterDiamondAlertCriterion::new);
+    public static final RegistrySupplier<HamsterCreeperAlertCriterion> HAMSTER_CREEPER_ALERT_TRIGGERED = CRITERIA.register("hamster_creeper_alert_triggered", HamsterCreeperAlertCriterion::new);
+    public static final RegistrySupplier<HamsterPouchFilledCriterion> HAMSTER_POUCH_FILLED = CRITERIA.register("hamster_pouch_filled", HamsterPouchFilledCriterion::new);
+    public static final RegistrySupplier<HamsterLedToDiamondCriterion> HAMSTER_LED_TO_DIAMOND = CRITERIA.register("hamster_led_to_diamond", HamsterLedToDiamondCriterion::new);
+    public static final RegistrySupplier<HamsterFoundGoldCriterion> HAMSTER_FOUND_GOLD = CRITERIA.register("hamster_found_gold", HamsterFoundGoldCriterion::new);
+
+
+    // --- 3. Main Registration Call ---
+    public static void register() {
+        CRITERIA.register();
         AdorableHamsterPets.LOGGER.info("Registering Mod Criteria for " + AdorableHamsterPets.MOD_ID);
-        // Static initializers handle the actual registration.
     }
 }
