@@ -42,15 +42,9 @@ dependencies {
 
     modImplementation "software.bernie.geckolib:geckolib-neoforge-$rootProject.minecraft_version:$rootProject.geckolib_version"
     modImplementation "curse.maven:jade-324717:${rootProject.jade_version_neoforge}"
+    modImplementation("me.fzzyhmstrs:fzzy_config:${rootProject.fzzy_config_version}+neoforge")
 
-    modImplementation("me.fzzyhmstrs:fzzy_config:${rootProject.fzzy_config_version}+neoforge") {
-        exclude group: 'thedarkcolour', module: 'kotlinforforge-neoforge'
-        exclude group: 'thedarkcolour', module: 'kfflang-neoforge'
-        exclude group: 'thedarkcolour', module: 'kfflib-neoforge'
-        exclude group: 'thedarkcolour', module: 'kffmod-neoforge'
-    }
-
-    modRuntimeOnly "thedarkcolour:kotlinforforge-neoforge:${rootProject.kff_version}"
+    modImplementation "thedarkcolour:kotlinforforge-neoforge:${rootProject.kff_version}"
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionNeoForge')
