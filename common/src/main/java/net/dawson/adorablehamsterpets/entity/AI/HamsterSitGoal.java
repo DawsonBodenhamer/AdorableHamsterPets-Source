@@ -12,6 +12,15 @@ public class HamsterSitGoal extends SitGoal {
     }
 
     @Override
+    public boolean canStart() {
+        // Prevent this goal from starting if the hamster is knocked out.
+        if (this.hamster.isKnockedOut()) {
+            return false;
+        }
+        return super.canStart();
+    }
+
+    @Override
     public void start() {
         super.start();
         this.hamster.setActiveCustomGoalDebugName(this.getClass().getSimpleName());

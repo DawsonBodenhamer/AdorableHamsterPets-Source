@@ -61,19 +61,6 @@ public class HamsterModel extends GeoModel<HamsterEntity> {
         GeoBone leftCheekInfBone = this.getAnimationProcessor().getBone("left_cheek_inflated");
         GeoBone rightCheekInfBone = this.getAnimationProcessor().getBone("right_cheek_inflated");
 
-        // --- State Determination for Eye Control ---
-        boolean isWakingUp = entity.wakingUpTicks > 0;
-        boolean isActuallySleepingOrDozing;
-
-        if (entity.isTamed()) {
-            HamsterEntity.DozingPhase phase = entity.getDozingPhase();
-            isActuallySleepingOrDozing = phase == HamsterEntity.DozingPhase.DRIFTING_OFF ||
-                    phase == HamsterEntity.DozingPhase.SETTLING_INTO_SLUMBER ||
-                    phase == HamsterEntity.DozingPhase.DEEP_SLEEP;
-        } else { // Wild hamster
-            isActuallySleepingOrDozing = entity.isSleeping();
-        }
-
         // --- Cheek Pouch Visibility Logic ---
         if (leftCheekDefBone != null && leftCheekInfBone != null) {
             boolean leftFull = entity.isLeftCheekFull();

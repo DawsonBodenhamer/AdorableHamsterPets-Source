@@ -2,6 +2,7 @@ package net.dawson.adorablehamsterpets.entity.AI;
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
+import net.dawson.adorablehamsterpets.mixin.accessor.MeleeAttackGoalAccessor;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
@@ -18,8 +19,6 @@ public class HamsterMeleeAttackGoal extends MeleeAttackGoal {
 
     @Override
     protected void attack(LivingEntity target) {
-        // --- Add the crucial canAttack check back ---
-        // This check includes isCooledDown(), isInAttackRange(), and canSee()
         if (this.canAttack(target)) {
             // --- Code inside this block only runs if cooldown is ready AND target is in range/visible ---
 
@@ -53,8 +52,8 @@ public class HamsterMeleeAttackGoal extends MeleeAttackGoal {
 
     @Override
     protected void resetCooldown() {
-        this.cooldown = this.getMaxCooldown();
-        // Logging moved to attack() method for better context
+        // Cast 'this' to the accessor interface and call the public setter method.
+        ((MeleeAttackGoalAccessor) this).setCooldown(this.getMaxCooldown());
     }
 
     @Override
@@ -70,7 +69,8 @@ public class HamsterMeleeAttackGoal extends MeleeAttackGoal {
     public void start() {
         super.start();
         AdorableHamsterPets.LOGGER.debug("[AttackGoal {} Tick {}] Goal started.", this.hamster.getId(), this.hamster.getWorld().getTime());
-        this.cooldown = 0;
+        // Use the accessor to set the cooldown to 0, making the hamster able to attack immediately.
+        ((MeleeAttackGoalAccessor) this).setCooldown(0);
         this.hamster.setActiveCustomGoalDebugName(this.getClass().getSimpleName());
     }
 

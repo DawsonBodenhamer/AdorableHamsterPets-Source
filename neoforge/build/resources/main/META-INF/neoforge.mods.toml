@@ -13,6 +13,9 @@ Sure, you’ve got dragons and machines, but let’s be honest— no respectable
 '''
 logoFile = "assets/adorablehamsterpets/icon.png"
 
+[entryPoints]
+main = "net.dawson.adorablehamsterpets.neoforge.AdorableHamsterPetsNeoForge"
+
 [[dependencies.adorablehamsterpets]]
 modId = "neoforge"
 type = "required"

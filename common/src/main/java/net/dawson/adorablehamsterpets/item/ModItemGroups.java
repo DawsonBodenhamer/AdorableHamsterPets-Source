@@ -1,5 +1,6 @@
 package net.dawson.adorablehamsterpets.item;
 
+
 import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -9,20 +10,38 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.text.Text;
 
+
 public class ModItemGroups {
 
-    // --- 1. Create a DeferredRegister for ItemGroups ---
+
     public static final DeferredRegister<ItemGroup> ITEM_GROUPS = DeferredRegister.create(AdorableHamsterPets.MOD_ID, RegistryKeys.ITEM_GROUP);
 
-    // --- 2. Register the ItemGroup using CreativeTabRegistry ---
-    public static final RegistrySupplier<ItemGroup> ADORABLE_HAMSTER_PETS_GROUP = ITEM_GROUPS.register("adorable_hamster_pets", () ->
-            CreativeTabRegistry.create(
-                    Text.translatable("itemgroup.adorablehamsterpets.main"), // The tab's title
-                    () -> new ItemStack(ModItems.HAMSTER_SPAWN_EGG.get()) // The icon supplier
-            )
+
+    public static final RegistrySupplier<ItemGroup> ADORABLE_HAMSTER_PETS_GROUP = ITEM_GROUPS.register(
+            "adorable_hamster_pets",
+            () -> CreativeTabRegistry.create(builder -> builder
+                    .displayName(Text.translatable("itemgroup.adorablehamsterpets.main"))
+                    .icon(() -> new ItemStack(ModItems.HAMSTER_SPAWN_EGG.get()))
+                    .entries((featureSet, output) -> {
+                        // This is where we add all the items to the tab's contents.
+                        output.add(ModItems.CHEESE.get());
+                        output.add(ModItems.HAMSTER_FOOD_MIX.get());
+                        output.add(ModItems.CUCUMBER.get());
+                        output.add(ModItems.CUCUMBER_SEEDS.get());
+                        output.add(ModItems.SLICED_CUCUMBER.get());
+                        output.add(ModItems.GREEN_BEANS.get());
+                        output.add(ModItems.GREEN_BEAN_SEEDS.get());
+                        output.add(ModItems.STEAMED_GREEN_BEANS.get());
+                        output.add(ModItems.SUNFLOWER_SEEDS.get());
+                        output.add(ModItems.HAMSTER_SPAWN_EGG.get());
+                        output.add(ModItems.HAMSTER_GUIDE_BOOK.get());
+                        output.add(ModItems.SUNFLOWER_BLOCK_ITEM.get());
+                        output.add(ModItems.WILD_GREEN_BEAN_BUSH_ITEM.get());
+                        output.add(ModItems.WILD_CUCUMBER_BUSH_ITEM.get());
+                    }))
     );
 
-    // --- 3. Main Registration Call ---
+
     public static void register() {
         ITEM_GROUPS.register();
     }

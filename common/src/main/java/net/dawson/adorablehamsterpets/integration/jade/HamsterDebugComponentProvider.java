@@ -13,6 +13,10 @@ import snownee.jade.api.EntityAccessor;
 import snownee.jade.api.IEntityComponentProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
+import software.bernie.geckolib.animation.Animation;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.AnimationProcessor;
+import software.bernie.geckolib.animation.AnimationState;
 
 public enum HamsterDebugComponentProvider implements IEntityComponentProvider {
     INSTANCE;
@@ -28,6 +32,21 @@ public enum HamsterDebugComponentProvider implements IEntityComponentProvider {
         Entity entity = accessor.getEntity();
         if (!(entity instanceof HamsterEntity hamster)) {
             return;
+        }
+
+        // --- Animation State ---
+        tooltip.add(Text.literal("--- Current Animation ---").formatted(Formatting.GRAY));
+        AnimationController<?> controller = hamster.getAnimatableInstanceCache().getManagerForId(hamster.getId()).getAnimationControllers().get("mainController");
+        if (controller != null) {
+            // Get the currently playing animation object from the controller
+            AnimationProcessor.QueuedAnimation currentAnim = controller.getCurrentAnimation();
+
+            if (currentAnim != null) {
+                // Get the name from the animation record itself
+                tooltip.add(fText("Current Anim: %s", Text.literal(currentAnim.animation().name()).formatted(Formatting.AQUA)));
+            } else {
+                tooltip.add(fText("Current Anim: %s", Text.literal("None").formatted(Formatting.GRAY)));
+            }
         }
 
         // --- AI Goal & Action States ---
@@ -55,7 +74,7 @@ public enum HamsterDebugComponentProvider implements IEntityComponentProvider {
             tooltip.add(fText("  Target: %s", Text.literal(target.getName().getString()).formatted(Formatting.WHITE)));
         }
         String activeGoalName = hamster.getActiveCustomGoalDebugName();
-        tooltip.add(fText("Current Custom Goal: %s", Text.literal(activeGoalName).formatted(activeGoalName.equals("None") ? Formatting.DARK_GRAY : Formatting.YELLOW)));
+        tooltip.add(fText("Current Custom Goal: %s", Text.literal(activeGoalName).formatted(activeGoalName.equals("None") ? Formatting.GRAY : Formatting.AQUA)));
 
         // --- Tamed Sleep Sequence ---
         if (hamster.isTamed()) {
@@ -73,7 +92,7 @@ public enum HamsterDebugComponentProvider implements IEntityComponentProvider {
         if (hamster.currentOreTarget != null) {
             tooltip.add(fText("  Current Ore Target: %s", Text.literal(hamster.currentOreTarget.toString()).formatted(Formatting.AQUA)));
         } else {
-            tooltip.add(fText("  Current Ore Target: %s", Text.literal("None").formatted(Formatting.DARK_GRAY)));
+            tooltip.add(fText("  Current Ore Target: %s", Text.literal("None").formatted(Formatting.GRAY)));
         }
         long foundOreCooldown = hamster.foundOreCooldownEndTick - hamster.getWorld().getTime();
         if (Configs.AHP.enableIndependentDiamondSeekCooldown && foundOreCooldown > 0) {
@@ -81,7 +100,7 @@ public enum HamsterDebugComponentProvider implements IEntityComponentProvider {
         } else if (Configs.AHP.enableIndependentDiamondSeekCooldown) {
             tooltip.add(fText("  Found Ore Cooldown: %s", Text.literal("Ready").formatted(Formatting.GREEN)));
         } else {
-            tooltip.add(fText("  Found Ore Cooldown: %s", Text.literal("Disabled").formatted(Formatting.DARK_GRAY)));
+            tooltip.add(fText("  Found Ore Cooldown: %s", Text.literal("Disabled").formatted(Formatting.GRAY)));
         }
         // --- End Ore Seeking States ---
 

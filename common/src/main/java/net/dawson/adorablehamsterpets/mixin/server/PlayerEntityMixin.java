@@ -78,12 +78,16 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     // --- 2. DataTracker Registration ---
     @Inject(method = "initDataTracker", at = @At("TAIL"))
     private void adorablehamsterpets$initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
+        // --- Diagnostic Logging ---
+        AdorableHamsterPets.LOGGER.debug("[AHP Mixin] PlayerEntityMixin initDataTracker is RUNNING for entity {}.", this.getId());
         builder.add(HAMSTER_SHOULDER_ENTITY, new NbtCompound());
     }
 
     // --- 3. NBT Read/Write ---
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
     private void adorablehamsterpets$writeNbt(NbtCompound nbt, CallbackInfo ci) {
+        // --- Diagnostic Logging ---
+        AdorableHamsterPets.LOGGER.debug("[AHP Mixin] PlayerEntityMixin writeNbt is RUNNING for entity {}.", this.getId());
         if (!this.getHamsterShoulderEntity().isEmpty()) {
             nbt.put("ShoulderHamster", this.getHamsterShoulderEntity());
         }
@@ -94,13 +98,15 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
     private void adorablehamsterpets$readNbt(NbtCompound nbt, CallbackInfo ci) {
+        // --- Diagnostic Logging ---
+        AdorableHamsterPets.LOGGER.debug("[AHP Mixin] PlayerEntityMixin readNbt is RUNNING for entity {}.", this.getId());
         if (nbt.contains("ShoulderHamster", 10)) {
             this.setHamsterShoulderEntity(nbt.getCompound("ShoulderHamster"));
         }
         if (nbt.contains("LastGoldMessageIndex", NbtElement.INT_TYPE)) {
             this.adorablehamsterpets$lastGoldMessageIndex = nbt.getInt("LastGoldMessageIndex");
         } else {
-            this.adorablehamsterpets$lastGoldMessageIndex = -1; // Default to -1 if tag doesn't exist
+            this.adorablehamsterpets$lastGoldMessageIndex = -1;
         }
     }
 

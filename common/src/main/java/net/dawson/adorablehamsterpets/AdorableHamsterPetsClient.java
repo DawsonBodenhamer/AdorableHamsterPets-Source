@@ -54,30 +54,17 @@ public class AdorableHamsterPetsClient {
     private static final Set<Integer> renderedHamsterIdsThisTick = new HashSet<>();
     private static final Set<Integer> renderedHamsterIdsLastTick = new HashSet<>();
 
+    /**
+     * Initializes general client-side features like screens, keybinds, and events.
+     */
     public static void init() {
-        // --- Block Render Layers ---
         RenderTypeRegistry.register(RenderLayer.getCutout(), ModBlocks.GREEN_BEANS_CROP.get(), ModBlocks.CUCUMBER_CROP.get(), ModBlocks.SUNFLOWER_BLOCK.get(), ModBlocks.WILD_CUCUMBER_BUSH.get(), ModBlocks.WILD_GREEN_BEAN_BUSH.get());
-
-        // --- Entity Rendering and Models ---
-        EntityModelLayerRegistry.register(ModModelLayers.HAMSTER_SHOULDER_LAYER, HamsterShoulderModel::getTexturedModelData);
-        EntityRendererRegistry.register(ModEntities.HAMSTER, HamsterRenderer::new);
-
-        // --- Screens and Handlers ---
-        MenuRegistry.registerScreenFactory(ModScreenHandlers.HAMSTER_INVENTORY_SCREEN_HANDLER.get(), HamsterInventoryScreen::new);
-
-        // --- Server to Client Packets ---
         ModPackets.registerS2CPackets();
-
-        // --- Keybinds ---
         ModKeyBindings.registerKeyInputs();
-
-        // --- Client Tick Event Handler ---
         ClientTickEvent.CLIENT_POST.register(AdorableHamsterPetsClient::onEndClientTick);
-
-        // --- Color Providers ---
         ColorHandlerRegistry.registerItemColors((stack, tintIndex) -> -1, ModItems.HAMSTER_SPAWN_EGG.get());
 
-        // --- Guide Book Open Screen Event Handler ---
+
         InteractionEvent.RIGHT_CLICK_ITEM.register((player, hand) -> {
             ItemStack stack = player.getStackInHand(hand);
             if (player.getWorld().isClient && stack.isOf(ModItems.HAMSTER_GUIDE_BOOK.get())) {
@@ -85,14 +72,33 @@ public class AdorableHamsterPetsClient {
                     BookScreen.Contents contents = BookScreen.Contents.create(stack);
                     if (contents != null) {
                         MinecraftClient.getInstance().setScreen(new BookScreen(contents));
-                        // Use CompoundEventResult to indicate success and consume the event
                         return CompoundEventResult.interrupt(true, stack);
                     }
                 }
             }
-            // Pass the event to allow other interactions
             return CompoundEventResult.pass();
         });
+    }
+
+    /**
+     * Registers the screen factory. Separate because NeoForge needs to call it natively.
+     */
+    public static void initScreenHandlers() {
+        MenuRegistry.registerScreenFactory(ModScreenHandlers.HAMSTER_INVENTORY_SCREEN_HANDLER.get(), HamsterInventoryScreen::new);
+    }
+
+    /**
+     * Registers entity renderers. Called from a dedicated event handler.
+     */
+    public static void initEntityRenderers() {
+        EntityRendererRegistry.register(ModEntities.HAMSTER, HamsterRenderer::new);
+    }
+
+    /**
+     * Registers entity model layer definitions. Called from a dedicated event handler.
+     */
+    public static void initModelLayers() {
+        EntityModelLayerRegistry.register(ModModelLayers.HAMSTER_SHOULDER_LAYER, HamsterShoulderModel::getTexturedModelData);
     }
 
     public static void onHamsterRendered(int entityId) {

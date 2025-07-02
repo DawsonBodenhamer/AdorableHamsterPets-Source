@@ -1,9 +1,12 @@
 package net.dawson.adorablehamsterpets.neoforge;
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
+import net.dawson.adorablehamsterpets.neoforge.client.AdorableHamsterPetsNeoForgeClient;
 import net.dawson.adorablehamsterpets.world.neoforge.ModSpawnPlacementsImpl;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.loading.FMLEnvironment;
 
 @Mod(AdorableHamsterPets.MOD_ID)
 public final class AdorableHamsterPetsNeoForge {
@@ -15,6 +18,11 @@ public final class AdorableHamsterPetsNeoForge {
     public AdorableHamsterPetsNeoForge(IEventBus modEventBus) {
         // Register the class containing @SubscribeEvent methods to the mod event bus.
         modEventBus.register(ModSpawnPlacementsImpl.class);
+
+        // Register client events only on the client side
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            modEventBus.register(AdorableHamsterPetsNeoForgeClient.class);
+        }
 
         // Run common setup.
         AdorableHamsterPets.init();

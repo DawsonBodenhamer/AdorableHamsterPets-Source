@@ -92,25 +92,6 @@ public class AdorableHamsterPets {
 				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
 				(type, world, reason, pos, random) -> AnimalEntity.isValidNaturalSpawn(type, world, reason, pos, random) ||
 						ModEntitySpawns.VALID_SPAWN_BLOCKS.contains(world.getBlockState(pos.down()).getBlock()));
-
-		// --- Creative Tab Population (Moved here for NeoForge) ---
-		// By the time this runs, all items and item groups are guaranteed to be registered.
-		CreativeTabRegistry.modify(ModItemGroups.ADORABLE_HAMSTER_PETS_GROUP, (featureSet, output, hasPermissions) -> {
-			output.add(ModItems.CHEESE.get());
-			output.add(ModItems.HAMSTER_FOOD_MIX.get());
-			output.add(ModItems.CUCUMBER.get());
-			output.add(ModItems.CUCUMBER_SEEDS.get());
-			output.add(ModItems.SLICED_CUCUMBER.get());
-			output.add(ModItems.GREEN_BEANS.get());
-			output.add(ModItems.GREEN_BEAN_SEEDS.get());
-			output.add(ModItems.STEAMED_GREEN_BEANS.get());
-			output.add(ModItems.SUNFLOWER_SEEDS.get());
-			output.add(ModItems.HAMSTER_SPAWN_EGG.get());
-			output.add(ModItems.HAMSTER_GUIDE_BOOK.get());
-			output.add(ModItems.SUNFLOWER_BLOCK_ITEM.get());
-			output.add(ModItems.WILD_GREEN_BEAN_BUSH_ITEM.get());
-			output.add(ModItems.WILD_CUCUMBER_BUSH_ITEM.get());
-		});
 	}
 
 	private static void onPlayerJoin(ServerPlayerEntity player) {

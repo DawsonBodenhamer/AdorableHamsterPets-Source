@@ -9,5 +9,8 @@ public final class AdorableHamsterPetsFabricClient implements ClientModInitializ
     @Override
     public void onInitializeClient() {
         AdorableHamsterPetsClient.init();
+        AdorableHamsterPetsClient.initScreenHandlers();
+        AdorableHamsterPetsClient.initEntityRenderers();
+        AdorableHamsterPetsClient.initModelLayers();
     }
 }

@@ -15,8 +15,6 @@ fabricApi {
 }
 
 loom {
-    accessWidenerPath = project(":common").loom.accessWidenerPath
-
     mods {
         main {
             sourceSet sourceSets.main

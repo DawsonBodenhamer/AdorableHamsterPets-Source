@@ -3,7 +3,6 @@ architectury {
 }
 
 loom {
-    accessWidenerPath = file("src/main/resources/adorablehamsterpets.accesswidener")
 }
 
 dependencies {

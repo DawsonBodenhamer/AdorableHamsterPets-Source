@@ -1636,9 +1636,13 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         if (this.sulkShockedSoundDelayTicks > 0) this.sulkShockedSoundDelayTicks--;
         if (this.diamondSparkleSoundDelayTicks > 0) this.diamondSparkleSoundDelayTicks--;
         // --- Logic for Handling Cleaning State ---
+        if (this.isKnockedOut() && this.dataTracker.get(IS_CLEANING)) {
+            this.dataTracker.set(IS_CLEANING, false);
+            this.cleaningTimer = 0;
+        }
         DozingPhase currentPhase = this.getDozingPhase();
-        if (!this.getWorld().isClient() && this.dataTracker.get(IS_SITTING) && !this.dataTracker.get(IS_CLEANING) && this.cleaningCooldownTimer <= 0) {
-            // Allow cleaning if the hamster is just sitting, but not if it's actively sleeping.
+        if (!this.getWorld().isClient() && this.dataTracker.get(IS_SITTING) && !this.isKnockedOut() && !this.dataTracker.get(IS_CLEANING) && this.cleaningCooldownTimer <= 0) {
+            // Allow cleaning if the hamster is just sitting and not knocked out, but not if it's actively sleeping.
             if (currentPhase == DozingPhase.NONE || currentPhase == DozingPhase.QUIESCENT_SITTING) {
                 int chanceDenominator = Configs.AHP.cleaningChanceDenominator.get();
                 if (chanceDenominator > 0 && this.random.nextInt(chanceDenominator) == 0) {
@@ -1672,8 +1676,9 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
                 this.setVelocity(currentVel.multiply(0.6, 0.0, 0.6));
                 this.setThrown(false);
-                this.playSound(SoundEvents.ENTITY_GENERIC_SMALL_FALL, 0.4f, 1.5f);
+                this.playSound(SoundEvents.ENTITY_GENERIC_SMALL_FALL, 1.0f, 1.2f);
                 this.setKnockedOut(true);
+                this.setInSittingPose(true);
                 // --- Trigger Crash Animation ---
                 if (!world.isClient()) {
                     this.triggerAnimOnServer("mainController", "crash");
@@ -1721,6 +1726,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     this.setVelocity(currentVel.multiply(0.1, 0.1, 0.1));
                     this.setThrown(false);
                     this.setKnockedOut(true);
+                    this.setInSittingPose(true);
                     // --- Trigger Crash Animation ---
                     if (!world.isClient()) {
                         this.triggerAnimOnServer("mainController", "crash");
@@ -1764,7 +1770,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
         // --- 3. Tamed Hamster "Path to Slumber" State Machine ---
         // This logic only applies to tamed hamsters and runs on the server.
-        if (!this.getWorld().isClient() && this.isTamed()) {
+        if (!this.getWorld().isClient() && this.isTamed() && !this.isKnockedOut()) {
             boolean canInitiateDrowsiness = checkConditionsForInitiatingDrowsiness(); // Helper method call
             boolean canSustainSlumber = checkConditionsForSustainingSlumber();       // Helper method call
 
@@ -2302,7 +2308,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             }
 
             // --- Player-Commanded Sitting / Tamed Quiescent Sitting ---
-            if (this.dataTracker.get(IS_SITTING)) {
+                    if (this.dataTracker.get(IS_SITTING) && !this.isKnockedOut()) {
                 if (this.dataTracker.get(IS_CLEANING)) {
                     return event.setAndContinue(CLEANING_ANIM);
                 } else {

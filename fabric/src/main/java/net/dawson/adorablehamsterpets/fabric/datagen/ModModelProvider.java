@@ -83,6 +83,5 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.SUNFLOWER_SEEDS.get(), Models.GENERATED);
         itemModelGenerator.register(ModBlocks.WILD_GREEN_BEAN_BUSH.get().asItem(), Models.GENERATED);
         itemModelGenerator.register(ModBlocks.WILD_CUCUMBER_BUSH.get().asItem(), Models.GENERATED);
-
     }
 }
