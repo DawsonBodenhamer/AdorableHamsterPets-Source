@@ -28,12 +28,6 @@ Or maybe you didn't. Doesn't matter. You're here now, considering adding hamster
 
 Adorable Hamster Pets introduces, against potentially better judgment, hamsters to Minecraft. Tiny, fuzzy, occasionally helpful, frequently underfoot creatures destined to become your new favorite source of minor inventory clutter. They squeak, bounce, fly... if you throw them... and silently judge your life choices from the questionable safety of your shoulder. You can tame them, feed them various vegetable concoctions, and even send them on the attack. (Consult your local ethics committee. Or don't. I'm not your conscience).
 
----
-
-### <font color="orange">Quick announcement— Neoforge, Forge (maybe) and 1.20, 1.21.1-6 are in the works right now! Join the discord to check my progress.</font>
-
----
-
 <p> <img src="https://i.imgur.com/GxXluZP.png" alt="Adorable Hamster Pets Banner Image" width="2000"/> </p>
 
 
@@ -53,7 +47,7 @@ Prepare for a veritable explosion of fur colors! With nine base coats and eight 
 *   **Light Gray & Dark Gray:** These stoic shades are common in mountainous regions (that aren't actively trying to freeze them) and also share cave real estate with their Black brethren.
 *   **White:** Exclusively found in most Snowy biomes (Plains, Taiga, Groves, etc.) and makes up about 30% of the population in the extremely chilly Ice Spikes.
 *   **Blue:** A rare sight, these cool-colored critters are rumored to only appear in the frigid, pointy landscape of Ice Spikes (about a 70% chance if you find a hamster there).
-*   **Lavender:** Another elusive variant, said to exclusively inhabit the picturesque but specific biome of Cherry Groves.
+*   **Lavender:** Another elusive variant, said to exclusively inhabit the picturesque but specific Cherry Groves and Mushroom Fields.
 
 *(Disclaimer: Hamster spawn location preferences are subject to change based on developer whims and biome generation quirks. Happy collecting!)*
 
@@ -193,7 +187,11 @@ You get one automatically the first time you join a world with this mod (unless 
 ..........................
 </details>
 
+---
 
+### <font color="orange">Quick announcement— WE HAVE OFFICIAL NEOFORGE SUPPORT! (Join the Discord channel to check my progress on Forge.)</font>
+
+---
 
 ## <font color="teal">Getting Started (The "Bla Bla How Do I Make It Squeak?" Guide)</font>
 <details>
@@ -251,34 +249,51 @@ Fun fact: I've already implemented new features like the custom advancement tree
 <details>
 <summary>Click to expand.</summary>
 
-*   **Minecraft:** 1.21.1 (Or whatever version this file says it's for)
-*   **Fabric Loader:** >=0.16.10 (Or newer, probably)
-*   **Fabric API:** (*) (The big one. You need this.)
-*   **GeckoLib:** 4.7.3 (For the wiggles and jiggles. Essential.)
-*   **Fzzy Config:** 0.6.x+1.21 (Bundled, mostly for the config screen you might ignore, unless you're nerdy like me and like to change the settings.)
+### For Fabric:
+*   **Fabric API:** The big one. The whole show. Duh.
+*   **Architectury API:** The universal translator that makes this all possible.
+*   **GeckoLib:** For the wiggles and jiggles. Essential.
+*   **Fzzy Config:** For the config screen you'll either ignore or spend way too much time in.
+*   **Fabric Language Kotlin:** Fabric's preferred brand of Kotlin, needed by Fzzy Config.
+
+
+### For NeoForge:
+*   **Architectury API:** Still the universal translator.
+*   **GeckoLib:** Still essential for the wiggles.
+*   **Fzzy Config:** Still here for your tweaking pleasure.
+*   **Kotlin for Forge:** NeoForge's flavor of Kotlin, also needed by Fzzy Config.
+
+
+### Optional (but Recommended for Your Sanity):
+*   **Jade** (Fabric/NeoForge): For seeing what's what, and for the special hamster debug overlay.
+*   **Mod Menu** (Fabric Only): For an easy way to get to that fancy config screen.
 </details>
 
 
 
-## <font color="teal">Forge and Neoforge Compatibility</font>
+## <font color="teal">Loader & Version Support (The Multi-Verse of Rodents)</font>
 <details>
 <summary>Click to expand.</summary>
 
-This mod is officially developed for **Fabric**. That's where it's built, tested, and guaranteed to work as intended (or as intended as a mod about throwable hamsters can be).
+Let's get this out of the way: The dark days of unofficial workarounds and digital duct tape are over.
 
-However, thanks to the tireless work of the Sinytra Connector team and a tip from Reddit user [`aussiedutchlover`](https://www.reddit.com/user/aussiedutchlover/), you can get this mod running on **NeoForge** right now. I've tested it myself, and it works!
 
-**To run on NeoForge, you will need:**
-*   **Adorable Hamster Pets** (the regular Fabric version)
-*   [**Sinytra Connector**](https://modrinth.com/mod/sinytra-connector) (The magic that bridges the gap)
-*   [**Forgified Fabric API**](https://modrinth.com/mod/forgified-fabric-api) (The Fabric API, but for Forge/NeoForge)
-*   All of this mod's other dependencies (like GeckoLib and Fzzy Config), but their **NeoForge versions**.
+As of version 2.0.0, this mod officially supports:
+*   **Fabric**
+*   **NeoForge**
 
-Here's a screenshot of my exact testing setup: <p> <img src="https://i.imgur.com/geJY9hA.png" alt="Adorable Hamster Pets Banner Image" width="2000"/> </p>
 
-**The Big Disclaimer:** While this workaround is functional, it is **unofficial**. I do not officially support NeoForge yet. If you run into bugs while using Connector, please mention it in your bug report, but be aware that some issues may be outside of my control.
+Thanks to a basically heroic, caffeine-fueled refactor to the Architectury toolchain, you can now download the appropriate JAR for your loader of choice and enjoy hamster-based chaos without any extra setup.
 
-Official ports to NeoForge and/or Forge are on the agenda, but for now, this is your best bet for cross-loader hamster shenanigans.
+Actually just kidding about the heroic caffeine-fueled part. It was more like terrified, GitHub conversation-fueled. Huge thanks to [**@fzzyhmstrs**](https://github.com/fzzyhmstrs) on GitHub / @ZeMonkey / @Cool Girl on Discord for all their help. It's doubtful you would be yeeting your hamsters on NeoForge right now if it weren't for them.
+
+
+### **"What about Forge?"**
+A proper Forge port is on the roadmap. It'll happen. Eventually. Probably. Modding is a fickle beast.
+
+
+### **"And Different Minecraft Versions?"**
+Yes, that's the plan. The goal is to keep the mod updated for the latest versions of Minecraft while also backporting features to older, popular versions where feasible. Your hamster army's temporal conquest is inevitable.
 
 </details>
 
