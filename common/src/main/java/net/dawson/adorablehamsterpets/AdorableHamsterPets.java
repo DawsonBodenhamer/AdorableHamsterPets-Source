@@ -1,9 +1,9 @@
 package net.dawson.adorablehamsterpets;
 
+
 import dev.architectury.event.events.common.CommandRegistrationEvent;
 import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.event.events.common.PlayerEvent;
-import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
 import net.dawson.adorablehamsterpets.block.ModBlocks;
@@ -29,21 +29,23 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.Heightmap;
 
+
 public class AdorableHamsterPets {
 	public static final String MOD_ID = "adorablehamsterpets";
 	public static final org.slf4j.Logger LOGGER = org.slf4j.LoggerFactory.getLogger(MOD_ID);
 
+
 	public static AhpConfig CONFIG;
 
+
 	/**
-	 * The main initialization method for the mod.
-	 * This method is called by platform-specific entrypoints to register all common features.
+	 * Initializes all DeferredRegister instances.
+	 * This must be called during mod construction (e.g., the loader-specific entrypoint's constructor or onInitialize).
 	 */
-	public static void init() {
+	public static void initRegistries() {
 		CONFIG = Configs.AHP;
 
 
-		// --- Core Registries (Needed for both runtime and datagen) ---
 		ModEntities.register();
 		ModDataComponentTypes.registerDataComponentTypes();
 		ModSounds.register();
@@ -52,27 +54,25 @@ public class AdorableHamsterPets {
 		ModItemGroups.register();
 		ModScreenHandlers.register();
 		ModCriteria.register();
+	}
 
 
-		// --- Runtime-only Initializations ---
+	/**
+	 * Initializes common setup logic that needs to run after registries are populated.
+	 * This is called from FMLCommonSetupEvent on NeoForge and onInitialize on Fabric.
+	 */
+	public static void initCommonSetup() {
 		// We check if the data generation API is NOT loaded. If it is loaded, we are in a datagen environment
 		// and should skip runtime-only logic to prevent crashes.
 		if (System.getProperty("fabric-api.datagen") == null) {
 			ModRegistries.initialize();
 
-
 			// --- Networking Client to Server Registration ---
 			ModPackets.registerC2SPackets();
-
 
 			// --- World Gen & Spawns ---
 			ModWorldGeneration.generateModWorldGen();
 			ModEntitySpawns.initialize();
-
-
-			// --- Entity Attribute Registration ---
-			EntityAttributeRegistry.register(ModEntities.HAMSTER, HamsterEntity::createHamsterAttributes);
-
 
 			// --- Events ---
 			PlayerEvent.PLAYER_JOIN.register(AdorableHamsterPets::onPlayerJoin);
@@ -80,6 +80,15 @@ public class AdorableHamsterPets {
 			LifecycleEvent.SETUP.register(AdorableHamsterPets::onSetup);
 		}
 	}
+
+	/**
+	 * Initializes entity attributes. This must be called after registries are initialized
+	 * but before the main setup event, typically during mod construction.
+	 */
+	public static void initAttributes() {
+		EntityAttributeRegistry.register(ModEntities.HAMSTER, HamsterEntity::createHamsterAttributes);
+	}
+
 
 	/**
 	 * This method is called during the SETUP lifecycle event, after all registries are frozen.
@@ -94,11 +103,13 @@ public class AdorableHamsterPets {
 						ModEntitySpawns.VALID_SPAWN_BLOCKS.contains(world.getBlockState(pos.down()).getBlock()));
 	}
 
+
 	private static void onPlayerJoin(ServerPlayerEntity player) {
 		if (Configs.AHP.enableAutoGuidebookDelivery) {
 			PlayerAdvancementTracker advancementTracker = player.getAdvancementTracker();
 			Identifier flagAdvId = Identifier.of(MOD_ID, "technical/has_received_initial_guidebook");
 			net.minecraft.advancement.AdvancementEntry flagAdvancementEntry = player.server.getAdvancementLoader().get(flagAdvId);
+
 
 			if (flagAdvancementEntry != null) {
 				AdvancementProgress flagProgress = advancementTracker.getProgress(flagAdvancementEntry);

@@ -52,7 +52,7 @@ dependencies {
     modImplementation "software.bernie.geckolib:geckolib-neoforge-$rootProject.minecraft_version:$rootProject.geckolib_version"
     modImplementation "curse.maven:jade-324717:${rootProject.jade_version_neoforge}"
 
-    modRuntimeOnly "me.fzzyhmstrs:fzzy_config:${rootProject.fzzy_config_version}+neoforge"
+    modImplementation "me.fzzyhmstrs:fzzy_config:${rootProject.fzzy_config_version}+neoforge"
     modRuntimeOnly "maven.modrinth:kotlin-for-forge:${rootProject.kff_version}"
 
 

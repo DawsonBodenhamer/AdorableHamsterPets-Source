@@ -1,6 +1,7 @@
 package net.dawson.adorablehamsterpets.world.gen;
 
 import dev.architectury.registry.level.biome.BiomeModifications;
+import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.minecraft.block.Block;
@@ -53,6 +54,9 @@ public class ModEntitySpawns {
         VALID_SPAWN_BLOCKS.add(Blocks.COARSE_DIRT);
         VALID_SPAWN_BLOCKS.add(Blocks.PODZOL);
         VALID_SPAWN_BLOCKS.add(Blocks.SNOW_BLOCK);
+        VALID_SPAWN_BLOCKS.add(Blocks.MYCELIUM);
+        VALID_SPAWN_BLOCKS.add(Blocks.MUD);
+        VALID_SPAWN_BLOCKS.add(Blocks.PACKED_MUD);
     }
 
     /**
@@ -60,17 +64,21 @@ public class ModEntitySpawns {
      * This should be called from the common initializer.
      */
     public static void initialize() {
+        AdorableHamsterPets.LOGGER.info("[AHP Spawn Debug] Initializing biome modifications for hamster spawns.");
         BiomeModifications.addProperties(
                 ModEntitySpawns::shouldSpawnInBiome,
-                (context, props) -> props.getSpawnProperties().addSpawn(
-                        SpawnGroup.CREATURE,
-                        new SpawnSettings.SpawnEntry(
-                                ModEntities.HAMSTER.get(),
-                                Configs.AHP.spawnWeight.get(),
-                                1,
-                                Configs.AHP.maxGroupSize.get()
-                        )
-                )
+                (context, props) -> {
+                    context.getKey().ifPresent(key -> AdorableHamsterPets.LOGGER.info("[AHP Spawn Debug] Applying spawn entry to biome: {}", key.toString()));
+                    props.getSpawnProperties().addSpawn(
+                            SpawnGroup.CREATURE,
+                            new SpawnSettings.SpawnEntry(
+                                    ModEntities.HAMSTER.get(),
+                                    Configs.AHP.spawnWeight.get(),
+                                    1,
+                                    Configs.AHP.maxGroupSize.get()
+                            )
+                    );
+                }
         );
     }
 
@@ -80,10 +88,10 @@ public class ModEntitySpawns {
      * @param ctx The biome context provided by Architectury.
      * @return True if hamsters should spawn, false otherwise.
      */
-    private static boolean shouldSpawnInBiome(BiomeModifications.BiomeContext ctx) {
-        // Use a single helper that checks the key from the context
-        // The .filter() method passes the Identifier from the Optional to our helper
-        return ctx.getKey().filter(ModEntitySpawns::isKeyInSpawnList).isPresent();
+    public static boolean shouldSpawnInBiome(BiomeModifications.BiomeContext ctx) {
+        boolean shouldSpawn = ctx.getKey().filter(ModEntitySpawns::isKeyInSpawnList).isPresent();
+        ctx.getKey().ifPresent(key -> AdorableHamsterPets.LOGGER.info("[AHP Spawn Debug] Checking biome [{}]: Should spawn? -> {}", key.toString(), shouldSpawn));
+        return shouldSpawn;
     }
 
     /**

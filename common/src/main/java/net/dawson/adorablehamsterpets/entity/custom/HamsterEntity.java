@@ -114,7 +114,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private static final int CUSTOM_LOVE_TICKS = 600;                 // 30 seconds
     private static final float THROW_DAMAGE = 20.0f;
     private static final double THROWN_GRAVITY = -0.05;
-    private static final double HAMSTER_ATTACK_BOX_EXPANSION = 0.65D;  // Expand by 0.5 blocks horizontally (vanilla is 0.83 blocks, so really this is shrinking it)
+    private static final double HAMSTER_ATTACK_BOX_EXPANSION = 0.70D;  // Expand by 0.7 blocks horizontally (vanilla is 0.83 blocks, so really this is shrinking it)
     public enum DozingPhase {
         NONE,                  // Not in any part of the sleep sequence
         QUIESCENT_SITTING,     // Tamed, sitting by command, waiting for drowsiness timer
@@ -238,55 +238,71 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     // --- Hamster Spawning In Different Biomes ---
     // Determine Which Hamster Variant for Each Biome
     private static HamsterVariant determineVariantForBiome(RegistryEntry<Biome> biomeEntry, net.minecraft.util.math.random.Random random) {
+        // --- Add Logging ---
+        String biomeName = biomeEntry.getKey().map(k -> k.getValue().toString()).orElse("unknown");
+        AdorableHamsterPets.LOGGER.info("[AHP Spawn Debug] determineVariantForBiome called for biome: {}", biomeName);
+        // --- End Add Logging ---
+
+        HamsterVariant result;
         // --- 1. Specific Rare Biomes First ---
         if (ModEntitySpawns.isIceSpikesBiome(biomeEntry)) {
             if (random.nextInt(10) < 3) {
-                return getRandomVariant(WHITE_VARIANTS, random);
+                result = getRandomVariant(WHITE_VARIANTS, random);
             } else {
-                return getRandomVariant(BLUE_VARIANTS, random);
+                result = getRandomVariant(BLUE_VARIANTS, random);
             }
         } else if (ModEntitySpawns.isCherryGroveBiome(biomeEntry)) {
-            return getRandomVariant(LAVENDER_VARIANTS, random);
+            result = getRandomVariant(LAVENDER_VARIANTS, random);
         } else if (biomeEntry.matchesKey(BiomeKeys.MUSHROOM_FIELDS)) {
-            return getRandomVariant(LAVENDER_VARIANTS, random);
+            result = getRandomVariant(LAVENDER_VARIANTS, random);
         }
         // --- End 1. Specific Rare Biomes First ---
 
         // --- 2. General Biome Categories ---
         else if (ModEntitySpawns.isSnowyBiome(biomeEntry)) {
-            return getRandomVariant(WHITE_VARIANTS, random);
+            result = getRandomVariant(WHITE_VARIANTS, random);
         } else if (ModEntitySpawns.isOldGrowthBirchForest(biomeEntry)) {
-            return getRandomVariant(CREAM_VARIANTS, random);
+            result = getRandomVariant(CREAM_VARIANTS, random);
         } else if (ModEntitySpawns.isCaveBiome(biomeEntry)) {
             int chance = random.nextInt(4);
-            if (chance < 2) { return getRandomVariant(BLACK_VARIANTS, random); }
-            else if (chance == 2) { return getRandomVariant(DARK_GRAY_VARIANTS, random); }
-            else { return getRandomVariant(LIGHT_GRAY_VARIANTS, random); }
+            if (chance < 2) { result = getRandomVariant(BLACK_VARIANTS, random); }
+            else if (chance == 2) { result = getRandomVariant(DARK_GRAY_VARIANTS, random); }
+            else { result = getRandomVariant(LIGHT_GRAY_VARIANTS, random); }
         } else if (ModEntitySpawns.isSwampBiome(biomeEntry)) {
-            return getRandomVariant(BLACK_VARIANTS, random);
+            result = getRandomVariant(BLACK_VARIANTS, random);
         } else if (ModEntitySpawns.isDesertBiome(biomeEntry)) {
-            return getRandomVariant(CREAM_VARIANTS, random);
+            result = getRandomVariant(CREAM_VARIANTS, random);
         } else if (biomeEntry.isIn(BiomeTags.IS_BADLANDS)) {
-            return getRandomVariant(ORANGE_VARIANTS, random);
+            result = getRandomVariant(ORANGE_VARIANTS, random);
         } else if (biomeEntry.isIn(BiomeTags.IS_BEACH) && !ModEntitySpawns.isSnowyBiome(biomeEntry)) {
-            return getRandomVariant(CREAM_VARIANTS, random);
+            result = getRandomVariant(CREAM_VARIANTS, random);
         } else if ((biomeEntry.isIn(BiomeTags.IS_FOREST) || biomeEntry.isIn(BiomeTags.IS_TAIGA) || ModEntitySpawns.isJungleBiome(biomeEntry)) && !ModEntitySpawns.isSnowyBiome(biomeEntry) && !ModEntitySpawns.isCherryGroveBiome(biomeEntry) && !ModEntitySpawns.isOldGrowthBirchForest(biomeEntry)) {
-            return getRandomVariant(CHOCOLATE_VARIANTS, random);
+            result = getRandomVariant(CHOCOLATE_VARIANTS, random);
         } else if (biomeEntry.isIn(BiomeTags.IS_SAVANNA) || ModEntitySpawns.isPlainsBiome(biomeEntry)) {
-            return getRandomVariant(ORANGE_VARIANTS, random);
+            result = getRandomVariant(ORANGE_VARIANTS, random);
         } else if ((biomeEntry.isIn(BiomeTags.IS_MOUNTAIN) || biomeEntry.matchesKey(BiomeKeys.STONY_SHORE) || ModEntitySpawns.isWindsweptOrStonyPeaks(biomeEntry)) && !ModEntitySpawns.isSnowyBiome(biomeEntry) && !ModEntitySpawns.isIceSpikesBiome(biomeEntry)) {
             boolean lightOrDarkGrayChance = random.nextBoolean();
-            if (lightOrDarkGrayChance) { return getRandomVariant(DARK_GRAY_VARIANTS, random); }
-            else { return getRandomVariant(LIGHT_GRAY_VARIANTS, random); }
+            if (lightOrDarkGrayChance) { result = getRandomVariant(DARK_GRAY_VARIANTS, random); }
+            else { result = getRandomVariant(LIGHT_GRAY_VARIANTS, random); }
         }
         // --- End 2. General Biome Categories ---
 
         // --- 3. Default Fallback ---
         else {
-            return getRandomVariant(ORANGE_VARIANTS, random);
+            result = getRandomVariant(ORANGE_VARIANTS, random);
         }
+
+        // --- Add Logging ---
+        AdorableHamsterPets.LOGGER.info("[AHP Spawn Debug] Determined variant for {} is {}", biomeName, result.name());
+        // --- End Add Logging ---
+        return result;
     }
     // --- End Hamster Spawning In Different Biomes ---
+
+
+
+
+
 
     private static HamsterVariant getRandomVariant(List<HamsterVariant> variantPool, net.minecraft.util.math.random.Random random) {
         if (variantPool == null || variantPool.isEmpty()) {
@@ -2594,23 +2610,24 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     @Nullable
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
+        AdorableHamsterPets.LOGGER.info("[AHP Spawn Debug] HamsterEntity.initialize called. SpawnReason: {}", spawnReason);
         // Assign Animation Personality
         this.dataTracker.set(ANIMATION_PERSONALITY_ID, this.random.nextBetween(1, 3));
         // Apply biome variants for natural spawns, spawn eggs, AND chunk generation
         if (spawnReason == SpawnReason.NATURAL || spawnReason == SpawnReason.SPAWN_EGG || spawnReason == SpawnReason.CHUNK_GENERATION) {
             RegistryEntry<Biome> biomeEntry = world.getBiome(this.getBlockPos());
             String biomeKeyStr = biomeEntry.getKey().map(key -> key.getValue().toString()).orElse("UNKNOWN");
-            AdorableHamsterPets.LOGGER.trace("[HamsterInit] SpawnReason: {}, BiomeKey: {}", spawnReason, biomeKeyStr); // Keep this log
+            AdorableHamsterPets.LOGGER.info("[HamsterInit] SpawnReason: {}, BiomeKey: {}", spawnReason, biomeKeyStr); // Keep this log
 
             HamsterVariant chosenVariant = determineVariantForBiome(biomeEntry, this.random);
             this.setVariant(chosenVariant.getId());
-            AdorableHamsterPets.LOGGER.trace("[HamsterInit] Assigned variant: {}", chosenVariant.name());
+            AdorableHamsterPets.LOGGER.info("[HamsterInit] Assigned variant: {}", chosenVariant.name());
 
         } else {
             // Fallback for other spawns (command, breeding, structure, etc.)
             int randomVariantId = this.random.nextInt(HamsterVariant.values().length);
             this.setVariant(randomVariantId);
-            AdorableHamsterPets.LOGGER.trace("[HamsterInit] SpawnReason: {}, Assigned random variant: {}",
+            AdorableHamsterPets.LOGGER.info("[HamsterInit] SpawnReason: {}, Assigned random variant: {}",
                     spawnReason, HamsterVariant.byId(randomVariantId).name());
         }
 

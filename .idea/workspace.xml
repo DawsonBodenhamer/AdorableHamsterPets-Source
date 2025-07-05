@@ -4,48 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="052c5d33-d6bb-405e-abe0-6cb2032d8642" name="Changes" comment="[FEAT] Enable NeoForge support via Architectury refactor&#10;&#10;This commit finalizes the migration to the Architectury toolchain, enabling the mod to be built for both Fabric and NeoForge.&#10;&#10;- [FEAT] Refactored the entire mod from a Fabric-only structure to a common/multi-loader Architectury project.&#10;- [FEAT] Implemented native NeoForge event handlers for client-side registrations (renderers, model layers, screens) to ensure cross-platform compatibility.&#10;- [FIX] Resolved numerous loader-timing crashes on NeoForge related to registries, renderers, and creative tab population.&#10;- [FIX] Replaced a Fabric-specific access widener with a cross-platform Mixin Accessor for the hamster's melee attack goal.&#10;- [FIX] Corrected the NeoForge build script to properly bundle data-generated resources and Mixin configurations from the common module.&#10;- [FIX] Disabled the cleaning animation and sound for hamsters that are in a knocked-out state.&#10;- [DOC] Finalized the changelog for the v2.0.0 release.">
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/md5-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+    <list default="true" id="052c5d33-d6bb-405e-abe0-6cb2032d8642" name="Changes" comment="- [DOC] Updated README.md">
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___fabric__fabric.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___fabric__fabric.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___neoforge__neoforge.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___neoforge__neoforge.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/.gradle/loom-cache/launch.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/common/.gradle/loom-cache/launch.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/.gradle/loom-cache/remapClasspath.txt" beforeDir="false" afterPath="$PROJECT_DIR$/common/.gradle/loom-cache/remapClasspath.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/.gradle/architectury/.properties" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/.gradle/architectury/.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/.gradle/architectury/.transforms" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/.gradle/architectury/.transforms" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/.gradle/loom-cache/launch.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/.gradle/loom-cache/launch.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/build/resources/main/fabric.mod.json" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/resources/main/fabric.mod.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/run/.architectury-transformer/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/.architectury-transformer/debug.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/run/logs/2025-07-02-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/2025-07-02-1.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/run/logs/2025-07-02-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/2025-07-02-2.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/run/logs/2025-07-02-3.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/2025-07-02-3.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/run/logs/2025-07-02-4.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/2025-07-02-4.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/run/logs/2025-07-02-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/2025-07-02-5.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/run/logs/2025-07-02-6.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/2025-07-02-6.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/run/logs/2025-07-02-7.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/2025-07-02-7.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/run/logs/debug-1.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/debug-1.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/run/logs/debug-2.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/debug-2.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/run/logs/debug-3.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/debug-3.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/run/logs/debug-4.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/debug-4.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/run/logs/debug-5.log.gz" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/debug-5.log.gz" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/run/logs/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/debug.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/run/logs/latest.log" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/logs/latest.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/run/server.properties" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/server.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/run/world/level.dat" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/world/level.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/run/world/region/r.-1.0.mca" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/run/world/region/r.-1.0.mca" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/.gradle/architectury/.properties" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/.gradle/architectury/.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/AdorableHamsterPets.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/AdorableHamsterPets.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/custom/HamsterEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/custom/HamsterEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/world/gen/ModEntitySpawns.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/world/gen/ModEntitySpawns.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/AdorableHamsterPetsFabric.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/AdorableHamsterPetsFabric.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/.gradle/architectury/.transforms" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/.gradle/architectury/.transforms" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/net/dawson/adorablehamsterpets/neoforge/AdorableHamsterPetsNeoForge.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/net/dawson/adorablehamsterpets/neoforge/AdorableHamsterPetsNeoForge.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -157,29 +128,29 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Adorable Hamster Pets [build].executor": "Run",
-    "Gradle.Adorable Hamster Pets:common [runDatagen].executor": "Run",
-    "Gradle.Adorable Hamster Pets:fabric [:fabric:dev.architectury.transformer.TransformerRuntime.main()].executor": "Run",
-    "Gradle.Adorable Hamster Pets:fabric [runDatagen].executor": "Run",
-    "Gradle.AdorableHamsterPets:fabric [:fabric:dev.architectury.transformer.TransformerRuntime.main()].executor": "Run",
-    "Gradle.AdorableHamsterPets:neoforge [:neoforge:dev.architectury.transformer.TransformerRuntime.main()].executor": "Run",
-    "Gradle.Download Sources.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/mods/Data/Repositories/AdorableHamsterPets/common/src/main/resources/assets/adorablehamsterpets/animations",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
-    "two.files.diff.last.used.file": "C:/Users/tweek/Downloads/test.txt"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Adorable Hamster Pets [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Adorable Hamster Pets:common [runDatagen].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Adorable Hamster Pets:fabric [:fabric:dev.architectury.transformer.TransformerRuntime.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Adorable Hamster Pets:fabric [runDatagen].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AdorableHamsterPets:fabric [:fabric:dev.architectury.transformer.TransformerRuntime.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AdorableHamsterPets:neoforge [:neoforge:dev.architectury.transformer.TransformerRuntime.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/mods/Data/Repositories/AdorableHamsterPets/common/src/main/resources/assets/adorablehamsterpets/animations&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
+    &quot;two.files.diff.last.used.file&quot;: &quot;C:/Users/tweek/Downloads/test.txt&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\mods\Data\Repositories\AdorableHamsterPets\common\src\main\resources\assets\adorablehamsterpets\animations" />
@@ -193,7 +164,7 @@
       <recent name="C:\mods\Data\Repositories\AdorableHamsterPets" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Minecraft Server (:fabric)">
+  <component name="RunManager" selected="Gradle.Adorable Hamster Pets [build]">
     <configuration name="Adorable Hamster Pets [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -505,7 +476,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751482799446</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="- [DOC] Updated README.md">
+      <option name="closed" value="true" />
+      <created>1751486615114</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1751486615114</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -537,6 +516,7 @@
     <MESSAGE value="[CHORE] Prepare for Neoforge testing&#10;&#10;This commit focuses on critical server-side compatibility fixes, quality-of-life improvements, and polishing the ore-seeking feature.&#10;&#10;- [FIX] Resolved multiple server crashes by correctly separating client/server logic for packet registration, item interactions, and keyframe events.&#10;- [FIX] Prevented AI goals from activating during the hamster's sulking state.&#10;- [FEAT] Added a config option for the gold ore &quot;mistake&quot; chance.&#10;- [FEAT] Added a startled jump and multiple new messages to the gold-finding event.&#10;- [STYLE] Adjusted hamster model scale, shoulder position, and various sound effect volumes." />
     <MESSAGE value="[CHORE] Pushing to GitHub so Deep Research can access" />
     <MESSAGE value="[FEAT] Enable NeoForge support via Architectury refactor&#10;&#10;This commit finalizes the migration to the Architectury toolchain, enabling the mod to be built for both Fabric and NeoForge.&#10;&#10;- [FEAT] Refactored the entire mod from a Fabric-only structure to a common/multi-loader Architectury project.&#10;- [FEAT] Implemented native NeoForge event handlers for client-side registrations (renderers, model layers, screens) to ensure cross-platform compatibility.&#10;- [FIX] Resolved numerous loader-timing crashes on NeoForge related to registries, renderers, and creative tab population.&#10;- [FIX] Replaced a Fabric-specific access widener with a cross-platform Mixin Accessor for the hamster's melee attack goal.&#10;- [FIX] Corrected the NeoForge build script to properly bundle data-generated resources and Mixin configurations from the common module.&#10;- [FIX] Disabled the cleaning animation and sound for hamsters that are in a knocked-out state.&#10;- [DOC] Finalized the changelog for the v2.0.0 release." />
-    <option name="LAST_COMMIT_MESSAGE" value="[FEAT] Enable NeoForge support via Architectury refactor&#10;&#10;This commit finalizes the migration to the Architectury toolchain, enabling the mod to be built for both Fabric and NeoForge.&#10;&#10;- [FEAT] Refactored the entire mod from a Fabric-only structure to a common/multi-loader Architectury project.&#10;- [FEAT] Implemented native NeoForge event handlers for client-side registrations (renderers, model layers, screens) to ensure cross-platform compatibility.&#10;- [FIX] Resolved numerous loader-timing crashes on NeoForge related to registries, renderers, and creative tab population.&#10;- [FIX] Replaced a Fabric-specific access widener with a cross-platform Mixin Accessor for the hamster's melee attack goal.&#10;- [FIX] Corrected the NeoForge build script to properly bundle data-generated resources and Mixin configurations from the common module.&#10;- [FIX] Disabled the cleaning animation and sound for hamsters that are in a knocked-out state.&#10;- [DOC] Finalized the changelog for the v2.0.0 release." />
+    <MESSAGE value="- [DOC] Updated README.md" />
+    <option name="LAST_COMMIT_MESSAGE" value="- [DOC] Updated README.md" />
   </component>
 </project>

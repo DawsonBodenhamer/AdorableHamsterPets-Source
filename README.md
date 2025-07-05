@@ -1,34 +1,26 @@
-<p> <img src="https://i.imgur.com/tB1QBQA.png" alt="Adorable Hamster Pets Banner Image" width="2000" /> </p>
+![Adorable Hamster Pets Banner](https://i.imgur.com/EGikPiI.png)
+
+<p align="center">
+  <a href="https://modrinth.com/mod/adorable-hamster-pets/versions?l=fabric"><img src="https://i.imgur.com/sOhq5bK.png" alt="Fabric" width="200" height="auto"></a>
+  <a href="https://modrinth.com/mod/adorable-hamster-pets/versions?l=neoforge"><img src="https://i.imgur.com/G7rGadf.png" alt="NeoForge" width="247" height="auto"></a>
+  <a href="https://nolinkyet"><img src="https://i.imgur.com/HHxLpaH.png" alt="Forge" width="199" height="auto"></a>
+</p>
+
+<p align="center">
+  <a href="https://discord.gg/umzr6bJZtY"><img src="https://i.imgur.com/3v9sbBI.png" alt="Discord" width="65" height="auto"></a>
+  <a href="https://github.com/DawsonBodenhamer/Adorable-Hamster-Pets-2.0"><img src="https://i.imgur.com/rhnck4M.png" alt="GitHub" width="65" height="auto"></a>
+  <a href="https://ko-fi.com/dawsonbodenhamer"><img src="https://i.imgur.com/59CF46p.png" alt="Ko-Fi" width="65" height="auto"></a>
+</p>
 
 ## <font color="orange">Because every great digital realm needs a tiny, squeaky snack-bandit.</font>
-
-<a href="https://ko-fi.com/dawsonbodenhamer" target="_blank">
-  <img
-    src="https://i.imgur.com/trr80ww.png"
-    alt="Buy me a coffee on Ko-fi"
-    align="right"
-    hspace="30"
-    width="120" />
-</a>
 
 Let's go back to the beginning. You looked upon your blocky domain, surveyed your automated farms spewing resources you probably don't need, your enchanted gear shimmering with overkill, your… unique architectural choices, and declared, "Needs more rodents."
 
 Or maybe you didn't. Doesn't matter. You're here now, considering adding hamsters to a world already teeming with exploding plants and questionable physics. A truly inspired decision.
 
-<a href="https://discord.gg/w54mk5bqdf">
-<div align="right" style="margin-left:30px;">
-  <img
-    src="https://discord.com/api/guilds/1382334723333820568/widget.png?style=banner3"
-    align="right"
-    hspace="30"
-    width="200"
-    alt="Join the Adorable Hamster Pets Discord!" />
-</div>
-</a>
-
 Adorable Hamster Pets introduces, against potentially better judgment, hamsters to Minecraft. Tiny, fuzzy, occasionally helpful, frequently underfoot creatures destined to become your new favorite source of minor inventory clutter. They squeak, bounce, fly... if you throw them... and silently judge your life choices from the questionable safety of your shoulder. You can tame them, feed them various vegetable concoctions, and even send them on the attack. (Consult your local ethics committee. Or don't. I'm not your conscience).
 
-<p> <img src="https://i.imgur.com/GxXluZP.png" alt="Adorable Hamster Pets Banner Image" width="2000"/> </p>
+<br> <p> <img src="https://i.imgur.com/8BnyUET.png" alt="Adorable Hamster Pets Features" width="2000"/> </p>
 
 
 ### Click each to expand: 👇🏼
@@ -189,9 +181,6 @@ You get one automatically the first time you join a world with this mod (unless 
 
 ---
 
-### <font color="orange">Quick announcement— WE HAVE OFFICIAL NEOFORGE SUPPORT! (Join the Discord channel to check my progress on Forge.)</font>
-
----
 
 ## <font color="teal">Getting Started (The "Bla Bla How Do I Make It Squeak?" Guide)</font>
 <details>
