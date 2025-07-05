@@ -4,18 +4,45 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="052c5d33-d6bb-405e-abe0-6cb2032d8642" name="Changes" comment="- [DOC] Updated README.md">
+    <list default="true" id="052c5d33-d6bb-405e-abe0-6cb2032d8642" name="Changes" comment="- [CHORE] Upload to repo for AI research">
+      <change afterPath="$PROJECT_DIR$/neoforge/src/main/java/net/dawson/adorablehamsterpets/world/neoforge/ConfigurableHamsterSpawnModifier.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/neoforge/src/main/java/net/dawson/adorablehamsterpets/world/neoforge/ModBiomeModifiers.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/neoforge/src/main/resources/data/adorablehamsterpets/neoforge/biome_modifier/hamster_spawns.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___fabric__fabric.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___fabric__fabric.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___neoforge__neoforge.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___neoforge__neoforge.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/.gradle/.architectury-transformer/debug.log" beforeDir="false" afterPath="$PROJECT_DIR$/common/.gradle/.architectury-transformer/debug.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/AdorableHamsterPets.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/AdorableHamsterPets.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/entity/custom/HamsterEntity$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/entity/custom/HamsterEntity$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/entity/custom/HamsterEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/entity/custom/HamsterEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/world/gen/ModEntitySpawns.class" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/classes/java/main/net/dawson/adorablehamsterpets/world/gen/ModEntitySpawns.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build/devlibs/adorablehamsterpets-2.0.1+common-dev.jar" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/devlibs/adorablehamsterpets-2.0.1+common-dev.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.1+common-transformProductionFabric.jar" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.1+common-transformProductionFabric.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.1+common-transformProductionNeoForge.jar" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/libs/adorablehamsterpets-2.0.1+common-transformProductionNeoForge.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/common/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/AdorableHamsterPets.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/AdorableHamsterPets.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/custom/HamsterEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/entity/custom/HamsterEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/world/gen/ModEntitySpawns.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/net/dawson/adorablehamsterpets/world/gen/ModEntitySpawns.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/.gradle/architectury/.properties" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/.gradle/architectury/.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/classes/java/main/net/dawson/adorablehamsterpets/fabric/AdorableHamsterPetsFabric.class" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/classes/java/main/net/dawson/adorablehamsterpets/fabric/AdorableHamsterPetsFabric.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fabric/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/AdorableHamsterPetsFabric.java" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/src/main/java/net/dawson/adorablehamsterpets/fabric/AdorableHamsterPetsFabric.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/.gradle/architectury/.transforms" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/.gradle/architectury/.transforms" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/neoforge/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/.gradle/architectury/.properties" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/.gradle/architectury/.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/classes/java/main/net/dawson/adorablehamsterpets/neoforge/AdorableHamsterPetsNeoForge.class" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build/classes/java/main/net/dawson/adorablehamsterpets/neoforge/AdorableHamsterPetsNeoForge.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/resources/main/META-INF/neoforge.mods.toml" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build/resources/main/META-INF/neoforge.mods.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/tmp/compileJava/compileTransaction/stash-dir/AdorableHamsterPetsNeoForgeClient.class.uniqueId0" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/neoforge/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/neoforge/src/main/java/net/dawson/adorablehamsterpets/neoforge/AdorableHamsterPetsNeoForge.java" beforeDir="false" afterPath="$PROJECT_DIR$/neoforge/src/main/java/net/dawson/adorablehamsterpets/neoforge/AdorableHamsterPetsNeoForge.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -484,7 +511,15 @@
       <option name="project" value="LOCAL" />
       <updated>1751486615114</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="- [CHORE] Upload to repo for AI research">
+      <option name="closed" value="true" />
+      <created>1751720745676</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1751720745676</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -517,6 +552,7 @@
     <MESSAGE value="[CHORE] Pushing to GitHub so Deep Research can access" />
     <MESSAGE value="[FEAT] Enable NeoForge support via Architectury refactor&#10;&#10;This commit finalizes the migration to the Architectury toolchain, enabling the mod to be built for both Fabric and NeoForge.&#10;&#10;- [FEAT] Refactored the entire mod from a Fabric-only structure to a common/multi-loader Architectury project.&#10;- [FEAT] Implemented native NeoForge event handlers for client-side registrations (renderers, model layers, screens) to ensure cross-platform compatibility.&#10;- [FIX] Resolved numerous loader-timing crashes on NeoForge related to registries, renderers, and creative tab population.&#10;- [FIX] Replaced a Fabric-specific access widener with a cross-platform Mixin Accessor for the hamster's melee attack goal.&#10;- [FIX] Corrected the NeoForge build script to properly bundle data-generated resources and Mixin configurations from the common module.&#10;- [FIX] Disabled the cleaning animation and sound for hamsters that are in a knocked-out state.&#10;- [DOC] Finalized the changelog for the v2.0.0 release." />
     <MESSAGE value="- [DOC] Updated README.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="- [DOC] Updated README.md" />
+    <MESSAGE value="- [CHORE] Upload to repo for AI research" />
+    <option name="LAST_COMMIT_MESSAGE" value="- [CHORE] Upload to repo for AI research" />
   </component>
 </project>

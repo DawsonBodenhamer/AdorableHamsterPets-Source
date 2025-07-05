@@ -17,6 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -
 
 ---
+## [2.0.1] - 2025-07-05
+
+### Fixed
+- Resolved a critical issue where Hamsters would not spawn naturally in the world on the NeoForge version of the mod. This was caused by an incorrect implementation of the biome modification logic for the NeoForge loader. The fix replaces the faulty Java-based event listener with a data-driven biome modifier JSON that correctly hooks into NeoForge's world generation pipeline.
+
+---
 
 ## [2.0.0] - 2025-07-02
 

@@ -1,5 +1,6 @@
 package net.dawson.adorablehamsterpets.world.gen;
 
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import dev.architectury.registry.level.biome.BiomeModifications;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.config.Configs;
@@ -99,7 +100,7 @@ public class ModEntitySpawns {
      * @param id The Identifier of the biome to check.
      * @return True if the key corresponds to a valid spawn biome.
      */
-    private static boolean isKeyInSpawnList(Identifier id) {
+    public static boolean isKeyInSpawnList(Identifier id) {
         // Pass the identifier to the key-matching helper
         return matchesAnyBiomeKey(id,
                 // Snowy Biomes

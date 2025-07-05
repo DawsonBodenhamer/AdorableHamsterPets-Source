@@ -70,9 +70,8 @@ public class AdorableHamsterPets {
 			// --- Networking Client to Server Registration ---
 			ModPackets.registerC2SPackets();
 
-			// --- World Gen & Spawns ---
+			// --- World Gen ---
 			ModWorldGeneration.generateModWorldGen();
-			ModEntitySpawns.initialize();
 
 			// --- Events ---
 			PlayerEvent.PLAYER_JOIN.register(AdorableHamsterPets::onPlayerJoin);

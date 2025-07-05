@@ -10,5 +10,6 @@ public final class AdorableHamsterPetsFabric implements ModInitializer {
         AdorableHamsterPets.initRegistries();
         AdorableHamsterPets.initAttributes();
         AdorableHamsterPets.initCommonSetup();
+        ModEntitySpawns.initialize();
     }
 }
