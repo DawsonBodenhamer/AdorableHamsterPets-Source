@@ -1,1 +1,2 @@
 /time set day
+/function adorablehamsterpets:debug/spawn_variants_circle_ai

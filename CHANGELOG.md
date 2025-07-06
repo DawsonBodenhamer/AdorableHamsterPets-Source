@@ -17,10 +17,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 -
 
 ---
-## [2.0.1] - 2025-07-05
+## [2.1.0] - 2025-07-05
+
+# Forge support is here!
+
+### Added
+- **Creeper Behavior:** Creepers will now flee from hamsters, similar to their behavior with cats. This should prevent them from detonating near your beloved pets and landscape. Thanks to [mikabean999](https://www.reddit.com/user/mikabean999/) on Reddit for the idea.
+- **Cheese Configurability:** Added new configuration options to control the hunger and saturation values restored by eating Cheese, allowing server owners to better balance food.
+
 
 ### Fixed
 - Resolved a critical issue where Hamsters would not spawn naturally in the world on the NeoForge version of the mod. This was caused by an incorrect implementation of the biome modification logic for the NeoForge loader. The fix replaces the faulty Java-based event listener with a data-driven biome modifier JSON that correctly hooks into NeoForge's world generation pipeline.
+- Fixed a bug that caused the hamster's cleaning sound to loop indefinitely if the hamster was commanded to stand up mid-animation.
+- Fixed a bug where wild hamsters would incorrectly perform the cleaning animation while sleeping. This behavior is now correctly restricted to tamed, sitting hamsters.
 
 ---
 

@@ -299,11 +299,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     }
     // --- End Hamster Spawning In Different Biomes ---
 
-
-
-
-
-
     private static HamsterVariant getRandomVariant(List<HamsterVariant> variantPool, net.minecraft.util.math.random.Random random) {
         if (variantPool == null || variantPool.isEmpty()) {
             // Fallback
@@ -1014,6 +1009,17 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         super.changeLookDirection(cursorX, cursorY);
     }
 
+    /**
+     * Overrides the vanilla {@link TameableEntity#setSitting(boolean)} method.
+     * <p>
+     * This method acts as an interceptor for any vanilla or external mod logic that
+     * attempts to change the sitting state (e.g., the vanilla {@code SitGoal}). It redirects
+     * the call to the custom overloaded {@link #setSitting(boolean, boolean)} method,
+     * ensuring that all mod-specific logic (like sleep sequence resets and animation state)
+     * is correctly handled.
+     *
+     * @param sitting {@code true} to make the hamster sit, {@code false} to make it stand.
+     */
     @Override
     public void setSitting(boolean sitting) {
         // Calls the overload below. We want player-initiated sits to NOT play the sleep sound.
@@ -1036,12 +1042,10 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         if (!sitting && this.isTamed() && this.getDozingPhase() != DozingPhase.NONE) {
             resetSleepSequence("Player commanded hamster to stand up.");
         }
-        // --- End 1. Reset ---
 
         // --- 2. Update Core Sitting State ---
         this.dataTracker.set(IS_SITTING, sitting);
         this.setInSittingPose(sitting); // Vanilla flag, also calls the IS_SITTING override in setInSittingPose
-        // --- End 2. Update ---
 
         // --- 3. Manage Cleaning Timers and Quiescent Sit Timer on State Change ---
         if (sitting) {
@@ -1053,8 +1057,11 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             this.quiescentSitDurationTimer = 0;
             // Also ensure cleaning stops if it was active.
             this.cleaningTimer = 0;
+            // Explicitly set the cleaning state to false.
+            if (this.dataTracker.get(IS_CLEANING)) {
+                this.dataTracker.set(IS_CLEANING, false);
+            }
         }
-        // --- End 3. Manage Timers ---
     }
 
     // --- Override isInAttackRange ---
@@ -1657,8 +1664,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             this.cleaningTimer = 0;
         }
         DozingPhase currentPhase = this.getDozingPhase();
-        if (!this.getWorld().isClient() && this.dataTracker.get(IS_SITTING) && !this.isKnockedOut() && !this.dataTracker.get(IS_CLEANING) && this.cleaningCooldownTimer <= 0) {
-            // Allow cleaning if the hamster is just sitting and not knocked out, but not if it's actively sleeping.
+        if (!this.getWorld().isClient() && this.isTamed() && this.dataTracker.get(IS_SITTING) && !this.dataTracker.get(IS_CLEANING) && this.cleaningCooldownTimer <= 0) {
+            // Allow cleaning if the hamster is just sitting, but not if it's actively sleeping.
             if (currentPhase == DozingPhase.NONE || currentPhase == DozingPhase.QUIESCENT_SITTING) {
                 int chanceDenominator = Configs.AHP.cleaningChanceDenominator.get();
                 if (chanceDenominator > 0 && this.random.nextInt(chanceDenominator) == 0) {

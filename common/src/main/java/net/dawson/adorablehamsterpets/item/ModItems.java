@@ -156,6 +156,10 @@ public class ModItems {
                     if (Configs.AHP.enableItemTooltips) {
                         tooltip.add(Text.translatable("tooltip.adorablehamsterpets.cheese.hint1").formatted(Formatting.GOLD));
                         tooltip.add(Text.translatable("tooltip.adorablehamsterpets.cheese.hint2").formatted(Formatting.GRAY));
+                        tooltip.add(Text.translatable("tooltip.adorablehamsterpets.cheese.hint3",
+                                Configs.AHP.cheeseNutrition.get(),
+                                String.format("%.1f", Configs.AHP.cheeseSaturation.get() * Configs.AHP.cheeseNutrition.get() * 2.0F)
+                        ).formatted(Formatting.DARK_GRAY));
                     } else {
                         tooltip.add(Text.literal("Adorable Hamster Pets").formatted(Formatting.BLUE, Formatting.ITALIC));
                     }
@@ -180,23 +184,19 @@ public class ModItems {
                 @Override
                 public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
                     if (user instanceof PlayerEntity player) {
-                        FoodComponent foodComponent = stack.get(DataComponentTypes.FOOD);
-                        if (foodComponent != null) {
-                            player.getHungerManager().eat(foodComponent);
-                        }
-
+                        // Manually apply hunger and saturation from config
+                        int nutrition = Configs.AHP.cheeseNutrition.get();
+                        float saturation = Configs.AHP.cheeseSaturation.get();
+                        player.getHungerManager().add(nutrition, saturation);
                         player.incrementStat(Stats.USED.getOrCreateStat(this));
-
                         SoundEvent randomEatSound = ModSounds.getRandomSoundFrom(ModSounds.CHEESE_EAT_SOUNDS, world.random);
                         if (randomEatSound != null) {
                             world.playSound(null, player.getX(), player.getY(), player.getZ(), randomEatSound, player.getSoundCategory(), 1.2F, 1.0F + (world.random.nextFloat() - world.random.nextFloat()) * 0.4F);
                         }
                     }
-
                     if (!(user instanceof PlayerEntity player) || !player.getAbilities().creativeMode) {
                         stack.decrement(1);
                     }
-
                     return stack;
                 }
             });

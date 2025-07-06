@@ -257,6 +257,20 @@ public class AhpConfig extends Config {
     @Translatable.Desc("Healing from basic seeds/crops. Better than nothing… probably.")
     public ValidatedFloat standardFoodHealing = new ValidatedFloat(2.0f, 5.0f, 0.0f);
 
+    // --- Cheese Food Settings ---
+    @Translatable.Name("Cheese Settings")
+    @Translatable.Desc("Cheese... the gooey wonder. Some people think it's overpowered. I disagree. Obviously.")
+    public ConfigGroup cheeseHealing = new ConfigGroup("foodHealing", true);
+
+    @Translatable.Name("Cheese Nutrition")
+    @Translatable.Desc("How many little hunger shanks the cheese restores. Vanilla cooked steak is 8. I know you're thinking of moving it to 20, you monster.")
+    public ValidatedInt cheeseNutrition = new ValidatedInt(8, 20, 0);
+
+    @ConfigGroup.Pop
+    @Translatable.Name("Cheese Saturation")
+    @Translatable.Desc("How long the hunger effect lasts. Cooked steak is 0.8. Don't get too crazy. Or do. I'm not your conscience.")
+    public ValidatedFloat cheeseSaturation = new ValidatedFloat(0.8f, 2.0f, 0.0f);
+
     // --- Green Bean Buff Settings ---
     @Translatable.Name("Green Bean Buff Settings")
     @Translatable.Desc("Nutrition, but make it dramatic. Tweaks to caffeine-bean highs.")

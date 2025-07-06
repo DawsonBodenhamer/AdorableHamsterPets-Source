@@ -77,6 +77,7 @@
 
   "tooltip.adorablehamsterpets.cheese.hint1": "A culinary masterpiece. Irresistible to small, furry opportunists.",
   "tooltip.adorablehamsterpets.cheese.hint2": "Wave it around in front of a hamster and see what happens.",
+  "tooltip.adorablehamsterpets.cheese.hint3": "Restores %s hunger and %s saturation (configurable).",
 
 
   "key.category.adorablehamsterpets.main": "Adorable Hamster Pets",

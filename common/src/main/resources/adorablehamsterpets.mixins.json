@@ -3,7 +3,7 @@
   "package": "net.dawson.adorablehamsterpets.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-
+    "server.CreeperEntityMixin",
     "server.PlayerEntityMixin",
     "accessor.MeleeAttackGoalAccessor"
   ],

@@ -1,5 +1,5 @@
-[14:32:39] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.1 with Fabric Loader 0.16.14
-[14:32:40] [main/INFO] (FabricLoader) Loading 51 mods:
+[07:39:23] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.21.1 with Fabric Loader 0.16.14
+[07:39:23] [main/INFO] (FabricLoader) Loading 64 mods:
 	- adorablehamsterpets 2.0.1+fabric
 	- architectury 13.0.8
 	- fabric-api 0.116.2+1.21.1
@@ -8,6 +8,8 @@
 	- fabric-biome-api-v1 13.0.31+d527f9fd19
 	- fabric-block-api-v1 1.1.0+0bc3503219
 	- fabric-block-view-api-v2 1.0.11+ebb2264e19
+	- fabric-blockrenderlayer-v1 1.1.52+0af3f5a719
+	- fabric-client-tags-api-v1 1.1.15+6573ed8c19
 	- fabric-command-api-v1 1.2.49+f71b366f19
 	- fabric-command-api-v2 2.2.28+6ced4dd919
 	- fabric-commands-v0 0.2.66+df3654b319
@@ -24,73 +26,247 @@
 	- fabric-gametest-api-v1 2.0.5+6fc22b9919
 	- fabric-item-api-v1 11.1.1+d5debaed19
 	- fabric-item-group-api-v1 4.1.7+def88e3a19
+	- fabric-key-binding-api-v1 1.0.47+0af3f5a719
+	- fabric-keybindings-v0 0.2.45+df3654b319
 	- fabric-language-kotlin 1.12.1+kotlin.2.0.20
 	- fabric-lifecycle-events-v1 2.6.0+0865547519
 	- fabric-loot-api-v2 3.0.15+3f89f5a519
 	- fabric-loot-api-v3 1.0.3+3f89f5a519
 	- fabric-message-api-v1 6.0.14+8aaf3aca19
+	- fabric-model-loading-api-v1 2.0.0+fe474d6b19
 	- fabric-networking-api-v1 4.3.0+c7469b2119
 	- fabric-object-builder-api-v1 15.2.1+40875a9319
 	- fabric-particles-v1 4.0.2+6573ed8c19
 	- fabric-permissions-api-v0 0.3.1
 	- fabric-recipe-api-v1 5.0.14+248df81c19
 	- fabric-registry-sync-v0 5.3.0+b7e751e819
+	- fabric-renderer-api-v1 3.4.0+c705a49c19
+	- fabric-renderer-indigo 1.7.0+c705a49c19
+	- fabric-renderer-registries-v1 3.2.68+df3654b319
 	- fabric-rendering-data-attachment-v1 0.3.49+73761d2e19
 	- fabric-rendering-fluids-v1 3.1.6+1daea21519
+	- fabric-rendering-v0 1.1.71+df3654b319
+	- fabric-rendering-v1 5.0.5+df16efd019
 	- fabric-resource-conditions-api-v1 4.3.0+8dc279b119
 	- fabric-resource-loader-v0 1.3.1+5b5275af19
+	- fabric-screen-api-v1 2.0.25+8b68f1c719
 	- fabric-screen-handler-api-v1 1.3.89+b559734419
+	- fabric-sound-api-v1 1.0.23+6573ed8c19
 	- fabric-transfer-api-v1 5.4.3+c24bd99419
 	- fabric-transitive-access-wideners-v1 6.2.0+45b9699719
 	- fabricloader 0.16.14
 	- fzzy_config 0.7.0+1.21
 	- geckolib 4.7.3
-	- generated_491a4d8 1.0.0
+	- generated_de1ad61 1.0.0
 	- jade 15.10.0+fabric
 	- java 21
 	- minecraft 1.21.1
 	- mixinextras 0.4.1
+	- modmenu 11.0.1
 	- placeholder-api 2.4.2+1.21
-[14:32:40] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/tweek/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.5+mixin.0.8.7/22f9eb729e216a091673a574a5906dc1b9027fb3/sponge-mixin-0.15.5+mixin.0.8.7.jar Service=Knot/Fabric Env=SERVER
-[14:32:40] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
-[14:32:40] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
-[14:32:40] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
-[14:32:45] [main/INFO] (fzzy_config) Loaded config adorablehamsterpets:main in 241ms
-[14:32:45] [main/ERROR] (Minecraft) No data fixer registered for hamster
-[14:32:45] [main/INFO] (adorablehamsterpets) Registering Data Component Types for adorablehamsterpets
-[14:32:45] [main/INFO] (adorablehamsterpets) Registering Mod Criteria for adorablehamsterpets
-[14:32:45] [main/INFO] (NetworkManagerImpl) Registering C2S receiver with id adorablehamsterpets:throw_hamster
-[14:32:45] [main/INFO] (NetworkManagerImpl) Registering C2S receiver with id adorablehamsterpets:update_hamster_render_state
-[14:32:45] [main/INFO] (adorablehamsterpets) Registering Biome Modifications for adorablehamsterpets
-[14:32:46] [main/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
-[14:32:46] [main/WARN] (Minecraft) Missing data pack generated_623001a
-[14:32:46] [main/INFO] (Minecraft) Found new data pack generated_491a4d8, loading it automatically
-[14:32:47] [main/INFO] (Minecraft) Loaded 1295 recipes
-[14:32:47] [main/INFO] (Minecraft) Loaded 1428 advancements
-[14:32:47] [main/INFO] (BiomeModificationImpl) Applied 256 biome modifications to 64 of 64 new biomes in 13.77 ms
-[14:32:47] [Server thread/INFO] (Minecraft) Starting minecraft server version 1.21.1
-[14:32:47] [Server thread/INFO] (Minecraft) Loading properties
-[14:32:47] [Server thread/INFO] (Minecraft) Default game type: SURVIVAL
-[14:32:47] [Server thread/INFO] (Minecraft) Generating keypair
-[14:32:47] [Server thread/INFO] (Minecraft) Starting Minecraft server on *:25565
-[14:32:47] [Server thread/INFO] (Minecraft) Using default channel type
-[14:32:47] [Server thread/INFO] (Minecraft) Preparing level "world"
-[14:32:48] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
-[14:32:48] [Worker-Main-9/INFO] (Minecraft) Preparing spawn area: 2%
-[14:32:49] [Worker-Main-13/INFO] (Minecraft) Preparing spawn area: 51%
-[14:32:49] [Worker-Main-21/INFO] (Minecraft) Preparing spawn area: 51%
-[14:32:49] [Worker-Main-12/INFO] (Minecraft) Preparing spawn area: 51%
-[14:32:50] [Server thread/INFO] (Minecraft) Time elapsed: 1802 ms
-[14:32:50] [Server thread/INFO] (Minecraft) Done (2.474s)! For help, type "help"
-[14:32:50] [Server thread/INFO] (Jade) Start loading plugin from Adorable Hamster Pets: net.dawson.adorablehamsterpets.integration.jade.AHPJadePlugin
-[14:32:50] [Server thread/INFO] (Jade) Loaded plugin from net.dawson.adorablehamsterpets.integration.jade.AHPJadePlugin in 5.777 ms
-[14:32:50] [Server thread/INFO] (Jade) Start loading plugin from Jade: snownee.jade.addon.core.CorePlugin
-[14:32:50] [Server thread/INFO] (Jade) Loaded plugin from snownee.jade.addon.core.CorePlugin in 1.114 ms
-[14:32:50] [Server thread/INFO] (Jade) Start loading plugin from Jade: snownee.jade.addon.vanilla.VanillaPlugin
-[14:32:50] [Server thread/INFO] (Jade) Loaded plugin from snownee.jade.addon.vanilla.VanillaPlugin in 6.675 ms
-[14:32:50] [Server thread/INFO] (Jade) Start loading plugin from Jade: snownee.jade.addon.universal.UniversalPlugin
-[14:32:50] [Server thread/INFO] (Jade) Loaded plugin from snownee.jade.addon.universal.UniversalPlugin in 2.929 ms
-[14:32:50] [Server thread/INFO] (Jade) Start loading plugin from Jade: snownee.jade.addon.access.AccessibilityPlugin
-[14:32:50] [Server thread/INFO] (Jade) Loaded plugin from snownee.jade.addon.access.AccessibilityPlugin in 2.500 μs
-[14:32:50] [Server thread/INFO] (Jade) Start loading plugin from Jade: snownee.jade.addon.debug.DebugPlugin
-[14:32:50] [Server thread/INFO] (Jade) Loaded plugin from snownee.jade.addon.debug.DebugPlugin in 2.200 μs
+[07:39:23] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.7 Source=file:/C:/Users/tweek/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.15.5+mixin.0.8.7/22f9eb729e216a091673a574a5906dc1b9027fb3/sponge-mixin-0.15.5+mixin.0.8.7.jar Service=Knot/Fabric Env=CLIENT
+[07:39:23] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[07:39:23] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
+[07:39:23] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_21
+[07:39:24] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.4.1).
+[07:39:25] [Datafixer Bootstrap/INFO] (Minecraft) 226 Datafixer optimizations took 298 milliseconds
+[07:39:28] [Render thread/INFO] (Minecraft) Environment: Environment[sessionHost=https://sessionserver.mojang.com, servicesHost=https://api.minecraftservices.com, name=PROD]
+[07:39:28] [Render thread/INFO] (Minecraft) Setting user: Player114
+[07:39:29] [Render thread/INFO] (fzzy_config) Loaded config adorablehamsterpets:main in 232ms
+[07:39:29] [Render thread/ERROR] (Minecraft) No data fixer registered for hamster
+[07:39:29] [Render thread/INFO] (adorablehamsterpets) Registering Data Component Types for adorablehamsterpets
+[07:39:29] [Render thread/INFO] (adorablehamsterpets) Registering Mod Criteria for adorablehamsterpets
+[07:39:29] [Render thread/INFO] (NetworkManagerImpl) Registering C2S receiver with id adorablehamsterpets:throw_hamster
+[07:39:29] [Render thread/INFO] (NetworkManagerImpl) Registering C2S receiver with id adorablehamsterpets:update_hamster_render_state
+[07:39:29] [Render thread/INFO] (adorablehamsterpets) Registering Biome Modifications for adorablehamsterpets
+[07:39:29] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Initializing biome modifications for hamster spawns.
+[07:39:29] [Render thread/INFO] (NetworkManagerImpl) Registering S2C receiver with id architectury:spawn_entity_packet
+[07:39:29] [Render thread/INFO] (fzzy_config) Loaded config fzzy_config:keybinds in 22ms
+[07:39:29] [Render thread/INFO] (NetworkManagerImpl) Registering S2C receiver with id adorablehamsterpets:start_hamster_flight_sound
+[07:39:29] [Render thread/INFO] (NetworkManagerImpl) Registering S2C receiver with id adorablehamsterpets:start_hamster_throw_sound
+[07:39:29] [Render thread/INFO] (Mod Menu/Update Checker) Checking mod updates...
+[07:39:29] [Render thread/INFO] (Indigo) [Indigo] Registering Indigo renderer!
+[07:39:30] [Render thread/INFO] (Minecraft) Backend library: LWJGL version 3.3.3-snapshot
+[07:39:31] [Render thread/INFO] (Minecraft) Reloading ResourceManager: vanilla, fabric, adorablehamsterpets, fabric-api, fabric-api-base, fabric-api-lookup-api-v1, fabric-biome-api-v1, fabric-block-api-v1, fabric-block-view-api-v2, fabric-blockrenderlayer-v1, fabric-client-tags-api-v1, fabric-command-api-v1, fabric-command-api-v2, fabric-commands-v0, fabric-content-registries-v0, fabric-convention-tags-v1, fabric-convention-tags-v2, fabric-crash-report-info-v1, fabric-data-attachment-api-v1, fabric-data-generation-api-v1, fabric-dimensions-v1, fabric-entity-events-v1, fabric-events-interaction-v0, fabric-game-rule-api-v1, fabric-gametest-api-v1, fabric-item-api-v1, fabric-item-group-api-v1, fabric-key-binding-api-v1, fabric-keybindings-v0, fabric-language-kotlin, fabric-lifecycle-events-v1, fabric-loot-api-v2, fabric-loot-api-v3, fabric-message-api-v1, fabric-model-loading-api-v1, fabric-networking-api-v1, fabric-object-builder-api-v1, fabric-particles-v1, fabric-recipe-api-v1, fabric-registry-sync-v0, fabric-renderer-api-v1, fabric-renderer-indigo, fabric-renderer-registries-v1, fabric-rendering-data-attachment-v1, fabric-rendering-fluids-v1, fabric-rendering-v0, fabric-rendering-v1, fabric-resource-conditions-api-v1, fabric-resource-loader-v0, fabric-screen-api-v1, fabric-screen-handler-api-v1, fabric-sound-api-v1, fabric-transfer-api-v1, fabric-transitive-access-wideners-v1, fabricloader, fzzy_config, generated_de1ad61, jade, modmenu, placeholder-api
+[07:39:31] [Worker-Main-13/INFO] (Minecraft) Found unifont_all_no_pua-15.1.05.hex, loading
+[07:39:31] [Worker-Main-15/INFO] (Minecraft) Found unifont_jp_patch-15.1.05.hex, loading
+[07:39:31] [Render thread/INFO] (Jade) Start loading plugin from Jade: snownee.jade.addon.core.CorePlugin
+[07:39:31] [Render thread/INFO] (Jade) Bootstrapped plugin from snownee.jade.addon.core.CorePlugin in 72.89 ms
+[07:39:31] [Render thread/INFO] (Jade) Loaded plugin from snownee.jade.addon.core.CorePlugin in 123.4 ms
+[07:39:31] [Render thread/INFO] (Jade) Start loading plugin from Jade: snownee.jade.addon.vanilla.VanillaPlugin
+[07:39:31] [Render thread/INFO] (Jade) Bootstrapped plugin from snownee.jade.addon.vanilla.VanillaPlugin in 70.34 ms
+[07:39:31] [Render thread/INFO] (Jade) Loaded plugin from snownee.jade.addon.vanilla.VanillaPlugin in 77.69 ms
+[07:39:31] [Render thread/INFO] (Jade) Start loading plugin from Jade: snownee.jade.addon.universal.UniversalPlugin
+[07:39:31] [Render thread/INFO] (Jade) Bootstrapped plugin from snownee.jade.addon.universal.UniversalPlugin in 6.648 ms
+[07:39:31] [Render thread/INFO] (Jade) Loaded plugin from snownee.jade.addon.universal.UniversalPlugin in 6.987 ms
+[07:39:31] [Render thread/INFO] (Jade) Start loading plugin from Jade: snownee.jade.addon.access.AccessibilityPlugin
+[07:39:31] [Render thread/INFO] (Jade) Bootstrapped plugin from snownee.jade.addon.access.AccessibilityPlugin in 4.616 ms
+[07:39:31] [Render thread/INFO] (Jade) Loaded plugin from snownee.jade.addon.access.AccessibilityPlugin in 4.833 ms
+[07:39:31] [Render thread/INFO] (Jade) Start loading plugin from Jade: snownee.jade.addon.debug.DebugPlugin
+[07:39:31] [Render thread/INFO] (Jade) Bootstrapped plugin from snownee.jade.addon.debug.DebugPlugin in 3.130 ms
+[07:39:31] [Render thread/INFO] (Jade) Loaded plugin from snownee.jade.addon.debug.DebugPlugin in 3.300 ms
+[07:39:31] [Render thread/INFO] (Jade) Start loading plugin from Adorable Hamster Pets: net.dawson.adorablehamsterpets.integration.jade.AHPJadePlugin
+[07:39:31] [Render thread/INFO] (Jade) Bootstrapped plugin from net.dawson.adorablehamsterpets.integration.jade.AHPJadePlugin in 2.926 ms
+[07:39:31] [Render thread/INFO] (Jade) Loaded plugin from net.dawson.adorablehamsterpets.integration.jade.AHPJadePlugin in 3.106 ms
+[07:39:32] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:item.goat_horn.play
+[07:39:32] [Render thread/WARN] (Minecraft) Missing sound for event: minecraft:entity.goat.screaming.horn_break
+[07:39:32] [Render thread/INFO] (Minecraft) OpenAL initialized on device OpenAL Soft on Desk Speakers (Realtek(R) Audio)
+[07:39:32] [Render thread/INFO] (Minecraft) Sound engine started
+[07:39:32] [Render thread/INFO] (Minecraft) Created: 1024x512x4 minecraft:textures/atlas/blocks.png-atlas
+[07:39:32] [Render thread/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/signs.png-atlas
+[07:39:32] [Render thread/INFO] (Minecraft) Created: 512x512x4 minecraft:textures/atlas/shield_patterns.png-atlas
+[07:39:32] [Render thread/INFO] (Minecraft) Created: 512x512x4 minecraft:textures/atlas/banner_patterns.png-atlas
+[07:39:32] [Render thread/INFO] (Minecraft) Created: 1024x1024x4 minecraft:textures/atlas/armor_trims.png-atlas
+[07:39:32] [Render thread/INFO] (Minecraft) Created: 256x256x4 minecraft:textures/atlas/chest.png-atlas
+[07:39:32] [Render thread/INFO] (Minecraft) Created: 128x64x4 minecraft:textures/atlas/decorated_pot.png-atlas
+[07:39:32] [Render thread/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/beds.png-atlas
+[07:39:32] [Render thread/INFO] (Minecraft) Created: 512x256x4 minecraft:textures/atlas/shulker_boxes.png-atlas
+[07:39:32] [Render thread/INFO] (Minecraft) Created: 512x256x0 minecraft:textures/atlas/particles.png-atlas
+[07:39:32] [Render thread/INFO] (Minecraft) Created: 512x256x0 minecraft:textures/atlas/paintings.png-atlas
+[07:39:32] [Render thread/INFO] (Minecraft) Created: 256x128x0 minecraft:textures/atlas/mob_effects.png-atlas
+[07:39:32] [Render thread/INFO] (Minecraft) Created: 64x64x0 minecraft:textures/atlas/map_decorations.png-atlas
+[07:39:32] [Render thread/INFO] (Minecraft) Created: 1024x512x0 minecraft:textures/atlas/gui.png-atlas
+[07:39:32] [Render thread/WARN] (Minecraft) Shader rendertype_entity_translucent_emissive could not find sampler named Sampler2 in the specified shader program.
+[07:39:36] [Render thread/WARN] (Minecraft) Missing data pack generated_4277c18
+[07:39:36] [Render thread/INFO] (Minecraft) Found new data pack generated_de1ad61, loading it automatically
+[07:39:37] [Render thread/INFO] (Minecraft) Loaded 1295 recipes
+[07:39:37] [Render thread/INFO] (Minecraft) Loaded 1428 advancements
+[07:39:37] [Render thread/INFO] (Jade) LootTableMineableCollector took 3.160 ms
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:badlands]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:badlands
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:bamboo_jungle]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:bamboo_jungle
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:basalt_deltas]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:beach]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:beach
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:birch_forest]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:birch_forest
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:cherry_grove]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:cherry_grove
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:cold_ocean]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:crimson_forest]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:dark_forest]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:dark_forest
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:deep_cold_ocean]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:deep_dark]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:deep_dark
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:deep_frozen_ocean]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:deep_frozen_ocean
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:deep_lukewarm_ocean]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:deep_ocean]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:desert]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:desert
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:dripstone_caves]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:dripstone_caves
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:end_barrens]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:end_highlands]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:end_midlands]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:eroded_badlands]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:eroded_badlands
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:flower_forest]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:forest]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:forest
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:frozen_ocean]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:frozen_ocean
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:frozen_peaks]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:frozen_peaks
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:frozen_river]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:frozen_river
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:grove]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:grove
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:ice_spikes]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:ice_spikes
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:jagged_peaks]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:jagged_peaks
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:jungle]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:jungle
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:lukewarm_ocean]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:lush_caves]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:lush_caves
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:mangrove_swamp]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:mangrove_swamp
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:meadow]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:meadow
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:mushroom_fields]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:mushroom_fields
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:nether_wastes]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:ocean]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:old_growth_birch_forest]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:old_growth_birch_forest
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:old_growth_pine_taiga]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:old_growth_pine_taiga
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:old_growth_spruce_taiga]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:old_growth_spruce_taiga
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:plains]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:plains
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:river]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:savanna]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:savanna
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:savanna_plateau]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:savanna_plateau
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:small_end_islands]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:snowy_beach]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:snowy_beach
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:snowy_plains]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:snowy_plains
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:snowy_slopes]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:snowy_slopes
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:snowy_taiga]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:snowy_taiga
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:soul_sand_valley]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:sparse_jungle]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:sparse_jungle
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:stony_peaks]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:stony_peaks
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:stony_shore]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:stony_shore
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:sunflower_plains]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:sunflower_plains
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:swamp]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:swamp
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:taiga]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:taiga
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:the_end]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:the_void]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:warm_ocean]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:warped_forest]: Should spawn? -> false
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:windswept_forest]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:windswept_forest
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:windswept_gravelly_hills]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:windswept_gravelly_hills
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:windswept_hills]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:windswept_hills
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:windswept_savanna]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:windswept_savanna
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Checking biome [minecraft:wooded_badlands]: Should spawn? -> true
+[07:39:37] [Render thread/INFO] (adorablehamsterpets) [AHP Spawn Debug] Applying spawn entry to biome: minecraft:wooded_badlands
+[07:39:37] [Render thread/INFO] (BiomeModificationImpl) Applied 256 biome modifications to 64 of 64 new biomes in 15.67 ms
+[07:39:37] [Server thread/INFO] (Minecraft) Starting integrated minecraft server version 1.21.1
+[07:39:37] [Server thread/INFO] (Minecraft) Generating keypair
+[07:39:37] [Server thread/INFO] (Minecraft) Preparing start region for dimension minecraft:overworld
+[07:39:37] [Render thread/INFO] (Minecraft) Preparing spawn area: 0%
+[07:39:37] [Render thread/INFO] (Minecraft) Time elapsed: 163 ms
+[07:39:37] [Server thread/INFO] (Minecraft) Changing view distance to 32, from 10
+[07:39:37] [Server thread/INFO] (Minecraft) Changing simulation distance to 12, from 0
+[07:39:38] [Server thread/INFO] (Minecraft) Player114[local:E:3e7f3eb7] logged in with entity id 9 at (-213.4257724511045, -60.0, 211.3037356489935)
+[07:39:38] [Server thread/INFO] (Minecraft) Player114 joined the game
+[07:39:40] [Render thread/INFO] (Minecraft) Loaded 56 advancements
+[07:39:40] [Render thread/INFO] (Jade) Received config from the server: 
+[07:40:08] [Server thread/INFO] (Minecraft) Saving and pausing game...
+[07:40:08] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[07:40:08] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[07:40:08] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[07:40:08] [Server thread/INFO] (Minecraft) Player114 lost connection: Disconnected
+[07:40:08] [Server thread/INFO] (Minecraft) Player114 left the game
+[07:40:08] [Server thread/INFO] (Minecraft) Stopping singleplayer server as player logged out
+[07:40:09] [Server thread/INFO] (Minecraft) Stopping server
+[07:40:09] [Server thread/INFO] (Minecraft) Saving players
+[07:40:09] [Server thread/INFO] (Minecraft) Saving worlds
+[07:40:09] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:overworld
+[07:40:09] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_end
+[07:40:09] [Server thread/INFO] (Minecraft) Saving chunks for level 'ServerLevel[New World]'/minecraft:the_nether
+[07:40:09] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (New World): All chunks are saved
+[07:40:09] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[07:40:09] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[07:40:09] [Server thread/INFO] (Minecraft) ThreadedAnvilChunkStorage: All dimensions are saved
+[07:40:10] [Render thread/INFO] (Minecraft) Stopping!
