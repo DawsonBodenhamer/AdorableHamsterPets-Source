@@ -31,6 +31,10 @@ public class ModBiomeModifiers {
                     () -> ConfigurableHamsterSpawnModifier.CODEC
             );
 
+    // --- Wild Bush and Sunflower Modifier Registration ---
+    public static final DeferredHolder<MapCodec<? extends BiomeModifier>, MapCodec<ConfigurableFeatureModifier>> CONFIGURABLE_FEATURE_MODIFIER =
+            BIOME_MODIFIER_SERIALIZERS.register("configurable_feature_modifier", () -> ConfigurableFeatureModifier.CODEC);
+
     /**
      * Registers this class's {@link DeferredRegister} to the mod's event bus,
      * allowing NeoForge to process the registrations at the correct time.

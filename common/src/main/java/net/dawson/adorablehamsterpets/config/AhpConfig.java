@@ -260,7 +260,7 @@ public class AhpConfig extends Config {
     // --- Cheese Food Settings ---
     @Translatable.Name("Cheese Settings")
     @Translatable.Desc("Cheese... the gooey wonder. Some people think it's overpowered. I disagree. Obviously.")
-    public ConfigGroup cheeseHealing = new ConfigGroup("foodHealing", true);
+    public ConfigGroup cheeseHealing = new ConfigGroup("cheeseHealing", true);
 
     @Translatable.Name("Cheese Nutrition")
     @Translatable.Desc("How many little hunger shanks the cheese restores. Vanilla cooked steak is 8. I know you're thinking of moving it to 20, you monster.")

@@ -6,6 +6,9 @@
     "net/dawson/adorablehamsterpets/mixin/client/LivingEntityRendererInvoker": {
       "addFeature": "method_4046(Lnet/minecraft/class_3887;)Z"
     },
+    "net/dawson/adorablehamsterpets/mixin/server/CreeperEntityMixin": {
+      "initGoals": "Lnet/minecraft/class_1548;method_5959()V"
+    },
     "net/dawson/adorablehamsterpets/mixin/server/PlayerEntityMixin": {
       "initDataTracker": "Lnet/minecraft/class_1657;method_5693(Lnet/minecraft/class_2945$class_9222;)V",
       "readCustomDataFromNbt": "Lnet/minecraft/class_1657;method_5749(Lnet/minecraft/class_2487;)V",
@@ -21,6 +24,9 @@
       },
       "net/dawson/adorablehamsterpets/mixin/client/LivingEntityRendererInvoker": {
         "addFeature": "method_4046(Lnet/minecraft/class_3887;)Z"
+      },
+      "net/dawson/adorablehamsterpets/mixin/server/CreeperEntityMixin": {
+        "initGoals": "Lnet/minecraft/class_1548;method_5959()V"
       },
       "net/dawson/adorablehamsterpets/mixin/server/PlayerEntityMixin": {
         "initDataTracker": "Lnet/minecraft/class_1657;method_5693(Lnet/minecraft/class_2945$class_9222;)V",

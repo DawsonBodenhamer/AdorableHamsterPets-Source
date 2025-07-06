@@ -126,6 +126,15 @@ Yes, inventory... *in their face*. Feed them **Hamster Food Mix** once to earn t
 </details>
 
 <details>
+<summary>Creeper Psychological Warfare</summary>
+
+..........................
+
+*   **Psychological Warfare:** Creepers are utterly terrified of hamsters, just like cats. They'll flee on sight. I probably didn't need a section for this.
+..........................
+</details>
+
+<details>
 <summary>Decorate Your Hamsters</summary>
 
 ..........................
@@ -154,7 +163,7 @@ Found some **Pink Petals**? Right-click your tamed hamster to bestow upon it a s
 *   **Cucumber/Green Beans:** Grow 'em, eat 'em raw (if you must), slice 'em, steam 'em. Culinary possibilities are… present.
 *   **Steamed Green Beans:** A suspiciously potent super-food for your hamster. Grants temporary buffs, followed by a mandatory "please wait" period. Don't get greedy.
 *   **Hamster Food Mix:** Allegedly gourmet. Heals well, bypasses their irritating pickiness, and is the key to unlocking their cheek pouches. Craft it. Or don't. Your hamster, your problem.
-*   **Cheese:** Not only can it lure hamsters onto your shoulder, it's player-edible. Surprisingly nutritious (think cooked porkchop levels) and you can scarf it down about 30% faster than most foods. The only catch? The... *distinctively moist* eating sound. Consider it an acquired taste.
+*   **Cheese:** Not only can it lure hamsters onto your shoulder, it's player-edible. Surprisingly nutritious (think cooked porkchop levels) and you can scarf it down about 30% faster than most foods. The only catch? The... *distinctively moist* eating sound. Consider it an acquired taste. Its nutritional value is fully configurable, for those of you who felt cheese was somehow "unbalanced." Plebs.
 
 ..........................
 </details>

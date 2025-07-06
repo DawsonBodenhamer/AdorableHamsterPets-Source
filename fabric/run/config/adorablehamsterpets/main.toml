@@ -60,6 +60,10 @@ hamsterThrowDamage = 20.0
 hamsterFoodMixHealing = 4.0
 # Healing from basic seeds/crops. Better than nothing… probably.
 standardFoodHealing = 2.0
+# How many little hunger shanks the cheese restores. Vanilla cooked steak is 8. I know you're thinking of moving it to 20, you monster.
+cheeseNutrition = 8
+# How long the hunger effect lasts. Cooked steak is 0.8. Don't get too crazy. Or do. I'm not your conscience.
+cheeseSaturation = 0.8
 # Steamed beans: power that fades faster than your attention span.
 greenBeanBuffDuration = 3600
 # Because someone has to go fast.

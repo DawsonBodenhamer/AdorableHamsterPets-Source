@@ -1,0 +1,7 @@
+{
+  "type": "adorablehamsterpets:configurable_feature_modifier",
+  "biomes": "#minecraft:is_overworld",
+  "features_to_add": [
+    "adorablehamsterpets:wild_green_bean_bush_placed"
+  ]
+}

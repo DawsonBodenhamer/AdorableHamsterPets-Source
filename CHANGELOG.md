@@ -16,10 +16,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 -
 
----
-## [2.1.0] - 2025-07-05
 
-# Forge support is here!
+---
+
+## [2.0.2] - 2025-07-06
+
+### Fixed
+- Fixed an issue where Wild Bushes and custom Sunflowers were not generating in the world on the NeoForge version of the mod.
+- **Developer's Note:** You might be thinking, "Didn't you *just* fix a spawning bug?" You're right! As it turns out, the way NeoForge handles adding *entities* to the world is similar to how it handles adding *features* like plants, but yours truly is just now learning this. Lol. Thanks for your patience as I navigate the wonderful quirks of multi-loader development. Incidentally, unlike with the hamster spawning fix, if any of you already spawned in a world on NeoForge, just FYI— this fix will only take place in newly generated chunks.
+
+---
+
+## [2.0.1] - 2025-07-06
 
 ### Added
 - **Creeper Behavior:** Creepers will now flee from hamsters, similar to their behavior with cats. This should prevent them from detonating near your beloved pets and landscape. Thanks to [mikabean999](https://www.reddit.com/user/mikabean999/) on Reddit for the idea.

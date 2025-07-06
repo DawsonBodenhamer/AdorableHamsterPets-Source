@@ -71,7 +71,7 @@ public class AdorableHamsterPets {
 			ModPackets.registerC2SPackets();
 
 			// --- World Gen ---
-			ModWorldGeneration.generateModWorldGen();
+			ModWorldGeneration.registerBiomeModifications();
 
 			// --- Events ---
 			PlayerEvent.PLAYER_JOIN.register(AdorableHamsterPets::onPlayerJoin);
