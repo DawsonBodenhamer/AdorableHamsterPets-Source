@@ -1,6 +1,5 @@
 package net.dawson.adorablehamsterpets.entity.client;
 
-import dev.architectury.networking.NetworkManager;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.AdorableHamsterPetsClient;
 import net.dawson.adorablehamsterpets.client.sound.HamsterCleaningSoundInstance;
@@ -91,8 +90,8 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
     }
 
     @Override
-    public void preRender(MatrixStack poseStack, HamsterEntity animatable, BakedGeoModel model, @Nullable VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
-        super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour);
+    public void preRender(MatrixStack poseStack, HamsterEntity animatable, BakedGeoModel model, @Nullable VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
 
         model.getBone("left_foot").ifPresent(bone -> bone.setTrackingMatrices(true));
         model.getBone("nose").ifPresent(bone -> bone.setTrackingMatrices(true));
@@ -107,8 +106,8 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
      * to prevent re-triggering.
      */
     @Override
-    public void renderFinal(MatrixStack poseStack, HamsterEntity animatable, BakedGeoModel model, VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay, int colour) {
-        super.renderFinal(poseStack, animatable, model, bufferSource, buffer, partialTick, packedLight, packedOverlay, colour);
+    public void renderFinal(MatrixStack poseStack, HamsterEntity animatable, BakedGeoModel model, VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        super.renderFinal(poseStack, animatable, model, bufferSource, buffer, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
 
         if (animatable.particleEffectId != null) {
             Random random = animatable.getRandom();
@@ -121,7 +120,7 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
                             double d = random.nextGaussian() * 0.1;
                             double e = random.nextGaussian() * 0.2;
                             double f = random.nextGaussian() * 0.1;
-                            animatable.getWorld().addParticle(ParticleTypes.WHITE_SMOKE,
+                            animatable.getWorld().addParticle(ParticleTypes.POOF,
                                     pos.x + d, pos.y + e, pos.z + f,
                                     random.nextGaussian() * 0.05,
                                     random.nextGaussian() * 0.05 + 0.1, // Slight upward bias

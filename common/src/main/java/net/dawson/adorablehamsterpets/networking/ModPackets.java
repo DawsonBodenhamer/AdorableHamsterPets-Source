@@ -3,54 +3,61 @@ package net.dawson.adorablehamsterpets.networking;
 import dev.architectury.networking.NetworkManager;
 import net.dawson.adorablehamsterpets.AdorableHamsterPetsClient;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
-import net.dawson.adorablehamsterpets.networking.payload.*;
 import net.dawson.adorablehamsterpets.util.HamsterRenderTracker;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.particle.BlockStateParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Identifier;
+
+import static net.dawson.adorablehamsterpets.AdorableHamsterPets.MOD_ID;
 
 public class ModPackets {
 
+    // --- Packet Identifiers ---
+    public static final Identifier THROW_HAMSTER_ID = Identifier.of(MOD_ID, "throw_hamster");
+    public static final Identifier UPDATE_HAMSTER_RENDER_STATE_ID = Identifier.of(MOD_ID, "update_hamster_render_state");
+    public static final Identifier START_HAMSTER_FLIGHT_SOUND_ID = Identifier.of(MOD_ID, "start_hamster_flight_sound");
+    public static final Identifier START_HAMSTER_THROW_SOUND_ID = Identifier.of(MOD_ID, "start_hamster_throw_sound");
+
     /**
      * Registers all C2S (Client-to-Server) packet receivers.
-     * This method should be called from the common initializer, as the server
-     * needs to be aware of these packets.
+     * This method should be called from the common initializer.
      */
     public static void registerC2SPackets() {
-        NetworkManager.registerReceiver(NetworkManager.Side.C2S, ThrowHamsterPayload.ID, ThrowHamsterPayload.CODEC,
-                (payload, context) -> context.queue(() -> HamsterEntity.tryThrowFromShoulder((ServerPlayerEntity) context.getPlayer()))
+        NetworkManager.registerReceiver(NetworkManager.Side.C2S, THROW_HAMSTER_ID,
+                (buf, context) -> context.queue(() -> HamsterEntity.tryThrowFromShoulder((ServerPlayerEntity) context.getPlayer()))
         );
 
-        NetworkManager.registerReceiver(NetworkManager.Side.C2S, UpdateHamsterRenderStatePayload.ID, UpdateHamsterRenderStatePayload.CODEC,
-                (payload, context) -> context.queue(() -> handleUpdateRenderState(payload, context))
+        NetworkManager.registerReceiver(NetworkManager.Side.C2S, UPDATE_HAMSTER_RENDER_STATE_ID,
+                (buf, context) -> {
+                    int entityId = buf.readInt();
+                    boolean isRendering = buf.readBoolean();
+                    context.queue(() -> {
+                        if (isRendering) {
+                            HamsterRenderTracker.addPlayer(entityId, context.getPlayer().getUuid());
+                        } else {
+                            HamsterRenderTracker.removePlayer(entityId, context.getPlayer().getUuid());
+                        }
+                    });
+                }
         );
     }
 
     /**
      * Registers all S2C (Server-to-Client) packet receivers.
-     * This method MUST be called from a client-only initializer to prevent
-     * server-side crashes.
+     * This method MUST be called from a client-only initializer.
      */
     public static void registerS2CPackets() {
-        NetworkManager.registerReceiver(NetworkManager.Side.S2C, StartHamsterFlightSoundPayload.ID, StartHamsterFlightSoundPayload.CODEC,
-                (payload, context) -> context.queue(() -> AdorableHamsterPetsClient.handleStartFlightSound(payload))
+        NetworkManager.registerReceiver(NetworkManager.Side.S2C, START_HAMSTER_FLIGHT_SOUND_ID,
+                (buf, context) -> {
+                    int entityId = buf.readInt();
+                    context.queue(() -> AdorableHamsterPetsClient.handleStartFlightSound(entityId));
+                }
         );
 
-        NetworkManager.registerReceiver(NetworkManager.Side.S2C, StartHamsterThrowSoundPayload.ID, StartHamsterThrowSoundPayload.CODEC,
-                (payload, context) -> context.queue(() -> AdorableHamsterPetsClient.handleStartThrowSound(payload))
+        NetworkManager.registerReceiver(NetworkManager.Side.S2C, START_HAMSTER_THROW_SOUND_ID,
+                (buf, context) -> {
+                    int entityId = buf.readInt();
+                    context.queue(() -> AdorableHamsterPetsClient.handleStartThrowSound(entityId));
+                }
         );
-    }
-
-    private static void handleUpdateRenderState(UpdateHamsterRenderStatePayload payload, NetworkManager.PacketContext context) {
-        if (payload.isRendering()) {
-            HamsterRenderTracker.addPlayer(payload.hamsterEntityId(), context.getPlayer().getUuid());
-        } else {
-            HamsterRenderTracker.removePlayer(payload.hamsterEntityId(), context.getPlayer().getUuid());
-        }
     }
 }

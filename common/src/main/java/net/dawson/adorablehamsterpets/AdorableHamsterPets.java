@@ -8,7 +8,6 @@ import dev.architectury.registry.level.entity.EntityAttributeRegistry;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
 import net.dawson.adorablehamsterpets.block.ModBlocks;
 import net.dawson.adorablehamsterpets.command.ModCommands;
-import net.dawson.adorablehamsterpets.component.ModDataComponentTypes;
 import net.dawson.adorablehamsterpets.config.AhpConfig;
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
@@ -21,9 +20,11 @@ import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.dawson.adorablehamsterpets.world.ModSpawnPlacements;
 import net.dawson.adorablehamsterpets.world.ModWorldGeneration;
 import net.dawson.adorablehamsterpets.world.gen.ModEntitySpawns;
+import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementProgress;
 import net.minecraft.advancement.PlayerAdvancementTracker;
-import net.minecraft.entity.SpawnLocationTypes;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnRestriction;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
@@ -47,7 +48,7 @@ public class AdorableHamsterPets {
 
 
 		ModEntities.register();
-		ModDataComponentTypes.registerDataComponentTypes();
+//		ModDataComponentTypes.registerDataComponentTypes(); // TODO: we Need to figure out what we're going to do instead of DataComponentTypes since we still have lot of hamster data that needs to be saved.
 		ModSounds.register();
 		ModBlocks.register();
 		ModItems.register();
@@ -59,7 +60,7 @@ public class AdorableHamsterPets {
 
 	/**
 	 * Initializes common setup logic that needs to run after registries are populated.
-	 * This is called from FMLCommonSetupEvent on NeoForge and onInitialize on Fabric.
+	 * This is called from FMLCommonSetupEvent on Forge and onInitialize on Fabric.
 	 */
 	public static void initCommonSetup() {
 		// We check if the data generation API is NOT loaded. If it is loaded, we are in a datagen environment
@@ -96,10 +97,10 @@ public class AdorableHamsterPets {
 	 */
 	private static void onSetup() {
 		// --- Spawn Restriction Registration ---
-		ModSpawnPlacements.register(ModEntities.HAMSTER.get(), SpawnLocationTypes.ON_GROUND,
+		ModSpawnPlacements.register(ModEntities.HAMSTER.get(), SpawnRestriction.Location.ON_GROUND,
 				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-				(type, world, reason, pos, random) -> AnimalEntity.isValidNaturalSpawn(type, world, reason, pos, random) ||
-						ModEntitySpawns.VALID_SPAWN_BLOCKS.contains(world.getBlockState(pos.down()).getBlock()));
+				(type, world, reason, pos, random) -> (world.getBlockState(pos.down()).isIn(net.minecraft.registry.tag.BlockTags.ANIMALS_SPAWNABLE_ON) ||
+						ModEntitySpawns.VALID_SPAWN_BLOCKS.contains(world.getBlockState(pos.down()).getBlock())));
 	}
 
 
@@ -107,15 +108,15 @@ public class AdorableHamsterPets {
 		if (Configs.AHP.enableAutoGuidebookDelivery) {
 			PlayerAdvancementTracker advancementTracker = player.getAdvancementTracker();
 			Identifier flagAdvId = Identifier.of(MOD_ID, "technical/has_received_initial_guidebook");
-			net.minecraft.advancement.AdvancementEntry flagAdvancementEntry = player.server.getAdvancementLoader().get(flagAdvId);
+			Advancement flagAdvancement = player.server.getAdvancementLoader().get(flagAdvId);
 
 
-			if (flagAdvancementEntry != null) {
-				AdvancementProgress flagProgress = advancementTracker.getProgress(flagAdvancementEntry);
+			if (flagAdvancement != null) {
+				AdvancementProgress flagProgress = advancementTracker.getProgress(flagAdvancement);
 				if (!flagProgress.isDone()) {
 					ModCriteria.FIRST_JOIN_GUIDEBOOK_CHECK.get().trigger(player);
-					for (String criterion : flagAdvancementEntry.value().criteria().keySet()) {
-						advancementTracker.grantCriterion(flagAdvancementEntry, criterion);
+					for (String criterion : flagAdvancement.getCriteria().keySet()) {
+						advancementTracker.grantCriterion(flagAdvancement, criterion);
 					}
 				}
 			} else {

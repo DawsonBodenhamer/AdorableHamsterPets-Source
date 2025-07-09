@@ -3,6 +3,7 @@ package net.dawson.adorablehamsterpets.entity.custom;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.registry.menu.ExtendedMenuProvider;
 import dev.architectury.registry.menu.MenuRegistry;
+import io.netty.buffer.Unpooled;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
@@ -13,9 +14,7 @@ import net.dawson.adorablehamsterpets.entity.AI.*;
 import net.dawson.adorablehamsterpets.entity.ImplementedInventory;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.dawson.adorablehamsterpets.item.ModItems;
-import net.dawson.adorablehamsterpets.networking.payload.HamsterAnimationSoundPayload;
-import net.dawson.adorablehamsterpets.networking.payload.StartHamsterFlightSoundPayload;
-import net.dawson.adorablehamsterpets.networking.payload.StartHamsterThrowSoundPayload;
+import net.dawson.adorablehamsterpets.networking.ModPackets;
 import net.dawson.adorablehamsterpets.screen.HamsterInventoryScreenHandler;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.dawson.adorablehamsterpets.tag.ModItemTags;
@@ -53,7 +52,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.particle.EntityEffectParticleEffect;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
@@ -63,7 +61,6 @@ import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerChunkManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
@@ -80,19 +77,16 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.RaycastContext;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Unique;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
-import software.bernie.geckolib.animation.AnimationController;
-import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.*;
@@ -115,6 +109,18 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private static final float THROW_DAMAGE = 20.0f;
     private static final double THROWN_GRAVITY = -0.05;
     private static final double HAMSTER_ATTACK_BOX_EXPANSION = 0.70D;  // Expand by 0.7 blocks horizontally (vanilla is 0.83 blocks, so really this is shrinking it)
+
+    /**
+     * Required by the Tameable interface in 1.20.1.
+     * It provides a view of the world the entity is in.
+     *
+     * @return The world this entity belongs to.
+     */
+    @Override
+    public EntityView method_48926() {
+        return this.getWorld();
+    }
+
     public enum DozingPhase {
         NONE,                  // Not in any part of the sleep sequence
         QUIESCENT_SITTING,     // Tamed, sitting by command, waiting for drowsiness timer
@@ -382,22 +388,20 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             });
 
             // --- 3. Load Inventory ---
-            RegistryWrapper.WrapperLookup registries = world.getRegistryManager();
             if (!data.inventoryNbt().isEmpty()) {
-                Inventories.readNbt(data.inventoryNbt(), hamster.items, registries);
+                Inventories.readNbt(data.inventoryNbt(), hamster.items);
                 hamster.updateCheekTrackers();
             }
 
             // --- 4. Load Status Effects ---
-            NbtCompound effectsNbt = data.activeEffectsNbt();
-            if (effectsNbt.contains("active_effects", NbtElement.LIST_TYPE)) {
-                NbtList effectsList = effectsNbt.getList("active_effects", NbtElement.COMPOUND_TYPE);
-                for (NbtElement effectElement : effectsList) {
-                    if (effectElement instanceof NbtCompound effectInstanceNbt) {
-                        StatusEffectInstance effectInstance = StatusEffectInstance.fromNbt(effectInstanceNbt);
-                        if (effectInstance != null) {
-                            hamster.addStatusEffect(effectInstance);
-                        }
+            // In 1.20.1, the data record holds the NbtList directly.
+            NbtList effectsList = data.activeEffectsNbt();
+            for (NbtElement effectElement : effectsList) {
+                if (effectElement instanceof NbtCompound effectInstanceNbt) {
+                    // StatusEffectInstance.fromNbt takes the compound directly.
+                    StatusEffectInstance effectInstance = StatusEffectInstance.fromNbt(effectInstanceNbt);
+                    if (effectInstance != null) {
+                        hamster.addStatusEffect(effectInstance);
                     }
                 }
             }
@@ -517,17 +521,31 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             serverWorld.spawnEntity(hamster);
             AdorableHamsterPets.LOGGER.debug("[HamsterEntity] tryThrowFromShoulder: Spawned thrown Hamster ID {}.", hamster.getId());
 
-            StartHamsterFlightSoundPayload flightPayload = new StartHamsterFlightSoundPayload(hamster.getId());
-            StartHamsterThrowSoundPayload throwPayload = new StartHamsterThrowSoundPayload(hamster.getId());
+            // Create buffers for the flight and throw sounds
+            PacketByteBuf flightBuf = new PacketByteBuf(Unpooled.buffer());
+            flightBuf.writeInt(hamster.getId());
 
-            NetworkManager.sendToPlayer(player, flightPayload);
-            NetworkManager.sendToPlayer(player, throwPayload);
+            PacketByteBuf throwBuf = new PacketByteBuf(Unpooled.buffer());
+            throwBuf.writeInt(hamster.getId());
+
+            // Send to the throwing player
+            NetworkManager.sendToPlayer(player, ModPackets.START_HAMSTER_FLIGHT_SOUND_ID, flightBuf);
+            NetworkManager.sendToPlayer(player, ModPackets.START_HAMSTER_THROW_SOUND_ID, throwBuf);
+
+            // Send to nearby players
             double radius = 64.0;
             Vec3d hamsterPos = hamster.getPos();
             Box searchBox = new Box(hamsterPos.subtract(radius, radius, radius), hamsterPos.add(radius, radius, radius));
             List<ServerPlayerEntity> nearbyPlayers = serverWorld.getPlayers(p -> p != player && searchBox.contains(p.getPos()));
-            NetworkManager.sendToPlayers(nearbyPlayers, flightPayload);
-            NetworkManager.sendToPlayers(nearbyPlayers, throwPayload);
+
+            // We need to create new buffers for sending to multiple players, as the previous ones might have been consumed.
+            PacketByteBuf flightBufNearby = new PacketByteBuf(Unpooled.buffer());
+            flightBufNearby.writeInt(hamster.getId());
+            PacketByteBuf throwBufNearby = new PacketByteBuf(Unpooled.buffer());
+            throwBufNearby.writeInt(hamster.getId());
+
+            NetworkManager.sendToPlayers(nearbyPlayers, ModPackets.START_HAMSTER_FLIGHT_SOUND_ID, flightBufNearby);
+            NetworkManager.sendToPlayers(nearbyPlayers, ModPackets.START_HAMSTER_THROW_SOUND_ID, throwBufNearby);
 
             ModCriteria.HAMSTER_THROWN.get().trigger(player);
         } else {
@@ -868,9 +886,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         nbt.putInt("SettleSleepCooldown", this.settleSleepAnimationCooldown);
 
         // --- 3. Write Inventory ---
-        RegistryWrapper.WrapperLookup registries = getRegistryLookup();
         NbtCompound inventoryWrapperNbt = new NbtCompound();
-        Inventories.writeNbt(inventoryWrapperNbt, this.items, registries);
+        Inventories.writeNbt(inventoryWrapperNbt, this.items);
         nbt.put("Inventory", inventoryWrapperNbt);
 
         // --- 4. Write Seeking and Sulking Data ---
@@ -926,9 +943,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
         // --- 3. Read Inventory ---
         this.items.clear();
-        RegistryWrapper.WrapperLookup registries = getRegistryLookup();
         if (nbt.contains("Inventory", NbtElement.COMPOUND_TYPE)) {
-            Inventories.readNbt(nbt.getCompound("Inventory"), this.items, registries);
+            Inventories.readNbt(nbt.getCompound("Inventory"), this.items);
         }
         this.updateCheekTrackers();
 
@@ -956,17 +972,17 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         // --- 1. Update Trackers and Prepare NBT ---
         this.updateCheekTrackers();
         NbtCompound inventoryNbt = new NbtCompound();
-        if (this.getWorld() instanceof ServerWorld serverWorld) {
-            Inventories.writeNbt(inventoryNbt, this.items, serverWorld.getRegistryManager());
-        }
+        // In 1.20.1, writeNbt does not take a registry manager.
+        Inventories.writeNbt(inventoryNbt, this.items);
 
         // --- 2. Save Active Status Effects to a Compound Wrapper ---
         NbtCompound effectsNbt = new NbtCompound();
         NbtList effectsList = new NbtList();
         for (StatusEffectInstance effectInstance : this.getStatusEffects()) {
-            effectsList.add(effectInstance.writeNbt());
+            // Corrected: In 1.20.1, writeNbt requires a compound to be passed into it.
+            effectsList.add(effectInstance.writeNbt(new NbtCompound()));
         }
-        effectsNbt.put("active_effects", effectsList); // Store the list inside a compound
+        // In 1.20.1, the active_effects are stored directly in the NbtList, not a wrapper compound.
 
         // --- 3. Get Custom Name ---
         Optional<String> nameOptional = Optional.ofNullable(this.getCustomName()).map(Text::getString);
@@ -989,7 +1005,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 this.getBreedingAge(),
                 this.throwCooldownEndTick,
                 this.steamedBeansCooldownEndTick,
-                effectsNbt, // Pass the compound wrapper
+                effectsList, // Pass the NbtList directly
                 this.autoEatCooldownTicks,
                 nameOptional,
                 this.getDataTracker().get(PINK_PETAL_TYPE),
@@ -1282,7 +1298,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     ItemScatterer.spawn(world, this.getX(), this.getY() + 0.5, this.getZ(), new ItemStack(Items.PINK_PETALS, 1));
 
                     if (!player.getAbilities().creativeMode) {
-                        stack.damage(1, player, LivingEntity.getSlotForHand(hand)); // Damage shears
+                        // For 1.20.1 - Determine EquipmentSlot based on the hand used.
+                        stack.damage(1, player, (p) -> p.sendEquipmentBreakStatus(hand == Hand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND));
                     }
                     AdorableHamsterPets.LOGGER.debug("[InteractMob {}] Removed pink petals with shears.", this.getId());
                 }
@@ -1458,23 +1475,35 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     }
 
     // --- Taming Override ---
+    /**
+     * Overrides the vanilla setTamed method. This is the method called by vanilla logic.
+     * It delegates to our custom implementation, ensuring attributes are always updated.
+     * @param tamed True if the entity is being tamed.
+     */
     @Override
+    public void setTamed(boolean tamed) {
+        // Always update attributes when this vanilla method is called.
+        this.setTamed(tamed, true);
+    }
+
+    /**
+     * Custom implementation of setTamed that allows controlling the attribute update.
+     * In 1.20.1, this is now a helper method for the mod's internal use.
+     * @param tamed True if the entity is being tamed.
+     * @param updateAttributes True to update the entity's attributes (e.g., max health).
+     */
     public void setTamed(boolean tamed, boolean updateAttributes) {
-        // --- 1. Set Tamed State and Attributes ---
-        super.setTamed(tamed, updateAttributes);
-        if (tamed) {
-            this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(16.0D);
-            this.setHealth(this.getMaxHealth()); // Set health to the updated maximum
-            // --- Ensure Attack Damage is set correctly on tame ---
-            // Set the base attack damage attribute to the defined melee damage when tamed.
-            this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE).setBaseValue(Configs.AHP.meleeDamage.get());
-            // --- End Attack Damage ---
-        } else {
-            this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(8.0D);
-            // Reset attack damage if untamed (optional, but good practice)
-            this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE).setBaseValue(Configs.AHP.meleeDamage.get());
+        super.setTamed(tamed); // Call the parent method
+        if (updateAttributes) {
+            if (tamed) {
+                this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(16.0D);
+                this.setHealth(this.getMaxHealth());
+                this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE).setBaseValue(Configs.AHP.meleeDamage.get());
+            } else {
+                this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(8.0D);
+                this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE).setBaseValue(Configs.AHP.meleeDamage.get());
+            }
         }
-        // --- End 1. Set Tamed State and Attributes ---
     }
 
     // --- Breeding ---
@@ -1735,7 +1764,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     }
 
                     if (playEffects) {
-                        world.playSound(null, this.getX(), this.getY(), this.getZ(), ModSounds.HAMSTER_IMPACT, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+                        // For 1.20.1, call .get() on the RegistrySupplier
+                        world.playSound(null, this.getX(), this.getY(), this.getZ(), ModSounds.HAMSTER_IMPACT.get(), SoundCategory.NEUTRAL, 1.0F, 1.0F);
                         if (!world.isClient()) {
                             ((ServerWorld)world).spawnParticles(
                                     ParticleTypes.POOF,
@@ -1777,7 +1807,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
                     if (!world.isClient() && this.throwTicks > 5) {
                         ((ServerWorld)world).spawnParticles(
-                                ParticleTypes.GUST,
+                                ParticleTypes.CLOUD,
                                 this.getX(), this.getY() + this.getHeight() / 2.0, this.getZ(),
                                 1, 0.1, 0.1, 0.1, 0.0
                         );
@@ -1856,21 +1886,20 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         // Randomly select a settle animation and corresponding deep sleep pose
                         int choice = this.random.nextInt(3);
                         String settleAnimId;
-                        String deepSleepAnimIdForTracker; // Temporary variable for clarity
-                        switch (choice) {
-                            case 0:
+                        String deepSleepAnimIdForTracker = switch (choice) {
+                            case 0 -> {
                                 settleAnimId = "anim_hamster_settle_sleep1";
-                                deepSleepAnimIdForTracker = "anim_hamster_sleep_pose1";
-                                break;
-                            case 1:
+                                yield "anim_hamster_sleep_pose1";
+                            }
+                            case 1 -> {
                                 settleAnimId = "anim_hamster_settle_sleep2";
-                                deepSleepAnimIdForTracker = "anim_hamster_sleep_pose2";
-                                break;
-                            default: // case 2
+                                yield "anim_hamster_sleep_pose2";
+                            }
+                            default -> {
                                 settleAnimId = "anim_hamster_settle_sleep3";
-                                deepSleepAnimIdForTracker = "anim_hamster_sleep_pose3";
-                                break;
-                        }
+                                yield "anim_hamster_sleep_pose3";
+                            }
+                        }; // Temporary variable for clarity
                         this.dataTracker.set(CURRENT_DEEP_SLEEP_ANIM_ID, deepSleepAnimIdForTracker); // Set DataTracker
                         this.triggerAnimOnServer("mainController", settleAnimId);
                         this.settleSleepAnimationCooldown = 20;
@@ -2046,7 +2075,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     // Particle Spawning
                     if (this.celebrationParticleTicks > 0) {
                             ((ServerWorld)this.getWorld()).spawnParticles(
-                                    ParticleTypes.TRIAL_SPAWNER_DETECTION_OMINOUS, // 1. Particle Type
+                                    ParticleTypes.ENCHANT,                         // 1. Particle Type
                                     this.getX(),                                   // 2. Center X-coordinate
                                     this.getY() + 1.5,                             // 3. Center Y-coordinate
                                     this.getZ(),                                   // 4. Center Z-coordinate
@@ -2119,25 +2148,18 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 // Black Entity Effect Particles on Hamster
                 if (this.sulkEntityEffectTicks > 0) {
                     if (this.random.nextInt(5) == 0) { // Spawn periodically
-                        // 1. Create the ParticleEffect with a specific color
-                        EntityEffectParticleEffect darkGrayEffect = EntityEffectParticleEffect.create(
-                                ParticleTypes.ENTITY_EFFECT, // The base particle type
-                                0.3f, // Red component (0.0 to 1.0)
-                                0.3f, // Green component (0.0 to 1.0)
-                                0.3f  // Blue component (0.0 to 1.0)
-                        );
-
-                        // 2. Spawn the pre-colored particle effect
+                        // In 1.20.1, colored ENTITY_EFFECT particles are spawned by setting count to 0
+                        // and using the delta parameters for RGB color.
                         ((ServerWorld)this.getWorld()).spawnParticles(
-                                darkGrayEffect,             // The ParticleEffect instance (already has color)
-                                this.getParticleX(0.3),   // Center X: Random X within 0.3 * hamster's width
-                                this.getRandomBodyY(),      // Center Y: Random Y on hamster's body
-                                this.getParticleZ(0.3),   // Center Z: Random Z within 0.3 * hamster's width
-                                1,                          // Count: Number of particles to spawn
-                                0.01,                       // Delta X: Half-width of spawn box (small spread)
-                                0.05,                       // Delta Y: Half-height of spawn box (small vertical spread)
-                                0.01,                       // Delta Z: Half-depth of spawn box (small spread)
-                                0.005                       // Speed: Initial motion multiplier for the particles (very gentle)
+                                ParticleTypes.ENTITY_EFFECT,             // The particle type
+                                this.getParticleX(0.3),        // Center X (preserves main spread)
+                                this.getRandomBodyY(),                   // Center Y (preserves main spread)
+                                this.getParticleZ(0.3),        // Center Z (preserves main spread)
+                                0,                                       // Count = 0 enables color mode
+                                0.3,                                     // Red component (0.0 to 1.0)
+                                0.3,                                     // Green component
+                                0.3,                                     // Blue component
+                                1.0                                      // Speed parameter is used for brightness/intensity
                         );
                     }
                 }
@@ -2384,12 +2406,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 })
         );
     }
-
-
-
-
-
-
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {

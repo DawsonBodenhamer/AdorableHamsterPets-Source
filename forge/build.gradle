@@ -1,0 +1,73 @@
+plugins {
+    id 'com.gradleup.shadow'
+}
+
+architectury {
+    platformSetupLoomIde()
+    forge()
+}
+
+loom {
+    forge {
+        mixinConfig "adorablehamsterpets.mixins.json"
+    }
+}
+
+configurations {
+    common {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentForge.extendsFrom common
+    shadowBundle {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+}
+
+dependencies {
+    forge "net.minecraftforge:forge:$rootProject.forge_version"
+    modImplementation "dev.architectury:architectury-forge:$rootProject.architectury_api_version"
+
+    // Forge Dependencies
+    modImplementation "software.bernie.geckolib:geckolib-forge-$rootProject.minecraft_version:$rootProject.geckolib_version"
+    modImplementation "curse.maven:jade-324717:${rootProject.jade_version_forge}"
+    modImplementation "me.fzzyhmstrs:fzzy_config:${rootProject.fzzy_config_version}+forge"
+    modRuntimeOnly "thedarkcolour:kotlinforforge:${rootProject.kff_version}"
+
+    common(project(path: ':common', configuration: 'namedElements')) { transitive false }
+    shadowBundle project(path: ':common', configuration: 'transformProductionForge')
+}
+
+processResources {
+    inputs.property 'version', project.version
+
+    filesMatching(["META-INF/mods.toml", "*.mixins.json"]) {
+        expand version: project.version
+    }
+}
+
+shadowJar {
+    exclude "fabric.mod.json"
+    configurations = [project.configurations.shadowBundle]
+    archiveClassifier = 'dev-shadow'
+}
+
+remapJar {
+    inputFile.set shadowJar.archiveFile
+    dependsOn shadowJar
+}
+
+sourcesJar {
+    def commonSources = project(":common").sourcesJar
+    dependsOn commonSources
+    from commonSources.archiveFile.map { zipTree(it) }
+}
+
+components.java {
+    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+        skip()
+    }
+}

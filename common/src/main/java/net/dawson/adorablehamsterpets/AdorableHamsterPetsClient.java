@@ -8,6 +8,7 @@ import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
 import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
 import dev.architectury.registry.client.rendering.RenderTypeRegistry;
 import dev.architectury.registry.menu.MenuRegistry;
+import io.netty.buffer.Unpooled;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.block.ModBlocks;
 import net.dawson.adorablehamsterpets.client.option.ModKeyBindings;
@@ -21,30 +22,23 @@ import net.dawson.adorablehamsterpets.entity.client.model.HamsterShoulderModel;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.item.ModItems;
 import net.dawson.adorablehamsterpets.networking.ModPackets;
-import net.dawson.adorablehamsterpets.networking.payload.*;
+import net.dawson.adorablehamsterpets.networking.payload.StartHamsterFlightSoundPayload;
+import net.dawson.adorablehamsterpets.networking.payload.StartHamsterThrowSoundPayload;
+import net.dawson.adorablehamsterpets.networking.payload.ThrowHamsterPayload;
+import net.dawson.adorablehamsterpets.networking.payload.UpdateHamsterRenderStatePayload;
 import net.dawson.adorablehamsterpets.screen.HamsterInventoryScreen;
 import net.dawson.adorablehamsterpets.screen.ModScreenHandlers;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.BookScreen;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.entity.EntityRenderer;
-import net.minecraft.client.sound.PositionedSoundInstance;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.particle.BlockStateParticleEffect;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import org.joml.Matrix4f;
-import org.joml.Vector3d;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -68,12 +62,11 @@ public class AdorableHamsterPetsClient {
         InteractionEvent.RIGHT_CLICK_ITEM.register((player, hand) -> {
             ItemStack stack = player.getStackInHand(hand);
             if (player.getWorld().isClient && stack.isOf(ModItems.HAMSTER_GUIDE_BOOK.get())) {
-                if (stack.contains(DataComponentTypes.WRITTEN_BOOK_CONTENT)) {
-                    BookScreen.Contents contents = BookScreen.Contents.create(stack);
-                    if (contents != null) {
-                        MinecraftClient.getInstance().setScreen(new BookScreen(contents));
-                        return CompoundEventResult.interrupt(true, stack);
-                    }
+                // In 1.20.1, book content is stored in NBT. BookScreen.Contents.create() handles this check.
+                BookScreen.Contents contents = BookScreen.Contents.create(stack);
+                if (contents != BookScreen.EMPTY_PROVIDER) {
+                    MinecraftClient.getInstance().setScreen(new BookScreen(contents));
+                    return CompoundEventResult.interrupt(true, stack);
                 }
             }
             return CompoundEventResult.pass();
@@ -81,7 +74,7 @@ public class AdorableHamsterPetsClient {
     }
 
     /**
-     * Registers the screen factory. Separate because NeoForge needs to call it natively.
+     * Registers the screen factory. Separate because Forge needs to call it natively.
      */
     public static void initScreenHandlers() {
         MenuRegistry.registerScreenFactory(ModScreenHandlers.HAMSTER_INVENTORY_SCREEN_HANDLER.get(), HamsterInventoryScreen::new);
@@ -121,7 +114,8 @@ public class AdorableHamsterPetsClient {
                 boolean hasShoulderHamsterClient = !((PlayerEntityAccessor) client.player).getHamsterShoulderEntity().isEmpty();
 
                 if (!lookingAtReachableBlock && hasShoulderHamsterClient) {
-                    dev.architectury.networking.NetworkManager.sendToServer(new ThrowHamsterPayload());
+                    // Send an empty buffer for the throw packet
+                    dev.architectury.networking.NetworkManager.sendToServer(ModPackets.THROW_HAMSTER_ID, new PacketByteBuf(Unpooled.buffer()));
                 }
             }
         }
@@ -130,7 +124,11 @@ public class AdorableHamsterPetsClient {
         stoppedRendering.removeAll(renderedHamsterIdsThisTick);
 
         for (Integer entityId : stoppedRendering) {
-            dev.architectury.networking.NetworkManager.sendToServer(new UpdateHamsterRenderStatePayload(entityId, false));
+            // Send the render state update packet
+            PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+            buf.writeInt(entityId);
+            buf.writeBoolean(false); // isRendering = false
+            dev.architectury.networking.NetworkManager.sendToServer(ModPackets.UPDATE_HAMSTER_RENDER_STATE_ID, buf);
         }
 
         renderedHamsterIdsLastTick.clear();
@@ -138,10 +136,11 @@ public class AdorableHamsterPetsClient {
         renderedHamsterIdsThisTick.clear();
     }
 
-    public static void handleStartFlightSound(StartHamsterFlightSoundPayload payload) {
+
+    public static void handleStartFlightSound(int hamsterEntityId) {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.world == null) return;
-        Entity entity = client.world.getEntityById(payload.hamsterEntityId());
+        Entity entity = client.world.getEntityById(hamsterEntityId);
         if (entity instanceof HamsterEntity hamster) {
             SoundEvent flightSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_FLYING_SOUNDS, hamster.getRandom());
             if (flightSound != null) {
@@ -150,10 +149,10 @@ public class AdorableHamsterPetsClient {
         }
     }
 
-    public static void handleStartThrowSound(StartHamsterThrowSoundPayload payload) {
+    public static void handleStartThrowSound(int hamsterEntityId) {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.world == null) return;
-        Entity entity = client.world.getEntityById(payload.hamsterEntityId());
+        Entity entity = client.world.getEntityById(hamsterEntityId);
         if (entity instanceof HamsterEntity hamster) {
             client.getSoundManager().play(new HamsterThrowSoundInstance(ModSounds.HAMSTER_THROW.get(), SoundCategory.PLAYERS, hamster));
         }

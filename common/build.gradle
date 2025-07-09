@@ -1,28 +1,16 @@
 architectury {
-    common(rootProject.enabled_platforms.split(","))
-}
-
-loom {
+    common(rootProject.enabled_platforms.split(','))
 }
 
 dependencies {
     // Depend on Fabric Loader here to use the Fabric @Environment annotations
-    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+    modImplementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
 
     // Architectury API
-    modCompileOnly "dev.architectury:architectury:$rootProject.architectury_api_version"
+    modImplementation "dev.architectury:architectury:$rootProject.architectury_api_version"
 
-    // ── ExpectPlatform / injectables  (NEEDED FOR @ExpectPlatform) ─────
-    def injectablesVer = "1.0.13"
-    compileOnly         "dev.architectury:architectury-injectables:$injectablesVer"
-    annotationProcessor "dev.architectury:architectury-injectables:$injectablesVer"
-
-    // GeckoLib API
-    modCompileOnly "software.bernie.geckolib:geckolib-fabric-$rootProject.minecraft_version:$rootProject.geckolib_version"
-
-    // Fzzy Config API
-    modCompileOnly "me.fzzyhmstrs:fzzy_config:${rootProject.fzzy_config_version}"
-
-    // Jade API
-    modCompileOnly "curse.maven:jade-324717:${rootProject.jade_version_fabric}"
+    // Common Dependencies
+    modImplementation "software.bernie.geckolib:geckolib-fabric-$rootProject.minecraft_version:$rootProject.geckolib_version"
+    modImplementation "me.fzzyhmstrs:fzzy_config:${rootProject.fzzy_config_version}"
+    modImplementation "curse.maven:jade-324717:${rootProject.jade_version_fabric}"
 }

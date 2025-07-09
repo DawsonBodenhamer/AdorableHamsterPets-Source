@@ -1,15 +1,14 @@
 pluginManagement {
     repositories {
-        maven { url = "https://maven.architectury.dev/" }
-        maven { url = "https://maven.fabricmc.net/" }
-        maven { url = "https://maven.minecraftforge.net/" }
+        maven { url "https://maven.fabricmc.net/" }
+        maven { url "https://maven.architectury.dev/" }
+        maven { url "https://files.minecraftforge.net/maven/" }
         gradlePluginPortal()
-        mavenCentral()
     }
 }
 
-include("common")
-include("fabric")
-include("neoforge")
+rootProject.name = 'adorablehamsterpets'
 
-rootProject.name = "adorablehamsterpets"
+include 'common'
+include 'fabric'
+include 'forge'
