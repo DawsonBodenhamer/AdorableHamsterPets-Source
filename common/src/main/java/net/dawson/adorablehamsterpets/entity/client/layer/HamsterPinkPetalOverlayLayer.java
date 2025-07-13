@@ -51,7 +51,7 @@ public class HamsterPinkPetalOverlayLayer extends GeoRenderLayer<HamsterEntity> 
                     partialTick,
                     packedLight,
                     OverlayTexture.DEFAULT_UV,
-                    ColorHelper.Argb.getArgb(255, 255, 255, 255)
+                    1.0F, 1.0F, 1.0F, 1.0F // R, G, B, A
             );
         }
     }

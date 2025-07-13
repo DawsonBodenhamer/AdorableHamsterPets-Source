@@ -55,6 +55,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.BiomeTags;
@@ -246,7 +247,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private static HamsterVariant determineVariantForBiome(RegistryEntry<Biome> biomeEntry, net.minecraft.util.math.random.Random random) {
         // --- Add Logging ---
         String biomeName = biomeEntry.getKey().map(k -> k.getValue().toString()).orElse("unknown");
-        AdorableHamsterPets.LOGGER.info("[AHP Spawn Debug] determineVariantForBiome called for biome: {}", biomeName);
+        AdorableHamsterPets.LOGGER.debug("[AHP Spawn Debug] determineVariantForBiome called for biome: {}", biomeName);
         // --- End Add Logging ---
 
         HamsterVariant result;
@@ -299,7 +300,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         }
 
         // --- Add Logging ---
-        AdorableHamsterPets.LOGGER.info("[AHP Spawn Debug] Determined variant for {} is {}", biomeName, result.name());
+        AdorableHamsterPets.LOGGER.debug("[AHP Spawn Debug] Determined variant for {} is {}", biomeName, result.name());
         // --- End Add Logging ---
         return result;
     }
@@ -547,7 +548,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             NetworkManager.sendToPlayers(nearbyPlayers, ModPackets.START_HAMSTER_FLIGHT_SOUND_ID, flightBufNearby);
             NetworkManager.sendToPlayers(nearbyPlayers, ModPackets.START_HAMSTER_THROW_SOUND_ID, throwBufNearby);
 
-            ModCriteria.HAMSTER_THROWN.get().trigger(player);
+            ModCriteria.HAMSTER_THROWN.trigger(player);
         } else {
             AdorableHamsterPets.LOGGER.error("[HamsterEntity] tryThrowFromShoulder: Failed to create HamsterEntity instance from NBT. Clearing shoulder data as a precaution.");
             playerAccessor.setHamsterShoulderEntity(new NbtCompound()); // Clear potentially corrupted data
@@ -851,7 +852,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 }
             }
             if (allSlotsFilled) {
-                ModCriteria.HAMSTER_POUCH_FILLED.get().trigger(serverPlayerOwner, this);
+                ModCriteria.HAMSTER_POUCH_FILLED.trigger(serverPlayerOwner, this);
             }
         }
         // --- End Trigger ---
@@ -1268,7 +1269,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
                 // Trigger advancement criterion
                 if (player instanceof ServerPlayerEntity serverPlayer) {
-                    ModCriteria.APPLIED_PINK_PETAL.get().trigger(serverPlayer, this);
+                    ModCriteria.APPLIED_PINK_PETAL.trigger(serverPlayer, this);
                 }
             }
             return ActionResult.success(world.isClient()); // Consume interaction
@@ -1351,7 +1352,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         this.discard(); // Remove hamster from world
 
                         if (player instanceof ServerPlayerEntity serverPlayer) {
-                            ModCriteria.HAMSTER_ON_SHOULDER.get().trigger(serverPlayer);
+                            ModCriteria.HAMSTER_ON_SHOULDER.trigger(serverPlayer);
                         }
                         player.sendMessage(Text.literal("Your hamster scurries onto your shoulder!"), true);
 
@@ -2050,7 +2051,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 AdorableHamsterPets.LOGGER.trace("[HamsterTick {}] Auto-eat finished. Healed. Cooldown set to 60.", this.getId());
 
                 if (this.getOwner() instanceof ServerPlayerEntity serverPlayerOwner) {
-                    ModCriteria.HAMSTER_AUTO_FED.get().trigger(serverPlayerOwner, this);
+                    ModCriteria.HAMSTER_AUTO_FED.trigger(serverPlayerOwner, this);
                 }
             }
             // --- End Stage 3 ---
@@ -2075,29 +2076,29 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     // Particle Spawning
                     if (this.celebrationParticleTicks > 0) {
                             ((ServerWorld)this.getWorld()).spawnParticles(
-                                    ParticleTypes.ENCHANT,                         // 1. Particle Type
-                                    this.getX(),                                   // 2. Center X-coordinate
-                                    this.getY() + 1.5,                             // 3. Center Y-coordinate
-                                    this.getZ(),                                   // 4. Center Z-coordinate
-                                    4,                                             // 5. Count
-                                    0.08,                                          // 6. Delta X (Spread X)
-                                    0.15,                                          // 7. Delta Y (Spread Y)
-                                    0.08,                                          // 8. Delta Z (Spread Z)
-                                    0.01                                           // 9. Speed
+                                    ParticleTypes.COMPOSTER,        // 1. Particle Type
+                                    this.getX(),                    // 2. Center X-coordinate
+                                    this.getY() + 1.8,              // 3. Center Y-coordinate
+                                    this.getZ(),                    // 4. Center Z-coordinate
+                                    2,                              // 5. Count
+                                    0.12,                           // 6. Delta X (Spread X)
+                                    0.25,                           // 7. Delta Y (Spread Y)
+                                    0.12,                           // 8. Delta Z (Spread Z)
+                                    0.15                            // 9. Speed
                             );
 
                         if (this.currentOreTarget != null && this.random.nextInt(4) == 0) {
                             BlockPos particlePos = this.currentOreTarget.up(); // Spawn above the diamond ore
                             ((ServerWorld)this.getWorld()).spawnParticles(
-                                    ParticleTypes.FIREWORK,   // 1. Particle Type
-                                    particlePos.getX() + 0.5, // 2. Center X-coordinate
-                                    particlePos.getY() + 0.5, // 3. Center Y-coordinate
-                                    particlePos.getZ() + 0.5, // 4. Center Z-coordinate
-                                    1,                        // 5. Count
-                                    0.2,                      // 6. Delta X (Spread X)
-                                    0.35,                     // 7. Delta Y (Spread Y)
-                                    0.2,                      // 8. Delta Z (Spread Z)
-                                    0.003                     // 9. Speed
+                                    ParticleTypes.FIREWORK,         // 1. Particle Type
+                                    particlePos.getX() + 0.5,       // 2. Center X-coordinate
+                                    particlePos.getY() + 0.5,       // 3. Center Y-coordinate
+                                    particlePos.getZ() + 0.5,       // 4. Center Z-coordinate
+                                    1,                              // 5. Count
+                                    0.2,                            // 6. Delta X (Spread X)
+                                    0.35,                           // 7. Delta Y (Spread Y)
+                                    0.2,                            // 8. Delta Z (Spread Z)
+                                    0.003                           // 9. Speed
                             );
                         }
                     }
@@ -2432,28 +2433,28 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
     // --- Data Tracker Initialization ---
     @Override
-    protected void initDataTracker(DataTracker.Builder builder) {
-        super.initDataTracker(builder);
-        builder.add(VARIANT, 0);
-        builder.add(IS_SLEEPING, false);
-        builder.add(IS_SITTING, false);
-        builder.add(IS_BEGGING, false);
-        builder.add(IS_IN_LOVE, false);
-        builder.add(IS_REFUSING_FOOD, false);
-        builder.add(IS_THROWN, false);
-        builder.add(LEFT_CHEEK_FULL, false);
-        builder.add(RIGHT_CHEEK_FULL, false);
-        builder.add(IS_KNOCKED_OUT, false);
-        builder.add(PINK_PETAL_TYPE, 0);
-        builder.add(CHEEK_POUCH_UNLOCKED, false);
-        builder.add(IS_CONSIDERING_AUTO_EAT, false);
-        builder.add(DOZING_PHASE, DozingPhase.NONE.ordinal());
-        builder.add(CURRENT_DEEP_SLEEP_ANIM_ID, "");
-        builder.add(ACTIVE_CUSTOM_GOAL_NAME_DEBUG, "None");
-        builder.add(IS_SULKING, false);
-        builder.add(IS_CELEBRATING_DIAMOND, false);
-        builder.add(IS_CLEANING, false);
-        builder.add(ANIMATION_PERSONALITY_ID, 1);
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(VARIANT, 0);
+        this.dataTracker.startTracking(ANIMATION_PERSONALITY_ID, 1);
+        this.dataTracker.startTracking(IS_SLEEPING, false);
+        this.dataTracker.startTracking(IS_SITTING, false);
+        this.dataTracker.startTracking(IS_BEGGING, false);
+        this.dataTracker.startTracking(IS_IN_LOVE, false);
+        this.dataTracker.startTracking(IS_REFUSING_FOOD, false);
+        this.dataTracker.startTracking(IS_THROWN, false);
+        this.dataTracker.startTracking(LEFT_CHEEK_FULL, false);
+        this.dataTracker.startTracking(RIGHT_CHEEK_FULL, false);
+        this.dataTracker.startTracking(IS_KNOCKED_OUT, false);
+        this.dataTracker.startTracking(PINK_PETAL_TYPE, 0);
+        this.dataTracker.startTracking(CHEEK_POUCH_UNLOCKED, false);
+        this.dataTracker.startTracking(IS_CONSIDERING_AUTO_EAT, false);
+        this.dataTracker.startTracking(DOZING_PHASE, DozingPhase.NONE.ordinal());
+        this.dataTracker.startTracking(CURRENT_DEEP_SLEEP_ANIM_ID, "");
+        this.dataTracker.startTracking(IS_SULKING, false);
+        this.dataTracker.startTracking(IS_CELEBRATING_DIAMOND, false);
+        this.dataTracker.startTracking(IS_CLEANING, false);
+        this.dataTracker.startTracking(ACTIVE_CUSTOM_GOAL_NAME_DEBUG, "None");
     }
 
     // --- AI Goals ---
@@ -2469,9 +2470,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         this.goalSelector.add(4, new HamsterFollowOwnerGoal(this, 1.2D, 4.0F, 16.0F));
         this.goalSelector.add(5, new HamsterFleeGoal<>(this, LivingEntity.class, 8.0F, 1.0D, 1.5D));
         this.goalSelector.add(6, new HamsterTemptGoal(this, 1.2D,
-                itemStack -> itemStack.isOf(ModItems.SLICED_CUCUMBER.get()) ||
-                        itemStack.isOf(ModItems.CHEESE.get()) ||
-                        itemStack.isOf(ModItems.STEAMED_GREEN_BEANS.get()),
+                Ingredient.ofItems(ModItems.SLICED_CUCUMBER.get(), ModItems.CHEESE.get(), ModItems.STEAMED_GREEN_BEANS.get()),
                 false));
         this.goalSelector.add(7, new HamsterSitGoal(this));
         this.goalSelector.add(8, new HamsterSleepGoal(this));
@@ -2628,37 +2627,35 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         // --- End 1. Check if Entity Can Be Hit ---
     }
 
-    @Override protected void applyGravity() { if (this.isThrown() && this.hasNoGravity()) return; super.applyGravity(); }
-
     @Nullable
     @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
-        AdorableHamsterPets.LOGGER.info("[AHP Spawn Debug] HamsterEntity.initialize called. SpawnReason: {}", spawnReason);
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound nbt) {
+        AdorableHamsterPets.LOGGER.debug("[AHP Spawn Debug] HamsterEntity.initialize called. SpawnReason: {}", spawnReason);
         // Assign Animation Personality
         this.dataTracker.set(ANIMATION_PERSONALITY_ID, this.random.nextBetween(1, 3));
         // Apply biome variants for natural spawns, spawn eggs, AND chunk generation
         if (spawnReason == SpawnReason.NATURAL || spawnReason == SpawnReason.SPAWN_EGG || spawnReason == SpawnReason.CHUNK_GENERATION) {
             RegistryEntry<Biome> biomeEntry = world.getBiome(this.getBlockPos());
             String biomeKeyStr = biomeEntry.getKey().map(key -> key.getValue().toString()).orElse("UNKNOWN");
-            AdorableHamsterPets.LOGGER.info("[HamsterInit] SpawnReason: {}, BiomeKey: {}", spawnReason, biomeKeyStr); // Keep this log
+            AdorableHamsterPets.LOGGER.debug("[HamsterInit] SpawnReason: {}, BiomeKey: {}", spawnReason, biomeKeyStr);
 
             HamsterVariant chosenVariant = determineVariantForBiome(biomeEntry, this.random);
             this.setVariant(chosenVariant.getId());
-            AdorableHamsterPets.LOGGER.info("[HamsterInit] Assigned variant: {}", chosenVariant.name());
+            AdorableHamsterPets.LOGGER.debug("[HamsterInit] Assigned variant: {}", chosenVariant.name());
 
         } else {
             // Fallback for other spawns (command, breeding, structure, etc.)
             int randomVariantId = this.random.nextInt(HamsterVariant.values().length);
             this.setVariant(randomVariantId);
-            AdorableHamsterPets.LOGGER.info("[HamsterInit] SpawnReason: {}, Assigned random variant: {}",
+            AdorableHamsterPets.LOGGER.debug("[HamsterInit] SpawnReason: {}, Assigned random variant: {}",
                     spawnReason, HamsterVariant.byId(randomVariantId).name());
         }
 
         // Always update cheek trackers on initialization
         this.updateCheekTrackers();
 
-        // Call and return the super method's result
-        return super.initialize(world, difficulty, spawnReason, entityData);
+        // Call and return the super method's result with the added nbt parameter for 1.20.1
+        return super.initialize(world, difficulty, spawnReason, entityData, nbt);
     }
 
 
@@ -2818,7 +2815,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
                 // Trigger Fed Steamed Beans Criterion
                 if (player instanceof ServerPlayerEntity serverPlayer) {
-                    ModCriteria.FED_HAMSTER_STEAMED_BEANS.get().trigger(serverPlayer, this);
+                    ModCriteria.FED_HAMSTER_STEAMED_BEANS.trigger(serverPlayer, this);
                 }
             }
         }
@@ -2849,7 +2846,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     this.dataTracker.set(CHEEK_POUCH_UNLOCKED, true);
                     AdorableHamsterPets.LOGGER.debug("Hamster {} cheek pouch unlocked by food mix.", this.getId());
                     if (player instanceof ServerPlayerEntity serverPlayer) {
-                        ModCriteria.CHEEK_POUCH_UNLOCKED.get().trigger(serverPlayer, this);
+                        ModCriteria.CHEEK_POUCH_UNLOCKED.trigger(serverPlayer, this);
                     }
                     world.playSound(null, this.getBlockPos(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.NEUTRAL, 0.5f, 1.5f);
                     if (!world.isClient) {

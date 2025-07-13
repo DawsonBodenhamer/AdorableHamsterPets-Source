@@ -13,10 +13,8 @@ import snownee.jade.api.EntityAccessor;
 import snownee.jade.api.IEntityComponentProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
-import software.bernie.geckolib.animation.Animation;
 import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.animation.AnimationProcessor;
-import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.core.animation.AnimationProcessor;
 
 public enum HamsterDebugComponentProvider implements IEntityComponentProvider {
     INSTANCE;

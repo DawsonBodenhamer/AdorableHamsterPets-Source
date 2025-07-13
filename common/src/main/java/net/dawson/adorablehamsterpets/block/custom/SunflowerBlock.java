@@ -1,6 +1,5 @@
 package net.dawson.adorablehamsterpets.block.custom;
 
-import com.mojang.serialization.MapCodec;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.config.AhpConfig;
 import net.dawson.adorablehamsterpets.item.ModItems;
@@ -16,11 +15,13 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
@@ -29,18 +30,12 @@ import org.jetbrains.annotations.Nullable;
 public class SunflowerBlock extends TallFlowerBlock implements Fertilizable {
 
     public static final BooleanProperty HAS_SEEDS = BooleanProperty.of("has_seeds");
-    public static final MapCodec<TallFlowerBlock> CODEC = TallFlowerBlock.createCodec(SunflowerBlock::new);
 
     public SunflowerBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState()
                 .with(HALF, DoubleBlockHalf.LOWER)
                 .with(HAS_SEEDS, true));
-    }
-
-    @Override
-    public MapCodec<TallFlowerBlock> getCodec() {
-        return CODEC;
     }
 
     @Override
@@ -74,7 +69,7 @@ public class SunflowerBlock extends TallFlowerBlock implements Fertilizable {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         // Redirect clicks on lower half to upper half
         if (state.get(HALF) == DoubleBlockHalf.LOWER) {
             BlockPos topPos = pos.up();
@@ -82,9 +77,8 @@ public class SunflowerBlock extends TallFlowerBlock implements Fertilizable {
             // Check if the top block is indeed the upper half of this sunflower type
             if (topState.isOf(this) && topState.get(HALF) == DoubleBlockHalf.UPPER) {
                 // Call onUse on the top block's state and position
-                return this.onUse(topState, world, topPos, player, hit); // Call on 'this' instance but pass top state/pos
+                return this.onUse(topState, world, topPos, player, hand, hit);
             }
-            // If the top isn't the correct block, pass the interaction
             return ActionResult.PASS;
         }
 
@@ -95,14 +89,12 @@ public class SunflowerBlock extends TallFlowerBlock implements Fertilizable {
                 ItemStack seedStack = new ItemStack(ModItems.SUNFLOWER_SEEDS.get(), seedAmount);
                 ItemScatterer.spawn(world, (double)pos.getX() + 0.5, (double)pos.getY() + 0.5, (double)pos.getZ() + 0.5, seedStack);
 
-                world.setBlockState(pos, state.with(HAS_SEEDS, false), Block.NOTIFY_LISTENERS); // Set seedless
-                world.playSound(null, pos, SoundEvents.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1.0f, 1.0f); // Play sound
+                world.setBlockState(pos, state.with(HAS_SEEDS, false), Block.NOTIFY_LISTENERS);
+                world.playSound(null, pos, SoundEvents.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1.0f, 1.0f);
             }
-            // Consume the action on both client and server if seeds were present
             return ActionResult.success(world.isClient);
         }
 
-        // If not seeded, pass the interaction
         return ActionResult.PASS;
     }
 
@@ -126,13 +118,13 @@ public class SunflowerBlock extends TallFlowerBlock implements Fertilizable {
 
 
     @Override
-    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
-        return new ItemStack(Items.SUNFLOWER); // Pick block gives vanilla sunflower
+    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
+        return new ItemStack(Items.SUNFLOWER);
     }
 
-    // --- Fertilizable Implementation (Keep vanilla behavior or disable) ---
+    // --- Fertilizable Implementation ---
     @Override
-    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state) {
+    public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
         // Only the bottom half can be bonemealed to grow the top
         return state.get(HALF) == DoubleBlockHalf.LOWER && world.getBlockState(pos.up()).isAir();
     }

@@ -19,7 +19,7 @@ public class ModRegistries {
      * Registers items with the vanilla composter.
      */
     private static void registerCompostables() {
-        // CORRECTED: Use the correct field name from the ComposterBlock source
+        // Use the field name from the ComposterBlock source
         ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(ModItems.GREEN_BEANS.get(), 0.5f);
         ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(ModItems.CUCUMBER.get(), 0.5f);
         ComposterBlock.ITEM_TO_LEVEL_INCREASE_CHANCE.put(ModItems.GREEN_BEAN_SEEDS.get(), 0.25f);

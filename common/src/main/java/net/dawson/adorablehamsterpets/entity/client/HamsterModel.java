@@ -2,12 +2,10 @@ package net.dawson.adorablehamsterpets.entity.client;
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animation.AnimationState;
-import software.bernie.geckolib.cache.object.GeoBone;
+import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoRenderer;
 
@@ -23,25 +21,14 @@ public class HamsterModel extends GeoModel<HamsterEntity> {
     // --- End 1. Constants ---
 
     @Override
-    public Identifier getModelResource(HamsterEntity animatable, @Nullable GeoRenderer<HamsterEntity> renderer) {
+    public Identifier getModelResource(HamsterEntity animatable) {
         return Identifier.of(AdorableHamsterPets.MOD_ID, "geo/hamster.geo.json");
     }
 
     @Override
-    public Identifier getTextureResource(HamsterEntity animatable, @Nullable GeoRenderer<HamsterEntity> renderer) {
-        return Identifier.of(AdorableHamsterPets.MOD_ID, "textures/entity/hamster/orange.png"); // Fallback
-    }
-
-    @Deprecated(forRemoval = true)
-    @Override
-    public Identifier getModelResource(HamsterEntity animatable) {
-        return this.getModelResource(animatable, null);
-    }
-
-    @Deprecated(forRemoval = true)
-    @Override
     public Identifier getTextureResource(HamsterEntity animatable) {
-        return this.getTextureResource(animatable, null);
+        // This is just a fallback; the actual texture is set in the renderer
+        return Identifier.of(AdorableHamsterPets.MOD_ID, "textures/entity/hamster/orange.png");
     }
 
     @Override
@@ -54,12 +41,12 @@ public class HamsterModel extends GeoModel<HamsterEntity> {
         super.setCustomAnimations(entity, instanceId, animationState);
 
         // --- Bone References ---
-        GeoBone rootBone = this.getAnimationProcessor().getBone("root");
-        GeoBone headParentBone = this.getAnimationProcessor().getBone("head_parent");
-        GeoBone leftCheekDefBone = this.getAnimationProcessor().getBone("left_cheek_deflated");
-        GeoBone rightCheekDefBone = this.getAnimationProcessor().getBone("right_cheek_deflated");
-        GeoBone leftCheekInfBone = this.getAnimationProcessor().getBone("left_cheek_inflated");
-        GeoBone rightCheekInfBone = this.getAnimationProcessor().getBone("right_cheek_inflated");
+        CoreGeoBone rootBone = this.getAnimationProcessor().getBone("root");
+        CoreGeoBone headParentBone = this.getAnimationProcessor().getBone("head_parent");
+        CoreGeoBone leftCheekDefBone = this.getAnimationProcessor().getBone("left_cheek_deflated");
+        CoreGeoBone rightCheekDefBone = this.getAnimationProcessor().getBone("right_cheek_deflated");
+        CoreGeoBone leftCheekInfBone = this.getAnimationProcessor().getBone("left_cheek_inflated");
+        CoreGeoBone rightCheekInfBone = this.getAnimationProcessor().getBone("right_cheek_inflated");
 
         // --- Cheek Pouch Visibility Logic ---
         if (leftCheekDefBone != null && leftCheekInfBone != null) {

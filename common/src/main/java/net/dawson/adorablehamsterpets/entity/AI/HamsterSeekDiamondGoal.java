@@ -1,10 +1,14 @@
 package net.dawson.adorablehamsterpets.entity.AI;
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
+import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
+import net.minecraft.advancement.Advancement;
+import net.minecraft.advancement.AdvancementProgress;
+import net.minecraft.advancement.PlayerAdvancementTracker;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.ai.goal.Goal;
@@ -17,18 +21,13 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
-import net.minecraft.advancement.AdvancementEntry;
-import net.minecraft.advancement.AdvancementProgress;
-import net.minecraft.advancement.PlayerAdvancementTracker;
-import net.minecraft.util.Formatting;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class HamsterSeekDiamondGoal extends Goal {
 
@@ -266,7 +265,7 @@ public class HamsterSeekDiamondGoal extends Goal {
             AdorableHamsterPets.LOGGER.debug("Hamster {} reached CELEBRATING_DIAMOND state for ore at {}", this.hamster.getId(), this.targetOrePos);
 
             if (this.hamster.getOwner() instanceof ServerPlayerEntity serverPlayerOwner) {
-                ModCriteria.HAMSTER_LED_TO_DIAMOND.get().trigger(serverPlayerOwner, this.hamster, this.targetOrePos);
+                ModCriteria.HAMSTER_LED_TO_DIAMOND.trigger(serverPlayerOwner, this.hamster, this.targetOrePos);
             }
         }
     }
@@ -328,7 +327,7 @@ public class HamsterSeekDiamondGoal extends Goal {
     private void sendMessageToOwner(ServerPlayerEntity owner) {
         PlayerAdvancementTracker tracker = owner.getAdvancementTracker();
         Identifier advId = Identifier.of(AdorableHamsterPets.MOD_ID, "technical/hamster_found_gold_first_time");
-        AdvancementEntry advancement = owner.server.getAdvancementLoader().get(advId);
+        Advancement advancement = owner.server.getAdvancementLoader().get(advId);
 
         if (advancement == null) {
             AdorableHamsterPets.LOGGER.debug("[GoldMessage] CRITICAL: Could not find advancement '{}'. Message will not be sent. Check file path and JSON validity.", advId);
@@ -341,8 +340,8 @@ public class HamsterSeekDiamondGoal extends Goal {
         if (!progress.isDone()) {
             // First time ever for this player
             messageIndex = 0;
-            // Grant the advancement so this block doesn't run again
-            for (String criterion : advancement.value().criteria().keySet()) {
+            // Grant the criterion using the Advancement object so this block doesn't run again
+            for (String criterion : advancement.getCriteria().keySet()) {
                 tracker.grantCriterion(advancement, criterion);
             }
         } else {
@@ -364,6 +363,6 @@ public class HamsterSeekDiamondGoal extends Goal {
         owner.sendMessage(Text.translatable(messageKey).formatted(Formatting.GOLD), true);
 
         // Trigger the criterion for any other potential uses
-        ModCriteria.HAMSTER_FOUND_GOLD.get().trigger(owner);
+        ModCriteria.HAMSTER_FOUND_GOLD.trigger(owner);
     }
 }

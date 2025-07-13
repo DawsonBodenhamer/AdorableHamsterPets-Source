@@ -48,21 +48,6 @@ public final class ModBiomeModifiers {
                     ConfigurableFeatureModifier.CODEC::codec
             );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /* ------------------------------------------------------------ */
     /* Hook into the mod-event bus                                  */
     /* ------------------------------------------------------------ */

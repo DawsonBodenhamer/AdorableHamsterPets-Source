@@ -1,61 +1,49 @@
 package net.dawson.adorablehamsterpets.advancement.criterion;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
+import com.google.gson.JsonObject;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.minecraft.advancement.criterion.AbstractCriterion;
+import net.minecraft.advancement.criterion.AbstractCriterionConditions;
 import net.minecraft.loot.context.LootContext;
+import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
 import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
-
-import java.util.Optional;
+import net.minecraft.util.Identifier;
 
 public class AppliedPinkPetalCriterion extends AbstractCriterion<AppliedPinkPetalCriterion.Conditions> {
+    private final Identifier id;
 
-    // Codec for the conditions, allowing optional player and hamster predicates
-    public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(instance ->
-            instance.group(
-                    EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC.optionalFieldOf("player").forGetter(Conditions::player),
-                    EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC.optionalFieldOf("hamster").forGetter(Conditions::hamster)
-            ).apply(instance, Conditions::new)
-    );
-
-    /**
-     * Triggers the criterion for the given player and hamster.
-     * @param player The player who applied the petal.
-     * @param hamster The hamster that received the petal.
-     */
-    public void trigger(ServerPlayerEntity player, HamsterEntity hamster) {
-        LootContext hamsterContext = EntityPredicate.createAdvancementEntityLootContext(player, hamster);
-        // Trigger for the player if conditions match
-        this.trigger(player, conditions -> conditions.matches(player, hamsterContext));
+    public AppliedPinkPetalCriterion(Identifier id) {
+        this.id = id;
     }
 
     @Override
-    public Codec<Conditions> getConditionsCodec() {
-        return CODEC;
+    public Identifier getId() {
+        return this.id;
     }
 
-    /**
-     * Conditions for the AppliedPinkPetalCriterion.
-     */
-    public record Conditions(Optional<LootContextPredicate> player, Optional<LootContextPredicate> hamster)
-            implements AbstractCriterion.Conditions {
+    @Override
+    public AppliedPinkPetalCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate playerPredicate, AdvancementEntityPredicateDeserializer predicateDeserializer) {
+        LootContextPredicate hamsterPredicate = EntityPredicate.contextPredicateFromJson(jsonObject, "hamster", predicateDeserializer);
+        return new AppliedPinkPetalCriterion.Conditions(this.id, playerPredicate, hamsterPredicate);
+    }
 
-        /**
-         * Checks if the provided player and hamster context match the conditions.
-         * @param playerEntity The player entity.
-         * @param hamsterContext The loot context for the hamster.
-         * @return True if conditions are met, false otherwise.
-         */
-        public boolean matches(ServerPlayerEntity playerEntity, LootContext hamsterContext) {
-            // Check player predicate if present
-            if (this.player.isPresent() && !this.player.get().test(EntityPredicate.createAdvancementEntityLootContext(playerEntity, playerEntity))) {
-                return false;
-            }
-            // Check hamster predicate if present
-            return this.hamster.isEmpty() || this.hamster.get().test(hamsterContext);
+    public void trigger(ServerPlayerEntity player, HamsterEntity hamster) {
+        LootContext hamsterContext = EntityPredicate.createAdvancementEntityLootContext(player, hamster);
+        this.trigger(player, (conditions) -> conditions.matches(hamsterContext));
+    }
+
+    public static class Conditions extends AbstractCriterionConditions {
+        private final LootContextPredicate hamster;
+
+        public Conditions(Identifier id, LootContextPredicate player, LootContextPredicate hamster) {
+            super(id, player);
+            this.hamster = hamster;
+        }
+
+        public boolean matches(LootContext hamsterContext) {
+            return this.hamster.test(hamsterContext);
         }
     }
 }

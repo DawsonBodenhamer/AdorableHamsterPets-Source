@@ -10,7 +10,7 @@
       "initGoals": "Lnet/minecraft/class_1548;method_5959()V"
     },
     "net/dawson/adorablehamsterpets/mixin/server/PlayerEntityMixin": {
-      "initDataTracker": "Lnet/minecraft/class_1657;method_5693(Lnet/minecraft/class_2945$class_9222;)V",
+      "initDataTracker": "Lnet/minecraft/class_1657;method_5693()V",
       "readCustomDataFromNbt": "Lnet/minecraft/class_1657;method_5749(Lnet/minecraft/class_2487;)V",
       "remove(Lnet/minecraft/entity/Entity$RemovalReason;)V": "Lnet/minecraft/class_1657;method_5650(Lnet/minecraft/class_1297$class_5529;)V",
       "tick": "Lnet/minecraft/class_1657;method_5773()V",
@@ -29,7 +29,7 @@
         "initGoals": "Lnet/minecraft/class_1548;method_5959()V"
       },
       "net/dawson/adorablehamsterpets/mixin/server/PlayerEntityMixin": {
-        "initDataTracker": "Lnet/minecraft/class_1657;method_5693(Lnet/minecraft/class_2945$class_9222;)V",
+        "initDataTracker": "Lnet/minecraft/class_1657;method_5693()V",
         "readCustomDataFromNbt": "Lnet/minecraft/class_1657;method_5749(Lnet/minecraft/class_2487;)V",
         "remove(Lnet/minecraft/entity/Entity$RemovalReason;)V": "Lnet/minecraft/class_1657;method_5650(Lnet/minecraft/class_1297$class_5529;)V",
         "tick": "Lnet/minecraft/class_1657;method_5773()V",

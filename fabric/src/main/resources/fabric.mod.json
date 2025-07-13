@@ -32,13 +32,14 @@
     "adorablehamsterpets.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.16.14",
-    "minecraft": "~1.21.1",
-    "java": ">=21",
-    "fabric-api": "*",
-    "architectury": ">=13.0.8",
-    "geckolib": ">=4.7.3",
-    "fzzy_config": ">=0.7.0"
+    "fabricloader": ">=0.15.11",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "fabric-api": ">=0.91.0+1.20.1",
+    "architectury": ">=9.2.14",
+    "geckolib": ">=4.4.9",
+    "fzzy_config": ">=0.7.0+1.20.1",
+    "placeholder-api": ">=2.1.1+1.20"
   },
   "suggests": {
     "modmenu": "*",

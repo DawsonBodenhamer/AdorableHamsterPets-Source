@@ -1,7 +1,5 @@
 package net.dawson.adorablehamsterpets.entity.client.model;
 
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumer;
@@ -54,7 +52,6 @@ public class HamsterShoulderModel extends EntityModel<AbstractClientPlayerEntity
             throw new RuntimeException(errorMessage, e);
         }
     }
-    // --- End Constructor ---
 
     // --- Public Static Methods ---
     /**
@@ -111,7 +108,6 @@ public class HamsterShoulderModel extends EntityModel<AbstractClientPlayerEntity
 
         return TexturedModelData.of(modelData, 32, 32);
     }
-    // --- End Public Static Methods ---
 
     // --- Public Methods (Overrides from EntityModel) ---
     @Override
@@ -120,8 +116,7 @@ public class HamsterShoulderModel extends EntityModel<AbstractClientPlayerEntity
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, int color) {
-        this.root.render(matrices, vertexConsumer, light, overlay, color);
+    public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
+        this.root.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
     }
-    // --- End Public Methods ---
 }

@@ -23,9 +23,7 @@ import net.dawson.adorablehamsterpets.world.gen.ModEntitySpawns;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementProgress;
 import net.minecraft.advancement.PlayerAdvancementTracker;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnRestriction;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.Heightmap;
@@ -45,10 +43,7 @@ public class AdorableHamsterPets {
 	 */
 	public static void initRegistries() {
 		CONFIG = Configs.AHP;
-
-
 		ModEntities.register();
-//		ModDataComponentTypes.registerDataComponentTypes(); // TODO: we Need to figure out what we're going to do instead of DataComponentTypes since we still have lot of hamster data that needs to be saved.
 		ModSounds.register();
 		ModBlocks.register();
 		ModItems.register();
@@ -114,7 +109,7 @@ public class AdorableHamsterPets {
 			if (flagAdvancement != null) {
 				AdvancementProgress flagProgress = advancementTracker.getProgress(flagAdvancement);
 				if (!flagProgress.isDone()) {
-					ModCriteria.FIRST_JOIN_GUIDEBOOK_CHECK.get().trigger(player);
+					ModCriteria.FIRST_JOIN_GUIDEBOOK_CHECK.trigger(player);
 					for (String criterion : flagAdvancement.getCriteria().keySet()) {
 						advancementTracker.grantCriterion(flagAdvancement, criterion);
 					}

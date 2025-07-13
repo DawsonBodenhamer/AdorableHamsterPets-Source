@@ -1,6 +1,5 @@
 package net.dawson.adorablehamsterpets.block.custom;
 
-import com.mojang.serialization.MapCodec;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.config.AhpConfig;
 import net.dawson.adorablehamsterpets.item.ModItems;
@@ -13,13 +12,13 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
 import net.minecraft.world.event.GameEvent;
 
 /**
@@ -27,7 +26,6 @@ import net.minecraft.world.event.GameEvent;
  */
 public class WildGreenBeanBushBlock extends PlantBlock {
     // --- Constants and Static Fields ---
-    public static final MapCodec<WildGreenBeanBushBlock> CODEC = createCodec(WildGreenBeanBushBlock::new);
     public static final BooleanProperty SEEDED = BooleanProperty.of("seeded");
 
     private static final VoxelShape SEEDLESS_SHAPE = Block.createCuboidShape(3.0, 0.0, 3.0, 13.0, 8.0, 13.0);
@@ -41,12 +39,7 @@ public class WildGreenBeanBushBlock extends PlantBlock {
 
     // --- Overridden Methods ---
     @Override
-    public MapCodec<WildGreenBeanBushBlock> getCodec() {
-        return CODEC;
-    }
-
-    @Override
-    public ItemStack getPickStack(WorldView world, BlockPos pos, BlockState state) {
+    public ItemStack getPickStack(BlockView world, BlockPos pos, BlockState state) {
         return new ItemStack(ModItems.GREEN_BEAN_SEEDS.get());
     }
 
@@ -81,11 +74,10 @@ public class WildGreenBeanBushBlock extends PlantBlock {
     }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, BlockHitResult hit) {
-        // --- Harvesting Logic ---
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (state.get(SEEDED)) {
             if (!world.isClient) {
-                int seedAmount = 1 + world.random.nextInt(2); // Drop 1 or 2 seeds
+                int seedAmount = 1 + world.random.nextInt(2);
                 dropStack(world, pos, new ItemStack(ModItems.GREEN_BEAN_SEEDS.get(), seedAmount));
 
                 world.playSound(null, pos, SoundEvents.BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES, SoundCategory.BLOCKS, 1.0F, 0.8F + world.random.nextFloat() * 0.4F);
@@ -96,9 +88,9 @@ public class WildGreenBeanBushBlock extends PlantBlock {
 
                 return ActionResult.SUCCESS;
             }
-            return ActionResult.success(world.isClient); // Indicate client-side success
+            return ActionResult.success(world.isClient);
         }
-        return ActionResult.PASS; // Not seeded, pass interaction
+        return ActionResult.PASS;
     }
 
     @Override

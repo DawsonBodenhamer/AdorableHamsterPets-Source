@@ -30,8 +30,8 @@ import net.minecraft.state.property.Properties;
 import java.util.concurrent.CompletableFuture;
 
 public class ModLootTableProvider extends FabricBlockLootTableProvider {
-    public ModLootTableProvider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
-        super(dataOutput, registryLookup);
+    public ModLootTableProvider(FabricDataOutput dataOutput) {
+        super(dataOutput);
     }
 
     @Override
@@ -76,11 +76,10 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
     }
 
 
-    // Keep your existing multipleOreDrops helper method if needed elsewhere
+    // Keep existing multipleOreDrops helper method if needed elsewhere
     public LootTable.Builder multipleOreDrops(Block drop, Item item, float minDrops, float maxDrops) {
-        RegistryWrapper.Impl<Enchantment> impl = this.registryLookup.getWrapperOrThrow(RegistryKeys.ENCHANTMENT);
         return this.dropsWithSilkTouch(drop, this.applyExplosionDecay(drop, ((LeafEntry.Builder<?>)
-                ItemEntry.builder(item).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(minDrops, maxDrops))))
-                .apply(ApplyBonusLootFunction.oreDrops(impl.getOrThrow(Enchantments.FORTUNE)))));
+                        ItemEntry.builder(item).apply(SetCountLootFunction.builder(UniformLootNumberProvider.create(minDrops, maxDrops)))))
+                .apply(ApplyBonusLootFunction.oreDrops(Enchantments.FORTUNE)));
     }
 }

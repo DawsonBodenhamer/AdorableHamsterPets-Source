@@ -7,9 +7,26 @@ architectury {
     forge()
 }
 
+evaluationDependsOn ':common'
+
 loom {
     forge {
         mixinConfig "adorablehamsterpets.mixins.json"
+    }
+    mods {
+        main {
+            sourceSet sourceSets.main
+            sourceSet project(':common').sourceSets.main
+            sourceSet project(':fabric').sourceSets.main
+        }
+    }
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir project(':fabric').file('src/main/generated/resources')
+        }
     }
 }
 
@@ -42,6 +59,8 @@ dependencies {
 }
 
 processResources {
+    from project(":common").sourceSets.main.resources
+    from(project(':fabric').file('src/main/generated/resources'))
     inputs.property 'version', project.version
 
     filesMatching(["META-INF/mods.toml", "*.mixins.json"]) {

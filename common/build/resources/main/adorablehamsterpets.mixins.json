@@ -2,6 +2,7 @@
   "required": true,
   "package": "net.dawson.adorablehamsterpets.mixin",
   "compatibilityLevel": "JAVA_17",
+  "refmap": "adorablehamsterpets-common-refmap.json",
   "mixins": [
     "server.CreeperEntityMixin",
     "server.PlayerEntityMixin",

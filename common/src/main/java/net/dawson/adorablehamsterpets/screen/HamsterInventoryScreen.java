@@ -7,13 +7,10 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.render.GameRenderer;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.World;
 
 public class HamsterInventoryScreen extends HandledScreen<HamsterInventoryScreenHandler> {
     // Path to the background texture for the GUI
@@ -62,31 +59,25 @@ public class HamsterInventoryScreen extends HandledScreen<HamsterInventoryScreen
         super.render(context, mouseX, mouseY, delta);
 
         // --- Draw the Hamster Entity ---
-        int boxX = this.x + 8;
-        int boxY = this.y + 12;
-        int boxWidth = 59 - 8;
-        int boxHeight = 69 - 18;
+        int boxX = this.x + 34;
+        int boxY = this.y + 55;
         int size = 60;
 
         // Get the entity instance directly from the handler
         HamsterEntity hamster = this.handler.getHamsterEntity();
 
         if (hamster != null) {
-            // Call the static helper method using the box coordinates
+            // Call the static helper method with the 1.20.1 signature
             InventoryScreen.drawEntity(
                     context,
                     boxX,
                     boxY,
-                    boxX + boxWidth,
-                    boxY + boxHeight,
                     size,
-                    0.0625F,
-                    (float)mouseX,
-                    (float)mouseY,
+                    (float)boxX - mouseX, // x-rotation based on mouse
+                    (float)boxY - 30 - mouseY, // y-rotation based on mouse
                     hamster // Pass the entity instance
             );
         }
-
         // Draw tooltips last
         drawMouseoverTooltip(context, mouseX, mouseY);
     }

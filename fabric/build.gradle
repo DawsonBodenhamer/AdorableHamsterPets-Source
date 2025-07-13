@@ -7,6 +7,24 @@ architectury {
     fabric()
 }
 
+fabricApi {
+    configureDataGeneration {
+        client = true
+    }
+}
+
+evaluationDependsOn ':common'
+
+loom {
+    mods {
+        main {
+            sourceSet sourceSets.main
+            sourceSet project(':common').sourceSets.main
+            sourceSet project(':forge').sourceSets.main
+        }
+    }
+}
+
 configurations {
     common {
         canBeResolved = true
@@ -32,10 +50,14 @@ dependencies {
     modImplementation "curse.maven:jade-324717:${rootProject.jade_version_fabric}"
     modImplementation "me.fzzyhmstrs:fzzy_config:${rootProject.fzzy_config_version}"
     modRuntimeOnly "maven.modrinth:fabric-language-kotlin:${rootProject.flk_version}"
-    modImplementation include("maven.modrinth:placeholder-api:2.4.2+1.21")
+    modImplementation include("maven.modrinth:placeholder-api:2.1.1+1.20")
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
+}
+
+processResources {
+    from project(":common").sourceSets.main.resources
 }
 
 processResources {

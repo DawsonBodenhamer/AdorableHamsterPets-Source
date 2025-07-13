@@ -135,20 +135,20 @@ public class HamsterShoulderFeatureRenderer
 
         // --- Render Base Model ---
         RenderLayer baseRenderLayer = RenderLayer.getEntityCutoutNoCull(baseTextureId);
-        this.hamsterShoulderModel.render(matrices, vertexConsumers.getBuffer(baseRenderLayer), light, OverlayTexture.DEFAULT_UV);
+        this.hamsterShoulderModel.render(matrices, vertexConsumers.getBuffer(baseRenderLayer), light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
 
         // --- Render Overlay Model (if applicable) ---
         if (overlayTextureName != null) {
             Identifier overlayTextureId = getTextureId(overlayTextureName);
-            RenderLayer overlayRenderLayer = RenderLayer.getEntityTranslucent(overlayTextureId); // Translucent for overlays
-            this.hamsterShoulderModel.render(matrices, vertexConsumers.getBuffer(overlayRenderLayer), light, OverlayTexture.DEFAULT_UV);
+            RenderLayer overlayRenderLayer = RenderLayer.getEntityTranslucent(overlayTextureId);
+            this.hamsterShoulderModel.render(matrices, vertexConsumers.getBuffer(overlayRenderLayer), light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
         }
 
         // --- Render Pink Petal Overlay (if applicable) ---
         if (pinkPetalType > 0 && pinkPetalType <= 3) {
             Identifier petalTextureId = Identifier.of(AdorableHamsterPets.MOD_ID, "textures/entity/hamster/overlay_pink_petal" + pinkPetalType + ".png");
-            RenderLayer petalRenderLayer = RenderLayer.getEntityTranslucent(petalTextureId); // Use translucent
-            this.hamsterShoulderModel.render(matrices, vertexConsumers.getBuffer(petalRenderLayer), light, OverlayTexture.DEFAULT_UV);
+            RenderLayer petalRenderLayer = RenderLayer.getEntityTranslucent(petalTextureId);
+            this.hamsterShoulderModel.render(matrices, vertexConsumers.getBuffer(petalRenderLayer), light, OverlayTexture.DEFAULT_UV, 1.0F, 1.0F, 1.0F, 1.0F);
         }
         matrices.pop(); // Restore matrix state
     }

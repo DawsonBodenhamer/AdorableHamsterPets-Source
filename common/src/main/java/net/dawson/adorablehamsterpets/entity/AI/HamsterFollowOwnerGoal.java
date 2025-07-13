@@ -7,7 +7,7 @@ public class HamsterFollowOwnerGoal extends FollowOwnerGoal {
     private final HamsterEntity hamster;
 
     public HamsterFollowOwnerGoal(HamsterEntity hamster, double speed, float minDistance, float maxDistance) {
-        super(hamster, speed, minDistance, maxDistance);
+        super(hamster, speed, minDistance, maxDistance, false);
         this.hamster = hamster;
     }
 

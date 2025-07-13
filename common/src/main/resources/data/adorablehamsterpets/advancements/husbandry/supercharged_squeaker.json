@@ -1,0 +1,24 @@
+{
+  "parent": "adorablehamsterpets:husbandry/steamy_greens",
+  "display": {
+    "icon": {
+      "item": "minecraft:potion",
+      "nbt": "{Potion:\"minecraft:swiftness\",display:{Name:'{\"text\":\"Hamster Super Serum\",\"italic\":false,\"color\":\"light_purple\"}'},CustomModelData:1}"
+    },
+    "title": {
+      "translate": "advancements.adorablehamsterpets.husbandry.supercharged_squeaker.title"
+    },
+    "description": {
+      "translate": "advancements.adorablehamsterpets.husbandry.supercharged_squeaker.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "fed_steamed_beans": {
+      "trigger": "adorablehamsterpets:fed_hamster_steamed_beans"
+    }
+  }
+}

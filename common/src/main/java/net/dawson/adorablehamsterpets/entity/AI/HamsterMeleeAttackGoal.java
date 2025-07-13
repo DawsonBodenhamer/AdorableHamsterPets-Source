@@ -1,5 +1,6 @@
 package net.dawson.adorablehamsterpets.entity.AI;
 
+
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.mixin.accessor.MeleeAttackGoalAccessor;
@@ -8,53 +9,55 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.sound.SoundEvent;
 
+
 public class HamsterMeleeAttackGoal extends MeleeAttackGoal {
     private final HamsterEntity hamster;
     private static final int CUSTOM_ATTACK_COOLDOWN_TICKS = 35;
+
 
     public HamsterMeleeAttackGoal(HamsterEntity hamster, double speed, boolean pauseWhenMobIdle) {
         super(hamster, speed, pauseWhenMobIdle);
         this.hamster = hamster;
     }
 
+
     @Override
-    protected void attack(LivingEntity target) {
-        if (this.canAttack(target)) {
-            // --- Code inside this block only runs if cooldown is ready AND target is in range/visible ---
+    protected void attack(LivingEntity target, double squaredDistance) {
+        // --- Gatekeeper Logic ---
+        // Check 1: Is the cooldown ready?
+        // Check 2: Is the target in the custom attack range?
+        if (this.getCooldown() <= 0 && this.hamster.isInAttackRange(target)) {
 
-            // Reset cooldown using the custom duration
+            // --- Attack Action ---
             this.resetCooldown();
-            AdorableHamsterPets.LOGGER.debug("[AttackGoal {} Tick {}] Attack condition met (cooldown {}, in range), attacking target {}. Cooldown reset to {}.",
-                    this.hamster.getId(), this.hamster.getWorld().getTime(), this.getCooldown(), // Log cooldown *before* reset for clarity
-                    target.getId(), this.getMaxCooldown()); // Log the value it's being reset to
+            this.mob.tryAttack(target);
 
-            // Play Sound
+            // --- Sound and Animation ---
             SoundEvent attackSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_ATTACK_SOUNDS, this.hamster.getRandom());
             if (attackSound != null) {
                 this.hamster.playSound(attackSound, 1.2F, this.hamster.getSoundPitch());
-                AdorableHamsterPets.LOGGER.debug("[AttackGoal {} Tick {}] Played attack sound: {}", this.hamster.getId(), this.hamster.getWorld().getTime(), attackSound.getId());
             }
-
-            // Trigger Attack Animation (Server-Side)
             this.hamster.triggerAnimOnServer("mainController", "attack");
 
-            // Deal Damage
-            this.mob.tryAttack(target);
-            AdorableHamsterPets.LOGGER.debug("[AttackGoal {} Tick {}] Called tryAttack() on target {}.", this.hamster.getId(), this.hamster.getWorld().getTime(), target.getId());
-
+            AdorableHamsterPets.LOGGER.debug("[AttackGoal {} Tick {}] Attack performed on target {}. Cooldown reset to {}.",
+                    this.hamster.getId(), this.hamster.getWorld().getTime(),
+                    target.getId(), this.getMaxCooldown());
         }
     }
+
 
     @Override
     protected int getMaxCooldown() {
         return CUSTOM_ATTACK_COOLDOWN_TICKS;
     }
 
+
     @Override
     protected void resetCooldown() {
         // Cast 'this' to the accessor interface and call the public setter method.
         ((MeleeAttackGoalAccessor) this).setCooldown(this.getMaxCooldown());
     }
+
 
     @Override
     public boolean canStart() {
@@ -65,6 +68,7 @@ public class HamsterMeleeAttackGoal extends MeleeAttackGoal {
         return super.canStart();
     }
 
+
     @Override
     public void start() {
         super.start();
@@ -73,6 +77,7 @@ public class HamsterMeleeAttackGoal extends MeleeAttackGoal {
         ((MeleeAttackGoalAccessor) this).setCooldown(0);
         this.hamster.setActiveCustomGoalDebugName(this.getClass().getSimpleName());
     }
+
 
     @Override
     public void stop() {
@@ -91,7 +96,7 @@ public class HamsterMeleeAttackGoal extends MeleeAttackGoal {
         // However, the actual attack logic is now correctly gated by canAttack().
         LivingEntity target = this.mob.getTarget();
         if (target != null) {
-            this.attack(target); // Call attack logic check every tick
+            this.attack(target, this.mob.squaredDistanceTo(target));
         }
     }
 }

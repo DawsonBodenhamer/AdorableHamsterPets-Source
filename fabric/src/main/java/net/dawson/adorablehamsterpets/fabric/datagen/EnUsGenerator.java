@@ -32,15 +32,12 @@ public class EnUsGenerator extends FabricLanguageProvider {
 
     private static final Gson GSON = new Gson();
 
-    public EnUsGenerator(FabricDataOutput output,
-                         CompletableFuture<RegistryWrapper.WrapperLookup> lookup) {
-        super(output, "en_us", lookup);
+    public EnUsGenerator(FabricDataOutput output) {
+        super(output);
     }
 
     @Override
-    public void generateTranslations(RegistryWrapper.WrapperLookup registries,
-                                     TranslationBuilder builder) {
-
+    public void generateTranslations(TranslationBuilder builder) {
         /* ------------------------------------------------------------
          * 1)  Load every manual translation from en_us_base.json
          * ------------------------------------------------------------ */
@@ -83,7 +80,7 @@ public class EnUsGenerator extends FabricLanguageProvider {
                 AhpConfig.class,
                 Identifier.of(AdorableHamsterPets.MOD_ID, "main"),
                 "en_us",
-                /* includeDescriptions = */ true,
+                true,
                 safeDualWriter
         );
     }

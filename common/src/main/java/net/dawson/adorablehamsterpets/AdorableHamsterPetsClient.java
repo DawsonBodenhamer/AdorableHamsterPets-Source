@@ -22,10 +22,6 @@ import net.dawson.adorablehamsterpets.entity.client.model.HamsterShoulderModel;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.item.ModItems;
 import net.dawson.adorablehamsterpets.networking.ModPackets;
-import net.dawson.adorablehamsterpets.networking.payload.StartHamsterFlightSoundPayload;
-import net.dawson.adorablehamsterpets.networking.payload.StartHamsterThrowSoundPayload;
-import net.dawson.adorablehamsterpets.networking.payload.ThrowHamsterPayload;
-import net.dawson.adorablehamsterpets.networking.payload.UpdateHamsterRenderStatePayload;
 import net.dawson.adorablehamsterpets.screen.HamsterInventoryScreen;
 import net.dawson.adorablehamsterpets.screen.ModScreenHandlers;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
@@ -62,10 +58,10 @@ public class AdorableHamsterPetsClient {
         InteractionEvent.RIGHT_CLICK_ITEM.register((player, hand) -> {
             ItemStack stack = player.getStackInHand(hand);
             if (player.getWorld().isClient && stack.isOf(ModItems.HAMSTER_GUIDE_BOOK.get())) {
-                // In 1.20.1, book content is stored in NBT. BookScreen.Contents.create() handles this check.
-                BookScreen.Contents contents = BookScreen.Contents.create(stack);
-                if (contents != BookScreen.EMPTY_PROVIDER) {
-                    MinecraftClient.getInstance().setScreen(new BookScreen(contents));
+                // Check if the book has content before trying to open it.
+                if (stack.hasNbt() && stack.getNbt().contains("pages")) {
+                    // Directly create WrittenBookContents to bypass the vanilla item check.
+                    MinecraftClient.getInstance().setScreen(new BookScreen(new BookScreen.WrittenBookContents(stack)));
                     return CompoundEventResult.interrupt(true, stack);
                 }
             }

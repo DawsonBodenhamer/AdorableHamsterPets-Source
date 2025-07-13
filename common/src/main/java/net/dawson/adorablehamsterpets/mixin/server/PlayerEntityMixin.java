@@ -77,10 +77,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
     // --- 2. DataTracker Registration ---
     @Inject(method = "initDataTracker", at = @At("TAIL"))
-    private void adorablehamsterpets$initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
-        // --- Diagnostic Logging ---
-        AdorableHamsterPets.LOGGER.debug("[AHP Mixin] PlayerEntityMixin initDataTracker is RUNNING for entity {}.", this.getId());
-        builder.add(HAMSTER_SHOULDER_ENTITY, new NbtCompound());
+    private void adorablehamsterpets$initDataTracker(CallbackInfo ci) {
+        // For 1.20.1, use startTracking instead of builder.add
+        this.dataTracker.startTracking(HAMSTER_SHOULDER_ENTITY, new NbtCompound());
     }
 
     // --- 3. NBT Read/Write ---
@@ -205,7 +204,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                                     SoundCategory.NEUTRAL, 2.5f, 1.0f);
                             self.sendMessage(Text.translatable("message.adorablehamsterpets.diamond_nearby").formatted(Formatting.AQUA), true);
                             adorablehamsterpets$diamondSoundCooldownTicks = random.nextBetween(140, 200);
-                            ModCriteria.HAMSTER_DIAMOND_ALERT_TRIGGERED.get().trigger((ServerPlayerEntity) self);
+                            ModCriteria.HAMSTER_DIAMOND_ALERT_TRIGGERED.trigger((ServerPlayerEntity) self);
                         }
                     } else {
                         this.adorablehamsterpets$isDiamondAlertConditionMet = false;
@@ -226,7 +225,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                                     SoundCategory.NEUTRAL, 1.0f, 1.0f);
                             self.sendMessage(Text.translatable("message.adorablehamsterpets.creeper_detected").formatted(Formatting.RED), true);
                             adorablehamsterpets$creeperSoundCooldownTicks = random.nextBetween(100, 160);
-                            ModCriteria.HAMSTER_CREEPER_ALERT_TRIGGERED.get().trigger((ServerPlayerEntity) self);
+                            ModCriteria.HAMSTER_CREEPER_ALERT_TRIGGERED.trigger((ServerPlayerEntity) self);
                         }
                     }
                 }

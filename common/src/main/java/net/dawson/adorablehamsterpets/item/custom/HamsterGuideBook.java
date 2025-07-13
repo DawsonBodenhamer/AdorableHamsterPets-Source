@@ -1,13 +1,14 @@
 package net.dawson.adorablehamsterpets.item.custom;
 
 import net.dawson.adorablehamsterpets.config.Configs;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.WrittenBookContentComponent;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -23,15 +24,16 @@ public class HamsterGuideBook extends Item {
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         if (Configs.AHP.enableItemTooltips) {
             tooltip.add(Text.translatable("tooltip.adorablehamsterpets.hamster_guide_book.hint1").formatted(Formatting.GRAY));
         }
-        WrittenBookContentComponent content = stack.get(DataComponentTypes.WRITTEN_BOOK_CONTENT);
-        if (content != null && !content.title().raw().isEmpty()) {
+        // Check for NBT data to determine if the book has been written
+        NbtCompound nbt = stack.getNbt();
+        if (nbt != null && nbt.contains("title", 8)) { // 8 is the NBT type for String
             tooltip.add(Text.literal("Adorable Hamster Pets").formatted(Formatting.BLUE, Formatting.ITALIC));
         }
-        super.appendTooltip(stack, context, tooltip, type);
+        super.appendTooltip(stack, world, tooltip, context);
     }
 
     @Override

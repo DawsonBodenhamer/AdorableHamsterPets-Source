@@ -4,6 +4,7 @@ import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.world.World;
 
 import java.util.function.Predicate;
@@ -12,15 +13,14 @@ public class HamsterTemptGoal extends TemptGoal {
 
     // --- 1. Fields ---
     private final HamsterEntity hamster;
-    private final Predicate<ItemStack> temptPredicate; // Stores the item predicate for tempting
+    private final Ingredient temptIngredient; // Stores the item for tempting
     private int recheckTimer = 0; // Frequency of begging state updates
 
     // --- 2. Constructors ---
-    public HamsterTemptGoal(HamsterEntity hamster, double speed, Predicate<ItemStack> predicate, boolean canBeScared) {
-        super(hamster, speed, predicate, canBeScared); // Call to superclass constructor
+    public HamsterTemptGoal(HamsterEntity hamster, double speed, Ingredient ingredient, boolean canBeScared) {
+        super(hamster, speed, ingredient, canBeScared);
         this.hamster = hamster;
-        this.temptPredicate = predicate;
-        // setControls(EnumSet.of(Control.MOVE, Control.LOOK)) is handled by superclass.
+        this.temptIngredient = ingredient; // Store the ingredient
     }
 
     @Override
@@ -97,8 +97,7 @@ public class HamsterTemptGoal extends TemptGoal {
      * @return True if the player is holding a tempting item in either hand, false otherwise.
      */
     private boolean isHoldingTemptItem(PlayerEntity player) {
-        ItemStack mainHandStack = player.getMainHandStack();
-        ItemStack offHandStack = player.getOffHandStack();
-        return this.temptPredicate.test(mainHandStack) || this.temptPredicate.test(offHandStack);
+        // Use the stored Ingredient to test the stacks
+        return this.temptIngredient.test(player.getMainHandStack()) || this.temptIngredient.test(player.getOffHandStack());
     }
 }
