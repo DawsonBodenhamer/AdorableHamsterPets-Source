@@ -1,34 +1,51 @@
-![Adorable Hamster Pets Banner](https://i.imgur.com/EGikPiI.png)
+![Adorable Hamster Pets Banner](https://i.imgur.com/HKJDio6.png)
 
-<p align="center">
-  <a href="https://modrinth.com/mod/adorable-hamster-pets/versions?l=fabric"><img src="https://i.imgur.com/sOhq5bK.png" alt="Fabric" width="200" height="auto"></a>
-  <a href="https://modrinth.com/mod/adorable-hamster-pets/versions?l=neoforge"><img src="https://i.imgur.com/G7rGadf.png" alt="NeoForge" width="247" height="auto"></a>
-  <a href="https://nolinkyet"><img src="https://i.imgur.com/HHxLpaH.png" alt="Forge" width="199" height="auto"></a>
+<p>
+  <a href="https://youtube.com/shorts/YEBDFItiOXA?si=lgGFLeAcsdrMn7qD">
+    <!-- Crimson Gaming Showcase Video -->
+    <img src="https://i.imgur.com/szpF6yq.png"
+         alt="Watch the Adorable Hamster Pets Crimson Gaming Showcase"
+         width="2000">
+  </a>
 </p>
 
+Thanks to Crimson Gaming for the Showcase!
+
 <p align="center">
-  <a href="https://discord.gg/umzr6bJZtY"><img src="https://i.imgur.com/3v9sbBI.png" alt="Discord" width="65" height="auto"></a>
-  <a href="https://github.com/DawsonBodenhamer/Adorable-Hamster-Pets-2.0"><img src="https://i.imgur.com/rhnck4M.png" alt="GitHub" width="65" height="auto"></a>
-  <a href="https://ko-fi.com/dawsonbodenhamer"><img src="https://i.imgur.com/59CF46p.png" alt="Ko-Fi" width="65" height="auto"></a>
+  <a href="https://modrinth.com/mod/adorable-hamster-pets/versions?l=fabric"><img src="https://i.imgur.com/sOhq5bK.png" alt="Fabric" width="167" height="auto"></a>
+  <a href="https://modrinth.com/mod/adorable-hamster-pets/versions?l=neoforge"><img src="https://i.imgur.com/G7rGadf.png" alt="NeoForge" width="207" height="auto"></a>
+  <a href="https://nolinkyet"><img src="https://i.imgur.com/HHxLpaH.png" alt="Forge" width="168" height="auto"></a>
+  <a href="https://nolink"><img src="https://i.imgur.com/RMWxRX6.png" alt="Spacer" width="25" height="auto"></a>
+  <a href="https://discord.gg/umzr6bJZtY"><img src="https://i.imgur.com/HgsZcO6.png" alt="Discord" width="63" height="auto"></a>
+  <a href="https://github.com/DawsonBodenhamer/Adorable-Hamster-Pets-2.0"><img src="https://i.imgur.com/kqpWMBH.png" alt="GitHub" width="63" height="auto"></a>
+  <a href="https://ko-fi.com/dawsonbodenhamer"><img src="https://i.imgur.com/0ug6BXn.png" alt="Ko-Fi" width="63" height="auto"></a>
 </p>
 
-## <font color="orange">Because every great digital realm needs a tiny, squeaky snack-bandit.</font>
+# <font color="orange">Tiny fur. Big fun.</font>
 
-Let's go back to the beginning. You looked upon your blocky domain, surveyed your automated farms spewing resources you probably don't need, your enchanted gear shimmering with overkill, your… unique architectural choices, and declared, "Needs more rodents."
+**Adorable Hamster Pets** stuffs Minecraft with pint-sized, jiggly fur-missiles that have a craving for... diamonds. Perfect for anyone who surveyed their diamond-encrusted empire and muttered, “Needs more rodents.” These hamsters like to bounce, shoulder-surf, hoard snacks, and moonlight as throwable projectiles, all while adding maximum charm and helping with your inventory clutter. Tame, feed, or yeet at will; (ethics optional).
 
-Or maybe you didn't. Doesn't matter. You're here now, considering adding hamsters to a world already teeming with exploding plants and questionable physics. A truly inspired decision.
-
-Adorable Hamster Pets introduces, against potentially better judgment, hamsters to Minecraft. Tiny, fuzzy, occasionally helpful, frequently underfoot creatures destined to become your new favorite source of minor inventory clutter. They squeak, bounce, fly... if you throw them... and silently judge your life choices from the questionable safety of your shoulder. You can tame them, feed them various vegetable concoctions, and even send them on the attack. (Consult your local ethics committee. Or don't. I'm not your conscience).
 
 <br> <p> <img src="https://i.imgur.com/8BnyUET.png" alt="Adorable Hamster Pets Features" width="2000"/> </p>
 
+## <font color="orange">TL;DR Features, for the Impatient</font>
+
+*   **73 fur variants** (genetics! science! questionable breeding decisions!)
+*   **Taming with Sliced Cucumber** – bribe your way to squeaky friendship
+*   **Shoulder-Surfing Perks** – portable creeper radar & diamond divination, powered by cheese
+*   **Diamond Sniffing** –  complete with dramatic sulking animations if it accidentally finds gold instead
+*   **Cheek Pouches of Holding** – six inventory slots *inside the hamster* (cheeks expand when full)
+*   **Hamster Yeet™ (press G)** – turns your shoulder buddy into a concussion-powered projectile.
+*   **Dynamic naps, personalities, & sleepy-time animations** – because realism
+*   **Wild cucumber/green-bean bushes, cheese crafting, and suspiciously potent steamed green beans**
+*   **Custom advancement tab** – gamify your rodent wrangling
+
+## <font color="orange">Or If You Prefer Juicy Details</font>
 
 ### Click each to expand: 👇🏼
 
 <details>
 <summary>Biome Variants & Genetics</summary>
-
-..........................
 
 Prepare for a veritable explosion of fur colors! With nine base coats and eight overlay patterns (plus the unique White color), there are a staggering **73 possible hamster variants** to discover. Hamsters found shivering in snowy plains look different from those basking in deserts. Shocking, I know. They even pass these stunningly diverse palettes on to their offspring, with a polite attempt to not *exactly* copy their parents' white overlay patterns, ensuring maximum genetic *variety* in your pocket pet population.
 
@@ -43,149 +60,126 @@ Prepare for a veritable explosion of fur colors! With nine base coats and eight 
 
 *(Disclaimer: Hamster spawn location preferences are subject to change based on developer whims and biome generation quirks. Happy collecting!)*
 
-..........................
 </details>
 
 <details>
 <summary>Taming & Sitting</summary>
 
-..........................
-
 Bribe them with enough Sliced Cucumber, and they'll follow you like a furry, ankle-biting shadow. Right-click to make them sit, lest they develop a sudden fascination with the nearest lava pool. Again.
 
-..........................
 </details>
 
 <details>
 <summary>Advanced Napping Protocols</summary>
 
-..........................
-
 Tamed hamsters, when left sitting, might just decide it's naptime. Watch as they gradually drift off through an elaborate "Path to Slumber" sequence, complete with unique animations for dozing, settling, and several adorable deep sleep poses. Their dedication to slumber is even configurable!
 
 Wild hamsters also have a rather bouncy transition into their naps.
 
-..........................
 </details>
 
 <details>
 <summary>Unique Animation Personalities</summary>
 
-..........................
-
 Not all hamsters are created equal. Upon birth, each hamster is assigned one of three "personalities," which determines the specific sitting and dozing off animations it will use for its entire life. One might be a prim and proper sitter, while another is a bit more of a sloucher. It's a small touch to make your specific furry companion feel even more unique.
 
-..........................
 </details>
 
 <details>
 <summary>Shoulder Surfing— with *Perks*</summary>
-..........................
 
 Lure your nearest owned hamster onto your shoulder with the irresistible siren call of **Cheese**. (Or if you prefer boring explanations: right-click them with it). They'll offer helpful alerts about nearby Creepers and possibly valuable shiny rocks that start with a D, and rhyme with Simon. Kind of. They almost rhyme. Whatever. Complete with "scurrying onto your shoulder" and "leaping off in a huff" sound effects.
 
-..........................
 </details>
 
 <details>
-<summary>Furry Freelance Prospecting</summary>
-..........................
+<summary>Furry Diamond Prospecting</summary>
 
 So, your shoulder-mounted furball just made a series of excited squeaks and sniffs, hinting at nearby diamonds? Excellent. Now for the fun part. Dismount your tiny prospector. If it was indeed onto something shiny, it might just take matters into its own feet.
 
-Watch as it attempts to lead you to the alleged riches, complete with sniffing animations, determined dust-sniffing particles (that cleverly match the ground below, because details💅🏼), and a soundtrack of focused sniffs. 
+Watch as it attempts to lead you to the alleged riches, complete with sniffing animations, determined dust-sniffing particles (the particle colors match the ground below, because details💅🏼), and a soundtrack of focused sniffs.
 
-If its path is blocked, it'll patiently (or impatiently, it's hard to tell) wait, hoping you'll clear the way. Upon reaching its target, it'll celebrate with cool particle effects and a chorus of happy bounces (with sound!).
+If its path is blocked, it'll wait patiently (or impatiently, it's hard to tell), hoping you'll clear the way. Upon reaching its target, it'll celebrate with cool particle effects and a chorus of happy bounces (with sound!).
 
 But be warned: sometimes, in their eagerness, these little geologists might get a tad confused about what exactly constitutes a "valuable shiny rock." If it unearths something... less diamond-y and more... not-quite-diamond-ish... prepare for a dramatic sulk, complete with its own unique animation, sound effects, and a display of utter disappointment. A quick pat should snap it out of its angst.
 
 This whole ore-seeking escapade is, of course, configurable.
 
-..........................
+![Diamond Sniffing](https://i.imgur.com/mF7L8ph.jpeg)
+
 </details>
 
 <details>
 <summary>Cheek Pouches of Holding</summary>
 
-..........................
-
 Yes, inventory... *in their face*. Feed them **Hamster Food Mix** once to earn their trust (and cheek access!), then Sneak + Right-click a tamed hamster for 6 slots of prime real estate. No, you can't stuff a Netherite block in there. They'll even automatically scarf down **Hamster Food Mix** from their cheeks if they take a tumble, after a brief, dramatic pause to consider their options. Can't make them *too* overpowered.
 
-..........................
 </details>
 
 <details>
 <summary>Hamster Kung Fu Techniques</summary>
 
-..........................
+They'll energetically implement hamster kung fu on enemies (yours or theirs). Essentially, they like round-house kicks. Complete with particles effects on their tiny kicking feet!
 
-*   **Melee:** They'll energetically implement hamster kung fu on things that hurt you, or things you decide to hurt first. Valiant, if statistically unimpressive. Complete with crit particles on impact!
-*   **The Hamster Yeet™:** Press **'G'** (by default - check your keybinds if you're just flailing your arms) while *not* staring intently at a block. Behold as your shoulder companion becomes a surprisingly effective, albeit concussed, projectile. Does enough damage by default to kill a creeper, which is... really convenient. Gentle interaction (a pat, a click, whatever) required for post-impact recovery.
+</details>
 
-..........................
+<details>
+<summary>The Hamster Yeet™</summary>
+
+For when words fail and you need a furry, surprisingly aerodynamic solution— press **'G'** (by default - check your keybinds if you're just flailing your arms) while *not* staring intently at a block. Behold as your shoulder companion becomes a surprisingly effective, albeit concussed, projectile. Includes satisfying particle trail, impact sound effects, and flight sounds that change pitch as it flies— the [Doppler Effect](https://en.wikipedia.org/wiki/Doppler_effect)!
+
+Does enough damage by default to kill a creeper, which is... really convenient. Gentle interaction (a pat, a click, whatever) required for post-impact recovery.
+
+![The Hamster Yeet](https://i.imgur.com/ACti7Rh.jpeg)
+
 </details>
 
 <details>
 <summary>Creeper Psychological Warfare</summary>
 
-..........................
+**Psychological Warfare:** Creepers are utterly terrified of hamsters, just like cats. They'll flee on sight.
 
-*   **Psychological Warfare:** Creepers are utterly terrified of hamsters, just like cats. They'll flee on sight. I probably didn't need a section for this.
-..........................
+In hindsight, I probably didn't need a whole section for this.
+
 </details>
 
 <details>
 <summary>Decorate Your Hamsters</summary>
 
-..........................
-
 Found some **Pink Petals**? Right-click your tamed hamster to bestow upon it a stylish floral accessory. Not feeling that particular look? Click again with petals to cycle through a few options. Regret your decision entirely? A quick snip with **Shears** will undo your fashionable folly (and you even get the petal back, because I'm nice like that).
 
-..........................
 </details>
 
 <details>
 <summary>New Questionable Flora</summary>
 
-..........................
-
 *   **Wild Cucumber & Green Bean Bushes:** Find these lurking in specific biomes. *(See the Hamster Guide book for details.)* Right-click the seeded ones for seeds. Try not to step on them. They now spawn without needing a specific light level, so happy cave gardening!
 *   **Slightly Less Useless Sunflowers:** Sunflowers have had an upgrade. These look like vanilla ones, but these actually *do* something. Right-click the top block when it looks seeded for **Sunflower Seeds**. They regrow. Eventually. Patience is a virtue. Isn't that right, John?
 
-..........................
 </details>
 
 <details>
 <summary>Exciting New Foodstuffs</summary>
-
-..........................
 
 *   **Cucumber/Green Beans:** Grow 'em, eat 'em raw (if you must), slice 'em, steam 'em. Culinary possibilities are… present.
 *   **Steamed Green Beans:** A suspiciously potent super-food for your hamster. Grants temporary buffs, followed by a mandatory "please wait" period. Don't get greedy.
 *   **Hamster Food Mix:** Allegedly gourmet. Heals well, bypasses their irritating pickiness, and is the key to unlocking their cheek pouches. Craft it. Or don't. Your hamster, your problem.
 *   **Cheese:** Not only can it lure hamsters onto your shoulder, it's player-edible. Surprisingly nutritious (think cooked porkchop levels) and you can scarf it down about 30% faster than most foods. The only catch? The... *distinctively moist* eating sound. Consider it an acquired taste. Its nutritional value is fully configurable, for those of you who felt cheese was somehow "unbalanced." Plebs.
 
-..........................
 </details>
 
 <details>
 <summary>The Hamster Tips Guide Book</summary>
 
-..........................
-
 You get one automatically the first time you join a world with this mod (unless you turned that off in the config, you rebel). It contains *hints*. Read it. Or use it as kindling. See if I care. Lost it? Craft another with a Book and some Sliced Cucumber. Don't ask why Sliced Cucumber. It's a long story.
 
-..........................
 </details>
 
 <details>
 <summary>Immersive Advancements</summary>
 
-..........................
+A custom advancements tab, "The Hamster Life," guides you through the thrilling world of hamster husbandry, from finding your first seed to... well, yeeting. (Thanks to `@MylesGit` on GitHub for the original advancement tree suggestion!)
 
-*   A custom advancements tab, "The Hamster Life," guides you through the thrilling world of hamster husbandry, from finding your first seed to... well, yeeting. (Thanks to `@MylesGit` on GitHub for the original advancement tree suggestion!)
-
-..........................
 </details>
 
 ---
@@ -212,7 +206,7 @@ Here's how to get in touch. And yes, I'm probably going to regret at least one o
 
 *   **The Official, Sensible Routes (Preferred for Bugs & Features):**
     *   **[GitHub Issues Page](https://github.com/DawsonBodenhamer/Adorable-Hamster-Pets-1.21/issues):** This is the best place for bug reports and feature suggestions. I actually check it. Frequently. It helps keep things organized, and other people can see if their issue is already known.
-    *   **[Official Discord Server](https://discord.gg/w54mk5bqdf):** Come hang out, share pictures of your hamsters, or get help in real-time. It's organized chaos, and you're invited. 
+    *   **[Official Discord Server](https://discord.gg/w54mk5bqdf):** Come hang out, share pictures of your hamsters, or get help in real-time. It's organized chaos, and you're invited.
 
 *   **The "I Need to Talk to a Human" Options:**
     *   [**Email:**](mailto:dawson@fortheking.design) - For when GitHub feels too impersonal, or you want to send me digital fan mail (or virtual rotten tomatoes).
@@ -239,7 +233,7 @@ If you're reporting a bug, to save both our sanities, try to include:
 
 The more info you give, the less I have to guess, and the faster things might get fixed.
 
-Fun fact: I've already implemented new features like the custom advancement tree and config toggles for the hamster guidebook based on suggestions from my Github! We move quick around here.
+Fun fact: I've already implemented new features like the custom advancement tree and config toggles for the hamster guidebook based on suggestions from my GitHub! We move quick around here.
 
 
 
@@ -338,37 +332,30 @@ The hamster wheel of "progress" never truly stops. Here's a peek at what might b
 </details>
 
 
-
 ## <font color="teal">License (The Legal Blah Blah - But Actually Read This Bit)</font>
 <details>
 <summary>Click to expand. It's less boring than it sounds. Mostly.</summary>
 
-Alright, let's talk about who owns what and what you can (and absolutely cannot) do with "Adorable Hamster Pets." It's a bit like a timeshare, but with more fur and less obligation to attend a sales pitch.
+# The license for this project is **All Rights Reserved.** © 2025 Dawson Bodenhamer ([**www.ForTheKing.Design**](https://www.fortheking.design/)).
 
-## **The Gist (for Humans):**
+## **What this License Covers**
 
-*   ### **My Pretty Pictures & Squeaky Sounds (The Assets):**
-    *   This includes all the hamster models, their fabulous fur textures, the delightful (or terrifying) animations, every custom sound effect that makes you jump, the block/item textures. Basically, anything in the `/src/main/resources/` folder of the mod.
-    *   **License:** © 2025 Dawson Bodenhamer ([**www.ForTheKing.Design**](https://www.fortheking.design/)). **All Rights Reserved.**
-    *   **What that means:** You can enjoy the hamsters in the mod, show them off in your videos (please do, and a little credit is always nice!), but please don't grab them to use in your own projects, mods, or try to redistribute them separately. Think of it as an art gallery – admire, enjoy, don't walk out with the paintings.
+The whole enchilada— all the Java code, the hamster models, their fur textures, the animations, every custom sound effect, the block/item textures, and even the build scripts. Basically, everything in this repository.
 
+## **What that Means**
 
-* ### **The Brains of the Operation (The Code):**
-    *   This is all the clever (and occasionally questionable) Java code that makes the hamsters run, sniff, yeet, and generally cause delightful chaos. This is most of what's in the `/src/main/java/` folder, plus things like build scripts.
-    *   **License:** **MIT License.**
-    *   **What that means:** If you're a fellow code-wrangler, you're welcome to peek under the hood. You can learn from it, modify it for your *personal* use, and even use snippets in your own open-source Fabric mod projects, **as long as you include my original copyright notice and a copy of the MIT License text.** It's like an open-source cookbook – use the recipe, give the original chef a nod. You still can't use my pretty dinner plates (the assets) without asking, though.
+You can enjoy the mod, show it off in your videos (please do, and a little credit is always nice!), and include it in modpacks. However, you cannot copy, modify, redistribute, or use any part of this project (code or assets) in your own projects without explicit, prior, written permission. Think of it as an art gallery – admire, enjoy, don't walk out with the paintings *or* the blueprints for the building.
 
 ## **TL;DR Version:**
 *   **Play the mod?** Yeppers.
 *   **Make videos/streams?** Big yep.
-*   **Use my hamster images/sounds in your own stuff?** Nope, ask first.
-*   **Look at/learn from/tweak the code for your own fun or compatible open-source mod (and give credit)?** Go for it.
+*   **Include in a modpack?** Go for it.
+*   **Use my hamster images/sounds/code in your own stuff?** Nope. Not without asking first.
 *   **Re-upload the mod somewhere else?** Definitely not. Get it from official sources (like Modrinth).
 *   **Sell the mod?** The Minecraft EULA says *I* can't even do that, and you shouldn't either.
 
-For the full, legally-binding-but-hopefully-still-understandable text that lawyers apparently enjoy, please see the `LICENSE.md` file included with the mod. If you're thinking of doing something not covered here, especially regarding modpacks or asset use, just reach out and ask! I'm generally pretty reasonable, unless you try to precisely replace all my hamsters with sentient cabbages. Then we might have words.
+For the full, legally-binding-but-hopefully-still-understandable text that lawyers apparently enjoy, please see the `LICENSE.md` file included with the mod. If you're thinking of doing something not covered here, just reach out and ask! I'm generally pretty reasonable, unless you try to precisely replace all my hamsters with sentient cabbages. Then we might have words.
 </details>
-
 
 
 ## <font color="teal">Hat Tip to the Hamster Trailblazers</font>
