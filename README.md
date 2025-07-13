@@ -1,15 +1,15 @@
 ![Adorable Hamster Pets Banner](https://i.imgur.com/HKJDio6.png)
 
 <p>
-  <a href="https://youtu.be/qGjH25FbPOg?t=593">
-    <!-- EnderVerse Showcase Video -->
-    <img src="https://i.imgur.com/7DJ9QY2.png"
-         alt="Watch the Adorable Hamster Pets EnderVerse Showcase (starts at 9 min 53 sec)"
+  <a href="https://youtube.com/shorts/YEBDFItiOXA?si=lgGFLeAcsdrMn7qD">
+    <!-- Crimson Gaming Showcase Video -->
+    <img src="https://i.imgur.com/szpF6yq.png"
+         alt="Watch the Adorable Hamster Pets Crimson Gaming Showcase"
          width="2000">
   </a>
 </p>
 
-Thanks to EnderVerse for the Showcase!
+Thanks to Crimson Gaming for the Showcase!
 
 <p align="center">
   <a href="https://modrinth.com/mod/adorable-hamster-pets/versions?l=fabric"><img src="https://i.imgur.com/sOhq5bK.png" alt="Fabric" width="167" height="auto"></a>
@@ -332,37 +332,30 @@ The hamster wheel of "progress" never truly stops. Here's a peek at what might b
 </details>
 
 
-
 ## <font color="teal">License (The Legal Blah Blah - But Actually Read This Bit)</font>
 <details>
 <summary>Click to expand. It's less boring than it sounds. Mostly.</summary>
 
-Alright, let's talk about who owns what and what you can (and absolutely cannot) do with "Adorable Hamster Pets." It's a bit like a timeshare, but with more fur and less obligation to attend a sales pitch.
+# The license for this project is **All Rights Reserved.** © 2025 Dawson Bodenhamer ([**www.ForTheKing.Design**](https://www.fortheking.design/)).
 
-## **The Gist (for Humans):**
+## **What this License Covers**
 
-*   ### **My Pretty Pictures & Squeaky Sounds (The Assets):**
-    *   This includes all the hamster models, their fabulous fur textures, the delightful (or terrifying) animations, every custom sound effect that makes you jump, the block/item textures. Basically, anything in the `/src/main/resources/` folder of the mod.
-    *   **License:** © 2025 Dawson Bodenhamer ([**www.ForTheKing.Design**](https://www.fortheking.design/)). **All Rights Reserved.**
-    *   **What that means:** You can enjoy the hamsters in the mod, show them off in your videos (please do, and a little credit is always nice!), but please don't grab them to use in your own projects, mods, or try to redistribute them separately. Think of it as an art gallery – admire, enjoy, don't walk out with the paintings.
+The whole enchilada— all the Java code, the hamster models, their fur textures, the animations, every custom sound effect, the block/item textures, and even the build scripts. Basically, everything in this repository.
 
+## **What that Means**
 
-* ### **The Brains of the Operation (The Code):**
-    *   This is all the clever (and occasionally questionable) Java code that makes the hamsters run, sniff, yeet, and generally cause delightful chaos. This is most of what's in the `/src/main/java/` folder, plus things like build scripts.
-    *   **License:** **MIT License.**
-    *   **What that means:** If you're a fellow code-wrangler, you're welcome to peek under the hood. You can learn from it, modify it for your *personal* use, and even use snippets in your own open-source Fabric mod projects, **as long as you include my original copyright notice and a copy of the MIT License text.** It's like an open-source cookbook – use the recipe, give the original chef a nod. You still can't use my pretty dinner plates (the assets) without asking, though.
+You can enjoy the mod, show it off in your videos (please do, and a little credit is always nice!), and include it in modpacks. However, you cannot copy, modify, redistribute, or use any part of this project (code or assets) in your own projects without explicit, prior, written permission. Think of it as an art gallery – admire, enjoy, don't walk out with the paintings *or* the blueprints for the building.
 
 ## **TL;DR Version:**
 *   **Play the mod?** Yeppers.
 *   **Make videos/streams?** Big yep.
-*   **Use my hamster images/sounds in your own stuff?** Nope, ask first.
-*   **Look at/learn from/tweak the code for your own fun or compatible open-source mod (and give credit)?** Go for it.
+*   **Include in a modpack?** Go for it.
+*   **Use my hamster images/sounds/code in your own stuff?** Nope. Not without asking first.
 *   **Re-upload the mod somewhere else?** Definitely not. Get it from official sources (like Modrinth).
 *   **Sell the mod?** The Minecraft EULA says *I* can't even do that, and you shouldn't either.
 
-For the full, legally-binding-but-hopefully-still-understandable text that lawyers apparently enjoy, please see the `LICENSE.md` file included with the mod. If you're thinking of doing something not covered here, especially regarding modpacks or asset use, just reach out and ask! I'm generally pretty reasonable, unless you try to precisely replace all my hamsters with sentient cabbages. Then we might have words.
+For the full, legally-binding-but-hopefully-still-understandable text that lawyers apparently enjoy, please see the `LICENSE.md` file included with the mod. If you're thinking of doing something not covered here, just reach out and ask! I'm generally pretty reasonable, unless you try to precisely replace all my hamsters with sentient cabbages. Then we might have words.
 </details>
-
 
 
 ## <font color="teal">Hat Tip to the Hamster Trailblazers</font>
