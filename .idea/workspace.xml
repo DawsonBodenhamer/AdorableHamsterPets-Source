@@ -4,93 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="052c5d33-d6bb-405e-abe0-6cb2032d8642" name="Changes" comment="[DOC] Update LICENSE.md and README.md">
-      <change afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/checksums.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/md5-checksums.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.14/checksums/sha1-checksums.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.14/executionHistory/executionHistory.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.14/fileHashes/fileHashes.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/blue/endless/jankson/1.2.3/jankson-1.2.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/com/electronwill/night-config/core/3.8.0/core-3.8.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/com/electronwill/night-config/toml/3.8.0/toml-3.8.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/com/google/code/gson/gson/2.10/gson-2.10.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/com/google/errorprone/error_prone_annotations/2.11.0/error_prone_annotations-2.11.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/com/google/guava/guava/31.1-jre/guava-31.1-jre.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/com/machinezoo/noexception/noexception/1.7.1/noexception-1.7.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/com/mojang/logging/1.1.1/logging-1.1.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/commons-io/commons-io/2.11.0/commons-io-2.11.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/cpw/mods/modlauncher/11.0.3/modlauncher-11.0.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/cpw/mods/securejarhandler/3.0.7/securejarhandler-3.0.7.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/curse/maven/jade-324717/6155158/jade-324717-6155158.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/dev/architectury/architectury-neoforge/13.0.8/architectury-neoforge-13.0.8.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/maven/modrinth/kotlin-for-forge/5.8.0/kotlin-for-forge-5.8.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/me/fzzyhmstrs/fzzy_config/0.7.0+1.21+neoforge/fzzy_config-0.7.0+1.21+neoforge.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/net/fabricmc/sponge-mixin/0.14.0+mixin.0.8.6/sponge-mixin-0.14.0+mixin.0.8.6.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/net/jodah/typetools/0.6.3/typetools-0.6.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/net/minecraftforge/srgutils/0.4.15/srgutils-0.4.15.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/net/minecrell/terminalconsoleappender/1.3.0/terminalconsoleappender-1.3.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/net/neoforged/JarJarFileSystems/0.4.1/JarJarFileSystems-0.4.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/net/neoforged/JarJarMetadata/0.4.1/JarJarMetadata-0.4.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/net/neoforged/JarJarSelector/0.4.1/JarJarSelector-0.4.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/net/neoforged/accesstransformers/10.0.1/accesstransformers-10.0.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/net/neoforged/accesstransformers/at-modlauncher/10.0.1/at-modlauncher-10.0.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/net/neoforged/bus/8.0.5/bus-8.0.5.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/net/neoforged/coremods/7.0.3/coremods-7.0.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/net/neoforged/fancymodloader/loader/4.0.41/loader-4.0.41.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/net/neoforged/mergetool/2.0.0/mergetool-2.0.0-api.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/net/peanuuutz/tomlkt/tomlkt-jvm/0.3.7/tomlkt-jvm-0.3.7.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/net/sf/jopt-simple/jopt-simple/5.0.4/jopt-simple-5.0.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/antlr/antlr4-runtime/4.13.1/antlr4-runtime-4.13.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/apache/commons/commons-lang3/3.12.0/commons-lang3-3.12.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/apache/logging/log4j/log4j-api/2.22.1/log4j-api-2.22.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/apache/logging/log4j/log4j-core/2.22.1/log4j-core-2.22.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/apache/logging/log4j/log4j-slf4j2-impl/2.19.0/log4j-slf4j2-impl-2.19.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/apache/maven/maven-artifact/3.8.5/maven-artifact-3.8.5.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/checkerframework/checker-qual/3.12.0/checker-qual-3.12.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/codehaus/plexus/plexus-utils/3.3.0/plexus-utils-3.3.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/jetbrains/annotations/13.0/annotations-13.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/jetbrains/annotations/23.0.0/annotations-23.0.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/jetbrains/kotlin/kotlin-reflect/2.0.0/kotlin-reflect-2.0.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/jetbrains/kotlin/kotlin-stdlib-jdk7/2.0.0/kotlin-stdlib-jdk7-2.0.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/jetbrains/kotlin/kotlin-stdlib-jdk8/2.0.0/kotlin-stdlib-jdk8-2.0.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/jetbrains/kotlin/kotlin-stdlib/2.0.20/kotlin-stdlib-2.0.20.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.8.1/kotlinx-coroutines-core-jvm-1.8.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/jetbrains/kotlinx/kotlinx-coroutines-jdk8/1.8.1/kotlinx-coroutines-jdk8-1.8.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/jetbrains/kotlinx/kotlinx-serialization-core-jvm/1.7.1/kotlinx-serialization-core-jvm-1.7.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/jetbrains/kotlinx/kotlinx-serialization-json-jvm/1.7.1/kotlinx-serialization-json-jvm-1.7.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/jline/jline-reader/3.20.0/jline-reader-3.20.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/jline/jline-terminal/3.20.0/jline-terminal-3.20.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/openjdk/nashorn/nashorn-core/15.4/nashorn-core-15.4.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/ow2/asm/asm-analysis/9.6/asm-analysis-9.6.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/ow2/asm/asm-commons/9.6/asm-commons-9.6.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/ow2/asm/asm-tree/9.6/asm-tree-9.6.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/ow2/asm/asm-util/9.6/asm-util-9.6.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/ow2/asm/asm/9.6/asm-9.6.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/org/slf4j/slf4j-api/2.0.9/slf4j-api-2.0.9.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/software/bernie/geckolib/geckolib-neoforge-1.21.1/4.7.3/geckolib-neoforge-1.21.1-4.7.3.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/thedarkcolour/kfflang-neoforge/5.4.0/kfflang-neoforge-5.4.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/thedarkcolour/kfflib-neoforge/5.4.0/kfflib-neoforge-5.4.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/thedarkcolour/kffmod-neoforge/5.4.0/kffmod-neoforge-5.4.0.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge/thedarkcolour/kotlinforforge-neoforge/5.4.0/kotlinforforge-neoforge-5.4.0-all.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/neoforge/.gradle/architectury/.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/neoforge/.gradle/loom-cache/remapClasspath.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/neoforge/build/loom-cache/remapped_working/loom_mappings_1_21_1_layered_hash_223741962_v2_neoforge_21_1_172_forge.maven.modrinth-kotlin-for-forge-5.8.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___fabric__fabric.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___fabric__fabric.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___neoforge__neoforge.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Minecraft_Server___neoforge__neoforge.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fabric/.gradle/architectury/.properties" beforeDir="false" afterPath="$PROJECT_DIR$/fabric/.gradle/architectury/.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/forge/.gradle/architectury/.properties" beforeDir="false" afterPath="$PROJECT_DIR$/forge/.gradle/architectury/.properties" afterDir="false" />
-    </list>
+    <list default="true" id="052c5d33-d6bb-405e-abe0-6cb2032d8642" name="Changes" comment="[DOC] Update LICENSE.md and README.md" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -201,29 +115,29 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Adorable Hamster Pets [build].executor": "Run",
-    "Gradle.Adorable Hamster Pets:common [runDatagen].executor": "Run",
-    "Gradle.Adorable Hamster Pets:fabric [:fabric:dev.architectury.transformer.TransformerRuntime.main()].executor": "Run",
-    "Gradle.Adorable Hamster Pets:fabric [runDatagen].executor": "Run",
-    "Gradle.AdorableHamsterPets:fabric [:fabric:dev.architectury.transformer.TransformerRuntime.main()].executor": "Run",
-    "Gradle.AdorableHamsterPets:neoforge [:neoforge:dev.architectury.transformer.TransformerRuntime.main()].executor": "Run",
-    "Gradle.Download Sources.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "1.20.x",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/mods/Data/Repositories/AdorableHamsterPets/common/src/main/resources/assets/adorablehamsterpets/animations",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
-    "two.files.diff.last.used.file": "C:/Users/tweek/Downloads/test.txt"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Adorable Hamster Pets [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Adorable Hamster Pets:common [runDatagen].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Adorable Hamster Pets:fabric [:fabric:dev.architectury.transformer.TransformerRuntime.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Adorable Hamster Pets:fabric [runDatagen].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AdorableHamsterPets:fabric [:fabric:dev.architectury.transformer.TransformerRuntime.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.AdorableHamsterPets:neoforge [:neoforge:dev.architectury.transformer.TransformerRuntime.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/mods/Data/Repositories/AdorableHamsterPets/common/src/main/resources/assets/adorablehamsterpets/animations&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
+    &quot;two.files.diff.last.used.file&quot;: &quot;C:/Users/tweek/Downloads/test.txt&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\mods\Data\Repositories\AdorableHamsterPets\common\src\main\resources\assets\adorablehamsterpets\animations" />
@@ -591,15 +505,7 @@
       <option name="project" value="LOCAL" />
       <updated>1752438709881</updated>
     </task>
-    <task id="LOCAL-00033" summary="[DOC] Update LICENSE.md and README.md&#10;&#10;(cherry picked from commit bc870215a1e252226ab13a3dd17f87315d256ad5)">
-      <option name="closed" value="true" />
-      <created>1752441481858</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1752441481858</updated>
-    </task>
-    <option name="localTasksCounter" value="34" />
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -637,7 +543,6 @@
     <MESSAGE value="[FIX] Correct multiple minor behavior bugs, prepare for adding Forge&#10;&#10;- Prevented wild hamsters from entering the cleaning state while sleeping by adding an isTamed() check to the cleaning logic.&#10;- Fixed an issue where the cleaning sound and state could become stuck if a player commanded a hamster to stand up mid-animation.&#10;- Added configurable options for cheese nutrition and saturation values, allowing server owners to balance food stats.&#10;- Updated the cheese item's tooltip to dynamically display the configured hunger and saturation values." />
     <MESSAGE value="[CHORE] Add .gitignore to exclude build artifacts" />
     <MESSAGE value="[DOC] Update LICENSE.md and README.md" />
-    <MESSAGE value="[DOC] Update LICENSE.md and README.md&#10;&#10;(cherry picked from commit bc870215a1e252226ab13a3dd17f87315d256ad5)" />
-    <option name="LAST_COMMIT_MESSAGE" value="[DOC] Update LICENSE.md and README.md&#10;&#10;(cherry picked from commit bc870215a1e252226ab13a3dd17f87315d256ad5)" />
+    <option name="LAST_COMMIT_MESSAGE" value="[DOC] Update LICENSE.md and README.md" />
   </component>
 </project>

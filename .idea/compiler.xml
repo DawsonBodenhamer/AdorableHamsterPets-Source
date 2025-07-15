@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="17" />
+    <annotationProcessing>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <option name="defaultObfuscationEnv" value="named:intermediary" />
+        <option name="inMapFileNamedIntermediary" value="C:\Users\tweek\.gradle\caches\fabric-loom\1.21.1\loom.mappings.1_21_1.layered+hash.223741962-v2\mappings.tiny" />
+        <option name="outMapFileNamedIntermediary" value="C:\mods\Data\Repositories\AdorableHamsterPets-Source\common\build\loom-cache\mixin-map-loom.mappings.1_21_1.layered+hash.223741962-v2.main.tiny" />
+        <option name="outRefMapFile" value="C:\mods\Data\Repositories\AdorableHamsterPets-Source\common\build\classes\java\main\adorablehamsterpets-common-refmap.json" />
+        <option name="quiet" value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/dev.architectury/architectury-injectables/1.0.13/4dbf84e4aa14f8c824dd291569110d958e9b8933/architectury-injectables-1.0.13.jar" />
+        </processorPath>
+        <module name="adorablehamsterpets.common.main" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="21" />
   </component>
 </project>

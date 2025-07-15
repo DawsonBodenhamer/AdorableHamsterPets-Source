@@ -6,7 +6,6 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/adorablehamsterpets.common.iml" filepath="$PROJECT_DIR$/.idea/modules/common/adorablehamsterpets.common.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/common/adorablehamsterpets.common.main.iml" filepath="$PROJECT_DIR$/.idea/modules/common/adorablehamsterpets.common.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/adorablehamsterpets.fabric.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/adorablehamsterpets.fabric.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/fabric/adorablehamsterpets.fabric.main.iml" filepath="$PROJECT_DIR$/.idea/modules/fabric/adorablehamsterpets.fabric.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/neoforge/adorablehamsterpets.neoforge.iml" filepath="$PROJECT_DIR$/.idea/modules/neoforge/adorablehamsterpets.neoforge.iml" />
     </modules>
   </component>
