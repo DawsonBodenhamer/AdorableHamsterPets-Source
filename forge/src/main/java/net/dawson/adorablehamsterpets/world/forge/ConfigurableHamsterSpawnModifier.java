@@ -2,6 +2,7 @@ package net.dawson.adorablehamsterpets.world.forge;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
+import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.dawson.adorablehamsterpets.world.gen.ModEntitySpawns;
@@ -36,26 +37,25 @@ public class ConfigurableHamsterSpawnModifier implements BiomeModifier {
      */
     @Override
     public void modify(RegistryEntry<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
-        // We only want to add spawns, so we only act during the ADD phase.
         if (phase != Phase.ADD) {
             return;
         }
 
-        // Use the common helper method to see if this biome should have hamsters.
-        if (biome.getKey().map(key -> ModEntitySpawns.isKeyInSpawnList(key.getValue())).orElse(false)) {
-            // Get the spawn settings builder for the biome.
-            var spawnBuilder = builder.getMobSpawnSettings();
+        String biomeName = biome.getKey().map(k -> k.getValue().toString()).orElse("unknown");
+        AdorableHamsterPets.LOGGER.info("[AHP Spawn Modifier] Running modify for biome: {}", biomeName);
 
-            // Create a new spawn entry using values from the config file.
+        if (biome.getKey().map(key -> ModEntitySpawns.isKeyInSpawnList(key.getValue())).orElse(false)) {
+            var spawnBuilder = builder.getMobSpawnSettings();
             var spawnEntry = new SpawnSettings.SpawnEntry(
                     ModEntities.HAMSTER.get(),
                     Configs.AHP.spawnWeight.get(),
-                    1, // minCount is always 1
+                    1,
                     Configs.AHP.maxGroupSize.get()
             );
-
-            // Add the new spawn entry to the CREATURE spawn group.
             spawnBuilder.spawn(SpawnGroup.CREATURE, spawnEntry);
+            AdorableHamsterPets.LOGGER.info("    -> SUCCESS: Added hamster spawn to biome '{}'", biomeName);
+        } else {
+            AdorableHamsterPets.LOGGER.info("    -> SKIPPED: Biome '{}' is not in the hamster spawn list.", biomeName);
         }
     }
 

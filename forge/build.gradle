@@ -17,7 +17,6 @@ loom {
         main {
             sourceSet sourceSets.main
             sourceSet project(':common').sourceSets.main
-            sourceSet project(':fabric').sourceSets.main
         }
     }
 }
@@ -25,7 +24,7 @@ loom {
 sourceSets {
     main {
         resources {
-            srcDir project(':fabric').file('src/main/generated/resources')
+            srcDir project(':fabric').file('src/main/generated')
         }
     }
 }
@@ -60,7 +59,8 @@ dependencies {
 
 processResources {
     from project(":common").sourceSets.main.resources
-    from(project(':fabric').file('src/main/generated/resources'))
+    from sourceSets.main.resources
+
     inputs.property 'version', project.version
 
     filesMatching(["META-INF/mods.toml", "*.mixins.json"]) {

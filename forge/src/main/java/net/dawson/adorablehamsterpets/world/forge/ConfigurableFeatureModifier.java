@@ -3,6 +3,7 @@ package net.dawson.adorablehamsterpets.world.forge;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.world.ModWorldGeneration;
 import net.minecraft.registry.RegistryCodecs;
 import net.minecraft.registry.RegistryKeys;
@@ -32,21 +33,35 @@ public record ConfigurableFeatureModifier(
 
     @Override
     public void modify(RegistryEntry<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
+        String biomeName = biome.getKey().map(k -> k.getValue().toString()).orElse("unknown");
+        AdorableHamsterPets.LOGGER.info("[AHP Feature Modifier] Running modify for biome: {} in phase: {}", biomeName, phase);
+
+        // --- ADD Phase ---
         if (phase == Phase.ADD && this.biomes.contains(biome)) {
             this.featuresToAdd.ifPresent(additions -> {
                 for (RegistryEntry<PlacedFeature> feature : additions) {
-                    // Use centralized helper methods to decide if the feature should be added to this specific biome
+                    String featureName = feature.getKey().map(k -> k.getValue().toString()).orElse("unknown");
+                    AdorableHamsterPets.LOGGER.info("[AHP Feature Modifier] Considering ADDING feature '{}' to biome '{}'", featureName, biomeName);
                     if (shouldFeatureBeInBiome(feature, biome)) {
-                        builder.getGenerationSettings().getFeatures(GenerationStep.Feature.VEGETAL_DECORATION).add(feature);
+                        builder.getGenerationSettings().feature(GenerationStep.Feature.VEGETAL_DECORATION, feature);
+                        AdorableHamsterPets.LOGGER.info("    -> SUCCESS: Added feature '{}' to biome '{}'", featureName, biomeName);
+                    } else {
+                        AdorableHamsterPets.LOGGER.info("    -> SKIPPED: Feature '{}' is not valid for biome '{}'", featureName, biomeName);
                     }
                 }
             });
         }
+        // --- REMOVE Phase ---
         if (phase == Phase.REMOVE && this.biomes.contains(biome)) {
             this.featuresToRemove.ifPresent(removals -> {
                 for (RegistryEntry<PlacedFeature> feature : removals) {
+                    String featureName = feature.getKey().map(k -> k.getValue().toString()).orElse("unknown");
+                    AdorableHamsterPets.LOGGER.info("[AHP Feature Modifier] Considering REMOVING feature '{}' from biome '{}'", featureName, biomeName);
                     if (shouldFeatureBeInBiome(feature, biome)) {
-                        builder.getGenerationSettings().getFeatures(GenerationStep.Feature.VEGETAL_DECORATION).remove(feature);
+                        boolean removed = builder.getGenerationSettings().getFeatures(GenerationStep.Feature.VEGETAL_DECORATION).remove(feature);
+                        AdorableHamsterPets.LOGGER.info("    -> SUCCESS: Removed feature '{}' from biome '{}'. Was present: {}", featureName, biomeName, removed);
+                    } else {
+                        AdorableHamsterPets.LOGGER.info("    -> SKIPPED: Feature '{}' is not valid for biome '{}'", featureName, biomeName);
                     }
                 }
             });

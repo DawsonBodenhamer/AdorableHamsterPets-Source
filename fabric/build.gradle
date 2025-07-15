@@ -20,7 +20,14 @@ loom {
         main {
             sourceSet sourceSets.main
             sourceSet project(':common').sourceSets.main
-            sourceSet project(':forge').sourceSets.main
+        }
+    }
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs += project.file('src/main/generated/resources')
         }
     }
 }
@@ -58,9 +65,8 @@ dependencies {
 
 processResources {
     from project(":common").sourceSets.main.resources
-}
+    from sourceSets.main.resources
 
-processResources {
     inputs.property 'version', project.version
 
     filesMatching('fabric.mod.json') {

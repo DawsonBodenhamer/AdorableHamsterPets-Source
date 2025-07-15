@@ -1,5 +1,5 @@
-[17:08:21] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.20.1 with Fabric Loader 0.15.11
-[17:08:21] [main/INFO] (FabricLoader) Loading 68 mods:
+[14:06:23] [main/INFO] (FabricLoader/GameProvider) Loading Minecraft 1.20.1 with Fabric Loader 0.15.11
+[14:06:24] [main/INFO] (FabricLoader) Loading 68 mods:
 	- adorablehamsterpets 2.0.2-1.20.1+fabric
 	- architectury 9.2.14
 	- fabric-api 0.92.2+1.20.1
@@ -61,21 +61,22 @@
 	- fabricloader 0.15.11
 	- fzzy_config 0.7.0+1.20.1
 	- geckolib 4.4.9
-	- generated_bc629e3 1.0.0
+	- generated_d70fbf8 1.0.0
 	- jade 11.12.3+fabric
 	- java 21
 	- minecraft 1.20.1
 	- mixinextras 0.3.5
 	- modmenu 7.2.2
 	- placeholder-api 2.1.1+1.20
-[17:08:22] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.5 Source=file:/C:/Users/tweek/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.13.3+mixin.0.8.5/9527e6b0d2449408958fd1302594dc65ec5ade9c/sponge-mixin-0.13.3+mixin.0.8.5.jar Service=Knot/Fabric Env=CLIENT
-[17:08:22] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
-[17:08:22] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
-[17:08:23] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.3.5).
-[17:08:26] [Datafixer Bootstrap/INFO] (Minecraft) 188 Datafixer optimizations took 77 milliseconds
-[17:08:28] [Render thread/INFO] (Minecraft) [STDERR]: [LWJGL] [ThreadLocalUtil] Unsupported JNI version detected, this may result in a crash. Please inform LWJGL developers.
-[17:08:28] [Render thread/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
-[17:08:28] [Render thread/ERROR] (Minecraft) Failed to verify authentication
+[14:06:24] [main/INFO] (FabricLoader/Mixin) SpongePowered MIXIN Subsystem Version=0.8.5 Source=file:/C:/Users/tweek/.gradle/caches/modules-2/files-2.1/net.fabricmc/sponge-mixin/0.13.3+mixin.0.8.5/9527e6b0d2449408958fd1302594dc65ec5ade9c/sponge-mixin-0.13.3+mixin.0.8.5.jar Service=Knot/Fabric Env=CLIENT
+[14:06:24] [main/INFO] (FabricLoader/Mixin) Loaded Fabric development mappings for mixin remapper!
+[14:06:24] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_16
+[14:06:24] [main/INFO] (FabricLoader/Mixin) Compatibility level set to JAVA_17
+[14:06:25] [main/INFO] (FabricLoader/MixinExtras|Service) Initializing MixinExtras via com.llamalad7.mixinextras.service.MixinExtrasServiceImpl(version=0.3.5).
+[14:06:28] [Datafixer Bootstrap/INFO] (Minecraft) 188 Datafixer optimizations took 77 milliseconds
+[14:06:29] [Render thread/INFO] (Minecraft) [STDERR]: [LWJGL] [ThreadLocalUtil] Unsupported JNI version detected, this may result in a crash. Please inform LWJGL developers.
+[14:06:30] [Render thread/INFO] (Minecraft) Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[14:06:30] [Render thread/ERROR] (Minecraft) Failed to verify authentication
 com.mojang.authlib.exceptions.InvalidCredentialsException: Status: 401
 	at com.mojang.authlib.exceptions.MinecraftClientHttpException.toAuthenticationException(MinecraftClientHttpException.java:56) ~[authlib-4.0.43.jar:?]
 	at com.mojang.authlib.yggdrasil.YggdrasilUserApiService.fetchProperties(YggdrasilUserApiService.java:156) ~[authlib-4.0.43.jar:?]
@@ -94,6 +95,87 @@ Caused by: com.mojang.authlib.exceptions.MinecraftClientHttpException: Status: 4
 	at com.mojang.authlib.minecraft.client.MinecraftClient.get(MinecraftClient.java:48) ~[authlib-4.0.43.jar:?]
 	at com.mojang.authlib.yggdrasil.YggdrasilUserApiService.fetchProperties(YggdrasilUserApiService.java:129) ~[authlib-4.0.43.jar:?]
 	... 10 more
-[17:08:28] [Render thread/INFO] (Minecraft) Setting user: Player155
-[17:08:29] [Render thread/INFO] (fzzy_config) Loaded config adorablehamsterpets:main in 1013ms
-[17:08:29] [Render thread/ERROR] (Minecraft) No data fixer registered for hamster
+[14:06:30] [Render thread/INFO] (Minecraft) Setting user: Player281
+[14:06:31] [Render thread/INFO] (fzzy_config) Loaded config adorablehamsterpets:main in 1036ms
+[14:06:31] [Render thread/ERROR] (Minecraft) No data fixer registered for hamster
+[14:06:32] [Render thread/INFO] (adorablehamsterpets) Registering Mod Criteria for adorablehamsterpets
+[14:06:32] [Render thread/INFO] (NetworkManagerImpl) Registering S2C receiver with id adorablehamsterpets:start_hamster_flight_sound
+[14:06:32] [Render thread/INFO] (NetworkManagerImpl) Registering S2C receiver with id adorablehamsterpets:start_hamster_throw_sound
+[14:06:32] [Render thread/INFO] (NetworkManagerImpl) Registering S2C receiver with id architectury:spawn_entity_packet
+[14:06:32] [Worker-Main-1/INFO] (Mod Menu/Update Checker) Checking mod updates...
+[14:06:32] [Render thread/INFO] (fzzy_config) Loaded config fzzy_config:keybinds in 36ms
+[14:06:32] [Render thread/INFO] (Indigo) [Indigo] Registering Indigo renderer!
+[14:06:32] [Render thread/INFO] (FabricDataGenHelper) Running data generator for adorablehamsterpets
+[14:06:33] [Render thread/INFO] (Minecraft) Starting provider: Adorable Hamster Pets/Language (en_us)
+[14:06:33] [Render thread/INFO] (fzzy_config) Building en_us entries for AhpConfig @ adorablehamsterpets.main
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.helpAndResources
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.giveGuideBook
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.reportBug
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.joinDiscord
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.visitWebsite
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.uiPreferences
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.enableAutoGuidebookDelivery
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.enableItemTooltips
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.enableShoulderDismountMessages
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.enableJadeHamsterDebugInfo
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.core
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.enableHamsterThrowing
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.requireFoodMixToUnlockCheeks
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.cooldowns
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.cleaningChanceDenominator
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.hamsterThrowCooldown
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.steamedGreenBeansBuffCooldown
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.hamsterSpawning
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.spawnWeight
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.maxGroupSize
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.tamingAndBreeding
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.tamingChanceDenominator
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.breedingCooldownTicks
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.shoulder
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.enableShoulderCreeperDetection
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.shoulderCreeperDetectionRadius
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.enableShoulderDiamondDetection
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.shoulderDiamondDetectionRadius
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.independentDiamondSeeking
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.enableIndependentDiamondSeeking
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.diamondSeekRadius
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.goldMistakeChance
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.enableIndependentDiamondSeekCooldown
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.independentOreSeekCooldownTicks
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.tamedSleepSettings
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.tamedSleepThreatDetectionRadiusBlocks
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.requireDaytimeForTamedSleep
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.tamedQuiescentSitMinSeconds
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.tamedQuiescentSitMaxSeconds
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.combat
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.meleeDamage
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.hamsterThrowDamage
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.foodHealing
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.hamsterFoodMixHealing
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.standardFoodHealing
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.cheeseHealing
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.cheeseNutrition
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.cheeseSaturation
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.greenBeanBuffs
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.greenBeanBuffDuration
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.greenBeanBuffAmplifierSpeed
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.greenBeanBuffAmplifierStrength
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.greenBeanBuffAmplifierAbsorption
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.greenBeanBuffAmplifierRegen
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.worldGenAdjustments
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.sunflowerRegrowthModifier
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.wildBushRegrowthModifier
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.wildGreenBeanBushRarity
+[14:06:33] [Render thread/WARN] (fzzy_config)   No en_us prefix entry for adorablehamsterpets.main.wildCucumberBushRarity
+[14:06:33] [Render thread/INFO] (Minecraft) Adorable Hamster Pets/Language (en_us) finished after 14 ms
+[14:06:33] [Render thread/INFO] (Minecraft) Starting provider: Adorable Hamster Pets/Block Loot Tables
+[14:06:33] [Render thread/INFO] (Minecraft) Adorable Hamster Pets/Block Loot Tables finished after 50 ms
+[14:06:33] [Render thread/INFO] (Minecraft) Starting provider: Adorable Hamster Pets/Model Definitions
+[14:06:33] [Render thread/INFO] (Minecraft) Adorable Hamster Pets/Model Definitions finished after 66 ms
+[14:06:33] [Render thread/INFO] (Minecraft) Starting provider: Adorable Hamster Pets/Recipes
+[14:06:33] [Render thread/INFO] (Minecraft) Adorable Hamster Pets/Recipes finished after 20 ms
+[14:06:33] [Render thread/INFO] (Minecraft) Starting provider: Adorable Hamster Pets/World Gen
+[14:06:33] [Render thread/INFO] (Minecraft) Adorable Hamster Pets/World Gen finished after 107 ms
+[14:06:33] [Render thread/INFO] (Minecraft) All providers took: 260 ms
+[14:06:33] [Render thread/INFO] (Minecraft) Caching: total files: 49, old count: 0, new count: 50, removed stale: 0, written: 49

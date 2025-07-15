@@ -1,5 +1,6 @@
 package net.dawson.adorablehamsterpets.item;
 
+import dev.architectury.injectables.annotations.ExpectPlatform;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
@@ -31,8 +32,7 @@ public class ModItems {
     public static final RegistrySupplier<Item> HAMSTER_GUIDE_BOOK = registerItem("hamster_guide_book",
             () -> new net.dawson.adorablehamsterpets.item.custom.HamsterGuideBook(new Item.Settings().maxCount(1)));
 
-    public static final RegistrySupplier<Item> HAMSTER_SPAWN_EGG = registerItem("hamster_spawn_egg",
-            () -> new SpawnEggItem(ModEntities.HAMSTER.get(), 0x9c631f, 0xffffff, new Item.Settings()));
+    public static final RegistrySupplier<Item> HAMSTER_SPAWN_EGG = registerSpawnEgg();
 
     public static final RegistrySupplier<Item> GREEN_BEAN_SEEDS = registerItem("green_bean_seeds",
             () -> new AliasedBlockItem(ModBlocks.GREEN_BEANS_CROP.get(), new Item.Settings()) {
@@ -244,5 +244,10 @@ public class ModItems {
 
     public static void register() {
         ITEMS.register();
+    }
+
+    @ExpectPlatform
+    private static RegistrySupplier<Item> registerSpawnEgg() {
+        throw new AssertionError();
     }
 }
