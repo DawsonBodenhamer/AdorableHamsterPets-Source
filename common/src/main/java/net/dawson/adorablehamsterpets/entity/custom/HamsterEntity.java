@@ -1855,7 +1855,20 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     this.velocityDirty = true;
 
                     if (!world.isClient() && this.throwTicks > 5) {
-                        ((ServerWorld)world).spawnParticles(ParticleTypes.CLOUD, this.getX(), this.getY() + this.getHeight() / 2.0, this.getZ(), 1, 0.1, 0.1, 0.1, 0.0);
+                        // Define an offset to push the particle spawn point backwards along the velocity vector.
+                        // This helps compensate for client-server render lag. A larger value pushes it back more.
+                        double offsetMultiplier = 1.5;
+
+                        // Calculate the spawn position based on the PREVIOUS position, offset backwards.
+                        double spawnX = this.prevX - (currentVelocity.x * offsetMultiplier);
+                        double spawnY = this.prevY + (this.getHeight() / 2.0) - (currentVelocity.y * offsetMultiplier);
+                        double spawnZ = this.prevZ - (currentVelocity.z * offsetMultiplier);
+
+                        ((ServerWorld)world).spawnParticles(
+                                ParticleTypes.CLOUD,
+                                spawnX, spawnY, spawnZ,
+                                1, 0.1, 0.1, 0.1, 0.0
+                        );
                     }
                 }
             } else {
