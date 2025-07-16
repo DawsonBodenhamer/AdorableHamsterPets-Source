@@ -1,5 +1,8 @@
 {
   "mappings": {
+    "net/dawson/adorablehamsterpets/mixin/accessor/LandPathNodeMakerInvoker": {
+      "getCommonNodeType": "method_58(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_7;"
+    },
     "net/dawson/adorablehamsterpets/mixin/accessor/MeleeAttackGoalAccessor": {
       "cooldown": "field_24667:I"
     },
@@ -19,6 +22,9 @@
   },
   "data": {
     "named:intermediary": {
+      "net/dawson/adorablehamsterpets/mixin/accessor/LandPathNodeMakerInvoker": {
+        "getCommonNodeType": "method_58(Lnet/minecraft/class_1922;Lnet/minecraft/class_2338;)Lnet/minecraft/class_7;"
+      },
       "net/dawson/adorablehamsterpets/mixin/accessor/MeleeAttackGoalAccessor": {
         "cooldown": "field_24667:I"
       },

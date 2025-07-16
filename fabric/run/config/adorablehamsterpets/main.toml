@@ -7,7 +7,7 @@ enableItemTooltips = true
 # Little status mumbles when your co-pilot disembarks.
 enableShoulderDismountMessages = true
 # More stats than anyone asked for. Defaults to off—mercifully.
-enableJadeHamsterDebugInfo = true
+enableJadeHamsterDebugInfo = false
 # Do we yeet the hamster? ('G' by default).
 enableHamsterThrowing = true
 # Gate cheek-pouch storage behind gourmet cuisine, because drama.

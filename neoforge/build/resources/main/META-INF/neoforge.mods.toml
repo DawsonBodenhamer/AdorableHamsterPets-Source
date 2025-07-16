@@ -1,11 +1,11 @@
 modLoader = "javafml"
-loaderVersion = "[2,)" # NeoForge for 1.21.1 uses loader version 2
-license = "Custom - See LICENSE.md"
-issueTrackerURL = "https://github.com/DawsonBodenhamer/Adorable-Hamster-Pets-1.21/issues"
+loaderVersion = "[2,)"
+license = "All Rights Reserved"
+issueTrackerURL = "https://github.com/DawsonBodenhamer/AdorableHamsterPets-Public/issues"
 
 [[mods]]
 modId = "adorablehamsterpets"
-version = "2.0.2+neoforge"
+version = "2.3.0+neoforge"
 displayName = "Adorable Hamster Pets"
 authors = "The Scarlet Fox"
 description = '''

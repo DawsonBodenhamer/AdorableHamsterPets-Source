@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "adorablehamsterpets",
-  "version": "2.0.2+fabric",
+  "version": "2.3.0+fabric",
   "name": "Adorable Hamster Pets",
   "description": "Sure, you’ve got dragons and machines, but let’s be honest— no respectable mod pack is complete without tiny fluffy hamsters running around.",
   "authors": [
@@ -9,7 +9,8 @@
   ],
   "contact": {
     "homepage": "https://www.fortheking.design/",
-    "sources": "https://github.com/DawsonBodenhamer/Adorable-Hamster-Pets-1.21/"
+    "sources": "https://github.com/DawsonBodenhamer/AdorableHamsterPets-Public/",
+    "issues": "https://github.com/DawsonBodenhamer/AdorableHamsterPets-Public/issues"
   },
   "license": "All Rights Reserved",
   "icon": "assets/adorablehamsterpets/icon.png",
