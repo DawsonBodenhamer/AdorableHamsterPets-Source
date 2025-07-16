@@ -16,6 +16,7 @@ out/
 # Platform-specific build outputs
 /fabric/build/
 /neoforge/build/
+/forge/build/
 
 # =================================================
 # Architectury & Loom
