@@ -27,7 +27,7 @@ allprojects {
         archivesName = rootProject.archives_base_name
     }
 
-    version = "${rootProject.mod_version}+${project.name}"
+    version = "${rootProject.mod_version}-${rootProject.minecraft_version}+${project.name}"
     group = rootProject.maven_group
 
     repositories {
