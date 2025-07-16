@@ -1729,22 +1729,10 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 net.minecraft.util.hit.BlockHitResult blockHitResult = (net.minecraft.util.hit.BlockHitResult) blockHit;
                 BlockPos adjacentPos = blockHitResult.getBlockPos().offset(blockHitResult.getSide());
 
-                // --- Gravity Check: Find the ground below the impact point ---
-                BlockPos.Mutable groundSearchPos = adjacentPos.mutableCopy();
-                while (world.getBlockState(groundSearchPos.down()).isAir() && groundSearchPos.getY() > world.getBottomY()) {
-                    groundSearchPos.move(Direction.DOWN);
-                }
+                // Place the hamster in the air next to the impacted block face.
+                this.setPosition(adjacentPos.getX() + 0.5, adjacentPos.getY(), adjacentPos.getZ() + 0.5);
 
-                Optional<BlockPos> safePosOpt = findSafeSpawnPosition(groundSearchPos, world, 5);
-
-                safePosOpt.ifPresentOrElse(
-                        safePos -> this.setPosition(safePos.getX() + 0.5, safePos.getY(), safePos.getZ() + 0.5),
-                        () -> {
-                            AdorableHamsterPets.LOGGER.warn("[HamsterThrow] Could not find safe landing spot after hitting block. Using original impact point {} as fallback.", blockHitResult.getBlockPos());
-                            this.setPosition(blockHit.getPos());
-                        }
-                );
-
+                // Apply the "tumble" state immediately. Vanilla gravity will handle the fall.
                 this.setVelocity(currentVel.multiply(0.6, 0.0, 0.6));
                 this.setThrown(false);
                 this.playSound(SoundEvents.ENTITY_GENERIC_SMALL_FALL, 1.0f, 1.2f);
