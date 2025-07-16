@@ -2,6 +2,7 @@ package net.dawson.adorablehamsterpets.forge.client;
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.AdorableHamsterPetsClient;
+import net.dawson.adorablehamsterpets.client.option.ModKeyBindings;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.dawson.adorablehamsterpets.entity.client.HamsterRenderer;
 import net.dawson.adorablehamsterpets.entity.client.ModModelLayers;
@@ -14,6 +15,7 @@ import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -48,6 +50,14 @@ public final class AdorableHamsterPetsForgeClient {
                         HamsterInventoryScreen::new
                 )
         );
+    }
+
+    @SubscribeEvent
+    public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
+        // Call the dedicated keybinding init method.
+        AdorableHamsterPetsClient.initKeybindings();
+        // Manually register the key with Forge's event.
+        event.register(ModKeyBindings.THROW_HAMSTER_KEY);
     }
 
     /* ------------------------------------------------------------ */
