@@ -7,11 +7,15 @@
 *.ipr
 
 # =================================================
-# Gradle
+# Gradle & Build Output
 # =================================com
 .gradle/
 build/
 out/
+
+# Platform-specific build outputs
+/fabric/build/
+/neoforge/build/
 
 # =================================================
 # Architectury & Loom
