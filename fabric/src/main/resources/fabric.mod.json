@@ -9,7 +9,8 @@
   ],
   "contact": {
     "homepage": "https://www.fortheking.design/",
-    "sources": "https://github.com/DawsonBodenhamer/Adorable-Hamster-Pets-1.21/"
+    "sources": "https://github.com/DawsonBodenhamer/AdorableHamsterPets-Public/",
+    "issues": "https://github.com/DawsonBodenhamer/AdorableHamsterPets-Public/issues"
   },
   "license": "All Rights Reserved",
   "icon": "assets/adorablehamsterpets/icon.png",
