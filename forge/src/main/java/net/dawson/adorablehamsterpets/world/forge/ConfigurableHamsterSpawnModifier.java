@@ -42,7 +42,7 @@ public class ConfigurableHamsterSpawnModifier implements BiomeModifier {
         }
 
         String biomeName = biome.getKey().map(k -> k.getValue().toString()).orElse("unknown");
-        AdorableHamsterPets.LOGGER.info("[AHP Spawn Modifier] Running modify for biome: {}", biomeName);
+        AdorableHamsterPets.LOGGER.debug("[AHP Spawn Modifier] Running modify for biome: {}", biomeName);
 
         if (biome.getKey().map(key -> ModEntitySpawns.isKeyInSpawnList(key.getValue())).orElse(false)) {
             var spawnBuilder = builder.getMobSpawnSettings();
@@ -53,9 +53,9 @@ public class ConfigurableHamsterSpawnModifier implements BiomeModifier {
                     Configs.AHP.maxGroupSize.get()
             );
             spawnBuilder.spawn(SpawnGroup.CREATURE, spawnEntry);
-            AdorableHamsterPets.LOGGER.info("    -> SUCCESS: Added hamster spawn to biome '{}'", biomeName);
+            AdorableHamsterPets.LOGGER.debug("    -> SUCCESS: Added hamster spawn to biome '{}'", biomeName);
         } else {
-            AdorableHamsterPets.LOGGER.info("    -> SKIPPED: Biome '{}' is not in the hamster spawn list.", biomeName);
+            AdorableHamsterPets.LOGGER.debug("    -> SKIPPED: Biome '{}' is not in the hamster spawn list.", biomeName);
         }
     }
 

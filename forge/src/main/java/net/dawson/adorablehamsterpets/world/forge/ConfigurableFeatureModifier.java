@@ -34,19 +34,19 @@ public record ConfigurableFeatureModifier(
     @Override
     public void modify(RegistryEntry<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
         String biomeName = biome.getKey().map(k -> k.getValue().toString()).orElse("unknown");
-        AdorableHamsterPets.LOGGER.info("[AHP Feature Modifier] Running modify for biome: {} in phase: {}", biomeName, phase);
+        AdorableHamsterPets.LOGGER.debug("[AHP Feature Modifier] Running modify for biome: {} in phase: {}", biomeName, phase);
 
         // --- ADD Phase ---
         if (phase == Phase.ADD && this.biomes.contains(biome)) {
             this.featuresToAdd.ifPresent(additions -> {
                 for (RegistryEntry<PlacedFeature> feature : additions) {
                     String featureName = feature.getKey().map(k -> k.getValue().toString()).orElse("unknown");
-                    AdorableHamsterPets.LOGGER.info("[AHP Feature Modifier] Considering ADDING feature '{}' to biome '{}'", featureName, biomeName);
+                    AdorableHamsterPets.LOGGER.debug("[AHP Feature Modifier] Considering ADDING feature '{}' to biome '{}'", featureName, biomeName);
                     if (shouldFeatureBeInBiome(feature, biome)) {
                         builder.getGenerationSettings().feature(GenerationStep.Feature.VEGETAL_DECORATION, feature);
-                        AdorableHamsterPets.LOGGER.info("    -> SUCCESS: Added feature '{}' to biome '{}'", featureName, biomeName);
+                        AdorableHamsterPets.LOGGER.debug("    -> SUCCESS: Added feature '{}' to biome '{}'", featureName, biomeName);
                     } else {
-                        AdorableHamsterPets.LOGGER.info("    -> SKIPPED: Feature '{}' is not valid for biome '{}'", featureName, biomeName);
+                        AdorableHamsterPets.LOGGER.debug("    -> SKIPPED: Feature '{}' is not valid for biome '{}'", featureName, biomeName);
                     }
                 }
             });
@@ -56,12 +56,12 @@ public record ConfigurableFeatureModifier(
             this.featuresToRemove.ifPresent(removals -> {
                 for (RegistryEntry<PlacedFeature> feature : removals) {
                     String featureName = feature.getKey().map(k -> k.getValue().toString()).orElse("unknown");
-                    AdorableHamsterPets.LOGGER.info("[AHP Feature Modifier] Considering REMOVING feature '{}' from biome '{}'", featureName, biomeName);
+                    AdorableHamsterPets.LOGGER.debug("[AHP Feature Modifier] Considering REMOVING feature '{}' from biome '{}'", featureName, biomeName);
                     if (shouldFeatureBeInBiome(feature, biome)) {
                         boolean removed = builder.getGenerationSettings().getFeatures(GenerationStep.Feature.VEGETAL_DECORATION).remove(feature);
-                        AdorableHamsterPets.LOGGER.info("    -> SUCCESS: Removed feature '{}' from biome '{}'. Was present: {}", featureName, biomeName, removed);
+                        AdorableHamsterPets.LOGGER.debug("    -> SUCCESS: Removed feature '{}' from biome '{}'. Was present: {}", featureName, biomeName, removed);
                     } else {
-                        AdorableHamsterPets.LOGGER.info("    -> SKIPPED: Feature '{}' is not valid for biome '{}'", featureName, biomeName);
+                        AdorableHamsterPets.LOGGER.debug("    -> SKIPPED: Feature '{}' is not valid for biome '{}'", featureName, biomeName);
                     }
                 }
             });
