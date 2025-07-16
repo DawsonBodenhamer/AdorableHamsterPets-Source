@@ -65,11 +65,11 @@ public class ModEntitySpawns {
      * This should be called from the common initializer.
      */
     public static void initialize() {
-        AdorableHamsterPets.LOGGER.info("[AHP Spawn Debug] Initializing biome modifications for hamster spawns.");
+        AdorableHamsterPets.LOGGER.debug("[AHP Spawn Debug] Initializing biome modifications for hamster spawns.");
         BiomeModifications.addProperties(
                 ModEntitySpawns::shouldSpawnInBiome,
                 (context, props) -> {
-                    context.getKey().ifPresent(key -> AdorableHamsterPets.LOGGER.info("[AHP Spawn Debug] Applying spawn entry to biome: {}", key.toString()));
+                    context.getKey().ifPresent(key -> AdorableHamsterPets.LOGGER.debug("[AHP Spawn Debug] Applying spawn entry to biome: {}", key.toString()));
                     props.getSpawnProperties().addSpawn(
                             SpawnGroup.CREATURE,
                             new SpawnSettings.SpawnEntry(
@@ -91,7 +91,7 @@ public class ModEntitySpawns {
      */
     public static boolean shouldSpawnInBiome(BiomeModifications.BiomeContext ctx) {
         boolean shouldSpawn = ctx.getKey().filter(ModEntitySpawns::isKeyInSpawnList).isPresent();
-        ctx.getKey().ifPresent(key -> AdorableHamsterPets.LOGGER.info("[AHP Spawn Debug] Checking biome [{}]: Should spawn? -> {}", key.toString(), shouldSpawn));
+        ctx.getKey().ifPresent(key -> AdorableHamsterPets.LOGGER.debug("[AHP Spawn Debug] Checking biome [{}]: Should spawn? -> {}", key.toString(), shouldSpawn));
         return shouldSpawn;
     }
 

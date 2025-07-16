@@ -240,7 +240,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private static HamsterVariant determineVariantForBiome(RegistryEntry<Biome> biomeEntry, net.minecraft.util.math.random.Random random) {
         // --- Add Logging ---
         String biomeName = biomeEntry.getKey().map(k -> k.getValue().toString()).orElse("unknown");
-        AdorableHamsterPets.LOGGER.info("[AHP Spawn Debug] determineVariantForBiome called for biome: {}", biomeName);
+        AdorableHamsterPets.LOGGER.debug("[AHP Spawn Debug] determineVariantForBiome called for biome: {}", biomeName);
         // --- End Add Logging ---
 
         HamsterVariant result;
@@ -293,7 +293,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         }
 
         // --- Add Logging ---
-        AdorableHamsterPets.LOGGER.info("[AHP Spawn Debug] Determined variant for {} is {}", biomeName, result.name());
+        AdorableHamsterPets.LOGGER.debug("[AHP Spawn Debug] Determined variant for {} is {}", biomeName, result.name());
         // --- End Add Logging ---
         return result;
     }
@@ -2617,24 +2617,24 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     @Nullable
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData) {
-        AdorableHamsterPets.LOGGER.info("[AHP Spawn Debug] HamsterEntity.initialize called. SpawnReason: {}", spawnReason);
+        AdorableHamsterPets.LOGGER.debug("[AHP Spawn Debug] HamsterEntity.initialize called. SpawnReason: {}", spawnReason);
         // Assign Animation Personality
         this.dataTracker.set(ANIMATION_PERSONALITY_ID, this.random.nextBetween(1, 3));
         // Apply biome variants for natural spawns, spawn eggs, AND chunk generation
         if (spawnReason == SpawnReason.NATURAL || spawnReason == SpawnReason.SPAWN_EGG || spawnReason == SpawnReason.CHUNK_GENERATION) {
             RegistryEntry<Biome> biomeEntry = world.getBiome(this.getBlockPos());
             String biomeKeyStr = biomeEntry.getKey().map(key -> key.getValue().toString()).orElse("UNKNOWN");
-            AdorableHamsterPets.LOGGER.info("[HamsterInit] SpawnReason: {}, BiomeKey: {}", spawnReason, biomeKeyStr); // Keep this log
+            AdorableHamsterPets.LOGGER.debug("[HamsterInit] SpawnReason: {}, BiomeKey: {}", spawnReason, biomeKeyStr); // Keep this log
 
             HamsterVariant chosenVariant = determineVariantForBiome(biomeEntry, this.random);
             this.setVariant(chosenVariant.getId());
-            AdorableHamsterPets.LOGGER.info("[HamsterInit] Assigned variant: {}", chosenVariant.name());
+            AdorableHamsterPets.LOGGER.debug("[HamsterInit] Assigned variant: {}", chosenVariant.name());
 
         } else {
             // Fallback for other spawns (command, breeding, structure, etc.)
             int randomVariantId = this.random.nextInt(HamsterVariant.values().length);
             this.setVariant(randomVariantId);
-            AdorableHamsterPets.LOGGER.info("[HamsterInit] SpawnReason: {}, Assigned random variant: {}",
+            AdorableHamsterPets.LOGGER.debug("[HamsterInit] SpawnReason: {}, Assigned random variant: {}",
                     spawnReason, HamsterVariant.byId(randomVariantId).name());
         }
 
