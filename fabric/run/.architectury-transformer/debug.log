@@ -1,5 +1,5 @@
 [Architectury Transformer] Architectury Runtime 5.2.87
-[Architectury Transformer DEBUG] Closed File Systems for C:\mods\Data\Repositories\AdorableHamsterPets\common\build\devlibs\adorablehamsterpets-2.0.2+common-dev.jar
+[Architectury Transformer DEBUG] Closed File Systems for C:\mods\Data\Repositories\AdorableHamsterPets-Source\common\build\devlibs\adorablehamsterpets-2.0.2+common-dev.jar
 [Architectury Transformer DEBUG] Preparing tiny remapper prepared transformer: dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Provided 116 classpath jar(s):
 [Architectury Transformer DEBUG]  - C:\Users\tweek\.gradle\caches\modules-2\files-2.1\dev.architectury\architectury-injectables\1.0.10\62db2a366d662606d1b23ad02ccc3212ed37ec3\architectury-injectables-1.0.10.jar
@@ -58,75 +58,75 @@
 [Architectury Transformer DEBUG]  - C:\Users\tweek\.gradle\caches\modules-2\files-2.1\org.lwjgl\lwjgl\3.3.3\29589b5f87ed335a6c7e7ee6a5775f81f97ecb84\lwjgl-3.3.3.jar
 [Architectury Transformer DEBUG]  - C:\Users\tweek\.gradle\caches\modules-2\files-2.1\org.lz4\lz4-java\1.8.0\4b986a99445e49ea5fbf5d149c4b63f6ed6c6780\lz4-java-1.8.0.jar
 [Architectury Transformer DEBUG]  - C:\Users\tweek\.gradle\caches\modules-2\files-2.1\org.slf4j\slf4j-api\2.0.9\7cf2726fdcfbc8610f9a71fb3ed639871f315340\slf4j-api-2.0.9.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\minecraftMaven\net\minecraft\minecraft-merged-dd95a7ae94\1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2\minecraft-merged-dd95a7ae94-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\minecraftMaven\net\minecraft\minecraft-merged-dd95a7ae94\1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2\minecraft-merged-dd95a7ae94-1.21.1-loom.mappings.1_21_1.layered+hash.223741962-v2.jar
 [Architectury Transformer DEBUG]  - C:\Users\tweek\.gradle\caches\modules-2\files-2.1\io.netty\netty-transport-native-epoll\4.1.97.Final\54188f271e388e7f313aea995e82f58ce2cdb809\netty-transport-native-epoll-4.1.97.Final-linux-x86_64.jar
 [Architectury Transformer DEBUG]  - C:\Users\tweek\.gradle\caches\modules-2\files-2.1\io.netty\netty-transport-native-epoll\4.1.97.Final\5514744c588190ffda076b35a9b8c9f24946a960\netty-transport-native-epoll-4.1.97.Final-linux-aarch_64.jar
 [Architectury Transformer DEBUG]  - C:\Users\tweek\.gradle\caches\modules-2\files-2.1\org.jetbrains.kotlin\kotlin-stdlib\2.0.20\7388d355f7cceb002cd387ccb7ab3850e4e0a07f\kotlin-stdlib-2.0.20.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-api\0.116.2+1.21.1\fabric-api-0.116.2+1.21.1.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\dev\architectury\architectury-fabric\13.0.8\architectury-fabric-13.0.8.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\software\bernie\geckolib\geckolib-fabric-1.21.1\4.7.3\geckolib-fabric-1.21.1-4.7.3.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\com\terraformersmc\modmenu\11.0.1\modmenu-11.0.1.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\curse\maven\jade-324717\6291536\jade-324717-6291536.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\me\fzzyhmstrs\fzzy_config\0.7.0+1.21\fzzy_config-0.7.0+1.21.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\maven\modrinth\placeholder-api\2.4.2+1.21\placeholder-api-2.4.2+1.21.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-transfer-api-v1\5.4.3+c24bd99419\fabric-transfer-api-v1-5.4.3+c24bd99419.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-api-lookup-api-v1\1.6.71+b559734419\fabric-api-lookup-api-v1-1.6.71+b559734419.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-blockrenderlayer-v1\1.1.52+0af3f5a719\fabric-blockrenderlayer-v1-1.1.52+0af3f5a719.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-client-tags-api-v1\1.1.15+6573ed8c19\fabric-client-tags-api-v1-1.1.15+6573ed8c19.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-command-api-v1\1.2.49+f71b366f19\fabric-command-api-v1-1.2.49+f71b366f19.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-commands-v0\0.2.66+df3654b319\fabric-commands-v0-0.2.66+df3654b319.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-command-api-v2\2.2.28+6ced4dd919\fabric-command-api-v2-2.2.28+6ced4dd919.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-content-registries-v0\8.0.19+b559734419\fabric-content-registries-v0-8.0.19+b559734419.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-data-generation-api-v1\20.2.30+16c4ae2519\fabric-data-generation-api-v1-20.2.30+16c4ae2519.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-convention-tags-v1\2.1.5+7f945d5b19\fabric-convention-tags-v1-2.1.5+7f945d5b19.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-convention-tags-v2\2.11.1+a406e79519\fabric-convention-tags-v2-2.11.1+a406e79519.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-data-attachment-api-v1\1.4.5+6116a37819\fabric-data-attachment-api-v1-1.4.5+6116a37819.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-entity-events-v1\1.8.0+2b27e0a419\fabric-entity-events-v1-1.8.0+2b27e0a419.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-events-interaction-v0\0.7.13+ba9dae0619\fabric-events-interaction-v0-0.7.13+ba9dae0619.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-gametest-api-v1\2.0.5+6fc22b9919\fabric-gametest-api-v1-2.0.5+6fc22b9919.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-item-api-v1\11.1.1+d5debaed19\fabric-item-api-v1-11.1.1+d5debaed19.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-item-group-api-v1\4.1.7+def88e3a19\fabric-item-group-api-v1-4.1.7+def88e3a19.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-lifecycle-events-v1\2.6.0+0865547519\fabric-lifecycle-events-v1-2.6.0+0865547519.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-loot-api-v2\3.0.15+3f89f5a519\fabric-loot-api-v2-3.0.15+3f89f5a519.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-loot-api-v3\1.0.3+3f89f5a519\fabric-loot-api-v3-1.0.3+3f89f5a519.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-message-api-v1\6.0.14+8aaf3aca19\fabric-message-api-v1-6.0.14+8aaf3aca19.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-model-loading-api-v1\2.0.0+fe474d6b19\fabric-model-loading-api-v1-2.0.0+fe474d6b19.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-recipe-api-v1\5.0.14+248df81c19\fabric-recipe-api-v1-5.0.14+248df81c19.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-screen-handler-api-v1\1.3.89+b559734419\fabric-screen-handler-api-v1-1.3.89+b559734419.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-registry-sync-v0\5.3.0+b7e751e819\fabric-registry-sync-v0-5.3.0+b7e751e819.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-networking-api-v1\4.3.0+c7469b2119\fabric-networking-api-v1-4.3.0+c7469b2119.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-object-builder-api-v1\15.2.1+40875a9319\fabric-object-builder-api-v1-15.2.1+40875a9319.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-particles-v1\4.0.2+6573ed8c19\fabric-particles-v1-4.0.2+6573ed8c19.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-renderer-indigo\1.7.0+c705a49c19\fabric-renderer-indigo-1.7.0+c705a49c19.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-renderer-api-v1\3.4.0+c705a49c19\fabric-renderer-api-v1-3.4.0+c705a49c19.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-rendering-fluids-v1\3.1.6+1daea21519\fabric-rendering-fluids-v1-3.1.6+1daea21519.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-renderer-registries-v1\3.2.68+df3654b319\fabric-renderer-registries-v1-3.2.68+df3654b319.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-rendering-v0\1.1.71+df3654b319\fabric-rendering-v0-1.1.71+df3654b319.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-rendering-v1\5.0.5+df16efd019\fabric-rendering-v1-5.0.5+df16efd019.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-screen-api-v1\2.0.25+8b68f1c719\fabric-screen-api-v1-2.0.25+8b68f1c719.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-api-base\0.4.42+6573ed8c19\fabric-api-base-0.4.42+6573ed8c19.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-biome-api-v1\13.0.31+d527f9fd19\fabric-biome-api-v1-13.0.31+d527f9fd19.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-block-api-v1\1.1.0+0bc3503219\fabric-block-api-v1-1.1.0+0bc3503219.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-rendering-data-attachment-v1\0.3.49+73761d2e19\fabric-rendering-data-attachment-v1-0.3.49+73761d2e19.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-block-view-api-v2\1.0.11+ebb2264e19\fabric-block-view-api-v2-1.0.11+ebb2264e19.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-crash-report-info-v1\0.2.29+0af3f5a719\fabric-crash-report-info-v1-0.2.29+0af3f5a719.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-dimensions-v1\4.0.0+6fc22b9919\fabric-dimensions-v1-4.0.0+6fc22b9919.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-game-rule-api-v1\1.0.53+6ced4dd919\fabric-game-rule-api-v1-1.0.53+6ced4dd919.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-keybindings-v0\0.2.45+df3654b319\fabric-keybindings-v0-0.2.45+df3654b319.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-key-binding-api-v1\1.0.47+0af3f5a719\fabric-key-binding-api-v1-1.0.47+0af3f5a719.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-resource-conditions-api-v1\4.3.0+8dc279b119\fabric-resource-conditions-api-v1-4.3.0+8dc279b119.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-resource-loader-v0\1.3.1+5b5275af19\fabric-resource-loader-v0-1.3.1+5b5275af19.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-sound-api-v1\1.0.23+6573ed8c19\fabric-sound-api-v1-1.0.23+6573ed8c19.jar
-[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-transitive-access-wideners-v1\6.2.0+45b9699719\fabric-transitive-access-wideners-v1-6.2.0+45b9699719.jar
-[Architectury Transformer] Read classpath in 838.1 ms
-[Architectury Transformer DEBUG] Closed File Systems for C:\mods\Data\Repositories\AdorableHamsterPets\common\build\devlibs\adorablehamsterpets-2.0.2+common-dev.jar
-[Architectury Transformer DEBUG] Transforming 5 transformer(s) from C:\mods\Data\Repositories\AdorableHamsterPets\common\build\devlibs\adorablehamsterpets-2.0.2+common-dev.jar to C:\Users\tweek\AppData\Local\Temp\9920903097229797366.jar: 
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-api\0.116.2+1.21.1\fabric-api-0.116.2+1.21.1.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\dev\architectury\architectury-fabric\13.0.8\architectury-fabric-13.0.8.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\software\bernie\geckolib\geckolib-fabric-1.21.1\4.7.3\geckolib-fabric-1.21.1-4.7.3.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\com\terraformersmc\modmenu\11.0.1\modmenu-11.0.1.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\curse\maven\jade-324717\6291536\jade-324717-6291536.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\me\fzzyhmstrs\fzzy_config\0.7.0+1.21\fzzy_config-0.7.0+1.21.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\maven\modrinth\placeholder-api\2.4.2+1.21\placeholder-api-2.4.2+1.21.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-transfer-api-v1\5.4.3+c24bd99419\fabric-transfer-api-v1-5.4.3+c24bd99419.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-api-lookup-api-v1\1.6.71+b559734419\fabric-api-lookup-api-v1-1.6.71+b559734419.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-blockrenderlayer-v1\1.1.52+0af3f5a719\fabric-blockrenderlayer-v1-1.1.52+0af3f5a719.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-client-tags-api-v1\1.1.15+6573ed8c19\fabric-client-tags-api-v1-1.1.15+6573ed8c19.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-command-api-v1\1.2.49+f71b366f19\fabric-command-api-v1-1.2.49+f71b366f19.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-commands-v0\0.2.66+df3654b319\fabric-commands-v0-0.2.66+df3654b319.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-command-api-v2\2.2.28+6ced4dd919\fabric-command-api-v2-2.2.28+6ced4dd919.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-content-registries-v0\8.0.19+b559734419\fabric-content-registries-v0-8.0.19+b559734419.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-data-generation-api-v1\20.2.30+16c4ae2519\fabric-data-generation-api-v1-20.2.30+16c4ae2519.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-convention-tags-v1\2.1.5+7f945d5b19\fabric-convention-tags-v1-2.1.5+7f945d5b19.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-convention-tags-v2\2.11.1+a406e79519\fabric-convention-tags-v2-2.11.1+a406e79519.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-data-attachment-api-v1\1.4.5+6116a37819\fabric-data-attachment-api-v1-1.4.5+6116a37819.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-entity-events-v1\1.8.0+2b27e0a419\fabric-entity-events-v1-1.8.0+2b27e0a419.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-events-interaction-v0\0.7.13+ba9dae0619\fabric-events-interaction-v0-0.7.13+ba9dae0619.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-gametest-api-v1\2.0.5+6fc22b9919\fabric-gametest-api-v1-2.0.5+6fc22b9919.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-item-api-v1\11.1.1+d5debaed19\fabric-item-api-v1-11.1.1+d5debaed19.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-item-group-api-v1\4.1.7+def88e3a19\fabric-item-group-api-v1-4.1.7+def88e3a19.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-lifecycle-events-v1\2.6.0+0865547519\fabric-lifecycle-events-v1-2.6.0+0865547519.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-loot-api-v2\3.0.15+3f89f5a519\fabric-loot-api-v2-3.0.15+3f89f5a519.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-loot-api-v3\1.0.3+3f89f5a519\fabric-loot-api-v3-1.0.3+3f89f5a519.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-message-api-v1\6.0.14+8aaf3aca19\fabric-message-api-v1-6.0.14+8aaf3aca19.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-model-loading-api-v1\2.0.0+fe474d6b19\fabric-model-loading-api-v1-2.0.0+fe474d6b19.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-recipe-api-v1\5.0.14+248df81c19\fabric-recipe-api-v1-5.0.14+248df81c19.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-screen-handler-api-v1\1.3.89+b559734419\fabric-screen-handler-api-v1-1.3.89+b559734419.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-registry-sync-v0\5.3.0+b7e751e819\fabric-registry-sync-v0-5.3.0+b7e751e819.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-networking-api-v1\4.3.0+c7469b2119\fabric-networking-api-v1-4.3.0+c7469b2119.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-object-builder-api-v1\15.2.1+40875a9319\fabric-object-builder-api-v1-15.2.1+40875a9319.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-particles-v1\4.0.2+6573ed8c19\fabric-particles-v1-4.0.2+6573ed8c19.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-renderer-indigo\1.7.0+c705a49c19\fabric-renderer-indigo-1.7.0+c705a49c19.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-renderer-api-v1\3.4.0+c705a49c19\fabric-renderer-api-v1-3.4.0+c705a49c19.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-rendering-fluids-v1\3.1.6+1daea21519\fabric-rendering-fluids-v1-3.1.6+1daea21519.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-renderer-registries-v1\3.2.68+df3654b319\fabric-renderer-registries-v1-3.2.68+df3654b319.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-rendering-v0\1.1.71+df3654b319\fabric-rendering-v0-1.1.71+df3654b319.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-rendering-v1\5.0.5+df16efd019\fabric-rendering-v1-5.0.5+df16efd019.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-screen-api-v1\2.0.25+8b68f1c719\fabric-screen-api-v1-2.0.25+8b68f1c719.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-api-base\0.4.42+6573ed8c19\fabric-api-base-0.4.42+6573ed8c19.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-biome-api-v1\13.0.31+d527f9fd19\fabric-biome-api-v1-13.0.31+d527f9fd19.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-block-api-v1\1.1.0+0bc3503219\fabric-block-api-v1-1.1.0+0bc3503219.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-rendering-data-attachment-v1\0.3.49+73761d2e19\fabric-rendering-data-attachment-v1-0.3.49+73761d2e19.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-block-view-api-v2\1.0.11+ebb2264e19\fabric-block-view-api-v2-1.0.11+ebb2264e19.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-crash-report-info-v1\0.2.29+0af3f5a719\fabric-crash-report-info-v1-0.2.29+0af3f5a719.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-dimensions-v1\4.0.0+6fc22b9919\fabric-dimensions-v1-4.0.0+6fc22b9919.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-game-rule-api-v1\1.0.53+6ced4dd919\fabric-game-rule-api-v1-1.0.53+6ced4dd919.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-keybindings-v0\0.2.45+df3654b319\fabric-keybindings-v0-0.2.45+df3654b319.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-key-binding-api-v1\1.0.47+0af3f5a719\fabric-key-binding-api-v1-1.0.47+0af3f5a719.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-resource-conditions-api-v1\4.3.0+8dc279b119\fabric-resource-conditions-api-v1-4.3.0+8dc279b119.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-resource-loader-v0\1.3.1+5b5275af19\fabric-resource-loader-v0-1.3.1+5b5275af19.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-sound-api-v1\1.0.23+6573ed8c19\fabric-sound-api-v1-1.0.23+6573ed8c19.jar
+[Architectury Transformer DEBUG]  - C:\mods\Data\Repositories\AdorableHamsterPets-Source\.gradle\loom-cache\remapped_mods\loom_mappings_1_21_1_layered_hash_223741962_v2\net\fabricmc\fabric-api\fabric-transitive-access-wideners-v1\6.2.0+45b9699719\fabric-transitive-access-wideners-v1-6.2.0+45b9699719.jar
+[Architectury Transformer] Read classpath in 857.8 ms
+[Architectury Transformer DEBUG] Closed File Systems for C:\mods\Data\Repositories\AdorableHamsterPets-Source\common\build\devlibs\adorablehamsterpets-2.0.2+common-dev.jar
+[Architectury Transformer DEBUG] Transforming 5 transformer(s) from C:\mods\Data\Repositories\AdorableHamsterPets-Source\common\build\devlibs\adorablehamsterpets-2.0.2+common-dev.jar to C:\Users\tweek\AppData\Local\Temp\8416002410579981425.jar: 
 [Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.RuntimeMixinRefmapDetector@24aed80c
 [Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.GenerateFakeFabricMod@3a52dba3
 [Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformExpectPlatform@2a5c8d3f
 [Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.RemapInjectables@752325ad
 [Architectury Transformer DEBUG]  - dev.architectury.transformer.transformers.TransformPlatformOnly@279fedbd
-[Architectury Transformer DEBUG] Transforming from C:\mods\Data\Repositories\AdorableHamsterPets\common\build\devlibs\adorablehamsterpets-2.0.2+common-dev.jar to C:\Users\tweek\AppData\Local\Temp\9920903097229797366.jar with 5 transformer(s) on dev.architectury.transformer.handler.SimpleTransformerHandler
+[Architectury Transformer DEBUG] Transforming from C:\mods\Data\Repositories\AdorableHamsterPets-Source\common\build\devlibs\adorablehamsterpets-2.0.2+common-dev.jar to C:\Users\tweek\AppData\Local\Temp\8416002410579981425.jar with 5 transformer(s) on dev.architectury.transformer.handler.SimpleTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/accessor/PlayerEntityAccessor with maxs=true frames=true
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/AdorableHamsterPets with maxs=true frames=true
@@ -244,408 +244,408 @@
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/world/ModWorldGeneration with maxs=true frames=true
 [Architectury Transformer DEBUG] Checking whether /adorablehamsterpets-common-refmap.json is a mixin config.
 [Architectury Transformer DEBUG] Checking whether /adorablehamsterpets.mixins.json is a mixin config.
-[Architectury Transformer DEBUG] Closed File Systems for C:\Users\tweek\AppData\Local\Temp\9920903097229797366.jar
-[Architectury Transformer] Listening at C:\mods\Data\Repositories\AdorableHamsterPets\common\build\devlibs\adorablehamsterpets-2.0.2+common-dev.jar
-[Architectury Transformer DEBUG] Temporary jar [C:\Users\tweek\AppData\Local\Temp\9920903097229797366.jar] contains packages: net.dawson.adorablehamsterpets.tag, net.dawson.adorablehamsterpets.entity.client.layer, net.dawson.adorablehamsterpets.advancement.criterion, net.dawson.adorablehamsterpets.world, net.dawson.adorablehamsterpets.block.custom, net.dawson.adorablehamsterpets.entity.client.model, net.dawson.adorablehamsterpets.entity.client, net.dawson.adorablehamsterpets, net.dawson.adorablehamsterpets.entity.client.feature, net.dawson.adorablehamsterpets.command, net.dawson.adorablehamsterpets.sound, net.dawson.adorablehamsterpets.util, net.dawson.adorablehamsterpets.entity, net.dawson.adorablehamsterpets.integration.jade, net.dawson.adorablehamsterpets.mixin.server, net.dawson.adorablehamsterpets.entity.AI, net.dawson.adorablehamsterpets.networking.payload, net.dawson.adorablehamsterpets.networking, net.dawson.adorablehamsterpets.entity.custom, net.dawson.adorablehamsterpets.client.sound, net.dawson.adorablehamsterpets.screen, net.dawson.adorablehamsterpets.screen.slot, net.dawson.adorablehamsterpets.mixin.client, net.dawson.adorablehamsterpets.mixin.accessor, net.dawson.adorablehamsterpets.client.option, net.dawson.adorablehamsterpets.accessor, net.dawson.adorablehamsterpets.config, net.dawson.adorablehamsterpets.world.gen.feature, net.dawson.adorablehamsterpets.world.gen, net.dawson.adorablehamsterpets.component, net.dawson.adorablehamsterpets.item.custom, net.dawson.adorablehamsterpets.item, net.dawson.adorablehamsterpets.block
-[Architectury Transformer DEBUG] Closed File Systems for C:\mods\Data\Repositories\AdorableHamsterPets\common\build\devlibs\adorablehamsterpets-2.0.2+common-dev.jar
-[Architectury Transformer DEBUG] Classpath entry [C:\mods\Data\Repositories\AdorableHamsterPets\fabric\build\resources\main] contains packages: 
+[Architectury Transformer DEBUG] Closed File Systems for C:\Users\tweek\AppData\Local\Temp\8416002410579981425.jar
+[Architectury Transformer] Listening at C:\mods\Data\Repositories\AdorableHamsterPets-Source\common\build\devlibs\adorablehamsterpets-2.0.2+common-dev.jar
+[Architectury Transformer DEBUG] Temporary jar [C:\Users\tweek\AppData\Local\Temp\8416002410579981425.jar] contains packages: net.dawson.adorablehamsterpets.tag, net.dawson.adorablehamsterpets.entity.client.layer, net.dawson.adorablehamsterpets.advancement.criterion, net.dawson.adorablehamsterpets.world, net.dawson.adorablehamsterpets.block.custom, net.dawson.adorablehamsterpets.entity.client.model, net.dawson.adorablehamsterpets.entity.client, net.dawson.adorablehamsterpets, net.dawson.adorablehamsterpets.entity.client.feature, net.dawson.adorablehamsterpets.command, net.dawson.adorablehamsterpets.sound, net.dawson.adorablehamsterpets.util, net.dawson.adorablehamsterpets.entity, net.dawson.adorablehamsterpets.integration.jade, net.dawson.adorablehamsterpets.mixin.server, net.dawson.adorablehamsterpets.entity.AI, net.dawson.adorablehamsterpets.networking.payload, net.dawson.adorablehamsterpets.networking, net.dawson.adorablehamsterpets.entity.custom, net.dawson.adorablehamsterpets.client.sound, net.dawson.adorablehamsterpets.screen, net.dawson.adorablehamsterpets.screen.slot, net.dawson.adorablehamsterpets.mixin.client, net.dawson.adorablehamsterpets.mixin.accessor, net.dawson.adorablehamsterpets.client.option, net.dawson.adorablehamsterpets.accessor, net.dawson.adorablehamsterpets.config, net.dawson.adorablehamsterpets.world.gen.feature, net.dawson.adorablehamsterpets.world.gen, net.dawson.adorablehamsterpets.component, net.dawson.adorablehamsterpets.item.custom, net.dawson.adorablehamsterpets.item, net.dawson.adorablehamsterpets.block
+[Architectury Transformer DEBUG] Closed File Systems for C:\mods\Data\Repositories\AdorableHamsterPets-Source\common\build\devlibs\adorablehamsterpets-2.0.2+common-dev.jar
+[Architectury Transformer DEBUG] Classpath entry [C:\mods\Data\Repositories\AdorableHamsterPets-Source\fabric\build\resources\main] contains packages: 
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/accessor/PlayerEntityAccessor.class to net/dawson/adorablehamsterpets/accessor/PlayerEntityAccessor.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/accessor/PlayerEntityAccessor with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/accessor/PlayerEntityAccessor in 921.5 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/accessor/PlayerEntityAccessor in 864.8 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/mixin/accessor/MeleeAttackGoalAccessor.class to net/dawson/adorablehamsterpets/mixin/accessor/MeleeAttackGoalAccessor.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/mixin/accessor/MeleeAttackGoalAccessor with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/mixin/accessor/MeleeAttackGoalAccessor in 461.1 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/mixin/accessor/MeleeAttackGoalAccessor in 491.8 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/AdorableHamsterPets.class to net/dawson/adorablehamsterpets/AdorableHamsterPets.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/AdorableHamsterPets with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/AdorableHamsterPets in 1.325 ms
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/AdorableHamsterPets in 1.059 ms
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/config/Configs.class to net/dawson/adorablehamsterpets/config/Configs.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/config/Configs with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/config/Configs in 199.4 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/config/Configs in 153.2 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/config/AhpConfig.class to net/dawson/adorablehamsterpets/config/AhpConfig.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/config/AhpConfig with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/config/AhpConfig in 1.026 ms
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/config/AhpConfig in 829.4 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/ModEntities.class to net/dawson/adorablehamsterpets/entity/ModEntities.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/ModEntities with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/ModEntities in 464.2 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/ModEntities in 420.8 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/custom/HamsterEntity.class to net/dawson/adorablehamsterpets/entity/custom/HamsterEntity.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/custom/HamsterEntity with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/custom/HamsterEntity in 5.462 ms
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/custom/HamsterEntity in 5.257 ms
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/ImplementedInventory.class to net/dawson/adorablehamsterpets/entity/ImplementedInventory.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/ImplementedInventory with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/ImplementedInventory in 1.584 ms
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterSeekDiamondGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterSeekDiamondGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterSeekDiamondGoal with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterSeekDiamondGoal in 3.221 ms
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterMeleeAttackGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterMeleeAttackGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterMeleeAttackGoal with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterMeleeAttackGoal in 485.8 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterMateGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterMateGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterMateGoal with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterMateGoal in 1.254 ms
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterFollowOwnerGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterFollowOwnerGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterFollowOwnerGoal with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterFollowOwnerGoal in 301.6 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterFleeGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterFleeGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterFleeGoal with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterFleeGoal in 338.4 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterTemptGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterTemptGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterTemptGoal with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterTemptGoal in 364.6 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterSitGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterSitGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterSitGoal with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterSitGoal in 247.0 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterSleepGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterSleepGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterSleepGoal with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterSleepGoal in 950.6 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterWanderAroundFarGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterWanderAroundFarGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterWanderAroundFarGoal with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterWanderAroundFarGoal in 310.5 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterLookAtEntityGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterLookAtEntityGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterLookAtEntityGoal with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterLookAtEntityGoal in 209.4 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterLookAroundGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterLookAroundGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterLookAroundGoal with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterLookAroundGoal in 366.7 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/ImplementedInventory in 990.6 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/screen/HamsterInventoryScreenHandler.class to net/dawson/adorablehamsterpets/screen/HamsterInventoryScreenHandler.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/screen/HamsterInventoryScreenHandler with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/screen/HamsterInventoryScreenHandler in 1.484 ms
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/screen/HamsterInventoryScreenHandler in 3.550 ms
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterSeekDiamondGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterSeekDiamondGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterSeekDiamondGoal with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterSeekDiamondGoal in 1.422 ms
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterMeleeAttackGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterMeleeAttackGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterMeleeAttackGoal with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterMeleeAttackGoal in 268.3 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterMateGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterMateGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterMateGoal with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterMateGoal in 529.6 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterFollowOwnerGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterFollowOwnerGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterFollowOwnerGoal with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterFollowOwnerGoal in 481.4 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterFleeGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterFleeGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterFleeGoal with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterFleeGoal in 590.4 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterTemptGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterTemptGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterTemptGoal with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterTemptGoal in 677.7 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterSitGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterSitGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterSitGoal with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterSitGoal in 467.9 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterSleepGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterSleepGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterSleepGoal with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterSleepGoal in 552.8 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterWanderAroundFarGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterWanderAroundFarGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterWanderAroundFarGoal with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterWanderAroundFarGoal in 197.9 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterLookAtEntityGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterLookAtEntityGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterLookAtEntityGoal with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterLookAtEntityGoal in 188.7 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterLookAroundGoal.class to net/dawson/adorablehamsterpets/entity/AI/HamsterLookAroundGoal.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterLookAroundGoal with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterLookAroundGoal in 123.6 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/component/ModDataComponentTypes.class to net/dawson/adorablehamsterpets/component/ModDataComponentTypes.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/component/ModDataComponentTypes with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/component/ModDataComponentTypes in 185.6 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/component/ModDataComponentTypes in 179.7 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/sound/ModSounds.class to net/dawson/adorablehamsterpets/sound/ModSounds.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/sound/ModSounds with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/sound/ModSounds in 725.5 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/sound/ModSounds in 650.1 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/block/ModBlocks.class to net/dawson/adorablehamsterpets/block/ModBlocks.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/block/ModBlocks with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/block/ModBlocks in 234.9 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/block/ModBlocks in 306.2 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/block/custom/GreenBeansCropBlock.class to net/dawson/adorablehamsterpets/block/custom/GreenBeansCropBlock.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/block/custom/GreenBeansCropBlock with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/block/custom/GreenBeansCropBlock in 140.0 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/block/custom/GreenBeansCropBlock in 191.8 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/block/custom/CucumberCropBlock.class to net/dawson/adorablehamsterpets/block/custom/CucumberCropBlock.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/block/custom/CucumberCropBlock with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/block/custom/CucumberCropBlock in 137.2 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/block/custom/CucumberCropBlock in 137.3 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/block/custom/WildGreenBeanBushBlock.class to net/dawson/adorablehamsterpets/block/custom/WildGreenBeanBushBlock.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/block/custom/WildGreenBeanBushBlock with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/block/custom/WildGreenBeanBushBlock in 277.8 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/block/custom/WildGreenBeanBushBlock in 290.7 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/block/custom/SunflowerBlock.class to net/dawson/adorablehamsterpets/block/custom/SunflowerBlock.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/block/custom/SunflowerBlock with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/block/custom/SunflowerBlock in 391.8 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/block/custom/SunflowerBlock in 335.9 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/block/custom/WildCucumberBushBlock.class to net/dawson/adorablehamsterpets/block/custom/WildCucumberBushBlock.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/block/custom/WildCucumberBushBlock with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/block/custom/WildCucumberBushBlock in 270.5 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/block/custom/WildCucumberBushBlock in 252.4 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems.class to net/dawson/adorablehamsterpets/item/ModItems.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems in 438.3 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems in 608.6 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/custom/HamsterGuideBook.class to net/dawson/adorablehamsterpets/item/custom/HamsterGuideBook.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/custom/HamsterGuideBook with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/custom/HamsterGuideBook in 187.7 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$9.class to net/dawson/adorablehamsterpets/item/ModItems$9.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$9 with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$9 in 266.9 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$11.class to net/dawson/adorablehamsterpets/item/ModItems$11.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$11 with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$11 in 148.0 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$10.class to net/dawson/adorablehamsterpets/item/ModItems$10.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$10 with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$10 in 124.1 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$12.class to net/dawson/adorablehamsterpets/item/ModItems$12.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$12 with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$12 in 124.2 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/custom/HamsterGuideBook in 213.1 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$1.class to net/dawson/adorablehamsterpets/item/ModItems$1.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$1 with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$1 in 112.9 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$4.class to net/dawson/adorablehamsterpets/item/ModItems$4.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$4 with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$4 in 123.3 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$3.class to net/dawson/adorablehamsterpets/item/ModItems$3.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$3 with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$3 in 119.1 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$6.class to net/dawson/adorablehamsterpets/item/ModItems$6.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$6 with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$6 in 141.8 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$8.class to net/dawson/adorablehamsterpets/item/ModItems$8.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$8 with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$8 in 107.0 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$2.class to net/dawson/adorablehamsterpets/item/ModItems$2.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$2 with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$2 in 136.3 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$5.class to net/dawson/adorablehamsterpets/item/ModItems$5.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$5 with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$5 in 151.4 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$1 in 216.0 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$7.class to net/dawson/adorablehamsterpets/item/ModItems$7.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$7 with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$7 in 111.1 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$7 in 172.1 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$8.class to net/dawson/adorablehamsterpets/item/ModItems$8.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$8 with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$8 in 191.2 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$6.class to net/dawson/adorablehamsterpets/item/ModItems$6.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$6 with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$6 in 120.5 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$12.class to net/dawson/adorablehamsterpets/item/ModItems$12.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$12 with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$12 in 143.1 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$10.class to net/dawson/adorablehamsterpets/item/ModItems$10.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$10 with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$10 in 114.9 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$9.class to net/dawson/adorablehamsterpets/item/ModItems$9.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$9 with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$9 in 357.0 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$11.class to net/dawson/adorablehamsterpets/item/ModItems$11.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$11 with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$11 in 179.4 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$4.class to net/dawson/adorablehamsterpets/item/ModItems$4.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$4 with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$4 in 179.0 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$5.class to net/dawson/adorablehamsterpets/item/ModItems$5.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$5 with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$5 in 122.6 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$3.class to net/dawson/adorablehamsterpets/item/ModItems$3.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$3 with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$3 in 167.7 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItems$2.class to net/dawson/adorablehamsterpets/item/ModItems$2.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItems$2 with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItems$2 in 115.0 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModFoodComponents.class to net/dawson/adorablehamsterpets/item/ModFoodComponents.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModFoodComponents with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModFoodComponents in 244.6 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModFoodComponents in 312.4 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/item/ModItemGroups.class to net/dawson/adorablehamsterpets/item/ModItemGroups.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/item/ModItemGroups with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItemGroups in 224.0 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/item/ModItemGroups in 273.2 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/screen/ModScreenHandlers.class to net/dawson/adorablehamsterpets/screen/ModScreenHandlers.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/screen/ModScreenHandlers with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/screen/ModScreenHandlers in 301.2 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/screen/ModScreenHandlers in 433.2 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/ModCriteria.class to net/dawson/adorablehamsterpets/advancement/criterion/ModCriteria.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/ModCriteria with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/ModCriteria in 328.8 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/ModCriteria in 297.5 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/HamsterOnShoulderCriterion.class to net/dawson/adorablehamsterpets/advancement/criterion/HamsterOnShoulderCriterion.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterOnShoulderCriterion with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterOnShoulderCriterion in 226.6 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterOnShoulderCriterion in 350.8 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/HamsterThrownCriterion.class to net/dawson/adorablehamsterpets/advancement/criterion/HamsterThrownCriterion.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterThrownCriterion with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterThrownCriterion in 183.0 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterThrownCriterion in 341.9 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/FirstJoinCriterion.class to net/dawson/adorablehamsterpets/advancement/criterion/FirstJoinCriterion.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/FirstJoinCriterion with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/FirstJoinCriterion in 151.0 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/FirstJoinCriterion in 233.1 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/FedHamsterSteamedBeansCriterion.class to net/dawson/adorablehamsterpets/advancement/criterion/FedHamsterSteamedBeansCriterion.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/FedHamsterSteamedBeansCriterion with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/FedHamsterSteamedBeansCriterion in 141.6 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/FedHamsterSteamedBeansCriterion in 225.7 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/CheekPouchUnlockedCriterion.class to net/dawson/adorablehamsterpets/advancement/criterion/CheekPouchUnlockedCriterion.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/CheekPouchUnlockedCriterion with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/CheekPouchUnlockedCriterion in 169.4 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/CheekPouchUnlockedCriterion in 424.6 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/AppliedPinkPetalCriterion.class to net/dawson/adorablehamsterpets/advancement/criterion/AppliedPinkPetalCriterion.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/AppliedPinkPetalCriterion with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/AppliedPinkPetalCriterion in 165.8 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/AppliedPinkPetalCriterion in 229.0 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/HamsterAutoFedCriterion.class to net/dawson/adorablehamsterpets/advancement/criterion/HamsterAutoFedCriterion.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterAutoFedCriterion with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterAutoFedCriterion in 142.4 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterAutoFedCriterion in 195.0 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/HamsterDiamondAlertCriterion.class to net/dawson/adorablehamsterpets/advancement/criterion/HamsterDiamondAlertCriterion.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterDiamondAlertCriterion with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterDiamondAlertCriterion in 211.8 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterDiamondAlertCriterion in 223.8 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/HamsterCreeperAlertCriterion.class to net/dawson/adorablehamsterpets/advancement/criterion/HamsterCreeperAlertCriterion.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterCreeperAlertCriterion with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterCreeperAlertCriterion in 158.4 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterCreeperAlertCriterion in 263.5 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/HamsterPouchFilledCriterion.class to net/dawson/adorablehamsterpets/advancement/criterion/HamsterPouchFilledCriterion.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterPouchFilledCriterion with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterPouchFilledCriterion in 182.4 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterPouchFilledCriterion in 226.5 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/HamsterLedToDiamondCriterion.class to net/dawson/adorablehamsterpets/advancement/criterion/HamsterLedToDiamondCriterion.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterLedToDiamondCriterion with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterLedToDiamondCriterion in 179.4 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterLedToDiamondCriterion in 221.2 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/HamsterFoundGoldCriterion.class to net/dawson/adorablehamsterpets/advancement/criterion/HamsterFoundGoldCriterion.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterFoundGoldCriterion with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterFoundGoldCriterion in 137.4 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterFoundGoldCriterion in 212.2 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/HamsterOnShoulderCriterion$Conditions.class to net/dawson/adorablehamsterpets/advancement/criterion/HamsterOnShoulderCriterion$Conditions.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterOnShoulderCriterion$Conditions with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterOnShoulderCriterion$Conditions in 264.7 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterOnShoulderCriterion$Conditions in 303.5 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/HamsterThrownCriterion$Conditions.class to net/dawson/adorablehamsterpets/advancement/criterion/HamsterThrownCriterion$Conditions.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterThrownCriterion$Conditions with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterThrownCriterion$Conditions in 248.3 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterThrownCriterion$Conditions in 176.2 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/FirstJoinCriterion$Conditions.class to net/dawson/adorablehamsterpets/advancement/criterion/FirstJoinCriterion$Conditions.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/FirstJoinCriterion$Conditions with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/FirstJoinCriterion$Conditions in 170.8 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/FirstJoinCriterion$Conditions in 135.3 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/FedHamsterSteamedBeansCriterion$Conditions.class to net/dawson/adorablehamsterpets/advancement/criterion/FedHamsterSteamedBeansCriterion$Conditions.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/FedHamsterSteamedBeansCriterion$Conditions with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/FedHamsterSteamedBeansCriterion$Conditions in 233.5 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/FedHamsterSteamedBeansCriterion$Conditions in 188.2 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/CheekPouchUnlockedCriterion$Conditions.class to net/dawson/adorablehamsterpets/advancement/criterion/CheekPouchUnlockedCriterion$Conditions.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/CheekPouchUnlockedCriterion$Conditions with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/CheekPouchUnlockedCriterion$Conditions in 217.2 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/CheekPouchUnlockedCriterion$Conditions in 209.5 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/AppliedPinkPetalCriterion$Conditions.class to net/dawson/adorablehamsterpets/advancement/criterion/AppliedPinkPetalCriterion$Conditions.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/AppliedPinkPetalCriterion$Conditions with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/AppliedPinkPetalCriterion$Conditions in 207.1 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/AppliedPinkPetalCriterion$Conditions in 170.7 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/HamsterAutoFedCriterion$Conditions.class to net/dawson/adorablehamsterpets/advancement/criterion/HamsterAutoFedCriterion$Conditions.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterAutoFedCriterion$Conditions with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterAutoFedCriterion$Conditions in 169.4 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterAutoFedCriterion$Conditions in 241.7 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/HamsterDiamondAlertCriterion$Conditions.class to net/dawson/adorablehamsterpets/advancement/criterion/HamsterDiamondAlertCriterion$Conditions.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterDiamondAlertCriterion$Conditions with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterDiamondAlertCriterion$Conditions in 193.8 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterDiamondAlertCriterion$Conditions in 185.6 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/HamsterCreeperAlertCriterion$Conditions.class to net/dawson/adorablehamsterpets/advancement/criterion/HamsterCreeperAlertCriterion$Conditions.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterCreeperAlertCriterion$Conditions with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterCreeperAlertCriterion$Conditions in 168.7 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterCreeperAlertCriterion$Conditions in 205.3 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/HamsterPouchFilledCriterion$Conditions.class to net/dawson/adorablehamsterpets/advancement/criterion/HamsterPouchFilledCriterion$Conditions.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterPouchFilledCriterion$Conditions with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterPouchFilledCriterion$Conditions in 197.3 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterPouchFilledCriterion$Conditions in 232.6 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/HamsterLedToDiamondCriterion$Conditions.class to net/dawson/adorablehamsterpets/advancement/criterion/HamsterLedToDiamondCriterion$Conditions.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterLedToDiamondCriterion$Conditions with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterLedToDiamondCriterion$Conditions in 221.9 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterLedToDiamondCriterion$Conditions in 255.2 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/advancement/criterion/HamsterFoundGoldCriterion$Conditions.class to net/dawson/adorablehamsterpets/advancement/criterion/HamsterFoundGoldCriterion$Conditions.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/advancement/criterion/HamsterFoundGoldCriterion$Conditions with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterFoundGoldCriterion$Conditions in 169.3 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/advancement/criterion/HamsterFoundGoldCriterion$Conditions in 181.1 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/custom/HamsterVariant.class to net/dawson/adorablehamsterpets/entity/custom/HamsterVariant.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/custom/HamsterVariant with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/custom/HamsterVariant in 1.217 ms
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/custom/HamsterVariant in 890.8 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/custom/HamsterVariant$BaseOverlayPair.class to net/dawson/adorablehamsterpets/entity/custom/HamsterVariant$BaseOverlayPair.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/custom/HamsterVariant$BaseOverlayPair with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/custom/HamsterVariant$BaseOverlayPair in 323.4 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/custom/HamsterVariant$BaseOverlayPair in 248.1 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/ModRegistries.class to net/dawson/adorablehamsterpets/ModRegistries.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/ModRegistries with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/ModRegistries in 241.1 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/ModRegistries in 208.8 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/networking/ModPackets.class to net/dawson/adorablehamsterpets/networking/ModPackets.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/networking/ModPackets with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/networking/ModPackets in 362.7 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/networking/ModPackets in 206.2 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/networking/payload/ThrowHamsterPayload.class to net/dawson/adorablehamsterpets/networking/payload/ThrowHamsterPayload.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/networking/payload/ThrowHamsterPayload with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/networking/payload/ThrowHamsterPayload in 226.6 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/networking/payload/ThrowHamsterPayload in 152.1 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/networking/payload/UpdateHamsterRenderStatePayload.class to net/dawson/adorablehamsterpets/networking/payload/UpdateHamsterRenderStatePayload.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/networking/payload/UpdateHamsterRenderStatePayload with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/networking/payload/UpdateHamsterRenderStatePayload in 368.1 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/networking/payload/UpdateHamsterRenderStatePayload in 347.1 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/world/ModWorldGeneration.class to net/dawson/adorablehamsterpets/world/ModWorldGeneration.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/world/ModWorldGeneration with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/world/ModWorldGeneration in 287.7 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/world/ModWorldGeneration in 284.1 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/command/ModCommands.class to net/dawson/adorablehamsterpets/command/ModCommands.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/command/ModCommands with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/command/ModCommands in 491.3 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/command/ModCommands in 487.3 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/world/gen/ModEntitySpawns.class to net/dawson/adorablehamsterpets/world/gen/ModEntitySpawns.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/world/gen/ModEntitySpawns with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/world/gen/ModEntitySpawns in 662.0 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/AdorableHamsterPetsClient.class to net/dawson/adorablehamsterpets/AdorableHamsterPetsClient.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/AdorableHamsterPetsClient with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/AdorableHamsterPetsClient in 488.0 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/networking/payload/StartHamsterFlightSoundPayload.class to net/dawson/adorablehamsterpets/networking/payload/StartHamsterFlightSoundPayload.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/networking/payload/StartHamsterFlightSoundPayload with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/networking/payload/StartHamsterFlightSoundPayload in 393.3 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/networking/payload/StartHamsterThrowSoundPayload.class to net/dawson/adorablehamsterpets/networking/payload/StartHamsterThrowSoundPayload.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/networking/payload/StartHamsterThrowSoundPayload with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/networking/payload/StartHamsterThrowSoundPayload in 213.9 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/client/option/ModKeyBindings.class to net/dawson/adorablehamsterpets/client/option/ModKeyBindings.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/client/option/ModKeyBindings with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/client/option/ModKeyBindings in 164.2 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/screen/HamsterInventoryScreen.class to net/dawson/adorablehamsterpets/screen/HamsterInventoryScreen.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/screen/HamsterInventoryScreen with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/screen/HamsterInventoryScreen in 365.3 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/client/HamsterRenderer.class to net/dawson/adorablehamsterpets/entity/client/HamsterRenderer.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/client/HamsterRenderer with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/client/HamsterRenderer in 779.8 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/client/HamsterModel.class to net/dawson/adorablehamsterpets/entity/client/HamsterModel.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/client/HamsterModel with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/client/HamsterModel in 425.6 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/client/layer/HamsterOverlayLayer.class to net/dawson/adorablehamsterpets/entity/client/layer/HamsterOverlayLayer.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/client/layer/HamsterOverlayLayer with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/client/layer/HamsterOverlayLayer in 203.4 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/client/layer/HamsterPinkPetalOverlayLayer.class to net/dawson/adorablehamsterpets/entity/client/layer/HamsterPinkPetalOverlayLayer.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/client/layer/HamsterPinkPetalOverlayLayer with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/client/layer/HamsterPinkPetalOverlayLayer in 186.6 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/client/ModModelLayers.class to net/dawson/adorablehamsterpets/entity/client/ModModelLayers.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/client/ModModelLayers with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/client/ModModelLayers in 73.80 μs
-[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/client/model/HamsterShoulderModel.class to net/dawson/adorablehamsterpets/entity/client/model/HamsterShoulderModel.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
-[Architectury Transformer DEBUG] Found class transformer
-[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/client/model/HamsterShoulderModel with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/client/model/HamsterShoulderModel in 318.8 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/world/gen/ModEntitySpawns in 543.8 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/world/ModSpawnPlacements.class to net/dawson/adorablehamsterpets/world/ModSpawnPlacements.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/world/ModSpawnPlacements with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/world/ModSpawnPlacements in 305.1 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/world/ModSpawnPlacements in 340.2 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/AdorableHamsterPetsClient.class to net/dawson/adorablehamsterpets/AdorableHamsterPetsClient.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/AdorableHamsterPetsClient with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/AdorableHamsterPetsClient in 496.3 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/networking/payload/StartHamsterFlightSoundPayload.class to net/dawson/adorablehamsterpets/networking/payload/StartHamsterFlightSoundPayload.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/networking/payload/StartHamsterFlightSoundPayload with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/networking/payload/StartHamsterFlightSoundPayload in 238.6 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/networking/payload/StartHamsterThrowSoundPayload.class to net/dawson/adorablehamsterpets/networking/payload/StartHamsterThrowSoundPayload.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/networking/payload/StartHamsterThrowSoundPayload with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/networking/payload/StartHamsterThrowSoundPayload in 227.3 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/client/option/ModKeyBindings.class to net/dawson/adorablehamsterpets/client/option/ModKeyBindings.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/client/option/ModKeyBindings with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/client/option/ModKeyBindings in 88.30 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/screen/HamsterInventoryScreen.class to net/dawson/adorablehamsterpets/screen/HamsterInventoryScreen.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/screen/HamsterInventoryScreen with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/screen/HamsterInventoryScreen in 303.0 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/client/HamsterRenderer.class to net/dawson/adorablehamsterpets/entity/client/HamsterRenderer.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/client/HamsterRenderer with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/client/HamsterRenderer in 811.7 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/client/HamsterModel.class to net/dawson/adorablehamsterpets/entity/client/HamsterModel.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/client/HamsterModel with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/client/HamsterModel in 531.4 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/client/layer/HamsterOverlayLayer.class to net/dawson/adorablehamsterpets/entity/client/layer/HamsterOverlayLayer.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/client/layer/HamsterOverlayLayer with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/client/layer/HamsterOverlayLayer in 281.7 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/client/layer/HamsterPinkPetalOverlayLayer.class to net/dawson/adorablehamsterpets/entity/client/layer/HamsterPinkPetalOverlayLayer.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/client/layer/HamsterPinkPetalOverlayLayer with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/client/layer/HamsterPinkPetalOverlayLayer in 205.1 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/client/ModModelLayers.class to net/dawson/adorablehamsterpets/entity/client/ModModelLayers.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/client/ModModelLayers with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/client/ModModelLayers in 95.00 μs
+[Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/client/model/HamsterShoulderModel.class to net/dawson/adorablehamsterpets/entity/client/model/HamsterShoulderModel.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
+[Architectury Transformer DEBUG] Found class transformer
+[Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/client/model/HamsterShoulderModel with maxs=true frames=true
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/client/model/HamsterShoulderModel in 404.9 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/integration/jade/AHPJadePlugin.class to net/dawson/adorablehamsterpets/integration/jade/AHPJadePlugin.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/integration/jade/AHPJadePlugin with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/integration/jade/AHPJadePlugin in 563.4 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/integration/jade/AHPJadePlugin in 537.5 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/integration/jade/WildBushComponentProvider.class to net/dawson/adorablehamsterpets/integration/jade/WildBushComponentProvider.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/integration/jade/WildBushComponentProvider with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/integration/jade/WildBushComponentProvider in 393.6 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/integration/jade/WildBushComponentProvider in 450.0 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/integration/jade/HamsterDebugComponentProvider.class to net/dawson/adorablehamsterpets/integration/jade/HamsterDebugComponentProvider.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/integration/jade/HamsterDebugComponentProvider with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/integration/jade/HamsterDebugComponentProvider in 861.1 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/integration/jade/HamsterDebugComponentProvider in 767.6 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/mixin/client/LivingEntityRendererInvoker.class to net/dawson/adorablehamsterpets/mixin/client/LivingEntityRendererInvoker.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/mixin/client/LivingEntityRendererInvoker with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/mixin/client/LivingEntityRendererInvoker in 245.1 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/mixin/client/LivingEntityRendererInvoker in 239.3 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/client/feature/HamsterShoulderFeatureRenderer.class to net/dawson/adorablehamsterpets/entity/client/feature/HamsterShoulderFeatureRenderer.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/client/feature/HamsterShoulderFeatureRenderer with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/client/feature/HamsterShoulderFeatureRenderer in 489.9 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/client/feature/HamsterShoulderFeatureRenderer in 557.7 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/world/gen/feature/ModPlacedFeatures.class to net/dawson/adorablehamsterpets/world/gen/feature/ModPlacedFeatures.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/world/gen/feature/ModPlacedFeatures with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/world/gen/feature/ModPlacedFeatures in 413.1 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/world/gen/feature/ModPlacedFeatures in 444.1 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/custom/HamsterEntity$DozingPhase.class to net/dawson/adorablehamsterpets/entity/custom/HamsterEntity$DozingPhase.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/custom/HamsterEntity$DozingPhase with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/custom/HamsterEntity$DozingPhase in 267.6 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/custom/HamsterEntity$DozingPhase in 342.5 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/entity/AI/HamsterSeekDiamondGoal$SeekingState.class to net/dawson/adorablehamsterpets/entity/AI/HamsterSeekDiamondGoal$SeekingState.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/entity/AI/HamsterSeekDiamondGoal$SeekingState with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterSeekDiamondGoal$SeekingState in 238.6 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/entity/AI/HamsterSeekDiamondGoal$SeekingState in 249.8 μs
 [Architectury Transformer DEBUG] Transforming from net/dawson/adorablehamsterpets/util/HamsterRenderTracker.class to net/dawson/adorablehamsterpets/util/HamsterRenderTracker.class with 5 transformer(s) on dev.architectury.transformer.handler.TinyRemapperPreparedTransformerHandler
 [Architectury Transformer DEBUG] Found class transformer
 [Architectury Transformer DEBUG] Writing net/dawson/adorablehamsterpets/util/HamsterRenderTracker with maxs=true frames=true
-[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/util/HamsterRenderTracker in 712.9 μs
+[Architectury Transformer DEBUG] Transformed net/dawson/adorablehamsterpets/util/HamsterRenderTracker in 659.8 μs
