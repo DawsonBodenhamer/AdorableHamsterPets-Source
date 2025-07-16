@@ -6,7 +6,8 @@
   "mixins": [
     "server.CreeperEntityMixin",
     "server.PlayerEntityMixin",
-    "accessor.MeleeAttackGoalAccessor"
+    "accessor.MeleeAttackGoalAccessor",
+    "accessor.LandPathNodeMakerInvoker"
   ],
   "client": [
 

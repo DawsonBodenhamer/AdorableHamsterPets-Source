@@ -15,6 +15,7 @@ import net.dawson.adorablehamsterpets.entity.ImplementedInventory;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.dawson.adorablehamsterpets.item.ModItems;
 import net.dawson.adorablehamsterpets.networking.ModPackets;
+import net.dawson.adorablehamsterpets.mixin.accessor.LandPathNodeMakerInvoker;
 import net.dawson.adorablehamsterpets.screen.HamsterInventoryScreenHandler;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.dawson.adorablehamsterpets.tag.ModItemTags;
@@ -77,6 +78,7 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.*;
 import net.minecraft.world.biome.Biome;
@@ -132,6 +134,16 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     public static final int CELEBRATION_PARTICLE_DURATION_TICKS = 600;    // 3 seconds
     private static final float DEFAULT_FOOTSTEP_VOLUME = 0.10F;
     private static final float GRAVEL_VOLUME_MODIFIER = 0.60F;
+    private static final Set<PathNodeType> HAZARDOUS_FLOOR_TYPES = EnumSet.of(
+            PathNodeType.LAVA,
+            PathNodeType.DAMAGE_FIRE,
+            PathNodeType.DANGER_FIRE,
+            PathNodeType.POWDER_SNOW,
+            PathNodeType.DAMAGE_OTHER,
+            PathNodeType.DANGER_OTHER,
+            PathNodeType.DAMAGE_CAUTIOUS,
+            PathNodeType.WATER
+    );
 
     // --- Item Restriction Sets ---
     private static final Set<TagKey<Item>> DISALLOWED_ITEM_TAGS = Set.of(
@@ -424,7 +436,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
     /**
      * Spawns a HamsterEntity from NBT data near the player, handling position and spawning.
-     * This is typically called when a player dismounts a hamster from their shoulder.
+     * This is typically called when a player dismounts a hamster from their shoulder. It uses a
+     * raycast to find a target block and then searches for a safe spawn location nearby.
      *
      * @param world The server world to spawn the entity in.
      * @param player The player who is dismounting the hamster.
@@ -432,26 +445,49 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
      * @param wasDiamondAlertActive True if the hamster should be primed for diamond seeking.
      */
     public static void spawnFromNbt(ServerWorld world, PlayerEntity player, NbtCompound nbt, boolean wasDiamondAlertActive) {
-        // --- Create and Configure Hamster from NBT ---
+        // --- 1. Create and Configure Hamster from NBT ---
         HamsterEntity hamster = createFromNbt(world, player, nbt);
-
-        if (hamster != null) {
-            // --- Prime for Diamond Seeking (if applicable) ---
-            if (wasDiamondAlertActive && Configs.AHP.enableIndependentDiamondSeeking) {
-                hamster.isPrimedToSeekDiamonds = true;
-                AdorableHamsterPets.LOGGER.debug("[HamsterEntity {}] Primed for diamond seeking upon dismount.", hamster.getId());
-            }
-
-            // --- Set Position for Normal Dismount ---
-            double angle = Math.toRadians(player.getYaw());
-            double offsetX = -Math.sin(angle) * 0.7;
-            double offsetZ = Math.cos(angle) * 0.7;
-            hamster.refreshPositionAndAngles(player.getX() + offsetX, player.getY() + 0.1, player.getZ() + offsetZ, player.getYaw(), player.getPitch());
-
-            // --- Spawn Entity ---
-            world.spawnEntityAndPassengers(hamster);
-            AdorableHamsterPets.LOGGER.debug("[HamsterEntity] Spawned Hamster ID {} from NBT data near Player {}.", hamster.getId(), player.getName().getString());
+        if (hamster == null) {
+            return;
         }
+
+        // --- 2. Prime for Diamond Seeking (if applicable) ---
+        if (wasDiamondAlertActive && Configs.AHP.enableIndependentDiamondSeeking) {
+            hamster.isPrimedToSeekDiamonds = true;
+            AdorableHamsterPets.LOGGER.debug("[HamsterEntity {}] Primed for diamond seeking upon dismount.", hamster.getId());
+        }
+
+        // --- 3. Find a Safe Spawn Position ---
+        BlockPos initialSearchPos;
+        BlockPos ultimateFallbackPos = player.getBlockPos(); // Player's feet as the last resort
+
+        // Raycast to find where the player is looking
+        HitResult hitResult = player.raycast(4.5, 0.0f, false);
+        if (hitResult.getType() == HitResult.Type.BLOCK) {
+            initialSearchPos = ((net.minecraft.util.hit.BlockHitResult) hitResult).getBlockPos();
+        } else {
+            initialSearchPos = ultimateFallbackPos; // Default to player's position if not looking at a block
+        }
+
+        // Use the safe spawning algorithm
+        Optional<BlockPos> safePosOpt = hamster.findSafeSpawnPosition(initialSearchPos, world, 5);
+
+        // --- 4. Set Position and Spawn ---
+        safePosOpt.ifPresentOrElse(
+                safePos -> {
+                    // Spawn at the center of the safe block
+                    hamster.refreshPositionAndAngles(safePos.getX() + 0.5, safePos.getY(), safePos.getZ() + 0.5, player.getYaw(), player.getPitch());
+                    AdorableHamsterPets.LOGGER.debug("[HamsterDismount] Found safe spawn at {} for player {}.", safePos, player.getName().getString());
+                },
+                () -> {
+                    // Fallback if no safe spot is found
+                    AdorableHamsterPets.LOGGER.warn("[HamsterDismount] Could not find a safe spawn position for player {}. Spawning at player's feet as a fallback.", player.getName().getString());
+                    hamster.refreshPositionAndAngles(ultimateFallbackPos.getX() + 0.5, ultimateFallbackPos.getY(), ultimateFallbackPos.getZ() + 0.5, player.getYaw(), player.getPitch());
+                }
+        );
+
+        world.spawnEntityAndPassengers(hamster);
+        AdorableHamsterPets.LOGGER.debug("[HamsterEntity] Spawned Hamster ID {} from NBT data near Player {}.", hamster.getId(), player.getName().getString());
     }
 
     /**
@@ -1722,21 +1758,33 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
             if (blockHit.getType() == HitResult.Type.BLOCK) {
                 // --- 2a. Block Collision Handling ---
-                Vec3d hitPos = blockHit.getPos();
-                Vec3d pushback = currentVel.normalize().multiply(-0.1).add(0, 0.1, 0);
-                this.setPosition(currentPos.add(pushback));
-                AdorableHamsterPets.LOGGER.debug("[HamsterTick] Hit block, applying pushback: {}", pushback);
+                net.minecraft.util.hit.BlockHitResult blockHitResult = (net.minecraft.util.hit.BlockHitResult) blockHit;
+                BlockPos adjacentPos = blockHitResult.getBlockPos().offset(blockHitResult.getSide());
+
+                // --- Gravity Check: Find the ground below the impact point ---
+                BlockPos.Mutable groundSearchPos = adjacentPos.mutableCopy();
+                while (world.getBlockState(groundSearchPos.down()).isAir() && groundSearchPos.getY() > world.getBottomY()) {
+                    groundSearchPos.move(Direction.DOWN);
+                }
+
+                Optional<BlockPos> safePosOpt = findSafeSpawnPosition(groundSearchPos, world, 5);
+
+                safePosOpt.ifPresentOrElse(
+                        safePos -> this.setPosition(safePos.getX() + 0.5, safePos.getY(), safePos.getZ() + 0.5),
+                        () -> {
+                            AdorableHamsterPets.LOGGER.warn("[HamsterThrow] Could not find safe landing spot after hitting block. Using original impact point {} as fallback.", blockHitResult.getBlockPos());
+                            this.setPosition(blockHit.getPos());
+                        }
+                );
 
                 this.setVelocity(currentVel.multiply(0.6, 0.0, 0.6));
                 this.setThrown(false);
                 this.playSound(SoundEvents.ENTITY_GENERIC_SMALL_FALL, 1.0f, 1.2f);
                 this.setKnockedOut(true);
                 this.setInSittingPose(true);
-                // --- Trigger Crash Animation ---
                 if (!world.isClient()) {
                     this.triggerAnimOnServer("mainController", "crash");
                 }
-                // --- End Trigger ---
                 stopped = true;
                 // --- End 2a. Block Collision Handling ---
 
@@ -1746,18 +1794,15 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 if (entityHit != null && entityHit.getEntity() != null) {
                     // --- 2b. Entity Collision Handling ---
                     Entity hitEntity = entityHit.getEntity();
+                    BlockPos impactPos = hitEntity.getBlockPos();
                     boolean playEffects = false;
 
                     if (hitEntity instanceof ArmorStandEntity) {
-                        AdorableHamsterPets.LOGGER.debug("Hamster hit Armor Stand.");
                         playEffects = true;
                     } else if (hitEntity instanceof LivingEntity livingHit) {
-                        // --- Use Config Value for Throw Damage ---
-                        boolean damaged = livingHit.damage(this.getDamageSources().thrown(this, this.getOwner()),
-                                Configs.AHP.hamsterThrowDamage.get().floatValue());
+                        boolean damaged = livingHit.damage(this.getDamageSources().thrown(this, this.getOwner()), Configs.AHP.hamsterThrowDamage.get().floatValue());
                         if (damaged) {
-                            int nauseaDuration = 20;
-                            livingHit.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, nauseaDuration, 0, false, false, false));
+                            livingHit.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 20, 0, false, false, false));
                             playEffects = true;
                         }
                     } else {
@@ -1768,24 +1813,27 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         // For 1.20.1, call .get() on the RegistrySupplier
                         world.playSound(null, this.getX(), this.getY(), this.getZ(), ModSounds.HAMSTER_IMPACT.get(), SoundCategory.NEUTRAL, 1.0F, 1.0F);
                         if (!world.isClient()) {
-                            ((ServerWorld)world).spawnParticles(
-                                    ParticleTypes.POOF,
-                                    this.getX(), this.getY() + this.getHeight() / 2.0, this.getZ(),
-                                    50, 0.4, 0.4, 0.4, 0.1
-                            );
-                            AdorableHamsterPets.LOGGER.debug("Spawned POOF particles at impact.");
+                            ((ServerWorld)world).spawnParticles(ParticleTypes.POOF, this.getX(), this.getY() + this.getHeight() / 2.0, this.getZ(), 50, 0.4, 0.4, 0.4, 0.1);
                         }
                     }
+
+                    // Find safe spot near the hit entity
+                    Optional<BlockPos> safePosOpt = findSafeSpawnPosition(impactPos, world, 2);
+                    safePosOpt.ifPresentOrElse(
+                            safePos -> this.setPosition(safePos.getX() + 0.5, safePos.getY(), safePos.getZ() + 0.5),
+                            () -> {
+                                AdorableHamsterPets.LOGGER.warn("[HamsterThrow] Could not find safe landing spot after hitting entity. Using entity's position {} as fallback.", impactPos);
+                                this.setPosition(impactPos.getX() + 0.5, impactPos.getY(), impactPos.getZ() + 0.5);
+                            }
+                    );
 
                     this.setVelocity(currentVel.multiply(0.1, 0.1, 0.1));
                     this.setThrown(false);
                     this.setKnockedOut(true);
                     this.setInSittingPose(true);
-                    // --- Trigger Crash Animation ---
                     if (!world.isClient()) {
                         this.triggerAnimOnServer("mainController", "crash");
                     }
-                    // --- End Trigger ---
                     stopped = true;
                     // --- End 2b. Entity Collision Handling ---
                 }
@@ -1807,11 +1855,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     this.velocityDirty = true;
 
                     if (!world.isClient() && this.throwTicks > 5) {
-                        ((ServerWorld)world).spawnParticles(
-                                ParticleTypes.CLOUD,
-                                this.getX(), this.getY() + this.getHeight() / 2.0, this.getZ(),
-                                1, 0.1, 0.1, 0.1, 0.0
-                        );
+                        ((ServerWorld)world).spawnParticles(ParticleTypes.CLOUD, this.getX(), this.getY() + this.getHeight() / 2.0, this.getZ(), 1, 0.1, 0.1, 0.1, 0.0);
                     }
                 }
             } else {
@@ -2663,6 +2707,85 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     /* ──────────────────────────────────────────────────────────────────────────────
      *                       6. Private Helper Methods
      * ────────────────────────────────────────────────────────────────────────────*/
+
+    /**
+     * Checks if a given block position is a safe location for a hamster to spawn.
+     * A location is safe if:
+     * 1. The block below is not a hazard (checked via PathNodeType).
+     * 2. The block below has a collision shape to stand on.
+     * 3. The two blocks at the spawn position (for feet and head) have no collision shape.
+     *
+     * @param pos   The block position to check.
+     * @param world The world to check in.
+     * @return True if the location is safe, false otherwise.
+     */
+    private boolean isSafeSpawnLocation(BlockPos pos, World world) {
+        // --- 1. Check for a valid, non-hazardous floor ---
+        BlockPos floorPos = pos.down();
+        BlockState floorState = world.getBlockState(floorPos);
+
+        // Use invoker to get the pathfinding node type of the floor.
+        PathNodeType floorType = LandPathNodeMakerInvoker.callGetCommonNodeType(world, floorPos);
+        if (HAZARDOUS_FLOOR_TYPES.contains(floorType)) {
+            return false; // Floor is a known hazard.
+        }
+
+        // Ensure there is a physical surface to stand on (not just air or grass).
+        if (floorState.getCollisionShape(world, floorPos).isEmpty()) {
+            return false;
+        }
+
+        // --- 2. Check for empty body/head space ---
+        // A block is safe to occupy if its collision shape is empty.
+        return world.getBlockState(pos).getCollisionShape(world, pos).isEmpty() &&
+                world.getBlockState(pos.up()).getCollisionShape(world, pos.up()).isEmpty();
+    }
+
+    /**
+     * Finds a safe spawn position for the hamster near an initial target position.
+     * The search is performed in stages for efficiency and logical placement:
+     * 1. Checks the initial target position itself.
+     * 2. Checks a few blocks directly above the target.
+     * 3. Performs a horizontal spiral search outwards on the same Y-level.
+     *
+     * @param initialTarget The desired starting point for the search.
+     * @param world         The world where the search is performed.
+     * @param searchRadius  The maximum horizontal radius for the spiral search.
+     * @return An Optional containing the first safe BlockPos found, or an empty Optional if no safe spot is found within the search radius.
+     */
+    private Optional<BlockPos> findSafeSpawnPosition(BlockPos initialTarget, World world, int searchRadius) {
+        // --- Stage 1: Initial Target Check ---
+        if (isSafeSpawnLocation(initialTarget, world)) {
+            return Optional.of(initialTarget);
+        }
+
+        // --- Stage 2: Vertical Vicinity Check (Upwards) ---
+        for (int i = 1; i <= 3; i++) {
+            BlockPos abovePos = initialTarget.up(i);
+            if (isSafeSpawnLocation(abovePos, world)) {
+                return Optional.of(abovePos);
+            }
+        }
+
+        // --- Stage 3: Horizontal Spiral Search ---
+        for (int r = 1; r <= searchRadius; r++) {
+            for (int i = -r; i <= r; i++) {
+                for (int j = -r; j <= r; j++) {
+                    // Only check the "ring" of the spiral, not the inside which was already checked
+                    if (Math.abs(i) != r && Math.abs(j) != r) {
+                        continue;
+                    }
+                    BlockPos checkPos = initialTarget.add(i, 0, j);
+                    if (isSafeSpawnLocation(checkPos, world)) {
+                        return Optional.of(checkPos);
+                    }
+                }
+            }
+        }
+
+        // --- Stage 4: Failure ---
+        return Optional.empty();
+    }
 
     /**
      * Checks if the given item stack is disallowed in the hamster's inventory based on a disallow list.
