@@ -34,7 +34,6 @@ public class ModItemGroups {
                         output.add(ModItems.STEAMED_GREEN_BEANS.get());
                         output.add(ModItems.SUNFLOWER_SEEDS.get());
                         output.add(ModItems.HAMSTER_SPAWN_EGG.get());
-                        output.add(ModItems.HAMSTER_GUIDE_BOOK.get());
                         output.add(ModItems.SUNFLOWER_BLOCK_ITEM.get());
                         output.add(ModItems.WILD_GREEN_BEAN_BUSH_ITEM.get());
                         output.add(ModItems.WILD_CUCUMBER_BUSH_ITEM.get());
