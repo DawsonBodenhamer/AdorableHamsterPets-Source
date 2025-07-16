@@ -1,7 +1,7 @@
 modLoader = "javafml"
 loaderVersion = "[47,)"
 license = "All Rights Reserved"
-issueTrackerURL = "https://github.com/DawsonBodenhamer/Adorable-Hamster-Pets-1.21/issues"
+issueTrackerURL = "https://github.com/DawsonBodenhamer/AdorableHamsterPets-Public/issues"
 
 [[mods]]
 modId = "adorablehamsterpets"
