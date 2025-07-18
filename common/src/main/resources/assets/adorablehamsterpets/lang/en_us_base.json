@@ -107,6 +107,10 @@
   "message.adorablehamsterpets.found_gold_mistake.5": "Well... it §ois§r treasure... technically. Your hamster, however, seems to disagree with this assessment.",
   "message.adorablehamsterpets.found_gold_mistake.6": "The epic quest for riches concludes with... gold. Your hamster has begun to contemplate its life choices.",
   "message.adorablehamsterpets.found_gold_mistake.7": "So close, and yet so... gold. The disappointment is palpable.",
+  "message.adorablehamsterpets.throwing_disabled": "Hamster throwing is disabled in config.",
+  "message.adorablehamsterpets.shoulder_mount_success": "Your hamster scurries onto your shoulder!",
+  "message.adorablehamsterpets.shoulder_occupied": "Your shoulder is already occupied!",
+  "message.adorablehamsterpets.food_refusal": "Hamster wants to try something different.",
 
   "subtitles.adorablehamsterpets.hamster_attack": "Hamster attacks",
   "subtitles.adorablehamsterpets.hamster_beg": "Hamster begs",

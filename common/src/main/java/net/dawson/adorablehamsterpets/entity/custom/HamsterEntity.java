@@ -506,7 +506,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             return;
         }
         if (!config.enableHamsterThrowing) {
-            player.sendMessage(Text.literal("Hamster throwing is disabled in config."), true);
+            player.sendMessage(Text.translatable("message.adorablehamsterpets.throwing_disabled"), true);
             return;
         }
 
@@ -1371,7 +1371,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         if (player instanceof ServerPlayerEntity serverPlayer) {
                             ModCriteria.HAMSTER_ON_SHOULDER.get().trigger(serverPlayer);
                         }
-                        player.sendMessage(Text.literal("Your hamster scurries onto your shoulder!"), true);
+                        player.sendMessage(Text.translatable("message.adorablehamsterpets.shoulder_mount_success"), true);
 
                         world.playSound(null, hamsterPosForCheeseSound, ModSounds.CHEESE_USE_SOUND.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 
@@ -1388,7 +1388,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                             stack.decrement(1);
                         }
                     } else {
-                        player.sendMessage(Text.literal("Your shoulder is already occupied!"), true);
+                        player.sendMessage(Text.translatable("message.adorablehamsterpets.shoulder_occupied"), true);
                     }
                 }
                 return ActionResult.success(world.isClient());
@@ -2846,7 +2846,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         if (!this.lastFoodItem.isEmpty() && ItemStack.areItemsEqual(this.lastFoodItem, currentStack)) {
             this.setRefusingFood(true);
             this.refuseTimer = REFUSE_FOOD_TIMER_TICKS;
-            player.sendMessage(Text.literal("Hamster wants to try something different."), true);
+            player.sendMessage(Text.translatable("message.adorablehamsterpets.food_refusal"), true);
             // --- Trigger Refusal Animation ---
             if (!this.getWorld().isClient()) {
                 this.triggerAnimOnServer("mainController", "no");
