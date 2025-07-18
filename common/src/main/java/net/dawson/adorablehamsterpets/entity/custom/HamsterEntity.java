@@ -24,6 +24,7 @@ import net.dawson.adorablehamsterpets.world.gen.ModEntitySpawns;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.AttackWithOwnerGoal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
@@ -2714,7 +2715,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
      * A location is safe if:
      * 1. The block below is not a hazard (checked via PathNodeType).
      * 2. The block below has a collision shape to stand on.
-     * 3. The two blocks at the spawn position (for feet and head) have no collision shape.
+     * 3. The two blocks at the spawn position (for feet and head) have no collision shape *for this specific hamster*.
      *
      * @param pos   The block position to check.
      * @param world The world to check in.
@@ -2736,10 +2737,11 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             return false;
         }
 
-        // --- 2. Check for empty body/head space ---
-        // A block is safe to occupy if its collision shape is empty.
-        return world.getBlockState(pos).getCollisionShape(world, pos).isEmpty() &&
-                world.getBlockState(pos.up()).getCollisionShape(world, pos.up()).isEmpty();
+        // --- 2. Check for empty body/head space using entity-specific context ---
+        // The block is considered safe if it has no collision for the HamsterEntity.
+        ShapeContext entityContext = ShapeContext.of(this);
+        return world.getBlockState(pos).getCollisionShape(world, pos, entityContext).isEmpty() &&
+                world.getBlockState(pos.up()).getCollisionShape(world, pos.up(), entityContext).isEmpty();
     }
 
     /**
