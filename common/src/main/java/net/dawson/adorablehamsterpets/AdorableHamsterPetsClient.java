@@ -110,7 +110,7 @@ public class AdorableHamsterPetsClient {
         if (ModKeyBindings.THROW_HAMSTER_KEY.wasPressed()) {
             final AhpConfig currentConfig = AdorableHamsterPets.CONFIG;
             if (!currentConfig.enableHamsterThrowing) {
-                client.player.sendMessage(Text.literal("Hamster throwing is disabled in config."), true);
+                client.player.sendMessage(Text.translatable("message.adorablehamsterpets.throwing_disabled"), true);
             } else {
                 boolean lookingAtReachableBlock = client.crosshairTarget != null && client.crosshairTarget.getType() == HitResult.Type.BLOCK;
                 boolean hasShoulderHamsterClient = !((PlayerEntityAccessor) client.player).getHamsterShoulderEntity().isEmpty();
