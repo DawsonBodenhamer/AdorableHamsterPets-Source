@@ -2184,7 +2184,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         }
         // --- End 4. Server-Side Logic ---
 
-        // --- 5. Client-Side Buff Particle Logic ---
+        // --- 5. Client-Side Logic ---
+        // --- 5.1 Buff Particle Logic ---
         if (world.isClient) {
             // Check if the hamster has one of the buff effects (e.g., Strength)
             if (this.hasStatusEffect(StatusEffects.STRENGTH)) {
@@ -2204,7 +2205,20 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 }
             }
         }
-        // --- End 5. Client-Side Buff Particle Logic ---
+        // --- End 5.1 Buff Particle Logic ---
+
+        // --- 5.2 Taunting Particle Logic ---
+        if (this.isStealingDiamond() && this.getNavigation().isIdle() && this.random.nextInt(4) == 0) {
+            Vec3d pos = this.getPos();
+            world.addParticle(ParticleTypes.INSTANT_EFFECT,
+                    pos.getX(), pos.getY() + 0.5, pos.getZ(),
+                    (this.random.nextDouble() - 0.5) * 0.5,
+                    (this.random.nextDouble() - 0.5) * 0.5,
+                    (this.random.nextDouble() - 0.5) * 0.5
+            );
+        }
+        // --- End 5.2 Taunting Particle Logic ---
+        // --- End 5. Client-Side Logic ---
 
         // --- 6. Other Non-Movement Tick Logic ---
         if (this.isRefusingFood() && refuseTimer > 0) { if (--refuseTimer <= 0) this.setRefusingFood(false); }
