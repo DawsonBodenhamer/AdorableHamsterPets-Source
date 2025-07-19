@@ -134,6 +134,10 @@ public class ModSounds {
     public static final RegistrySupplier<SoundEvent> DIAMOND_SPARKLE2 = registerSoundEvent("diamond_sparkle2");
     public static final RegistrySupplier<SoundEvent> DIAMOND_SPARKLE3 = registerSoundEvent("diamond_sparkle3");
 
+    // --- Diamond Pounce Sound ---
+    public static final RegistrySupplier<SoundEvent> HAMSTER_DIAMOND_POUNCE = registerSoundEvent("hamster_diamond_pounce");
+
+
     // --- 3. Public Sound Lists (using RegistrySuppliers) ---
     public static final List<RegistrySupplier<SoundEvent>> HAMSTER_ATTACK_SOUNDS = List.of(HAMSTER_ATTACK1, HAMSTER_ATTACK2, HAMSTER_ATTACK3, HAMSTER_ATTACK4);
     public static final List<RegistrySupplier<SoundEvent>> HAMSTER_IDLE_SOUNDS = List.of(HAMSTER_IDLE1, HAMSTER_IDLE2, HAMSTER_IDLE3, HAMSTER_IDLE4, HAMSTER_IDLE5, HAMSTER_IDLE6, HAMSTER_IDLE7, HAMSTER_IDLE8, HAMSTER_IDLE9, HAMSTER_IDLE10, HAMSTER_IDLE11);

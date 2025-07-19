@@ -320,5 +320,9 @@
   "diamond_sparkle3": {
     "subtitle": "subtitles.adorablehamsterpets.diamond_sparkle",
     "sounds": [ "adorablehamsterpets:diamond_sparkle3" ]
+  },
+  "hamster_diamond_pounce": {
+    "subtitle": "subtitles.adorablehamsterpets.diamond_pounce",
+    "sounds": [ "adorablehamsterpets:hamster_diamond_pounce" ]
   }
 }
