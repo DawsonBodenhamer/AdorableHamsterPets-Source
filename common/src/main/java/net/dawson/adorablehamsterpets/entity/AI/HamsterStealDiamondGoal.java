@@ -2,9 +2,9 @@ package net.dawson.adorablehamsterpets.entity.AI;
 
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
-import net.dawson.adorablehamsterpets.mixin.accessor.LandPathNodeMakerInvoker;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.ai.FuzzyTargeting;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -171,8 +171,10 @@ public class HamsterStealDiamondGoal extends Goal {
 
             case FLEEING:
                 if (this.hamster.distanceTo(this.owner) < Configs.AHP.minFleeDistance.get()) {
-                    Vec3d fleePos = LandPathNodeMakerInvoker.callFindFleePosition(this.hamster, Configs.AHP.maxFleeDistance.get(), 7, this.owner.getPos());
+                    Vec3d fleePos = FuzzyTargeting.findFrom(this.hamster, Configs.AHP.maxFleeDistance.get(), 7, this.owner.getPos());
+                    // First, check if a valid flee position was found.
                     if (fleePos != null) {
+                        // Then, attempt to start moving to it.
                         this.hamster.getNavigation().startMovingTo(fleePos.x, fleePos.y, fleePos.z, 1.4D);
                     }
                 } else {
