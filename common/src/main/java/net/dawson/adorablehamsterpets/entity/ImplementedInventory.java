@@ -58,8 +58,7 @@ public interface ImplementedInventory extends Inventory {
 
     /**
      * Removes a stack from the given slot and returns it.
-     * Defaults to {@link DefaultedList removeStack(int, int)} with {@code count = 1}
-     * and marks the inventory as dirty.
+     * This implementation uses Inventories.splitStack to correctly handle the amount.
      * @see Inventory#removeStack(int, int)
      * @param slot  The slot to remove from.
      * @param amount  The amount to remove.
@@ -67,7 +66,8 @@ public interface ImplementedInventory extends Inventory {
      */
     @Override
     default ItemStack removeStack(int slot, int amount) {
-        ItemStack result = Inventories.removeStack(getItems(), slot);
+        // Use helper method that respects the 'amount' parameter.
+        ItemStack result = Inventories.splitStack(getItems(), slot, amount);
         if (!result.isEmpty()) {
             markDirty();
         }
