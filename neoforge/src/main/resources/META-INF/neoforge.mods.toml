@@ -53,7 +53,7 @@ side = "BOTH"
 
 [[dependencies.adorablehamsterpets]]
 modId = "jade"
-type = "required"
+type = "optional"
 versionRange = "[15.9.3,)"
 ordering = "NONE"
 side = "BOTH"
