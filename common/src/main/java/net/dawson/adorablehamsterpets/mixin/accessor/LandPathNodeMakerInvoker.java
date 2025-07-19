@@ -30,20 +30,4 @@ public interface LandPathNodeMakerInvoker {
         // This is a Mixin Invoker; the body is empty and will be implemented at runtime.
         throw new AssertionError();
     }
-
-    /**
-     * Invokes the protected static method {@code findFleePosition}. This is used by goals
-     * to find a suitable random position away from a target.
-     * @param entity The entity that is fleeing.
-     * @param xRange The horizontal range for the search.
-     * @param yRange The vertical range for the search.
-     * @param targetPos The position to flee from.
-     * @return A Vec3d representing a safe flee position, or null if none was found.
-     */
-    @Nullable
-    @Invoker("findFleePosition")
-    static Vec3d callFindFleePosition(PathAwareEntity entity, int xRange, int yRange, Vec3d targetPos) {
-        // This is a Mixin Invoker; the body is empty and will be implemented at runtime.
-        throw new AssertionError();
-    }
 }

@@ -1174,8 +1174,21 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         World world = this.getWorld();
         AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Interaction start. Player: {}, Hand: {}, Item: {}", this.getId(), world.getTime(), player.getName().getString(), hand, stack.getItem());
 
+        // --- Handle Diamond Stealing Interaction ---
+        if (this.isStealingDiamond() && this.isOwner(player)) {
+            if (!world.isClient) {
+                // Give the diamond back to the player
+                player.getInventory().offerOrDrop(new ItemStack(Items.DIAMOND));
+                // Stop the stealing behavior
+                this.setStealingDiamond(false);
+                // Play a happy/affectionate sound
+                world.playSound(null, this.getBlockPos(), ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_AFFECTION_SOUNDS, this.random), SoundCategory.NEUTRAL, 1.0f, this.getSoundPitch());
+            }
+            return ActionResult.success(world.isClient());
+        }
+        // --- END Handle Diamond Stealing Interaction ---
 
-        // --- 2. Check Knocked Out, Diamond Celebration, or Sulking ---
+        // --- Check Knocked Out, Diamond Celebration, or Sulking ---
         // --- Check for Knocked Out ---
         if (this.isKnockedOut()) {
             AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Hamster is knocked out. Waking up.", this.getId(), world.getTime());
@@ -2501,6 +2514,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         // --- 1. Initialize Goals ---
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new HamsterSeekDiamondGoal(this));
+        this.goalSelector.add(1, new HamsterStealDiamondGoal(this));
         this.goalSelector.add(2, new HamsterMeleeAttackGoal(this, 1.0D, true));
         this.goalSelector.add(3, new HamsterMateGoal(this, 1.0D));
         this.goalSelector.add(4, new HamsterFollowOwnerGoal(this, 1.2D, 4.0F, 16.0F));
