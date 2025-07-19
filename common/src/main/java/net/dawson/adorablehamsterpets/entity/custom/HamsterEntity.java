@@ -619,6 +619,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     public static final TrackedData<Boolean> IS_CELEBRATING_DIAMOND = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     public static final TrackedData<Boolean> IS_CLEANING = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<String> ACTIVE_CUSTOM_GOAL_NAME_DEBUG = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.STRING);
+    public static final TrackedData<Boolean> IS_STEALING_DIAMOND = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
 
 
@@ -792,6 +793,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             this.sulkEntityEffectTicks = 0;
         }
     }
+    public boolean isStealingDiamond() {return this.dataTracker.get(IS_STEALING_DIAMOND);}
+    public void setStealingDiamond(boolean stealing) {this.dataTracker.set(IS_STEALING_DIAMOND, stealing);}
 
     // --- Inventory Implementation ---
     @Override
@@ -2494,6 +2497,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         this.dataTracker.startTracking(IS_CELEBRATING_DIAMOND, false);
         this.dataTracker.startTracking(IS_CLEANING, false);
         this.dataTracker.startTracking(ACTIVE_CUSTOM_GOAL_NAME_DEBUG, "None");
+        this.dataTracker.startTracking(IS_STEALING_DIAMOND, false);
     }
 
     // --- AI Goals ---
