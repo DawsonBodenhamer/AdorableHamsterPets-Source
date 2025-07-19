@@ -5,6 +5,7 @@ import net.dawson.adorablehamsterpets.AdorableHamsterPetsClient;
 import net.dawson.adorablehamsterpets.client.sound.HamsterCleaningSoundInstance;
 import net.dawson.adorablehamsterpets.entity.client.layer.HamsterOverlayLayer;
 import net.dawson.adorablehamsterpets.entity.client.layer.HamsterPinkPetalOverlayLayer;
+import net.dawson.adorablehamsterpets.entity.client.layer.HamsterStolenItemLayer;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterVariant;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
@@ -16,6 +17,8 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.BlockSoundGroup;
@@ -46,6 +49,7 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
 
         addRenderLayer(new HamsterOverlayLayer(this));
         addRenderLayer(new HamsterPinkPetalOverlayLayer(this));
+        addRenderLayer(new HamsterStolenItemLayer(this));
     }
 
     @Override
@@ -143,6 +147,22 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
                                     pos.x + d, pos.y + e, pos.z + f,
                                     0.0, 0.0, 0.0); // Speed is default
                         }
+                    });
+                case "diamond_pounce_poof":
+                    model.getBone("nose").ifPresent(bone -> {
+                        Vector3d pos = bone.getWorldPosition();
+                        for (int i = 0; i < 8; i++) {
+                            animatable.getWorld().addParticle(ParticleTypes.END_ROD,
+                                    pos.x, pos.y, pos.z,
+                                    random.nextGaussian() * 0.15,
+                                    random.nextGaussian() * 0.15,
+                                    random.nextGaussian() * 0.15);
+                        }
+                        animatable.getWorld().addParticle(new net.minecraft.particle.ItemStackParticleEffect(ParticleTypes.ITEM, new ItemStack(Items.DIAMOND)),
+                                pos.x, pos.y, pos.z,
+                                random.nextGaussian() * 0.05,
+                                0.2,
+                                random.nextGaussian() * 0.05);
                     });
                     break;
             }
