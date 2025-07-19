@@ -17,6 +17,7 @@ import net.dawson.adorablehamsterpets.item.ModItems;
 import net.dawson.adorablehamsterpets.networking.ModPackets;
 import net.dawson.adorablehamsterpets.mixin.accessor.LandPathNodeMakerInvoker;
 import net.dawson.adorablehamsterpets.screen.HamsterInventoryScreenHandler;
+import net.dawson.adorablehamsterpets.screen.HamsterScreenHandlerFactory;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.dawson.adorablehamsterpets.tag.ModItemTags;
 import net.dawson.adorablehamsterpets.util.HamsterRenderTracker;
@@ -99,7 +100,7 @@ import static net.dawson.adorablehamsterpets.sound.ModSounds.HAMSTER_CELEBRATE_S
 import static net.dawson.adorablehamsterpets.sound.ModSounds.getRandomSoundFrom;
 
 
-public class HamsterEntity extends TameableEntity implements GeoEntity, ImplementedInventory, ExtendedMenuProvider {
+public class HamsterEntity extends TameableEntity implements GeoEntity, ImplementedInventory {
 
 
     /* ──────────────────────────────────────────────────────────────────────────────
@@ -810,22 +811,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     }
 
     /**
-     * Creates the server-side instance of the hamster's inventory screen handler.
-     * This is called by the server when the menu is opened by a player.
-     *
-     * @param syncId The window ID for the screen handler.
-     * @param playerInventory The inventory of the player opening the menu.
-     * @param player The player entity opening the menu.
-     * @return A new {@link HamsterInventoryScreenHandler} instance.
-     */
-    @Nullable
-    @Override
-    public ScreenHandler createMenu(int syncId, PlayerInventory playerInventory, PlayerEntity player) {
-        return new HamsterInventoryScreenHandler(syncId, playerInventory, this);
-    }
-
-    /**
-     * Gets the display name for the hamster's inventory screen.
+     * Gets the display name for the hamster.
      * This will be the hamster's custom name if it has one, otherwise it defaults
      * to a translatable title.
      *
@@ -833,7 +819,18 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
      */
     @Override
     public Text getDisplayName() {
-        return this.hasCustomName() ? this.getCustomName() : Text.translatable("entity.adorablehamsterpets.hamster.inventory_title");
+        // If the entity has a custom name from a name tag, always use that.
+        if (this.hasCustomName()) {
+            return super.getDisplayName();
+        }
+
+        // If no custom name, check the config for the default name.
+        if (Configs.AHP.useHampterName) {
+            return Text.translatable("entity.adorablehamsterpets.hampter");
+        }
+
+        // Otherwise, use the default vanilla behavior, which will resolve to "entity.adorablehamsterpets.hamster".
+        return super.getDisplayName();
     }
 
 
@@ -1426,8 +1423,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         resetSleepSequence("Player accessed inventory.");
                     }
 
-                    // --- Use Architectury's openExtendedMenu ---
-                    MenuRegistry.openExtendedMenu((ServerPlayerEntity) player, this);
+                    // --- Use Architectury's openExtendedMenu with the factory ---
+                    MenuRegistry.openExtendedMenu((ServerPlayerEntity) player, new HamsterScreenHandlerFactory(this));
 
                 } else {
                     player.sendMessage(Text.translatable("message.adorablehamsterpets.cheek_pouch_locked").formatted(Formatting.WHITE), true);
@@ -3046,19 +3043,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         this.quiescentSitDurationTimer = 0;
         this.driftingOffTimer = 0;
         this.settleSleepAnimationCooldown = 0;
-    }
-
-    /**
-     * Writes the necessary extra data to the network buffer when the extended menu is opened.
-     * For the hamster inventory, this is the entity's integer ID, which the client
-     * will use to find the correct hamster entity in its world.
-     *
-     * @param buf The {@link PacketByteBuf} to write the data to.
-     */
-    @Override
-    public void saveExtraData(PacketByteBuf buf) {
-        // Write the entity's ID to the buffer. This is the "extra data" the client needs.
-        buf.writeInt(this.getId());
     }
 
     /**

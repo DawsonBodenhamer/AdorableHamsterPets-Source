@@ -63,7 +63,6 @@ public class AhpConfig extends Config {
                     "https://discord.gg/w54mk5bqdf"));
 
     @ClientModifiable
-    @ConfigGroup.Pop
     @Translatable.Name("Visit My Website")
     @Translatable.Desc("Shameless plug for my other, less-rodent-focused work. Click if you dare.")
     public ConfigAction visitWebsite = new ConfigAction.Builder()
@@ -72,6 +71,12 @@ public class AhpConfig extends Config {
             .decoration(TextureIds.INSTANCE.getDECO_LINK())
             .build(new ClickEvent(ClickEvent.Action.OPEN_URL,
                     "https://www.fortheking.design"));
+
+    @ClientModifiable
+    @ConfigGroup.Pop
+    @Translatable.Name("Use 'Hampter' as Default Name")
+    @Translatable.Desc("Changes the default entity name from 'Hamster' to 'Hampter'. Note: This has no visible effect in vanilla Minecraft, as mobs don't show nameplates by default. It's primarily for use with mods like Auto Leveling that display entity names.")
+    public boolean useHampterName = false;
 
     // --- UI & Quality of Life ---
     @Translatable.Name("UI & Quality of Life")
