@@ -217,37 +217,41 @@ public class AhpConfig extends Config {
 
     // --- Diamond Stealing Behavior Settings---
     @Translatable.Name("Diamond Stealing Behavior Settings")
-    @Translatable.Desc("For when your hamster develops a taste for the finer things in life.")
+    @Translatable.Desc("For when your hamster develops a taste for the finer things in life. Can be configured so they steal any item— even from other mods, but they only steal diamonds by default.")
     public ConfigGroup diamondStealing = new ConfigGroup("diamondStealing", true);
 
     @Translatable.Name("Enable Diamond Stealing")
-    @Translatable.Desc("Allows hamsters to occasionally pounce on and run away with dropped diamonds. A chase ensues.")
+    @Translatable.Desc("Permits hamsters to engage in spontaneous, high-stakes games of keep-away with your valuables. A chase ensues. Obviously.")
     public boolean enableDiamondStealing = true;
 
+    @Translatable.Name("Steal Cooldown (Ticks)")
+    @Translatable.Desc("Mandatory time-out after a successful heist to prevent serial kleptomania. (20 ticks = 1s)")
+    public ValidatedInt stealCooldownTicks = new ValidatedInt(100, 6000, 20);
+
     @Translatable.Name("Stealable Items")
-    @Translatable.Desc("A list of item IDs that hamsters are allowed to steal. Format: 'mod_id:item_id'. Example: 'minecraft:diamond'.")
+    @Translatable.Desc("A list of item IDs hamsters find irresistible. Format: 'mod_id:item_id'. Example: 'minecraft:diamond'.")
     public List<String> stealableItems = new ArrayList<>(List.of("minecraft:diamond"));
 
     @Translatable.Name("Pounce Chance")
-    @Translatable.Desc("The probability (0.0 to 1.0) that a hamster will attempt to steal a nearby diamond. High by default because people don't leave their diamonds on the ground very often.")
-    public ValidatedFloat diamondPounceChance = new ValidatedFloat(0.75f, 1.0f, 0.0f);
+    @Translatable.Desc("Probability (0.1 to 1.0) a hamster will succumb to temptation. High by default. You shouldn't leave your diamonds lying around anyway.")
+    public ValidatedFloat diamondPounceChance = new ValidatedFloat(0.75f, 1.0f, 0.1f);
 
     @Translatable.Name("Minimum Flee Distance (Blocks)")
-    @Translatable.Desc("The closest a hamster will let you get before it starts running away again during the chase.")
+    @Translatable.Desc("The hamster's personal space bubble.")
     public ValidatedInt minFleeDistance = new ValidatedInt(5, 20, 1);
 
     @Translatable.Name("Maximum Flee Distance (Blocks)")
-    @Translatable.Desc("The farthest a hamster will run before it stops to taunt you.")
+    @Translatable.Desc("The maximum distance before the hamster gets bored and stops running to taunt you.")
     public ValidatedInt maxFleeDistance = new ValidatedInt(20, 40, 5);
 
     @Translatable.Name("Minimum Steal Duration (Seconds)")
-    @Translatable.Desc("The shortest possible time the chase will last before the hamster gives up.")
-    public ValidatedInt minStealDurationSeconds = new ValidatedInt(5, 60, 1);
+    @Translatable.Desc("The shortest amount of time the hamster will entertain this little game before getting bored and dropping your stuff.")
+    public ValidatedInt minStealDurationSeconds = new ValidatedInt(5, 240, 1);
 
     @ConfigGroup.Pop
     @Translatable.Name("Maximum Steal Duration (Seconds)")
-    @Translatable.Desc("The longest possible time the chase can last.")
-    public ValidatedInt maxStealDurationSeconds = new ValidatedInt(15, 120, 5);
+    @Translatable.Desc("The longest your cardio session can last before the hamster's attention span gives out.")
+    public ValidatedInt maxStealDurationSeconds = new ValidatedInt(15, 300, 5);
 
     // --- Tamed Sleep Settings ---
     @Translatable.Name("Tamed Sleep Settings")

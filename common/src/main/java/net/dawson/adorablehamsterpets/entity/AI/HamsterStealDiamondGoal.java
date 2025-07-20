@@ -1,5 +1,6 @@
 package net.dawson.adorablehamsterpets.entity.AI;
 
+import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
@@ -8,10 +9,15 @@ import net.minecraft.entity.ai.FuzzyTargeting;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.particle.ItemStackParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.Registries;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -26,21 +32,27 @@ public class HamsterStealDiamondGoal extends Goal {
 
     private final HamsterEntity hamster;
     private final World world;
-    @Nullable
-    private ItemEntity targetItem;
-    @Nullable
-    private PlayerEntity owner;
+    @Nullable private ItemEntity targetItem;
+    @Nullable private PlayerEntity owner;
+    @Nullable private Vec3d pounceStartPos;
+    private int bounceSoundDelayTicks;
+    private int tauntSettleTicks;
+    @Nullable private Vec3d repositionTarget;
+    private int repositionAttempts;
+
+    private static final int LUNGE_DURATION_TICKS = 5;
 
     private enum State {
         SCANNING,
         MOVING_TO_DIAMOND,
+        REPOSITIONING,
         POUNCING,
         FLEEING,
         TAUNTING
     }
 
+    private int lungeTicks;
     private State currentState = State.SCANNING;
-    private int pounceTimer;
     private int stealDurationTimer;
 
     public HamsterStealDiamondGoal(HamsterEntity hamster) {
@@ -48,23 +60,46 @@ public class HamsterStealDiamondGoal extends Goal {
         this.world = hamster.getWorld();
         this.setControls(EnumSet.of(Control.MOVE, Control.LOOK, Control.JUMP));
     }
-
+    
     @Override
     public boolean canStart() {
-        if (!Configs.AHP.enableDiamondStealing || this.hamster.isStealingDiamond() || this.hamster.isSitting()) {
+        AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] Evaluating canStart...", this.hamster.getId());
+
+        // --- Initial Checks ---
+        if (!Configs.AHP.enableDiamondStealing) {
+            return false; // Silent return
+        }
+        if (this.hamster.isStealingDiamond()) {
+            AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] canStart FAILED: Hamster is already in a stealing state.", this.hamster.getId());
+            return false;
+        }
+        if (this.hamster.isSitting()) {
+            AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] canStart FAILED: Hamster is sitting.", this.hamster.getId());
+            return false;
+        }
+        long currentTime = this.world.getTime();
+        if (this.hamster.stealCooldownEndTick > currentTime) {
+            AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] canStart FAILED: Steal cooldown is active for another {} ticks.", this.hamster.getId(), this.hamster.stealCooldownEndTick - currentTime);
             return false;
         }
 
-        if (this.hamster.getRandom().nextFloat() >= Configs.AHP.diamondPounceChance.get()) {
+        // --- Pounce Chance Check ---
+        float randomVal = this.hamster.getRandom().nextFloat();
+        float chance = Configs.AHP.diamondPounceChance.get();
+        if (randomVal > chance) {
+            // This is a common failure case, so we use trace to avoid spamming the log.
+            AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] canStart FAILED: Pounce chance check failed (Rolled {} > Chance {})", this.hamster.getId(), String.format("%.2f", randomVal), String.format("%.2f", chance));
             return false;
         }
 
+        // --- Owner Check ---
         if (!(this.hamster.getOwner() instanceof PlayerEntity playerOwner)) {
+            AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] canStart FAILED: Hamster has no valid owner.", this.hamster.getId());
             return false;
         }
         this.owner = playerOwner;
 
-        // Access the list and convert string IDs to Item objects
+        // --- Find Target Item ---
         List<Item> stealableItems = Configs.AHP.stealableItems.stream()
                 .map(Identifier::tryParse)
                 .filter(Objects::nonNull)
@@ -73,7 +108,8 @@ public class HamsterStealDiamondGoal extends Goal {
                 .toList();
 
         if (stealableItems.isEmpty()) {
-            return false; // No valid items to steal were configured
+            AdorableHamsterPets.LOGGER.info("[StealGoal-{}] canStart FAILED: No valid stealable items configured or parsed.", this.hamster.getId());
+            return false;
         }
 
         List<ItemEntity> nearbyItems = this.world.getEntitiesByClass(
@@ -88,6 +124,7 @@ public class HamsterStealDiamondGoal extends Goal {
 
         if (closestItem.isPresent()) {
             this.targetItem = closestItem.get();
+            AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] canStart SUCCEEDED. Target item: {} at {}. Owner: {}", this.hamster.getId(), this.targetItem.getStack().getItem(), this.targetItem.getBlockPos(), this.owner.getName().getString());
             return true;
         }
 
@@ -96,32 +133,78 @@ public class HamsterStealDiamondGoal extends Goal {
 
     @Override
     public boolean shouldContinue() {
-        if (this.hamster.isSitting() || this.targetItem == null || !this.targetItem.isAlive() || this.owner == null || !this.owner.isAlive()) {
+        // --- 1. Check for external interruptions that should ALWAYS stop the goal ---
+        if (this.hamster.isSitting()) {
+            AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] shouldContinue check failed: Hamster is sitting.", this.hamster.getId());
             return false;
         }
-        return this.stealDurationTimer > 0;
+        if (this.owner == null || !this.owner.isAlive()) {
+            AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] shouldContinue check failed: Owner is null or not alive.", this.hamster.getId());
+            return false;
+        }
+        if (this.stealDurationTimer <= 0) {
+            AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] shouldContinue check failed: Steal duration timer expired.", this.hamster.getId());
+            return false;
+        }
+
+        // --- 2. State-aware logic ---
+        // If it is fleeing or taunting, the ONLY thing that should stop it (besides the checks above) is the player
+        if (this.currentState == State.FLEEING || this.currentState == State.TAUNTING) {
+            if (!this.hamster.isStealingDiamond()) {
+                AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] shouldContinue check failed: Player retrieved diamond (isStealingDiamond is false).", this.hamster.getId());
+                return false;
+            }
+        }
+        // If it is moving to or pouncing on the item, it MUST still exist in the world.
+        else if (this.currentState == State.MOVING_TO_DIAMOND || this.currentState == State.POUNCING) {
+            if (this.targetItem == null || !this.targetItem.isAlive()) {
+                AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] shouldContinue check failed: Target item disappeared before pounce.", this.hamster.getId());
+                return false;
+            }
+        }
+
+        return true; // All checks passed for the current state, continue the goal.
     }
 
     @Override
     public void start() {
         this.currentState = State.MOVING_TO_DIAMOND;
-        this.hamster.getNavigation().startMovingTo(this.targetItem, 1.2D);
+        this.hamster.getNavigation().startMovingTo(this.targetItem, 0.75D);
         this.stealDurationTimer = this.hamster.getRandom().nextBetween(
                 Configs.AHP.minStealDurationSeconds.get() * 20,
                 Configs.AHP.maxStealDurationSeconds.get() * 20
         );
+        this.hamster.setStealDurationTimer(this.stealDurationTimer);
         this.hamster.setActiveCustomGoalDebugName(this.getClass().getSimpleName());
+        this.repositionTarget = null;
+        this.repositionAttempts = 0;
+        AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] Goal started. State: MOVING_TO_DIAMOND. Duration: {} ticks.", this.hamster.getId(), this.stealDurationTimer);
     }
 
     @Override
     public void stop() {
-        if (this.hamster.isStealingDiamond()) {
-            // Drop the item if the timer ran out
-            if (this.targetItem != null) {
-                this.world.spawnEntity(new ItemEntity(this.world, this.hamster.getX(), this.hamster.getY(), this.hamster.getZ(), this.targetItem.getStack()));
+        AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] Goal stopped. Final state was: {}.", this.hamster.getId(), this.currentState);
+
+        // Apply cooldown regardless of how the goal ended.
+        this.hamster.stealCooldownEndTick = this.world.getTime() + Configs.AHP.stealCooldownTicks.get();
+
+        // Only drop the item if the goal is stopping because the timer ran out.
+        // If it stops for any other reason (like player interaction), the timer will be > 0.
+        if (this.hamster.isStealingDiamond() && this.stealDurationTimer <= 0) {
+            ItemStack stolenStack = this.hamster.getStolenItemStack();
+            if (!stolenStack.isEmpty()) {
+                this.world.spawnEntity(new ItemEntity(this.world, this.hamster.getX(), this.hamster.getY(), this.hamster.getZ(), stolenStack.copy()));
                 this.hamster.playSound(ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_HURT_SOUNDS, this.hamster.getRandom()), 1.0f, 1.0f);
+                // Get and play the dynamic sound
+                SoundEvent pounceSound = ModSounds.getDynamicPounceSound(stolenStack);
+                float volume = (pounceSound == SoundEvents.ENTITY_GENERIC_EAT) ? 0.35f : 1.0f;
+                this.world.playSound(null, this.hamster.getBlockPos(), pounceSound, SoundCategory.NEUTRAL, volume, 1.7f);
+                AdorableHamsterPets.LOGGER.trace ("[StealGoal-{}] Dropped stolen item {} because timer expired.", this.hamster.getId(), stolenStack.getItem());
             }
         }
+        this.hamster.setStolenItemStack(ItemStack.EMPTY); // Clear the stolen item stack
+        this.hamster.setStealDurationTimer(0);
+        this.hamster.setTaunting(false);
         this.hamster.setStealingDiamond(false);
         this.hamster.getNavigation().stop();
         this.targetItem = null;
@@ -138,55 +221,164 @@ public class HamsterStealDiamondGoal extends Goal {
             return;
         }
 
+        // --- Handle Delayed Bounce and Celebrate Sound ---
+        if (this.bounceSoundDelayTicks > 0) {
+            this.bounceSoundDelayTicks--;
+            if (this.bounceSoundDelayTicks == 0) {
+                this.hamster.playSound(ModSounds.HAMSTER_BOUNCE.get(), 0.6f, this.hamster.getSoundPitch() * 1.2f);
+            }
+        }
+
         this.stealDurationTimer--;
+        this.hamster.setStealDurationTimer(this.stealDurationTimer);
 
         switch (this.currentState) {
             case MOVING_TO_DIAMOND:
-                this.hamster.getLookControl().lookAt(this.targetItem);
+                this.hamster.getLookControl().lookAt(this.targetItem, 30.0f, 30.0f);
+                // If navigation stops before reaching the target, try to reposition.
+                if (this.hamster.getNavigation().isIdle()) {
+                    this.currentState = State.REPOSITIONING;
+                    AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] Navigator is idle, transitioning to REPOSITIONING.", this.hamster.getId());
+                    return; // End this tick, start repositioning on the next
+                }
                 if (this.hamster.distanceTo(this.targetItem) < 1.5) {
                     this.currentState = State.POUNCING;
-                    this.pounceTimer = 20; // 1 second for the pounce animation
+                    this.lungeTicks = LUNGE_DURATION_TICKS; // Use the constant
+                    this.pounceStartPos = this.hamster.getPos(); // Store starting position for the lunge
                     this.hamster.getNavigation().stop();
                     this.hamster.triggerAnimOnServer("mainController", "anim_hamster_diamond_pounce");
-                    this.hamster.playSound(ModSounds.HAMSTER_BOUNCE.get(), 0.8f, this.hamster.getSoundPitch() * 1.2f);
+                    this.bounceSoundDelayTicks = 5;
+                    // --- Play celebration sound ---
+                    SoundEvent celebrationSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_CELEBRATE_SOUNDS, this.hamster.getRandom());
+                    if (celebrationSound != null) {
+                        this.hamster.playSound(celebrationSound, 0.7f, this.hamster.getSoundPitch());
+                    }
+                    AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] State changed to POUNCING.", this.hamster.getId());
+                }
+                break;
+
+            case REPOSITIONING:
+                // Check if exceeded repositioning budget.
+                if (this.repositionAttempts >= 3) {
+                    AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] Exceeded max reposition attempts. Stopping goal.", this.hamster.getId());
+                    this.stealDurationTimer = 0; // Force the goal to stop.
+                    // Also apply the cooldown to prevent an immediate restart loop.
+                    return;
+                }
+                // If we don't have a reposition target yet, find one.
+                if (this.repositionTarget == null) {
+                    this.repositionAttempts++; // Increment the attempt counter.
+                    // Use findTo to get a spot in the direction of the item.
+                    this.repositionTarget = FuzzyTargeting.findTo(this.hamster, 2, 3, Vec3d.ofCenter(this.targetItem.getBlockPos()));
+                    if (this.repositionTarget != null) {
+                        this.hamster.getNavigation().startMovingTo(this.repositionTarget.x, this.repositionTarget.y, this.repositionTarget.z, 0.75D);
+                        AdorableHamsterPets.LOGGER.trace ("[StealGoal-{}] Attempt #{}: Found repositioning target at {}. Moving now.", this.hamster.getId(), this.repositionAttempts, this.repositionTarget);
+                    } else {
+                        // If we can't find a random spot, the area is likely too cramped. Stop the goal.
+                        AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] Could not find a repositioning target. Stopping goal.", this.hamster.getId());
+                        this.stealDurationTimer = 0; // Force stop
+                        return;
+                    }
+                }
+                // If the navigator is idle, we've reached the reposition target or failed. Try again.
+                if (this.hamster.getNavigation().isIdle()) {
+                    this.repositionTarget = null; // Clear the target to find a new one next tick if needed
+                    this.currentState = State.MOVING_TO_DIAMOND;
+                    AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] Repositioning move complete. Transitioning back to MOVING_TO_DIAMOND.", this.hamster.getId());
                 }
                 break;
 
             case POUNCING:
-                this.pounceTimer--;
-                if (this.pounceTimer <= 0) {
+                this.lungeTicks--;
+
+                // --- Pounce Lunge Interpolation ---
+                if (this.pounceStartPos != null) {
+                    // The pounce lunge uses the constant
+                    if (this.lungeTicks >= 0) {
+                        // Calculate progress (from 0.0 to 1.0 over the lunge duration)
+                        double progress = (double)(LUNGE_DURATION_TICKS - this.lungeTicks) / LUNGE_DURATION_TICKS;
+                        // Apply a quadratic ease-in curve for acceleration
+                        double easedProgress = progress * progress;
+
+                        // Interpolate X and Z coordinates. Y is left alone to be controlled by the animation's jump.
+                        double newX = pounceStartPos.x + easedProgress * (this.targetItem.getX() - pounceStartPos.x);
+                        double newZ = pounceStartPos.z + easedProgress * (this.targetItem.getZ() - pounceStartPos.z);
+                        this.hamster.setPosition(newX, this.hamster.getY(), newZ);
+                    }
+                }
+
+                if (this.lungeTicks < 0) {
+                    // Get the stack from the target ItemEntity
+                    ItemStack stackToSteal = this.targetItem.getStack().copy();
+                    if (stackToSteal.isEmpty()) {
+                        // Safety check in case the item entity's stack somehow became empty.
+                        this.stealDurationTimer = 0; // Stop the goal.
+                        return;
+                    }
+
+                    this.hamster.setStolenItemStack(stackToSteal);
                     this.targetItem.discard();
                     this.hamster.setStealingDiamond(true);
 
-                    // Play composite sound
-                    this.world.playSound(null, this.hamster.getBlockPos(), ModSounds.HAMSTER_DIAMOND_POUNCE.get(), SoundCategory.NEUTRAL, 1.0f, 1.0f);
-                    SoundEvent celebrateSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_CELEBRATE_SOUNDS, this.hamster.getRandom());
-                    if (celebrateSound != null) {
-                        this.world.playSound(null, this.hamster.getBlockPos(), celebrateSound, SoundCategory.NEUTRAL, 0.7f, 1.2f);
+                    // --- Play Sounds and Spawn Particles Simultaneously ---
+                    // Get the dynamic sound for the item
+                    SoundEvent pounceSound = ModSounds.getDynamicPounceSound(stackToSteal);
+                    float volume = (pounceSound == SoundEvents.ENTITY_GENERIC_EAT) ? 0.35f : 1.0f;
+                    this.world.playSound(null, this.hamster.getBlockPos(), pounceSound, SoundCategory.NEUTRAL, volume, 1.7f);
+
+                    // Spawn particles
+                    if (!this.world.isClient) {
+                        ((ServerWorld)this.world).spawnParticles(ParticleTypes.END_ROD, this.hamster.getX(), this.hamster.getY() + 0.5, this.hamster.getZ(), 5, 0.1, 0.1, 0.1, 0.05);
+                        // Use the actual stolenStack for the particle effect
+                        ((ServerWorld)this.world).spawnParticles(new ItemStackParticleEffect(ParticleTypes.ITEM, stackToSteal), this.hamster.getX(), this.hamster.getY() + 0.5, this.hamster.getZ(), 18, 0.2, 0.2, 0.2, 0.1);
                     }
 
                     this.currentState = State.FLEEING;
+                    AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] Pounce finished. Item stolen. State changed to FLEEING.", this.hamster.getId());
                 }
                 break;
 
             case FLEEING:
+                this.hamster.setTaunting(false); // Ensure taunting is off while fleeing
                 if (this.hamster.distanceTo(this.owner) < Configs.AHP.minFleeDistance.get()) {
                     Vec3d fleePos = FuzzyTargeting.findFrom(this.hamster, Configs.AHP.maxFleeDistance.get(), 7, this.owner.getPos());
                     // First, check if a valid flee position was found.
                     if (fleePos != null) {
                         // Then, attempt to start moving to it.
-                        this.hamster.getNavigation().startMovingTo(fleePos.x, fleePos.y, fleePos.z, 1.4D);
+                        this.hamster.getNavigation().startMovingTo(fleePos.x, fleePos.y, fleePos.z, 1.5D);
+                        AdorableHamsterPets.LOGGER.trace ("[StealGoal-{}] Fleeing: Owner too close, found new flee point at {}.", this.hamster.getId(), fleePos);
                     }
                 } else {
                     this.currentState = State.TAUNTING;
                     this.hamster.getNavigation().stop();
+                    AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] State changed to TAUNTING.", this.hamster.getId());
                 }
                 break;
 
             case TAUNTING:
-                this.hamster.getLookControl().lookAt(this.owner, 10.0f, (float)this.hamster.getMaxLookPitchChange());
+                // Immediately start looking at the owner as soon as we enter the taunting state.
+                this.hamster.getLookControl().lookAt(this.owner, 30.0f, 30.0f);
+
+                // If we just entered the taunting state, start the settle timer.
+                if (!this.hamster.isTaunting() && this.tauntSettleTicks == 0) {
+                    this.tauntSettleTicks = 10; // 10-tick (0.5s) settle delay
+                }
+
+                if (this.tauntSettleTicks > 0) {
+                    this.tauntSettleTicks--;
+                }
+
+                // Only set the taunting animation flag to true if the hamster has stopped moving and the settle timer is done.
+                if (this.hamster.getNavigation().isIdle() && this.tauntSettleTicks == 0) {
+                    this.hamster.setTaunting(true);
+                }
+
+                // Check if we need to switch back to fleeing.
                 if (this.hamster.distanceTo(this.owner) < Configs.AHP.minFleeDistance.get()) {
                     this.currentState = State.FLEEING;
+                    this.hamster.setTaunting(false); // Immediately turn off taunting when fleeing
+                    this.tauntSettleTicks = 0; // Reset the settle timer
+                    AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] State changed back to FLEEING.", this.hamster.getId());
                 }
                 break;
         }

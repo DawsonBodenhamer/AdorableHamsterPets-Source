@@ -3,8 +3,12 @@ package net.dawson.adorablehamsterpets.sound;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
 
@@ -134,9 +138,8 @@ public class ModSounds {
     public static final RegistrySupplier<SoundEvent> DIAMOND_SPARKLE2 = registerSoundEvent("diamond_sparkle2");
     public static final RegistrySupplier<SoundEvent> DIAMOND_SPARKLE3 = registerSoundEvent("diamond_sparkle3");
 
-    // --- Diamond Pounce Sound ---
+    // --- Pounce Sound ---
     public static final RegistrySupplier<SoundEvent> HAMSTER_DIAMOND_POUNCE = registerSoundEvent("hamster_diamond_pounce");
-
 
     // --- 3. Public Sound Lists (using RegistrySuppliers) ---
     public static final List<RegistrySupplier<SoundEvent>> HAMSTER_ATTACK_SOUNDS = List.of(HAMSTER_ATTACK1, HAMSTER_ATTACK2, HAMSTER_ATTACK3, HAMSTER_ATTACK4);
@@ -156,10 +159,74 @@ public class ModSounds {
     public static final List<RegistrySupplier<SoundEvent>> HAMSTER_AFFECTION_SOUNDS = List.of(HAMSTER_AFFECTION1, HAMSTER_AFFECTION2, HAMSTER_AFFECTION3);
     public static final List<RegistrySupplier<SoundEvent>> DIAMOND_SPARKLE_SOUNDS = List.of(DIAMOND_SPARKLE1, DIAMOND_SPARKLE2, DIAMOND_SPARKLE3);
 
-    // --- 4. Helper Method for Registration ---
+    // --- 4. Helper Methods ---
     private static RegistrySupplier<SoundEvent> registerSoundEvent(String name) {
         Identifier id = Identifier.of(AdorableHamsterPets.MOD_ID, name);
         return SOUND_EVENTS.register(id, () -> SoundEvent.of(id));
+    }
+
+    /**
+     * Determines the appropriate pounce sound effect based on the properties of the stolen item.
+     * This method categorizes items using extensive keyword lists and checks for a food component
+     * to return one of five possible sound events.
+     *
+     * @param stack The ItemStack the hamster is pouncing on.
+     * @return The SoundEvent for the pounce ("clink", "stone", "wood", "crunch", or "thud").
+     */
+    public static SoundEvent getDynamicPounceSound(ItemStack stack) {
+        if (stack.isEmpty()) {
+            return SoundEvents.BLOCK_WOOL_PLACE; // Fallback for safety
+        }
+        Item item = stack.getItem();
+        String translationKey = item.getTranslationKey();
+
+        // --- Keyword Lists for Sound Categories ---
+        List<String> clinkKeywords = List.of(
+                "diamond", "emerald", "amethyst", "lapis", "quartz", "raw_", "coal",
+                "ingot", "nugget", "netherite", "gold", "iron", "copper", "scrap",
+                "shard", "brick", "sherd", "flint", "prismarine", "rod",
+                "glass", "bottle", "spyglass", "tear", "pearl", "eye",
+                "bell", "trim", "charcoal", "bucket", "shears", "hoe", "axe", "pickaxe", "shovel", "sword"
+        );
+
+        List<String> stoneKeywords = List.of(
+                "stone", "rock", "ore", "andesite", "diorite", "granite", "deepslate",
+                "tuff", "calcite", "dripstone", "sandstone", "end_stone", "netherrack",
+                "basalt", "blackstone", "obsidian", "gravel", "clay", "terracotta",
+                "concrete", "powder", "redstone", "glowstone_dust", "gunpowder", "sugar",
+                "bone_meal", "blaze_powder", "egg", "snowball"
+        );
+
+        List<String> woodKeywords = List.of(
+                "log", "wood", "planks", "stick", "sapling", "door", "trapdoor", "sign",
+                "boat", "bowl", "chest", "table", "lectern", "loom", "composter", "barrel",
+                "ladder", "fence", "gate", "plate", "button", "torch", "arrow", "bow",
+                "scaffolding", "bamboo", "propagule", "roots", "cherry", "acacia", "birch",
+                "dark_oak", "jungle", "oak", "spruce", "crimson_", "warped_", "stem", "hyphae"
+        );
+
+        // --- Check Categories in Order of Priority ---
+        for (String keyword : clinkKeywords) {
+            if (translationKey.contains(keyword)) {
+                return ModSounds.HAMSTER_DIAMOND_POUNCE.get(); // "Clink" (for metallic items)
+            }
+        }
+        for (String keyword : stoneKeywords) {
+            if (translationKey.contains(keyword)) {
+                return SoundEvents.BLOCK_STONE_PLACE; // "Stone"
+            }
+        }
+        for (String keyword : woodKeywords) {
+            if (translationKey.contains(keyword)) {
+                return SoundEvents.BLOCK_WOOD_PLACE; // "Wood"
+            }
+        }
+        if (item.getComponents().contains(DataComponentTypes.FOOD)) {
+            return SoundEvents.ENTITY_GENERIC_EAT; // "Crunch"
+        }
+
+        // --- Fallback for everything else ---
+        return SoundEvents.BLOCK_WOOL_PLACE; // "Thud"
     }
 
     // --- 5. Main Registration Call ---

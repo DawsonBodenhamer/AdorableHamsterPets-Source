@@ -5,16 +5,18 @@ import net.dawson.adorablehamsterpets.AdorableHamsterPetsClient;
 import net.dawson.adorablehamsterpets.client.sound.HamsterCleaningSoundInstance;
 import net.dawson.adorablehamsterpets.entity.client.layer.HamsterOverlayLayer;
 import net.dawson.adorablehamsterpets.entity.client.layer.HamsterPinkPetalOverlayLayer;
-import net.dawson.adorablehamsterpets.entity.client.layer.HamsterStolenItemLayer;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterVariant;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.item.ItemRenderer;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
@@ -28,8 +30,11 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.Nullable;
+import org.joml.AxisAngle4f;
+import org.joml.Quaternionf;
 import org.joml.Vector3d;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
+import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 import java.util.HashMap;
@@ -38,8 +43,8 @@ import java.util.Map;
 
 public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
 
+    private final ItemStack diamondStack = new ItemStack(Items.DIAMOND);
     private final float adultShadowRadius;
-
     private static final Map<Integer, HamsterCleaningSoundInstance> activeCleaningSounds = new HashMap<>();
 
     public HamsterRenderer(EntityRendererFactory.Context ctx) {
@@ -49,7 +54,6 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
 
         addRenderLayer(new HamsterOverlayLayer(this));
         addRenderLayer(new HamsterPinkPetalOverlayLayer(this));
-        addRenderLayer(new HamsterStolenItemLayer(this));
     }
 
     @Override
@@ -151,7 +155,7 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
                 case "diamond_pounce_poof":
                     model.getBone("nose").ifPresent(bone -> {
                         Vector3d pos = bone.getWorldPosition();
-                        for (int i = 0; i < 8; i++) {
+                        for (int i = 0; i < 2; i++) {
                             animatable.getWorld().addParticle(ParticleTypes.END_ROD,
                                     pos.x, pos.y, pos.z,
                                     random.nextGaussian() * 0.15,
@@ -201,6 +205,54 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
             }
             // Reset the flag
             animatable.soundEffectId = null;
+        }
+    }
+
+    @Override
+    public void renderRecursively(MatrixStack poseStack, HamsterEntity animatable, GeoBone bone, RenderLayer renderType, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
+        // First, call the super method to render the bone itself
+        super.renderRecursively(poseStack, animatable, bone, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour);
+
+        // Get the stolen item stack directly from the animatable entity
+        ItemStack stolenStack = animatable.getStolenItemStack();
+
+        // Now, check if this is the bone we want to attach our item to
+        if (bone.getName().equals("nose") && animatable.isStealingDiamond()) {
+            ItemRenderer itemRenderer = MinecraftClient.getInstance().getItemRenderer();
+
+            poseStack.push();
+            // Move the matrix to the bone's position and apply its transformations
+            poseStack.translate(bone.getPosX(), bone.getPosY(), bone.getPosZ());
+            poseStack.multiply(new Quaternionf().rotateZ(bone.getRotZ()));
+            poseStack.multiply(new Quaternionf().rotateY(bone.getRotY()));
+            poseStack.multiply(new Quaternionf().rotateX(bone.getRotX()));
+            poseStack.scale(bone.getScaleX(), bone.getScaleY(), bone.getScaleZ());
+
+            // --- MANUAL ADJUSTMENTS ---
+            // These transformations are applied *relative to the nose bone's pivot point*.
+            // The coordinate system is: +X is right, +Y is up, +Z is backward.
+
+            // poseStack.translate(X, Y, Z): Moves the item.
+            // X: Positive values move it to the hamster's right. Negative to the left.
+            // Y: Positive values move it up. Negative moves it down.
+            // Z: Positive values move it TOWARDS THE HAMSTER'S TAIL. Negative values move it FORWARD, AWAY FROM THE FACE.
+            // To fix the diamond appearing at the tail, you need a negative Z value.
+            poseStack.translate(0, 0.22F, -0.4F);
+
+            // poseStack.scale(X, Y, Z): Resizes the item.
+            // Values > 1.0 make it bigger. Values < 1.0 make it smaller.
+            poseStack.scale(0.7f, 0.7f, 0.7f);
+
+
+            // poseStack.multiply(...): Rotates the item. This is complex.
+            // This specific line rotates the item 90 degrees on its X-axis, which makes it
+            // stand upright as if held, rather than lying flat. You likely won't need to change this.
+            poseStack.multiply(new Quaternionf(new AxisAngle4f((float) Math.toRadians(90), 1, 0, 0)));
+
+            // Render the item from the DataTracker
+            itemRenderer.renderItem(stolenStack, ModelTransformationMode.THIRD_PERSON_RIGHT_HAND, packedLight, packedOverlay, poseStack, bufferSource, animatable.getWorld(), animatable.getId());
+
+            poseStack.pop();
         }
     }
 }

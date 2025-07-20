@@ -620,6 +620,10 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     public static final TrackedData<Boolean> IS_CLEANING = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<String> ACTIVE_CUSTOM_GOAL_NAME_DEBUG = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.STRING);
     public static final TrackedData<Boolean> IS_STEALING_DIAMOND = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    public static final TrackedData<Integer> STEAL_DURATION_TIMER = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    public static final TrackedData<Boolean> IS_TAUNTING = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    public static final TrackedData<ItemStack> STOLEN_ITEM_STACK = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.ITEM_STACK);
+
 
 
 
@@ -652,6 +656,9 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private static final RawAnimation SULKING_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sulking");
     public static final RawAnimation SEEKING_DIAMOND_ANIM = RawAnimation.begin().thenPlay("anim_hamster_seeking_diamond");
     public static final RawAnimation WANTS_TO_SEEK_DIAMOND_ANIM = RawAnimation.begin().thenPlay("anim_hamster_wants_to_seek_diamond");
+    private static final RawAnimation DIAMOND_POUNCE_ANIM = RawAnimation.begin().thenPlay("anim_hamster_diamond_pounce");
+    private static final RawAnimation DIAMOND_TAUNT_ANIM = RawAnimation.begin().thenPlay("anim_hamster_diamond_taunt");
+    private static final RawAnimation CELEBRATE_CHASE_ANIM = RawAnimation.begin().thenPlay("anim_hamster_celebrate_chase");
 
 
 
@@ -682,6 +689,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     @Unique private int diamondSparkleSoundDelayTicks = 0;
     @Unique public transient String particleEffectId = null;
     @Unique public transient String soundEffectId = null;
+    @Unique public long stealCooldownEndTick = 0L;
 
 
     // --- Inventory ---
@@ -795,6 +803,12 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     }
     public boolean isStealingDiamond() {return this.dataTracker.get(IS_STEALING_DIAMOND);}
     public void setStealingDiamond(boolean stealing) {this.dataTracker.set(IS_STEALING_DIAMOND, stealing);}
+    public int getStealDurationTimer() {return this.dataTracker.get(STEAL_DURATION_TIMER);}
+    public void setStealDurationTimer(int ticks) {this.dataTracker.set(STEAL_DURATION_TIMER, ticks);}
+    public boolean isTaunting() {return this.dataTracker.get(IS_TAUNTING);}
+    public void setTaunting(boolean taunting) {this.dataTracker.set(IS_TAUNTING, taunting);}
+    public ItemStack getStolenItemStack() { return this.dataTracker.get(STOLEN_ITEM_STACK); }
+    public void setStolenItemStack(ItemStack stack) { this.dataTracker.set(STOLEN_ITEM_STACK, stack); }
 
     // --- Inventory Implementation ---
     @Override
@@ -1193,17 +1207,29 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         // --- 1. Initial Setup ---
         ItemStack stack = player.getStackInHand(hand);
         World world = this.getWorld();
-        AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Interaction start. Player: {}, Hand: {}, Item: {}", this.getId(), world.getTime(), player.getName().getString(), hand, stack.getItem());
+        AdorableHamsterPets.LOGGER.info("[InteractMob {} Tick {}] Interaction start. Player: {}, Hand: {}, Item: {}", this.getId(), world.getTime(), player.getName().getString(), hand, stack.getItem());
 
         // --- Handle Diamond Stealing Interaction ---
         if (this.isStealingDiamond() && this.isOwner(player)) {
+            AdorableHamsterPets.LOGGER.info("[InteractMob-{}] Passed 'isStealingDiamond' check.", this.getId());
             if (!world.isClient) {
-                // Give the diamond back to the player
-                player.getInventory().offerOrDrop(new ItemStack(Items.DIAMOND));
-                // Stop the stealing behavior
+                ItemStack retrievedStack = this.getStolenItemStack().copy();
+                player.getInventory().offerOrDrop(this.getStolenItemStack().copy());
+                this.setStolenItemStack(ItemStack.EMPTY);
+                this.setStealDurationTimer(0);
                 this.setStealingDiamond(false);
-                // Play a happy/affectionate sound
+                // Make the hamster look at the player before celebrating
+                this.getLookControl().lookAt(player, 30.0f, 30.0f);
+                this.triggerAnimOnServer("mainController", "anim_hamster_celebrate_chase");
+                // Play a happy/affectionate and diamond "tink" sound
                 world.playSound(null, this.getBlockPos(), ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_AFFECTION_SOUNDS, this.random), SoundCategory.NEUTRAL, 1.0f, this.getSoundPitch());
+                // Get and play the dynamic sound
+                if (!retrievedStack.isEmpty()) {
+                    SoundEvent pounceSound = ModSounds.getDynamicPounceSound(retrievedStack);
+                    float volume = (pounceSound == SoundEvents.ENTITY_GENERIC_EAT) ? 0.35f : 1.0f;
+                    world.playSound(null, this.getBlockPos(), pounceSound, SoundCategory.NEUTRAL, volume, 1.7f);
+                }
+                AdorableHamsterPets.LOGGER.info("[InteractMob-{}] Diamond returned to player and goal stopped.", this.getId());
             }
             return ActionResult.success(world.isClient());
         }
@@ -2230,7 +2256,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             // Check if the hamster has one of the buff effects (e.g., Strength)
             if (this.hasStatusEffect(StatusEffects.STRENGTH)) {
                 // Only spawn particles occasionally to avoid clutter
-                if (this.random.nextInt(5) == 0) { // Spawn roughly every 1/4 second
+                if (this.random.nextInt(5) == 0) { // Spawn roughly every 4 times per second
                     // Spawn standard entity effect particles randomly around the hamster
                     for (int i = 0; i < 2; ++i) { // Spawn a couple particles each time
                         world.addParticle((ParticleEffect)ParticleTypes.ENTITY_EFFECT, // Cast ParticleType to ParticleEffect
@@ -2248,14 +2274,21 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         // --- End 5.1 Buff Particle Logic ---
 
         // --- 5.2 Taunting Particle Logic ---
-        if (this.isStealingDiamond() && this.getNavigation().isIdle() && this.random.nextInt(4) == 0) {
-            Vec3d pos = this.getPos();
-            world.addParticle(ParticleTypes.INSTANT_EFFECT,
-                    pos.getX(), pos.getY() + 0.5, pos.getZ(),
-                    (this.random.nextDouble() - 0.5) * 0.5,
-                    (this.random.nextDouble() - 0.5) * 0.5,
-                    (this.random.nextDouble() - 0.5) * 0.5
-            );
+        if (this.isTaunting()) {
+            // Only spawn particles occasionally
+            if (this.random.nextInt(7) == 0) { // Spawn roughly 2.86 times per second
+                // Spawn energetic "instant effect" particles randomly around the hamster
+                for (int i = 0; i < 2; ++i) { // Spawn three particles each time for a noticeable effect
+                    world.addParticle(ParticleTypes.INSTANT_EFFECT,
+                            this.getParticleX(0.6), // Spawn on the body
+                            this.getRandomBodyY(),
+                            this.getParticleZ(0.6),
+                            (this.random.nextDouble() - 0.5) * 0.5, // dx (energetic outward motion)
+                            (this.random.nextDouble() - 0.5) * 0.5, // dy
+                            (this.random.nextDouble() - 0.5) * 0.5  // dz
+                    );
+                }
+            }
         }
         // --- End 5.2 Taunting Particle Logic ---
         // --- End 5. Client-Side Logic ---
@@ -2333,37 +2366,29 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             int personality = this.dataTracker.get(ANIMATION_PERSONALITY_ID);
 
             // --- Knocked Out State ---
-            if (this.isKnockedOut()) {
-                return event.setAndContinue(KNOCKED_OUT_ANIM);
-            }
-
+            if (this.isKnockedOut()) {return event.setAndContinue(KNOCKED_OUT_ANIM);}
             // --- Sulking State ---
-            if (this.isSulking()) {
-                return event.setAndContinue(SULKING_ANIM);
-            }
-
+            if (this.isSulking()) {return event.setAndContinue(SULKING_ANIM);}
             // --- Thrown State ---
-            if (this.isThrown()) {
-                return event.setAndContinue(FLYING_ANIM);
-            }
-
+            if (this.isThrown()) {return event.setAndContinue(FLYING_ANIM);}
+            // --- Diamond Stealing / Taunting State ---
+            if (this.isTaunting()) return event.setAndContinue(DIAMOND_TAUNT_ANIM);
             // --- Seeking/Wanting to Seek Diamond/Ore State ---
             boolean isSeekingGoalActive = false;
             String activeGoalName = this.getActiveCustomGoalDebugName();
             if (activeGoalName.startsWith(HamsterSeekDiamondGoal.class.getSimpleName())) {
                 isSeekingGoalActive = true;
             }
-
             if (isSeekingGoalActive) {
                 double horizontalSpeedSquared = this.getVelocity().horizontalLengthSquared();
-                if (horizontalSpeedSquared > 1.0E-7) { // Use a very small threshold to detect any movement
+                if (horizontalSpeedSquared > 1.0E-6) { // Use a very small threshold to detect any movement
                     return event.setAndContinue(SEEKING_DIAMOND_ANIM); // Hamster is moving
                 } else {
                     return event.setAndContinue(WANTS_TO_SEEK_DIAMOND_ANIM); // Hamster is not moving
                 }
             }
 
-            // --- Diamond Celebration Animation ---
+            // --- Found Diamond Celebration ---
             if (this.isCelebratingDiamond()) {
                 return event.setAndContinue(BEGGING_ANIM); // Reuse begging animation for celebration
             }
@@ -2416,6 +2441,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         }
                     }
 
+
             // --- Wild Hamster Sleeping State ---
             if (!this.isTamed() && this.isSleeping()) {
                 // After anim_hamster_wild_settle_sleep (triggerable) finishes, loop sleep_pose1.
@@ -2461,6 +2487,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 .triggerableAnim("anim_hamster_settle_sleep3", SETTLE_SLEEP3_ANIM)
                 .triggerableAnim("anim_hamster_wild_settle_sleep", WILD_SETTLE_SLEEP_ANIM)
                 .triggerableAnim("anim_hamster_sulk", SULK_ANIM)
+                .triggerableAnim("anim_hamster_diamond_pounce", DIAMOND_POUNCE_ANIM)
+                .triggerableAnim("anim_hamster_celebrate_chase", CELEBRATE_CHASE_ANIM)
 
                 // --- Handle Keyframe Particles ---
                 .setParticleKeyframeHandler(event -> {
@@ -2525,6 +2553,9 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         this.dataTracker.startTracking(IS_CLEANING, false);
         this.dataTracker.startTracking(ACTIVE_CUSTOM_GOAL_NAME_DEBUG, "None");
         this.dataTracker.startTracking(IS_STEALING_DIAMOND, false);
+        this.dataTracker.startTracking(STEAL_DURATION_TIMER, 0);
+        this.dataTracker.startTracking(IS_TAUNTING, false);
+        this.dataTracker.startTracking(STOLEN_ITEM_STACK, ItemStack.EMPTY);
     }
 
     // --- AI Goals ---
@@ -2621,8 +2652,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         if (this.isKnockedOut()) {
             return null; // Knocked out hamsters make no ambient sounds
         }
-        // --- 1. Begging Sounds ---
-        if (this.isBegging()) {
+        // --- 1. Begging/Taunting Sounds ---
+        if (this.isBegging() || this.isTaunting()) {
             return getRandomSoundFrom(ModSounds.HAMSTER_BEG_SOUNDS, this.random);
         }
         // --- 2. Sleep Sounds ---

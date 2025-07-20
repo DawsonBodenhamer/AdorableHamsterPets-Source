@@ -100,7 +100,14 @@ public enum HamsterDebugComponentProvider implements IEntityComponentProvider {
         } else {
             tooltip.add(fText("  Found Ore Cooldown: %s", Text.literal("Disabled").formatted(Formatting.GRAY)));
         }
-        // --- End Ore Seeking States ---
+
+        // --- Diamond Stealing States ---
+        tooltip.add(Text.literal("--- Diamond Stealing ---").formatted(Formatting.GRAY));
+        tooltip.add(fText("Is Stealing: %s", hamster.isStealingDiamond() ? Text.literal("true").formatted(Formatting.GREEN) : Text.literal("false").formatted(Formatting.RED)));
+        if (hamster.isStealingDiamond()) {
+            int remainingTicks = hamster.getStealDurationTimer();
+            tooltip.add(fText("  Time Remaining: %s sec", Text.literal(String.format("%.1f", remainingTicks / 20.0)).formatted(Formatting.YELLOW)));
+        }
 
         // --- Love & Interaction States ---
         tooltip.add(Text.literal("--- Love & Interaction ---").formatted(Formatting.GRAY));
