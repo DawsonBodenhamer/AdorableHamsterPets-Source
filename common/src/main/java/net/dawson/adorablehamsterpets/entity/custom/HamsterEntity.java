@@ -926,6 +926,16 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         }
         nbt.putBoolean("IsSulking", this.dataTracker.get(IS_SULKING));
         nbt.putBoolean("IsCelebratingDiamond", this.dataTracker.get(IS_CELEBRATING_DIAMOND));
+
+        // --- 5. Write Diamond Stealing Data ---
+        if (this.isStealingDiamond()) {
+            nbt.putBoolean("IsStealingDiamond", true);
+            nbt.putInt("StealDurationTimer", this.getStealDurationTimer());
+            // Save the stolen item stack
+            if (!this.getStolenItemStack().isEmpty()) {
+                nbt.put("StolenItemStack", this.getStolenItemStack().encode(registries));
+            }
+        }
     }
 
     @Override
@@ -985,6 +995,19 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         }
         this.dataTracker.set(IS_SULKING, nbt.getBoolean("IsSulking"));
         this.dataTracker.set(IS_CELEBRATING_DIAMOND, nbt.getBoolean("IsCelebratingDiamond"));
+
+        // --- 5. Read Diamond Stealing Data ---
+        this.setStealingDiamond(nbt.getBoolean("IsStealingDiamond"));
+        if (this.isStealingDiamond()) {
+            this.setStealDurationTimer(nbt.getInt("StealDurationTimer"));
+            if (nbt.contains("StolenItemStack", NbtElement.COMPOUND_TYPE)) {
+                ItemStack.fromNbt(registries, nbt.get("StolenItemStack")).ifPresent(this::setStolenItemStack);
+            }
+        } else {
+            // Ensure state is clean if the flag isn't set
+            this.setStealDurationTimer(0);
+            this.setStolenItemStack(ItemStack.EMPTY);
+        }
     }
 
 

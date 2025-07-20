@@ -64,7 +64,16 @@ public class HamsterStealDiamondGoal extends Goal {
     @Override
     public boolean canStart() {
         AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] Evaluating canStart...", this.hamster.getId());
+        // --- 1. Resume Logic ---
+        if (this.hamster.isStealingDiamond()) {
+            if (this.hamster.isSitting()) return false; // Don't resume if sitting
+            if (!(this.hamster.getOwner() instanceof PlayerEntity)) return false; // Can't resume without an owner
 
+            this.owner = (PlayerEntity) this.hamster.getOwner();
+            AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] canStart SUCCEEDED: Resuming existing steal.", this.hamster.getId());
+            return true; // Resume the goal
+        }
+        // --- 2. Steal Logic ---
         // --- Initial Checks ---
         if (!Configs.AHP.enableDiamondStealing) {
             return false; // Silent return
@@ -168,17 +177,33 @@ public class HamsterStealDiamondGoal extends Goal {
 
     @Override
     public void start() {
-        this.currentState = State.MOVING_TO_DIAMOND;
-        this.hamster.getNavigation().startMovingTo(this.targetItem, 0.75D);
-        this.stealDurationTimer = this.hamster.getRandom().nextBetween(
-                Configs.AHP.minStealDurationSeconds.get() * 20,
-                Configs.AHP.maxStealDurationSeconds.get() * 20
-        );
-        this.hamster.setStealDurationTimer(this.stealDurationTimer);
         this.hamster.setActiveCustomGoalDebugName(this.getClass().getSimpleName());
-        this.repositionTarget = null;
-        this.repositionAttempts = 0;
-        AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] Goal started. State: MOVING_TO_DIAMOND. Duration: {} ticks.", this.hamster.getId(), this.stealDurationTimer);
+
+        if (this.hamster.isStealingDiamond()) {
+            // --- RESUME LOGIC ---
+            this.stealDurationTimer = this.hamster.getStealDurationTimer();
+            this.targetItem = null; // No item entity to target, it's already "stolen"
+            AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] Resuming steal. Duration left: {} ticks.", this.hamster.getId(), this.stealDurationTimer);
+
+            // Immediately decide whether to flee or taunt based on distance to owner
+            if (this.hamster.distanceTo(this.owner) < Configs.AHP.minFleeDistance.get()) {
+                this.currentState = State.FLEEING;
+            } else {
+                this.currentState = State.TAUNTING;
+            }
+        } else {
+            // --- FRESH START LOGIC ---
+            this.currentState = State.MOVING_TO_DIAMOND;
+            this.hamster.getNavigation().startMovingTo(this.targetItem, 0.75D);
+            this.stealDurationTimer = this.hamster.getRandom().nextBetween(
+                    Configs.AHP.minStealDurationSeconds.get() * 20,
+                    Configs.AHP.maxStealDurationSeconds.get() * 20
+            );
+            this.hamster.setStealDurationTimer(this.stealDurationTimer);
+            this.repositionTarget = null;
+            this.repositionAttempts = 0;
+            AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] Goal started fresh. State: MOVING_TO_DIAMOND. Duration: {} ticks.", this.hamster.getId(), this.stealDurationTimer);
+        }
     }
 
     @Override
@@ -217,8 +242,15 @@ public class HamsterStealDiamondGoal extends Goal {
 
     @Override
     public void tick() {
-        if (this.targetItem == null || this.owner == null) {
-            return;
+        // --- Timer Decrement ---
+        if (this.stealDurationTimer > 0) {
+            this.stealDurationTimer--;
+            this.hamster.setStealDurationTimer(this.stealDurationTimer);
+        }
+
+        // --- Owner Check ---
+        if (this.owner == null) {
+            return; // Cannot proceed without an owner.
         }
 
         // --- Handle Delayed Bounce and Celebrate Sound ---
@@ -234,6 +266,7 @@ public class HamsterStealDiamondGoal extends Goal {
 
         switch (this.currentState) {
             case MOVING_TO_DIAMOND:
+                if (this.targetItem == null) return;
                 this.hamster.getLookControl().lookAt(this.targetItem, 30.0f, 30.0f);
                 // If navigation stops before reaching the target, try to reposition.
                 if (this.hamster.getNavigation().isIdle()) {
@@ -258,6 +291,7 @@ public class HamsterStealDiamondGoal extends Goal {
                 break;
 
             case REPOSITIONING:
+                if (this.targetItem == null) return;
                 // Check if exceeded repositioning budget.
                 if (this.repositionAttempts >= 3) {
                     AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] Exceeded max reposition attempts. Stopping goal.", this.hamster.getId());
@@ -289,6 +323,7 @@ public class HamsterStealDiamondGoal extends Goal {
                 break;
 
             case POUNCING:
+                if (this.targetItem == null) return;
                 this.lungeTicks--;
 
                 // --- Pounce Lunge Interpolation ---
