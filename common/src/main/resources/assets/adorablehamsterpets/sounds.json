@@ -323,6 +323,8 @@
   },
   "hamster_diamond_pounce": {
     "subtitle": "subtitles.adorablehamsterpets.diamond_pounce",
-    "sounds": [ "adorablehamsterpets:hamster_diamond_pounce" ]
+    "sounds": [
+      "adorablehamsterpets:hamster_diamond_pounce"
+    ]
   }
 }

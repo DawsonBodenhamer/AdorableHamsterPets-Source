@@ -102,6 +102,9 @@
   "subtitles.adorablehamsterpets.alarm_orchestra_hit": "Dramatic sound",
   "subtitles.adorablehamsterpets.hamster_affection": "Hamster coos",
   "subtitles.adorablehamsterpets.diamond_sparkle": "Diamond sparkles",
+  "subtitles.adorablehamsterpets.diamond_pounce": "Hamster pounces on item",
+  "subtitles.adorablehamsterpets.food_pounce": "Hamster pounces on food",
+  "subtitles.adorablehamsterpets.generic_pounce": "Hamster pounces on item",
 
   "config.jade.plugin_adorablehamsterpets.wild_bush_tooltips": "Wild Bush Tooltip Hints",
   "config.jade.plugin_adorablehamsterpets.hamster_debug_info": "More Hamster Info (For Debugging)",
