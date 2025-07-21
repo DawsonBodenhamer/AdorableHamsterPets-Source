@@ -2612,11 +2612,11 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new HamsterSeekDiamondGoal(this));
         this.goalSelector.add(1, new HamsterStealDiamondGoal(this));
-        this.goalSelector.add(2, new HamsterMeleeAttackGoal(this, 1.0D, true));
-        this.goalSelector.add(3, new HamsterMateGoal(this, 1.0D));
-        this.goalSelector.add(4, new HamsterFollowOwnerGoal(this, 1.2D, 4.0F, 16.0F));
+        this.goalSelector.add(2, new HamsterMeleeAttackGoal(this, 1.5D, true));
+        this.goalSelector.add(3, new HamsterMateGoal(this, 0.75D));
+        this.goalSelector.add(4, new HamsterFollowOwnerGoal(this, 1.0D, 4.0F, 16.0F));
         this.goalSelector.add(5, new HamsterFleeGoal<>(this, LivingEntity.class, 8.0F, 0.75D, 1.5D));
-        this.goalSelector.add(6, new HamsterTemptGoal(this, 1.2D,
+        this.goalSelector.add(6, new HamsterTemptGoal(this, 1.0D,
                 Ingredient.ofItems(ModItems.SLICED_CUCUMBER.get(), ModItems.CHEESE.get(), ModItems.STEAMED_GREEN_BEANS.get()),
                 false));
         this.goalSelector.add(7, new HamsterSitGoal(this));
