@@ -106,6 +106,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
      * ────────────────────────────────────────────────────────────────────────────*/
 
     // --- Constants ---
+    private static final double WALK_TO_RUN_THRESHOLD_SQUARED = 0.002;
+    private static final double RUN_TO_SPRINT_THRESHOLD_SQUARED = 0.008;
     public static final float FAST_YAW_CHANGE = 25.0f;
     public static final float FAST_PITCH_CHANGE = 25.0f;
     private static final int INVENTORY_SIZE = 6;
@@ -664,6 +666,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private static final RawAnimation DIAMOND_POUNCE_ANIM = RawAnimation.begin().thenPlay("anim_hamster_diamond_pounce");
     private static final RawAnimation DIAMOND_TAUNT_ANIM = RawAnimation.begin().thenPlay("anim_hamster_diamond_taunt");
     private static final RawAnimation CELEBRATE_CHASE_ANIM = RawAnimation.begin().thenPlay("anim_hamster_celebrate_chase");
+    private static final RawAnimation SPRINTING_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sprinting");
 
 
 
@@ -2508,10 +2511,16 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             }
 
             // --- Movement State ---
-            double horizontalSpeedSquared = this.getVelocity().horizontalLengthSquared();
-            if (horizontalSpeedSquared > 1.0E-6) {
-                return event.setAndContinue(horizontalSpeedSquared > 0.002 ? RUNNING_ANIM : WALKING_ANIM);
-            }
+                    double horizontalSpeedSquared = this.getVelocity().horizontalLengthSquared();
+                    if (horizontalSpeedSquared > 1.0E-6) { // Check if moving at all
+                        if (horizontalSpeedSquared > RUN_TO_SPRINT_THRESHOLD_SQUARED) {
+                            return event.setAndContinue(SPRINTING_ANIM);
+                        } else if (horizontalSpeedSquared > WALK_TO_RUN_THRESHOLD_SQUARED) {
+                            return event.setAndContinue(RUNNING_ANIM);
+                        } else {
+                            return event.setAndContinue(WALKING_ANIM);
+                        }
+                    }
 
             // --- Begging State ---
             if (this.isBegging()) {
