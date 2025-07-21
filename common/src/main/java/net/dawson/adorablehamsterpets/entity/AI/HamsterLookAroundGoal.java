@@ -1,6 +1,7 @@
 package net.dawson.adorablehamsterpets.entity.AI;
 
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
+import net.dawson.adorablehamsterpets.mixin.accessor.LookAroundGoalAccessor;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
 import net.minecraft.entity.mob.MobEntity;
 
@@ -23,7 +24,7 @@ public class HamsterLookAroundGoal extends LookAroundGoal {
         // --- 1. Check Hamster State ---
         // Use our stored 'hamsterMob' reference
         if (this.hamsterMob instanceof HamsterEntity hamster) {
-            if (hamster.isSitting() || hamster.isSleeping() || hamster.isKnockedOut() || hamster.isSulking() || hamster.isStealingDiamond()) {
+            if (hamster.isSitting() || hamster.isSleeping() || hamster.isKnockedOut() || hamster.isSulking() || hamster.isStealingDiamond() || hamster.isCelebratingChase()) {
                 return false;
             }
         }
@@ -60,6 +61,24 @@ public class HamsterLookAroundGoal extends LookAroundGoal {
                 he.setActiveCustomGoalDebugName("None");
             }
         }
+    }
+
+    @Override
+    public void tick() {
+        LookAroundGoalAccessor accessor = (LookAroundGoalAccessor) this;
+        MobEntity mob = accessor.getMob(); // Get the mob via accessor
+
+        // Replicate the vanilla logic of decrementing the timer
+        accessor.setLookTime(accessor.getLookTime() - 1);
+
+        // Use our centralized constants for rotation speed
+        mob.getLookControl().lookAt(
+                mob.getX() + accessor.getDeltaX(),
+                mob.getEyeY(),
+                mob.getZ() + accessor.getDeltaZ(),
+                HamsterEntity.FAST_YAW_CHANGE,
+                HamsterEntity.FAST_PITCH_CHANGE
+        );
     }
     // --- End 3. Overridden Methods ---
 }

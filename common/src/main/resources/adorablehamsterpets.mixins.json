@@ -7,7 +7,9 @@
     "server.CreeperEntityMixin",
     "server.PlayerEntityMixin",
     "accessor.MeleeAttackGoalAccessor",
-    "accessor.LandPathNodeMakerInvoker"
+    "accessor.LandPathNodeMakerInvoker",
+    "accessor.LookAtEntityGoalAccessor",
+    "accessor.LookAroundGoalAccessor"
   ],
   "client": [
 

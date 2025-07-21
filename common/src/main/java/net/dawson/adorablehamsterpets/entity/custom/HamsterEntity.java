@@ -12,6 +12,7 @@ import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.AI.*;
 import net.dawson.adorablehamsterpets.entity.ImplementedInventory;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
+import net.dawson.adorablehamsterpets.entity.control.HamsterBodyControl;
 import net.dawson.adorablehamsterpets.item.ModItems;
 import net.dawson.adorablehamsterpets.networking.ModPackets;
 import net.dawson.adorablehamsterpets.mixin.accessor.LandPathNodeMakerInvoker;
@@ -26,6 +27,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.control.BodyControl;
 import net.minecraft.entity.ai.goal.AttackWithOwnerGoal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
@@ -104,6 +106,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
      * ────────────────────────────────────────────────────────────────────────────*/
 
     // --- Constants ---
+    public static final float FAST_YAW_CHANGE = 25.0f;
+    public static final float FAST_PITCH_CHANGE = 25.0f;
     private static final int INVENTORY_SIZE = 6;
     private static final int REFUSE_FOOD_TIMER_TICKS = 40;            // 2 seconds
     private static final int CUSTOM_LOVE_TICKS = 600;                 // 30 seconds
@@ -623,6 +627,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     public static final TrackedData<Integer> STEAL_DURATION_TIMER = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public static final TrackedData<Boolean> IS_TAUNTING = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     public static final TrackedData<ItemStack> STOLEN_ITEM_STACK = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.ITEM_STACK);
+    public static final TrackedData<Boolean> IS_CELEBRATING_CHASE = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
 
 
@@ -690,6 +695,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     @Unique public transient String particleEffectId = null;
     @Unique public transient String soundEffectId = null;
     @Unique public long stealCooldownEndTick = 0L;
+    @Unique private int celebrationChaseTicks = 0;
 
 
     // --- Inventory ---
@@ -809,6 +815,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     public void setTaunting(boolean taunting) {this.dataTracker.set(IS_TAUNTING, taunting);}
     public ItemStack getStolenItemStack() { return this.dataTracker.get(STOLEN_ITEM_STACK); }
     public void setStolenItemStack(ItemStack stack) { this.dataTracker.set(STOLEN_ITEM_STACK, stack); }
+    public boolean isCelebratingChase() { return this.dataTracker.get(IS_CELEBRATING_CHASE); }
+    public void setCelebratingChase(boolean celebrating) { this.dataTracker.set(IS_CELEBRATING_CHASE, celebrating); }
 
     // --- Inventory Implementation ---
     @Override
@@ -1241,8 +1249,9 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 this.setStolenItemStack(ItemStack.EMPTY);
                 this.setStealDurationTimer(0);
                 this.setStealingDiamond(false);
-                // Make the hamster look at the player before celebrating
-                this.getLookControl().lookAt(player, 30.0f, 30.0f);
+                // Set the state flag and initialize the timer so the tick() method can handle the rotation.
+                this.setCelebratingChase(true);
+                this.celebrationChaseTicks = 30; // 1.5 second duration
                 this.triggerAnimOnServer("mainController", "anim_hamster_celebrate_chase");
                 // Play a happy/affectionate and diamond "tink" sound
                 world.playSound(null, this.getBlockPos(), ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_AFFECTION_SOUNDS, this.random), SoundCategory.NEUTRAL, 1.0f, this.getSoundPitch());
@@ -1801,6 +1810,18 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         }
         // --- End Logic for Handling Cleaning State ---
         // --- End 1. Decrement Timers ---
+
+        // --- Post-Chase Celebration State Logic ---
+        if (this.isCelebratingChase()) {
+            if (this.celebrationChaseTicks > 0) {
+                if (this.getOwner() != null) {
+                    this.getLookControl().lookAt(this.getOwner(), FAST_YAW_CHANGE, FAST_PITCH_CHANGE);
+                }
+                this.celebrationChaseTicks--;
+            } else {
+                this.setCelebratingChase(false);
+            }
+        }
 
         // --- 2. Thrown State Logic ---
         if (this.isThrown()) {
@@ -2384,7 +2405,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
      */
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "mainController", 5, event -> {
+        controllers.add(new AnimationController<>(this, "mainController", 2, event -> {
             DozingPhase currentDozingPhase = this.getDozingPhase();
             int personality = this.dataTracker.get(ANIMATION_PERSONALITY_ID);
 
@@ -2579,6 +2600,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         this.dataTracker.startTracking(STEAL_DURATION_TIMER, 0);
         this.dataTracker.startTracking(IS_TAUNTING, false);
         this.dataTracker.startTracking(STOLEN_ITEM_STACK, ItemStack.EMPTY);
+        this.dataTracker.startTracking(IS_CELEBRATING_CHASE, false);
     }
 
     // --- AI Goals ---
@@ -2781,6 +2803,11 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
         // Call and return the super method's result with the added nbt parameter for 1.20.1
         return super.initialize(world, difficulty, spawnReason, entityData, nbt);
+    }
+
+    @Override
+    protected BodyControl createBodyControl() {
+        return new HamsterBodyControl(this);
     }
 
 
