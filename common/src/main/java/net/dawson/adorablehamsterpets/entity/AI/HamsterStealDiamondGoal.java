@@ -396,7 +396,7 @@ public class HamsterStealDiamondGoal extends Goal {
 
                 // If we just entered the taunting state, start the settle timer.
                 if (!this.hamster.isTaunting() && this.tauntSettleTicks == 0) {
-                    this.tauntSettleTicks = 10; // 10-tick (0.5s) settle delay
+                    this.tauntSettleTicks = 5; // 5-tick (0.25s) taunt delay
                 }
 
                 if (this.tauntSettleTicks > 0) {
