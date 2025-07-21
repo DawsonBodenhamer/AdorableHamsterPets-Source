@@ -134,10 +134,26 @@ public class AhpConfig extends Config {
     @Translatable.Desc("Time-out after using your living projectile. (20 ticks = 1 s)")
     public ValidatedInt hamsterThrowCooldown = new ValidatedInt(2400, 20 * 60 * 10, 20);
 
-    @ConfigGroup.Pop
     @Translatable.Name("Green Bean Buff Cooldown (Ticks)")
     @Translatable.Desc("When the sugar rush ends, force a breather. (20 ticks = 1 s)")
     public ValidatedInt steamedGreenBeansBuffCooldown = new ValidatedInt(6000, 20 * 60 * 10, 20);
+
+    @Translatable.Name("Enable Diamond Seeking Cooldown?")
+    @Translatable.Desc("Force a cool-down after striking it rich. Off by default, since this can't happen again anyway without another mount/dismount on the shoulder.")
+    public boolean enableIndependentDiamondSeekCooldown = false;
+
+    @Translatable.Name("Diamond Seeking Cooldown (Ticks)")
+    @Translatable.Desc("Cooldown before your hamster can go on another treasure hunt. (20 ticks = 1 s)")
+    public ValidatedInt independentOreSeekCooldownTicks = new ValidatedInt(2400, 6000, 20);
+
+    @Translatable.Name("Diamond Thievery Cooldown (Ticks)")
+    @Translatable.Desc("Mandatory time-out after a successful heist to prevent serial kleptomania. (20 ticks = 1s). WARNING: Increasing this cooldown can dramatically change the diamond stealing mechanic, since that AI goal sometimes re-runs multiple times in a row when the hamster has trouble pathfinding to the item that it wants to steal. So instead of increasing this, you should probably just stop dropping your diamonds on the ground everywhere, butter fingers.")
+    public ValidatedInt stealCooldownTicks = new ValidatedInt(100, 6000, 20);
+
+    @ConfigGroup.Pop
+    @Translatable.Name("Breeding Cooldown (Ticks)")
+    @Translatable.Desc("Hamsters need their space. (20 ticks = 1 s)")
+    public ValidatedInt breedingCooldownTicks = new ValidatedInt(6000, 24000, 600);
 
     // --- Spawn Settings ---
     @Translatable.Name("Spawn Settings")
@@ -158,14 +174,10 @@ public class AhpConfig extends Config {
     @Translatable.Desc("Convince a hamster to love you—and occasionally accept a roommate.")
     public ConfigGroup tamingAndBreeding = new ConfigGroup("tamingAndBreeding", true);
 
+    @ConfigGroup.Pop
     @Translatable.Name("Taming Chance")
     @Translatable.Desc("Taming difficulty (1 in X chance). Higher = more cucumbers sacrificed to fuzzy freeloaders.")
     public ValidatedInt tamingChanceDenominator = new ValidatedInt(3, 20, 1);
-
-    @ConfigGroup.Pop
-    @Translatable.Name("Breeding Cooldown (Ticks)")
-    @Translatable.Desc("Hamsters need their space. (20 ticks = 1 s)")
-    public ValidatedInt breedingCooldownTicks = new ValidatedInt(6000, 24000, 600);
 
     // --- Shoulder Feature Settings ---
     @Translatable.Name("Shoulder Feature Settings")
@@ -202,18 +214,10 @@ public class AhpConfig extends Config {
     @Translatable.Desc("How far a hamster scans once it’s decided to play prospector.")
     public ValidatedInt diamondSeekRadius = new ValidatedInt(10, 20, 5);
 
+    @ConfigGroup.Pop
     @Translatable.Name("Gold 'Mistake' Chance")
     @Translatable.Desc("The probability (0.0 to 1.0) that a hamster will seek gold instead of diamond, if both are available. At 0.5, it's a coin toss. At 1.0, it's guaranteed hamster sulking.")
     public ValidatedFloat goldMistakeChance = new ValidatedFloat(0.33f, 1.0f, 0.0f);
-
-    @Translatable.Name("Enable Cooldown?")
-    @Translatable.Desc("Force a cool-down after striking it rich. Off by default, since this can't happen again anyway without another mount/dismount on the shoulder.")
-    public boolean enableIndependentDiamondSeekCooldown = false;
-
-    @ConfigGroup.Pop
-    @Translatable.Name("Cooldown Duration (Ticks)")
-    @Translatable.Desc("Cooldown before your hamster can go on another treasure hunt. (20 ticks = 1 s)")
-    public ValidatedInt independentOreSeekCooldownTicks = new ValidatedInt(2400, 6000, 20);
 
     // --- Diamond Stealing Behavior Settings---
     @Translatable.Name("Diamond Stealing Behavior Settings")
@@ -223,10 +227,6 @@ public class AhpConfig extends Config {
     @Translatable.Name("Enable Diamond Stealing")
     @Translatable.Desc("Permits hamsters to engage in spontaneous, high-stakes games of keep-away with your valuables. A chase ensues. Obviously.")
     public boolean enableDiamondStealing = true;
-
-    @Translatable.Name("Steal Cooldown (Ticks)")
-    @Translatable.Desc("Mandatory time-out after a successful heist to prevent serial kleptomania. (20 ticks = 1s)")
-    public ValidatedInt stealCooldownTicks = new ValidatedInt(100, 6000, 20);
 
     @Translatable.Name("Stealable Items")
     @Translatable.Desc("A list of item IDs hamsters find irresistible. Format: 'mod_id:item_id'. Example: 'minecraft:diamond'.")
