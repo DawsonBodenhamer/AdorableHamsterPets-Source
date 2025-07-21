@@ -380,7 +380,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             hamster.setTamed(true, true);
             hamster.setBreedingAge(data.breedingAge());
             hamster.throwCooldownEndTick = data.throwCooldownEndTick();
-            hamster.steamedBeansCooldownEndTick = data.steamedBeansCooldownEndTick();
+            hamster.greenBeanBuffEndTick = data.greenBeanBuffEndTick();
             hamster.autoEatCooldownTicks = data.autoEatCooldownTicks();
             hamster.getDataTracker().set(PINK_PETAL_TYPE, data.pinkPetalType());
             hamster.getDataTracker().set(CHEEK_POUCH_UNLOCKED, data.cheekPouchUnlocked());
@@ -690,7 +690,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     public int customLoveTimer;
     private int tamingCooldown = 0;
     private long throwCooldownEndTick = 0L;
-    private long steamedBeansCooldownEndTick = 0L;
+    private long greenBeanBuffEndTick = 0L;
 
     // --- Auto-Eating State/Cooldown Fields ---
     private boolean isAutoEating = false; // Flag for potential animation hook
@@ -907,7 +907,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
         nbt.putBoolean("KnockedOut", this.isKnockedOut());
         nbt.putLong("ThrowCooldownEnd", this.throwCooldownEndTick);
-        nbt.putLong("SteamedBeansCooldownEnd", this.steamedBeansCooldownEndTick);
+        nbt.putLong("SteamedBeansCooldownEnd", this.greenBeanBuffEndTick);
         nbt.putInt("AutoEatCooldown", this.autoEatCooldownTicks);
         nbt.putInt("EjectionCheckCooldown", this.ejectionCheckCooldown);
         nbt.putInt("PinkPetalType", this.dataTracker.get(PINK_PETAL_TYPE));
@@ -965,7 +965,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         }
         this.setKnockedOut(nbt.getBoolean("KnockedOut"));
         this.throwCooldownEndTick = nbt.getLong("ThrowCooldownEnd");
-        this.steamedBeansCooldownEndTick = nbt.getLong("SteamedBeansCooldownEnd");
+        this.greenBeanBuffEndTick = nbt.getLong("SteamedBeansCooldownEnd");
         this.autoEatCooldownTicks = nbt.getInt("AutoEatCooldown");
         this.ejectionCheckCooldown = nbt.contains("EjectionCheckCooldown", NbtElement.INT_TYPE) ? nbt.getInt("EjectionCheckCooldown") : 20;
         this.dataTracker.set(PINK_PETAL_TYPE, nbt.getInt("PinkPetalType"));
@@ -1065,7 +1065,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 this.isRightCheekFull(),
                 this.getBreedingAge(),
                 this.throwCooldownEndTick,
-                this.steamedBeansCooldownEndTick,
+                this.greenBeanBuffEndTick,
                 effectsNbt, // Pass the compound wrapper
                 this.autoEatCooldownTicks,
                 nameOptional,
@@ -3000,9 +3000,9 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         // --- 2. Steamed Green Beans Logic ---
         if (isBuffItem) {
             long currentTime = world.getTime();
-            if (this.steamedBeansCooldownEndTick > currentTime) {
+            if (this.greenBeanBuffEndTick > currentTime) {
                 // Still on cooldown
-                long remainingTicks = this.steamedBeansCooldownEndTick - currentTime;
+                long remainingTicks = this.greenBeanBuffEndTick - currentTime;
                 long totalSecondsRemaining = remainingTicks / 20;
                 long minutes = totalSecondsRemaining / 60;
                 long seconds = totalSecondsRemaining % 60;
@@ -3028,9 +3028,9 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
 
                 // Set cooldown
-                this.steamedBeansCooldownEndTick = currentTime + config.steamedGreenBeansBuffCooldown.get();
+                this.greenBeanBuffEndTick = currentTime + config.steamedGreenBeansBuffCooldown.get();
                 actionTaken = true; // Action was successful
-                AdorableHamsterPets.LOGGER.debug("[FeedAttempt {} Tick {}] Applied buffs from Steamed Green Beans. Cooldown set to {}. Returning true.", this.getId(), world.getTime(), this.steamedBeansCooldownEndTick);
+                AdorableHamsterPets.LOGGER.debug("[FeedAttempt {} Tick {}] Applied buffs from Steamed Green Beans. Cooldown set to {}. Returning true.", this.getId(), world.getTime(), this.greenBeanBuffEndTick);
 
                 // Trigger Fed Steamed Beans Criterion
                 if (player instanceof ServerPlayerEntity serverPlayer) {
