@@ -21,15 +21,20 @@ public class HamsterLookAroundGoal extends LookAroundGoal {
     // --- 3. Overridden Methods ---
     @Override
     public boolean canStart() {
-        // --- 1. Check Hamster State ---
+        // Use the accessor to get the mob field
+        LookAroundGoalAccessor accessor = (LookAroundGoalAccessor) this;
+        MobEntity mob = accessor.getMob();
+
+        // First, perform the vanilla probability check.
+        if (mob.getRandom().nextFloat() >= 0.02F) { // Vanilla's hardcoded chance
+            return false;
+        }
+        // Check Hamster State
         // Use our stored 'hamsterMob' reference
         if (this.hamsterMob instanceof HamsterEntity hamster) {
-            if (hamster.isSitting() || hamster.isSleeping() || hamster.isKnockedOut() || hamster.isSulking() || hamster.isStealingDiamond() || hamster.isCelebratingChase()) {
-                return false;
-            }
+            return !hamster.isSitting() && !hamster.isSleeping() && !hamster.isKnockedOut() && !hamster.isSulking() && !hamster.isStealingDiamond() && !hamster.isCelebratingChase();
         }
-        // --- End 1. Check Hamster State ---
-        return super.canStart();
+        return true;
     }
 
     @Override

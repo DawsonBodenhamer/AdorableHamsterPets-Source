@@ -11,22 +11,26 @@ public class HamsterLookAtEntityGoal extends LookAtEntityGoal {
 
     // --- 1. Fields ---
     private final MobEntity hamsterMob; // Store our own reference
+    private final float chance; // Initialize with default vanilla chance
     // --- End 1. Fields ---
 
     // --- 2. Constructors ---
     public HamsterLookAtEntityGoal(MobEntity mob, Class<? extends LivingEntity> targetType, float range) {
         super(mob, targetType, range);
         this.hamsterMob = mob; // Initialize our reference
+        this.chance = 0.02F; // Initialize the chance
     }
 
     public HamsterLookAtEntityGoal(MobEntity mob, Class<? extends LivingEntity> targetType, float range, float chance) {
         super(mob, targetType, range, chance);
-        this.hamsterMob = mob; // Initialize our reference
+        this.hamsterMob = mob;
+        this.chance = chance; // Store the chance
     }
 
     public HamsterLookAtEntityGoal(MobEntity mob, Class<? extends LivingEntity> targetType, float range, float chance, boolean lookForward) {
         super(mob, targetType, range, chance, lookForward);
         this.hamsterMob = mob; // Initialize our reference
+        this.chance = chance; // Initialize the chance
     }
     // --- End 2. Constructors ---
 
@@ -40,7 +44,10 @@ public class HamsterLookAtEntityGoal extends LookAtEntityGoal {
                 return false;
             }
         }
-        // --- End 1. Check Hamster State ---
+        // The vanilla probability check
+        if (this.mob.getRandom().nextFloat() >= this.chance) {
+            return false;
+        }
         return super.canStart();
     }
 
