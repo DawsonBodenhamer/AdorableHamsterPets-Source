@@ -56,7 +56,6 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ItemStackParticleEffect;
-import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.RegistryWrapper;
@@ -630,8 +629,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     public static final TrackedData<Boolean> IS_TAUNTING = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     public static final TrackedData<ItemStack> STOLEN_ITEM_STACK = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.ITEM_STACK);
     public static final TrackedData<Boolean> IS_CELEBRATING_CHASE = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-
-
+    public static final TrackedData<Long> GREEN_BEAN_BUFF_DURATION = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.LONG);
 
 
     // --- Animation Constants ---
@@ -656,6 +654,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private static final RawAnimation CLEANING_ANIM = RawAnimation.begin().thenPlay("anim_hamster_cleaning");
     private static final RawAnimation RUNNING_ANIM = RawAnimation.begin().thenPlay("anim_hamster_running");
     private static final RawAnimation WALKING_ANIM = RawAnimation.begin().thenPlay("anim_hamster_walking");
+    private static final RawAnimation SPRINTING_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sprinting");
     private static final RawAnimation BEGGING_ANIM = RawAnimation.begin().thenPlay("anim_hamster_begging");
     private static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenPlay("anim_hamster_idle");
     private static final RawAnimation ATTACK_ANIM = RawAnimation.begin().thenPlay("anim_hamster_attack");
@@ -666,7 +665,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private static final RawAnimation DIAMOND_POUNCE_ANIM = RawAnimation.begin().thenPlay("anim_hamster_diamond_pounce");
     private static final RawAnimation DIAMOND_TAUNT_ANIM = RawAnimation.begin().thenPlay("anim_hamster_diamond_taunt");
     private static final RawAnimation CELEBRATE_CHASE_ANIM = RawAnimation.begin().thenPlay("anim_hamster_celebrate_chase");
-    private static final RawAnimation SPRINTING_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sprinting");
 
 
 
@@ -688,7 +686,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     @Unique public long foundOreCooldownEndTick = 0L;
     @Unique public BlockPos currentOreTarget = null;
     @Unique private int celebrationParticleTicks = 0;
-    @Unique private int sulkingSoundTicks = 0;
     @Unique private int diamondCelebrationSoundTicks = 0;
     @Unique private int sulkOrchestraHitDelayTicks = 0;
     @Unique private int sulkFailParticleTicks = 0;
@@ -820,6 +817,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     public void setStolenItemStack(ItemStack stack) { this.dataTracker.set(STOLEN_ITEM_STACK, stack); }
     public boolean isCelebratingChase() { return this.dataTracker.get(IS_CELEBRATING_CHASE); }
     public void setCelebratingChase(boolean celebrating) { this.dataTracker.set(IS_CELEBRATING_CHASE, celebrating); }
+    public boolean hasGreenBeanBuff() {return this.getDataTracker().get(GREEN_BEAN_BUFF_DURATION) > this.getWorld().getTime();}
 
     // --- Inventory Implementation ---
     @Override
@@ -930,7 +928,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
         nbt.putBoolean("KnockedOut", this.isKnockedOut());
         nbt.putLong("ThrowCooldownEnd", this.throwCooldownEndTick);
-        nbt.putLong("SteamedBeansCooldownEnd", this.greenBeanBuffEndTick);
+        nbt.putLong("GreenBeanBuffDuration", this.getDataTracker().get(GREEN_BEAN_BUFF_DURATION));
         nbt.putInt("AutoEatCooldown", this.autoEatCooldownTicks);
         nbt.putInt("EjectionCheckCooldown", this.ejectionCheckCooldown);
         nbt.putInt("PinkPetalType", this.dataTracker.get(PINK_PETAL_TYPE));
@@ -987,7 +985,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         }
         this.setKnockedOut(nbt.getBoolean("KnockedOut"));
         this.throwCooldownEndTick = nbt.getLong("ThrowCooldownEnd");
-        this.greenBeanBuffEndTick = nbt.getLong("SteamedBeansCooldownEnd");
+        this.getDataTracker().set(GREEN_BEAN_BUFF_DURATION, nbt.getLong("GreenBeanBuffDuration"));
         this.autoEatCooldownTicks = nbt.getInt("AutoEatCooldown");
         this.ejectionCheckCooldown = nbt.contains("EjectionCheckCooldown", NbtElement.INT_TYPE) ? nbt.getInt("EjectionCheckCooldown") : 20;
         this.dataTracker.set(PINK_PETAL_TYPE, nbt.getInt("PinkPetalType"));
@@ -2299,21 +2297,39 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
         // --- 5. Client-Side Logic ---
         // --- 5.1 Buff Particle Logic ---
-        if (world.isClient) {
-            // Check if the hamster has one of the buff effects (e.g., Strength)
-            if (this.hasStatusEffect(StatusEffects.STRENGTH)) {
-                // Only spawn particles occasionally to avoid clutter
-                if (this.random.nextInt(5) == 0) { // Spawn roughly every 4 times per second
-                    // Spawn standard entity effect particles randomly around the hamster
-                    for (int i = 0; i < 2; ++i) { // Spawn a couple particles each time
-                        world.addParticle((ParticleEffect)ParticleTypes.ENTITY_EFFECT, // Cast ParticleType to ParticleEffect
-                                this.getParticleX(0.6), // Get random X within bounds
-                                this.getRandomBodyY(),     // Get random Y on the body
-                                this.getParticleZ(0.6), // Get random Z within bounds
-                                this.random.nextGaussian() * 0.02, // dx (slight random motion)
-                                this.random.nextGaussian() * 0.02, // dy
-                                this.random.nextGaussian() * 0.02  // dz
-                        );
+        if (world.isClient && this.hasGreenBeanBuff()) {
+            // Only spawn particles if the hamster is actually moving.
+            if (this.getVelocity().horizontalLengthSquared() > 1.0E-6) {
+                // --- Constants for Particle Physics ---
+                final double backwardsSpeed = 1.7;
+                final double scatterStrength = 0.03;
+                final double downwardVelocity = 0.17;
+                final double positionOffsetMultiplier = 1.7;
+
+                // Spawn particles frequently, but not every single tick, to avoid being overwhelming.
+                if (this.random.nextInt(2) == 0) {
+                    for (int i = 0; i < 5; ++i) {
+                        // 1. Calculate the base spawn position using the hamster's PREVIOUS tick's location.
+                        Vec3d currentVelocity = this.getVelocity();
+                        double baseX = this.prevX - (currentVelocity.x * positionOffsetMultiplier);
+                        double baseY = this.prevY + (this.getHeight() / 2.0) - (currentVelocity.y * positionOffsetMultiplier);
+                        double baseZ = this.prevZ - (currentVelocity.z * positionOffsetMultiplier);
+
+                        // 2. Apply the random spread to the base position.
+                        // This maintains spread relative to the calculated "previous" point.
+                        double spawnX = baseX + (this.random.nextDouble() - 0.5) * (this.getWidth() * 0.8);
+                        double spawnY = baseY + (this.random.nextDouble() - 0.5) * (this.getHeight() * 0.05);
+                        double spawnZ = baseZ + (this.random.nextDouble() - 0.5) * (this.getWidth() * 0.8);
+
+                        // 3. Calculate the particle's velocity for the "zoomies" effect.
+                        Vec3d hamsterMovementVec = this.getVelocity();
+                        Vec3d backwardsBaseVel = hamsterMovementVec.multiply(-1.0 * backwardsSpeed);
+                        double finalVelX = backwardsBaseVel.x + (this.random.nextGaussian() * scatterStrength);
+                        double finalVelY = backwardsBaseVel.y + (this.random.nextGaussian() * scatterStrength) - downwardVelocity;
+                        double finalVelZ = backwardsBaseVel.z + (this.random.nextGaussian() * scatterStrength);
+
+                        // 4. Add the particle to the world with the calculated position and velocity.
+                        world.addParticle(ParticleTypes.WHITE_SMOKE, spawnX, spawnY, spawnZ, finalVelX, finalVelY, finalVelZ);
                     }
                 }
             }
@@ -2610,6 +2626,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         this.dataTracker.startTracking(IS_TAUNTING, false);
         this.dataTracker.startTracking(STOLEN_ITEM_STACK, ItemStack.EMPTY);
         this.dataTracker.startTracking(IS_CELEBRATING_CHASE, false);
+        this.dataTracker.startTracking(GREEN_BEAN_BUFF_DURATION, 0L);
     }
 
     // --- AI Goals ---
@@ -3038,21 +3055,26 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 int strengthAmplifier = config.greenBeanBuffAmplifierStrength.get();
                 int absorptionAmplifier = config.greenBeanBuffAmplifierAbsorption.get();
                 int regenAmplifier = config.greenBeanBuffAmplifierRegen.get();
-                this.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, duration, speedAmplifier));
-                this.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, duration, strengthAmplifier));
-                this.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, duration, absorptionAmplifier));
-                this.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, duration, regenAmplifier));
 
+                // The three 'false' arguments are: (isAmbient, showParticles, showIcon)
+                this.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, duration, speedAmplifier, true, false, true));
+                this.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, duration, strengthAmplifier, true, false, true));
+                this.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, duration, absorptionAmplifier, true, false, true));
+                this.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, duration, regenAmplifier, true, false, true));
 
                 // Play sound
                 SoundEvent buffSound = getRandomSoundFrom(HAMSTER_CELEBRATE_SOUNDS, this.random);
                 world.playSound(null, this.getBlockPos(), buffSound, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
+                // Calculate when the buff's duration will end and sync to the client.
+                long buffDurationEnd = currentTime + config.greenBeanBuffDuration.get();
+                this.getDataTracker().set(GREEN_BEAN_BUFF_DURATION, buffDurationEnd);
 
-                // Set cooldown
+                // Set the server-side cooldown timer.
                 this.greenBeanBuffEndTick = currentTime + config.steamedGreenBeansBuffCooldown.get();
+
                 actionTaken = true; // Action was successful
-                AdorableHamsterPets.LOGGER.debug("[FeedAttempt {} Tick {}] Applied buffs from Steamed Green Beans. Cooldown set to {}. Returning true.", this.getId(), world.getTime(), this.greenBeanBuffEndTick);
+                AdorableHamsterPets.LOGGER.info("[FeedAttempt {} Tick {}] Applied buffs. Duration ends at tick {}. Cooldown ends at tick {}.", this.getId(), world.getTime(), buffDurationEnd, this.greenBeanBuffEndTick);
 
                 // Trigger Fed Steamed Beans Criterion
                 if (player instanceof ServerPlayerEntity serverPlayer) {
