@@ -69,7 +69,7 @@ public class HamsterSeekDiamondGoal extends Goal {
         if (!this.hamster.isPrimedToSeekDiamonds) {
             return false;
         }
-        if (this.hamster.isSitting() || this.hamster.isSleeping() || this.hamster.isKnockedOut() || this.hamster.isSulking()) {
+        if (this.hamster.isSitting() || this.hamster.isSleeping() || this.hamster.isKnockedOut() || this.hamster.isCelebratingChase()|| this.hamster.isSulking()) {
             return false;
         }
         if (this.hamster.getTarget() != null) { // In combat
@@ -188,7 +188,7 @@ public class HamsterSeekDiamondGoal extends Goal {
             return;
         }
 
-        this.hamster.getLookControl().lookAt(this.targetOrePos.getX() + 0.5, this.targetOrePos.getY() + 0.5, this.targetOrePos.getZ() + 0.5, 10.0f, (float) this.hamster.getMaxLookPitchChange());
+        this.hamster.getLookControl().lookAt(this.targetOrePos.getX() + 0.5, this.targetOrePos.getY() + 0.5, this.targetOrePos.getZ() + 0.5, HamsterEntity.FAST_YAW_CHANGE, HamsterEntity.FAST_PITCH_CHANGE);
 
         if (this.soundTimer > 0) {
             this.soundTimer--;
@@ -238,7 +238,7 @@ public class HamsterSeekDiamondGoal extends Goal {
             this.currentState = SeekingState.SULKING_AT_GOLD;
             if (this.hamster.getOwner() instanceof ServerPlayerEntity owner) {
                 if (this.hamster.squaredDistanceTo(owner) < 36.0) {
-                    this.hamster.getLookControl().lookAt(owner, 30.0f, 30.0f);
+                    this.hamster.getLookControl().lookAt(owner, HamsterEntity.FAST_YAW_CHANGE, HamsterEntity.FAST_PITCH_CHANGE);
                 }
                 // Send message to the owner
                 sendMessageToOwner(owner);

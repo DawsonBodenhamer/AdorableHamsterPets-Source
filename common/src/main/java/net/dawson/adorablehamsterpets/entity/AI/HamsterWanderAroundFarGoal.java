@@ -20,7 +20,7 @@ public class HamsterWanderAroundFarGoal extends WanderAroundFarGoal {
 
     @Override
     public boolean canStart() {
-        if (this.mob instanceof HamsterEntity he && (he.isSitting() || he.isSleeping() || he.isKnockedOut() || he.isSulking() || he.isCelebratingDiamond())) {
+        if (this.mob instanceof HamsterEntity he && (he.isSitting() || he.isSleeping() || he.isKnockedOut() || he.isSulking() || he.isCelebratingDiamond() || he.isCelebratingChase())) {
             return false;
         }
         return super.canStart(); // Call the original MobEntity's canStart logic

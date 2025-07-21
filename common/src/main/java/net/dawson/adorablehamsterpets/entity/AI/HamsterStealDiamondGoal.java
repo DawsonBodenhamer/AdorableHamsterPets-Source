@@ -267,7 +267,7 @@ public class HamsterStealDiamondGoal extends Goal {
         switch (this.currentState) {
             case MOVING_TO_DIAMOND:
                 if (this.targetItem == null) return;
-                this.hamster.getLookControl().lookAt(this.targetItem, 30.0f, 30.0f);
+                this.hamster.getLookControl().lookAt(this.targetItem, HamsterEntity.FAST_YAW_CHANGE, HamsterEntity.FAST_PITCH_CHANGE);
                 // If navigation stops before reaching the target, try to reposition.
                 if (this.hamster.getNavigation().isIdle()) {
                     this.currentState = State.REPOSITIONING;
@@ -392,7 +392,7 @@ public class HamsterStealDiamondGoal extends Goal {
 
             case TAUNTING:
                 // Immediately start looking at the owner as soon as we enter the taunting state.
-                this.hamster.getLookControl().lookAt(this.owner, 30.0f, 30.0f);
+                this.hamster.getLookControl().lookAt(this.owner, HamsterEntity.FAST_YAW_CHANGE, HamsterEntity.FAST_PITCH_CHANGE);
 
                 // If we just entered the taunting state, start the settle timer.
                 if (!this.hamster.isTaunting() && this.tauntSettleTicks == 0) {
