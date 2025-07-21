@@ -10,12 +10,14 @@ public class HamsterWanderAroundFarGoal extends WanderAroundFarGoal {
     public HamsterWanderAroundFarGoal(HamsterEntity hamster, double speed) {
         super(hamster, speed);
         this.hamster = hamster;
+        this.setChance(120); // Set vanilla default chance (1 in 120 ticks)
     }
 
     // Constructor for speed and probability
     public HamsterWanderAroundFarGoal(HamsterEntity hamster, double speed, float probability) {
         super(hamster, speed, probability);
         this.hamster = hamster;
+        this.setChance(120); // Also set it here for consistency
     }
 
     @Override
