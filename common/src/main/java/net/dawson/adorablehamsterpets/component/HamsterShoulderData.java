@@ -21,7 +21,7 @@ public record HamsterShoulderData(
         boolean rightCheekFull,
         int breedingAge,
         long throwCooldownEndTick,
-        long steamedBeansCooldownEndTick,
+        long greenBeanBuffEndTick,
         NbtList activeEffectsNbt, // Changed from NbtCompound to NbtList
         int autoEatCooldownTicks,
         Optional<String> customName,
@@ -82,7 +82,7 @@ public record HamsterShoulderData(
                     Codec.BOOL.fieldOf("rightCheekFull").forGetter(HamsterShoulderData::rightCheekFull),
                     Codec.INT.fieldOf("breedingAge").forGetter(HamsterShoulderData::breedingAge),
                     Codec.LONG.fieldOf("throwCooldownEndTick").forGetter(HamsterShoulderData::throwCooldownEndTick),
-                    Codec.LONG.fieldOf("steamedBeansCooldownEndTick").forGetter(HamsterShoulderData::steamedBeansCooldownEndTick),
+                    Codec.LONG.fieldOf("greenBeanBuffEndTick").forGetter(HamsterShoulderData::steamedBeansCooldownEndTick),
                     NBT_LIST_CODEC.fieldOf("activeEffectsNbt").forGetter(HamsterShoulderData::activeEffectsNbt), // Now expects a list
                     Codec.INT.fieldOf("autoEatCooldownTicks").forGetter(HamsterShoulderData::autoEatCooldownTicks),
                     Codec.STRING.optionalFieldOf("customName").forGetter(HamsterShoulderData::customName),
@@ -123,7 +123,7 @@ public record HamsterShoulderData(
                 ", rightFull=" + rightCheekFull +
                 ", age=" + breedingAge +
                 ", throwCooldownEnd=" + throwCooldownEndTick +
-                ", beansCooldownEnd=" + steamedBeansCooldownEndTick +
+                ", beansCooldownEnd=" + greenBeanBuffEndTick +
                 ", effectsNbtCount=" + activeEffectsNbt.size() +
                 ", autoEatCooldown=" + autoEatCooldownTicks +
                 ", customName=" + customName.orElse("None") +
