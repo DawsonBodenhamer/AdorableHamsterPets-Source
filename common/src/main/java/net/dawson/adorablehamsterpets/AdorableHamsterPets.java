@@ -1,10 +1,10 @@
 package net.dawson.adorablehamsterpets;
 
-
 import dev.architectury.event.events.common.CommandRegistrationEvent;
 import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
+import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
 import net.dawson.adorablehamsterpets.block.ModBlocks;
 import net.dawson.adorablehamsterpets.command.ModCommands;
@@ -24,18 +24,17 @@ import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementProgress;
 import net.minecraft.advancement.PlayerAdvancementTracker;
 import net.minecraft.entity.SpawnRestriction;
+import net.minecraft.entity.SpawnLocationTypes;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.Heightmap;
-
 
 public class AdorableHamsterPets {
 	public static final String MOD_ID = "adorablehamsterpets";
 	public static final org.slf4j.Logger LOGGER = org.slf4j.LoggerFactory.getLogger(MOD_ID);
-
-
 	public static AhpConfig CONFIG;
-
 
 	/**
 	 * Initializes all DeferredRegister instances.
@@ -51,7 +50,6 @@ public class AdorableHamsterPets {
 		ModScreenHandlers.register();
 		ModCriteria.register();
 	}
-
 
 	/**
 	 * Initializes common setup logic that needs to run after registries are populated.
@@ -71,6 +69,7 @@ public class AdorableHamsterPets {
 
 			// --- Events ---
 			PlayerEvent.PLAYER_JOIN.register(AdorableHamsterPets::onPlayerJoin);
+			PlayerEvent.PLAYER_CLONE.register(AdorableHamsterPets::onPlayerClone);
 			CommandRegistrationEvent.EVENT.register(ModCommands::register);
 			LifecycleEvent.SETUP.register(AdorableHamsterPets::onSetup);
 		}
@@ -84,7 +83,6 @@ public class AdorableHamsterPets {
 		EntityAttributeRegistry.register(ModEntities.HAMSTER, HamsterEntity::createHamsterAttributes);
 	}
 
-
 	/**
 	 * This method is called during the SETUP lifecycle event, after all registries are frozen.
 	 * It's the safe place to register things that require fully-realized registry objects,
@@ -97,7 +95,6 @@ public class AdorableHamsterPets {
 				(type, world, reason, pos, random) -> (world.getBlockState(pos.down()).isIn(net.minecraft.registry.tag.BlockTags.ANIMALS_SPAWNABLE_ON) ||
 						ModEntitySpawns.VALID_SPAWN_BLOCKS.contains(world.getBlockState(pos.down()).getBlock())));
 	}
-
 
 	private static void onPlayerJoin(ServerPlayerEntity player) {
 		if (Configs.AHP.enableAutoGuidebookDelivery) {
@@ -117,6 +114,31 @@ public class AdorableHamsterPets {
 			} else {
 				LOGGER.warn("Could not find flag advancement: {}", flagAdvId);
 			}
+		}
+	}
+
+	private static void onPlayerClone(ServerPlayerEntity oldPlayer, ServerPlayerEntity newPlayer, boolean wasDeath) {
+		// --- 1. Get Shoulder Data from the Old Player ---
+		PlayerEntityAccessor oldPlayerAccessor = (PlayerEntityAccessor) oldPlayer;
+		NbtCompound shoulderNbt = oldPlayerAccessor.getHamsterShoulderEntity();
+
+		// --- 2. Check if a Hamster Was on the Shoulder ---
+		if (shoulderNbt.isEmpty()) {
+			return; // No hamster data to process.
+		}
+
+		// --- 3. Handle Death vs. Non-Death Scenarios ---
+		if (oldPlayer.isDead()) {
+			// --- Player Died: Spawn the hamster at the death location ---
+			ServerWorld world = oldPlayer.getServerWorld();
+			// The 'isDiamondAlertActive' parameter is false as it's not relevant to respawning.
+			HamsterEntity.spawnFromNbt(world, oldPlayer, shoulderNbt, false);
+			AdorableHamsterPets.LOGGER.debug("Player {} died. Spawning shoulder hamster at death location.", oldPlayer.getName().getString());
+		} else {
+			// --- Player Cloned (e.g., End Portal): Transfer hamster to the new player instance ---
+			PlayerEntityAccessor newPlayerAccessor = (PlayerEntityAccessor) newPlayer;
+			newPlayerAccessor.setHamsterShoulderEntity(shoulderNbt);
+			AdorableHamsterPets.LOGGER.debug("Player {} was cloned. Transferring shoulder hamster to new entity.", newPlayer.getName().getString());
 		}
 	}
 }
