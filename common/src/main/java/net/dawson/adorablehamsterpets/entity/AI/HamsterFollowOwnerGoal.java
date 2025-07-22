@@ -71,22 +71,43 @@ public class HamsterFollowOwnerGoal extends FollowOwnerGoal {
 
     @Override
     public void tick() {
+        // --- 1. Get Owner and Check Teleport Condition ---
+        // This logic is now shared for both buffed and non-buffed states.
+        FollowOwnerGoalAccessor accessor = (FollowOwnerGoalAccessor) this;
         LivingEntity owner = ((FollowOwnerGoalAccessor) this).getOwner();
-        if (owner == null) return;
+        if (owner == null) return; // Safety check
 
-        this.hamster.getLookControl().lookAt(owner, 10.0F, (float)this.hamster.getMaxLookPitchChange());
+        // The shouldTryTeleportToOwner() method respects the follow distance.
+        boolean shouldTeleport = this.hamster.shouldTryTeleportToOwner();
 
-        if (this.hamster.hasGreenBeanBuff()) {
-            // "Zoomies" follow logic
-            if (this.hamster.getNavigation().isIdle() || this.hamster.getRandom().nextInt(20) == 0) {
-                Vec3d targetPos = FuzzyTargeting.findTo(this.hamster, 8, 4, Vec3d.ofCenter(owner.getBlockPos()));
-                if (targetPos != null) {
-                    this.hamster.getNavigation().startMovingTo(targetPos.x, targetPos.y, targetPos.z, BUFFED_FOLLOW_SPEED);
+        // --- 2. Handle Looking ---
+        // Always look at the owner if not about to teleport.
+        if (!shouldTeleport) {
+            this.hamster.getLookControl().lookAt(owner, HamsterEntity.FAST_YAW_CHANGE, HamsterEntity.FAST_PITCH_CHANGE);
+        }
+
+        // --- 4. Use Vanilla Update Timer via Accessor ---
+        int currentTicks = accessor.getUpdateCountdownTicks() - 1;
+        accessor.setUpdateCountdownTicks(currentTicks);
+
+        if (currentTicks <= 0) {
+            accessor.setUpdateCountdownTicks(this.getTickCount(10));
+
+            // --- 5. Execute Teleport or Pathfinding ---
+            if (shouldTeleport) {
+                this.hamster.tryTeleportToOwner();
+            } else {
+                if (this.hamster.hasGreenBeanBuff()) {
+                    // "Zoomies" pathfinding logic.
+                    Vec3d targetPos = FuzzyTargeting.findTo(this.hamster, 8, 4, Vec3d.ofCenter(owner.getBlockPos()));
+                    if (targetPos != null) {
+                        this.hamster.getNavigation().startMovingTo(targetPos.x, targetPos.y, targetPos.z, BUFFED_FOLLOW_SPEED);
+                    }
+                } else {
+                    // Standard, direct pathfinding for non-buffed hamsters, using the accessor for speed.
+                    this.hamster.getNavigation().startMovingTo(owner, accessor.getSpeed());
                 }
             }
-        } else {
-            // Normal follow logic
-            super.tick();
         }
     }
 
