@@ -43,7 +43,7 @@ public class HamsterLookAroundGoal extends LookAroundGoal {
         super.start();
         if (this.hamsterMob instanceof HamsterEntity he) {
             he.setActiveCustomGoalDebugName(this.getClass().getSimpleName());
-            AdorableHamsterPets.LOGGER.info("[AI Goal Start] Hamster {} started LookAroundGoal.", he.getId());
+            AdorableHamsterPets.LOGGER.trace("[AI Goal Start] Hamster {} started LookAroundGoal.", he.getId());
         }
     }
 

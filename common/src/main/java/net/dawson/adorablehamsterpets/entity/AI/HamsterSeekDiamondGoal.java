@@ -1,34 +1,41 @@
 package net.dawson.adorablehamsterpets.entity.AI;
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
+import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
+import net.minecraft.advancement.AdvancementEntry;
+import net.minecraft.advancement.AdvancementProgress;
+import net.minecraft.advancement.PlayerAdvancementTracker;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.pathing.Path;
+import net.minecraft.entity.ai.pathing.PathNode;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
-import net.minecraft.advancement.AdvancementEntry;
-import net.minecraft.advancement.AdvancementProgress;
-import net.minecraft.advancement.PlayerAdvancementTracker;
-import net.minecraft.util.Formatting;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class HamsterSeekDiamondGoal extends Goal {
 
@@ -49,6 +56,7 @@ public class HamsterSeekDiamondGoal extends Goal {
     private SeekingState currentState = SeekingState.IDLE;
     private int pathingTickTimer;
     private int soundTimer;
+    @Nullable private Path path;
 
     private static final int PATHING_RECHECK_INTERVAL = 20; // Ticks (1 second)
     private static final int SNIFF_SOUND_INTERVAL_MOVING = 30; // Less than 2 seconds
@@ -88,37 +96,52 @@ public class HamsterSeekDiamondGoal extends Goal {
         this.isSeekingGold = false;
         this.hamster.currentOreTarget = null; // Clear entity's direct target tracker initially
 
-        List<BlockPos> diamondOres = new ArrayList<>();
-        List<BlockPos> goldOres = new ArrayList<>();
+        List<BlockPos> exposedDiamondOres = new ArrayList<>();
+        List<BlockPos> buriedDiamondOres = new ArrayList<>();
+        List<BlockPos> buriedGoldOres = new ArrayList<>(); // Only track buried gold for the "mistake"
         int radius = Configs.AHP.diamondSeekRadius.get();
 
         for (BlockPos pos : BlockPos.iterateOutwards(hamster.getBlockPos(), radius, radius, radius)) {
-            Block block = world.getBlockState(pos).getBlock();
+            BlockState state = world.getBlockState(pos);
+            Block block = state.getBlock();
+
             if (block == Blocks.DIAMOND_ORE || block == Blocks.DEEPSLATE_DIAMOND_ORE) {
-                diamondOres.add(pos.toImmutable());
+                if (isOreExposed(pos, this.world)) {
+                    exposedDiamondOres.add(pos.toImmutable());
+                } else {
+                    buriedDiamondOres.add(pos.toImmutable());
+                }
             } else if (block == Blocks.GOLD_ORE || block == Blocks.DEEPSLATE_GOLD_ORE) {
-                goldOres.add(pos.toImmutable());
+                if (isOreExposed(pos, this.world)) { // Only consider gold if it's hidden
+                    buriedGoldOres.add(pos.toImmutable());
+                }
             }
         }
 
-        if (diamondOres.isEmpty()) {
-            // No diamond ore found. isPrimedToSeekDiamonds remains true, goal just won't start this tick.
-            return false;
-        }
+        // --- Prioritized Target Selection ---
+        boolean targetIsGold = !buriedGoldOres.isEmpty() && this.world.random.nextFloat() < Configs.AHP.goldMistakeChance.get();
 
-        diamondOres.sort(Comparator.comparingDouble(pos -> pos.getSquaredDistance(hamster.getPos())));
-        goldOres.sort(Comparator.comparingDouble(pos -> pos.getSquaredDistance(hamster.getPos())));
-
-        if (!goldOres.isEmpty() && this.world.random.nextFloat() < Configs.AHP.goldMistakeChance.get()) {
-            this.targetOrePos = goldOres.get(0);
+        if (targetIsGold) {
+            buriedGoldOres.sort(Comparator.comparingDouble(pos -> pos.getSquaredDistance(hamster.getPos())));
+            this.targetOrePos = buriedGoldOres.get(0);
             this.isSeekingGold = true;
         } else {
-            this.targetOrePos = diamondOres.get(0);
-            this.isSeekingGold = false;
+            if (!exposedDiamondOres.isEmpty()) {
+                exposedDiamondOres.sort(Comparator.comparingDouble(pos -> pos.getSquaredDistance(hamster.getPos())));
+                this.targetOrePos = exposedDiamondOres.get(0);
+            } else if (!buriedDiamondOres.isEmpty()) {
+                buriedDiamondOres.sort(Comparator.comparingDouble(pos -> pos.getSquaredDistance(hamster.getPos())));
+                this.targetOrePos = buriedDiamondOres.get(0);
+            }
         }
-        this.hamster.currentOreTarget = this.targetOrePos; // Store in entity for persistence/debug
-        this.currentState = SeekingState.SCANNING; // Mark that we have a target and are ready to attempt pathing
-        return true; // A target was selected
+
+        if (this.targetOrePos != null) {
+            this.hamster.currentOreTarget = this.targetOrePos;
+            this.currentState = SeekingState.SCANNING;
+            return true; // A target was selected
+        }
+
+        return false; // No valid target found
     }
 
     @Override
@@ -132,23 +155,24 @@ public class HamsterSeekDiamondGoal extends Goal {
 
     private void attemptPathToTarget() {
         if (this.targetOrePos == null) {
-            // This might happen if the goal was started but then the target became invalid before first tick
-            this.currentState = SeekingState.IDLE; // Go to idle to allow canStart to re-evaluate
+            this.currentState = SeekingState.IDLE;
             return;
         }
-        boolean pathFound = this.hamster.getNavigation().startMovingTo(
+        // --- Store the Path ---
+        this.path = this.hamster.getNavigation().findPathTo(
                 this.targetOrePos.getX() + 0.5,
-                this.targetOrePos.getY(), // Target the ore's Y level
+                this.targetOrePos.getY(),
                 this.targetOrePos.getZ() + 0.5,
-                0.7D // 70% speed
+                0
         );
 
-        if (pathFound) {
+        if (this.path != null) {
+            this.hamster.getNavigation().startMovingAlong(this.path, 0.5D);
             this.currentState = SeekingState.MOVING_TO_ORE;
             this.soundTimer = SNIFF_SOUND_INTERVAL_MOVING / 2;
         } else {
             this.currentState = SeekingState.WAITING_FOR_PATH;
-            this.pathingTickTimer = PATHING_RECHECK_INTERVAL; // Start timer to recheck path
+            this.pathingTickTimer = PATHING_RECHECK_INTERVAL;
             this.soundTimer = SNIFF_SOUND_INTERVAL_WAITING / 2;
         }
     }
@@ -174,17 +198,16 @@ public class HamsterSeekDiamondGoal extends Goal {
         boolean isTargetGold = targetBlock == Blocks.GOLD_ORE || targetBlock == Blocks.DEEPSLATE_GOLD_ORE;
 
         if (this.isSeekingGold) {
-            if (!isTargetGold) return false; // Target gold ore was broken or changed
+            return isTargetGold; // Target gold ore was broken or changed
         } else {
-            if (!isTargetDiamond) return false; // Target diamond ore was broken or changed
+            return isTargetDiamond; // Target diamond ore was broken or changed
         }
-        return true;
     }
 
     @Override
     public void tick() {
         if (this.targetOrePos == null) {
-            stop(); // Should ensure goal stops if target becomes null
+            stop();
             return;
         }
 
@@ -196,14 +219,55 @@ public class HamsterSeekDiamondGoal extends Goal {
 
         switch (this.currentState) {
             case MOVING_TO_ORE:
+
+                // --- Particle Breadcrumb Logic ---
+                if (this.path != null && !this.world.isClient()) {
+                    int currentNodeIndex = this.path.getCurrentNodeIndex();
+                    int pathLength = this.path.getLength();
+
+                    // Iterate from the current node to the end of the path
+                    for (int i = currentNodeIndex; i < pathLength; i++) {
+                        PathNode node = this.path.getNode(i);
+                        Vec3d directionVector = Vec3d.ZERO; // Default to no direction
+
+                        // 1. Determine the direction to the next node in the path.
+                        if (i + 1 < pathLength) {
+                            PathNode nextNode = this.path.getNode(i + 1);
+                            // Create a normalized (length of 1) vector pointing from the current node to the next.
+                            directionVector = new Vec3d(nextNode.x - node.x, 0, nextNode.z - node.z).normalize();
+                        }
+                        // For the very last node, directionVector will remain (0,0,0), so particles will cluster around it.
+
+                        // Loop to spawn multiple particles with randomized origins
+                        for (int p = 0; p < 3; p++) {
+                            // 2. Calculate a random distance to spread the particle along the direction vector.
+                            double distanceAlongPath = this.world.random.nextDouble(); // Random value from 0.0 to 1.0
+                            Vec3d pathOffset = directionVector.multiply(distanceAlongPath);
+
+                            // 3. Calculate limited vertical offset.
+                            double offsetY = (this.world.random.nextDouble() - 0.5) * 0.1;
+
+                            ((ServerWorld)this.world).spawnParticles(
+                                    ParticleTypes.MYCELIUM,
+                                    node.x + 0.5 + pathOffset.x,      // Center X + directional offset X
+                                    (node.y + 0.5) - 0.38 + offsetY,     // Center Y + limited vertical offset
+                                    node.z + 0.5 + pathOffset.z,         // Center Z + directional offset Z
+                                    1,                                   // Count is 1
+                                    0.2, 0.0, 0.2,          // Vertical Spread is 0
+                                    3                                    // Speed
+                            );
+                        }
+                    }
+                }
+
                 if (this.hamster.getNavigation().isIdle() || this.hamster.getBlockPos().isWithinDistance(this.targetOrePos, 1.5)) {
                     if (this.hamster.getBlockPos().isWithinDistance(this.targetOrePos, 1.5)) {
                         onOreReached();
                     } else {
-                        // Path failed or hamster got stuck, switch to waiting to re-evaluate
+                        this.path = null; // Clear old path
                         this.currentState = SeekingState.WAITING_FOR_PATH;
-                        this.pathingTickTimer = PATHING_RECHECK_INTERVAL; // Start timer to recheck path
-                        this.soundTimer = SNIFF_SOUND_INTERVAL_WAITING / 2; // Reset sound timer for waiting state
+                        this.pathingTickTimer = PATHING_RECHECK_INTERVAL;
+                        this.soundTimer = SNIFF_SOUND_INTERVAL_WAITING / 2;
                     }
                 } else {
                     if (this.soundTimer <= 0) {
@@ -280,6 +344,7 @@ public class HamsterSeekDiamondGoal extends Goal {
 
     @Override
     public void stop() {
+        this.path = null; // Clear the path when the goal stops
         this.hamster.getNavigation().stop();
         boolean targetOreStillExists = false;
         if (this.targetOrePos != null) {
@@ -365,5 +430,22 @@ public class HamsterSeekDiamondGoal extends Goal {
 
         // Trigger the criterion for any other potential uses
         ModCriteria.HAMSTER_FOUND_GOLD.get().trigger(owner);
+    }
+
+    /**
+     * Checks if an ore block is "exposed" by having at least one adjacent air-like block.
+     *
+     * @param orePos The position of the ore block.
+     * @return True if the ore is exposed, false otherwise.
+     */
+    public static boolean isOreExposed(BlockPos orePos, World world) {
+        for (Direction direction : Direction.values()) {
+            BlockPos adjacentPos = orePos.offset(direction);
+            // A block is considered "exposed" if the adjacent block has no collision shape (e.g., air, water, grass).
+            if (world.getBlockState(adjacentPos).getCollisionShape(world, adjacentPos, ShapeContext.absent()).isEmpty()) {
+                return true;
+            }
+        }
+        return false;
     }
 }

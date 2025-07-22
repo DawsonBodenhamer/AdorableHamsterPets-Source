@@ -41,7 +41,7 @@ public class HamsterLookAtEntityGoal extends LookAtEntityGoal {
         // --- 1. Check Hamster State ---
         // Use our stored 'hamsterMob' reference
         if (this.hamsterMob instanceof HamsterEntity hamster) {
-            if (hamster.isSitting() || hamster.isSleeping() || hamster.isKnockedOut() || hamster.isSulking() || hamster.isCelebratingChase() || hamster.isStealingDiamond()) {
+            if (hamster.isSitting() || hamster.isSleeping() || hamster.isKnockedOut() || hamster.isSulking() || hamster.isStealingDiamond()) {
                 return false;
             }
         }
@@ -57,7 +57,7 @@ public class HamsterLookAtEntityGoal extends LookAtEntityGoal {
         super.start();
         if (this.mob instanceof HamsterEntity he) {
             he.setActiveCustomGoalDebugName(this.getClass().getSimpleName());
-            AdorableHamsterPets.LOGGER.info("[AI Goal Start] Hamster {} started LookAtEntityGoal.", he.getId());
+            AdorableHamsterPets.LOGGER.trace("[AI Goal Start] Hamster {} started LookAtEntityGoal.", he.getId());
         }
     }
 
