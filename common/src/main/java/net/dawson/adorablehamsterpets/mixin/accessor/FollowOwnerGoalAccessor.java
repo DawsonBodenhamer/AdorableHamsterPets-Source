@@ -16,4 +16,13 @@ public interface FollowOwnerGoalAccessor {
 
     @Accessor("maxDistance")
     float getMaxDistance();
+
+    @Accessor("speed")
+    double getSpeed();
+
+    @Accessor("updateCountdownTicks")
+    int getUpdateCountdownTicks();
+
+    @Accessor("updateCountdownTicks")
+    void setUpdateCountdownTicks(int value);
 }
