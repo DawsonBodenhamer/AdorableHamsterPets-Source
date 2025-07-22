@@ -96,6 +96,17 @@ public class AdorableHamsterPets {
 						ModEntitySpawns.VALID_SPAWN_BLOCKS.contains(world.getBlockState(pos.down()).getBlock())));
 	}
 
+	/**
+	 * An event handler that is called whenever a player joins the server.
+	 * <p>
+	 * This method is responsible for the one-time delivery of the Hamster Guide Book. It checks if the player
+	 * has the {@code adorablehamsterpets:technical/has_received_initial_guidebook} advancement. If they do not,
+	 * and if the {@code uiTweaks.enableAutoGuidebookDelivery} config option is enabled, it triggers a custom
+	 * criterion. This criterion, in turn, grants another advancement that rewards the player with the
+	 * fully-written guide book via a function.
+	 *
+	 * @param player The ServerPlayerEntity who has just joined the world.
+	 */
 	private static void onPlayerJoin(ServerPlayerEntity player) {
 		if (Configs.AHP.enableAutoGuidebookDelivery) {
 			PlayerAdvancementTracker advancementTracker = player.getAdvancementTracker();
@@ -117,6 +128,20 @@ public class AdorableHamsterPets {
 		}
 	}
 
+	/**
+	 * An event handler that is called when a player entity is "cloned".
+	 * This occurs upon player death and respawn, or when traveling between certain dimensions (like returning from the End).
+	 * <p>
+	 * This method ensures that a shoulder-mounted hamster is not lost during these events.
+	 * <ul>
+	 *     <li>If the player died ({@code wasDeath} is true), the hamster is spawned as an entity in the world at the player's death location.</li>
+	 *     <li>If the player was cloned for another reason (e.g., dimension travel), the hamster's NBT data is transferred directly to the new player entity instance, keeping it on their shoulder.</li>
+	 * </ul>
+	 *
+	 * @param oldPlayer The player entity instance before the cloning event.
+	 * @param newPlayer The new player entity instance created after the cloning event.
+	 * @param wasDeath  A boolean flag indicating whether the clone was caused by player death.
+	 */
 	private static void onPlayerClone(ServerPlayerEntity oldPlayer, ServerPlayerEntity newPlayer, boolean wasDeath) {
 		// --- 1. Get Shoulder Data from the Old Player ---
 		PlayerEntityAccessor oldPlayerAccessor = (PlayerEntityAccessor) oldPlayer;
