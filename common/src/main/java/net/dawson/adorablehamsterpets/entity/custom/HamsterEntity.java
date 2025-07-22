@@ -32,6 +32,7 @@ import net.minecraft.entity.ai.goal.AttackWithOwnerGoal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.TrackOwnerAttackerGoal;
+import net.minecraft.entity.ai.pathing.MobNavigation;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -729,13 +730,15 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
      *                             3. Constructor
      * ────────────────────────────────────────────────────────────────────────────*/
 
-    // --- Make Hamsters Avoid Water and Fire ---
     public HamsterEntity(EntityType<? extends TameableEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints = 3;
+
+        // --- Set pathfinding penalties for all relevant goals ---
         this.setPathfindingPenalty(PathNodeType.WATER, -1.0F);
-        this.setPathfindingPenalty(PathNodeType.DANGER_FIRE, 8.0F);   // Standard penalty for fire
-        this.setPathfindingPenalty(PathNodeType.DAMAGE_FIRE, -1.0F);  // Strongly avoid nodes that cause fire damage
+        this.setPathfindingPenalty(PathNodeType.LAVA, -1.0F);
+        this.setPathfindingPenalty(PathNodeType.DAMAGE_FIRE, -1.0F);
+        this.setPathfindingPenalty(PathNodeType.DANGER_FIRE, -1.0F);
     }
 
 
