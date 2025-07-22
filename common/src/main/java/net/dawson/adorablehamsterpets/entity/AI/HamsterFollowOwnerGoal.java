@@ -19,7 +19,12 @@ public class HamsterFollowOwnerGoal extends FollowOwnerGoal {
 
     @Override
     public boolean canStart() {
-        if (!super.canStart()) {
+        if (this.hamster.isSitting() ||
+                this.hamster.isSleeping() ||
+                this.hamster.isKnockedOut() ||
+                this.hamster.isSulking() ||
+                this.hamster.isCelebratingDiamond() ||
+                this.hamster.isCelebratingChase()) {
             return false;
         }
 
@@ -66,7 +71,7 @@ public class HamsterFollowOwnerGoal extends FollowOwnerGoal {
     public void start() {
         super.start();
         this.hamster.setActiveCustomGoalDebugName(this.getClass().getSimpleName() + (this.hamster.hasGreenBeanBuff() ? " (Zoomies)" : ""));
-        AdorableHamsterPets.LOGGER.info("[FollowGoal-{}] start: Goal has started. IsBuffed: {}", this.hamster.getId(), this.hamster.hasGreenBeanBuff());
+        AdorableHamsterPets.LOGGER.debug("[FollowGoal-{}] start: Goal has started. IsBuffed: {}", this.hamster.getId(), this.hamster.hasGreenBeanBuff());
     }
 
     @Override

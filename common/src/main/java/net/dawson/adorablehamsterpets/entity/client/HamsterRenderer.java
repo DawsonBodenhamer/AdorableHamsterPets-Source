@@ -152,22 +152,6 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
                                     0.0, 0.0, 0.0); // Speed is default
                         }
                     });
-                case "diamond_pounce_poof":
-                    model.getBone("nose").ifPresent(bone -> {
-                        Vector3d pos = bone.getWorldPosition();
-                        for (int i = 0; i < 2; i++) {
-                            animatable.getWorld().addParticle(ParticleTypes.END_ROD,
-                                    pos.x, pos.y, pos.z,
-                                    random.nextGaussian() * 0.15,
-                                    random.nextGaussian() * 0.15,
-                                    random.nextGaussian() * 0.15);
-                        }
-                        animatable.getWorld().addParticle(new net.minecraft.particle.ItemStackParticleEffect(ParticleTypes.ITEM, new ItemStack(Items.DIAMOND)),
-                                pos.x, pos.y, pos.z,
-                                random.nextGaussian() * 0.05,
-                                0.2,
-                                random.nextGaussian() * 0.05);
-                    });
                     break;
             }
             animatable.particleEffectId = null;

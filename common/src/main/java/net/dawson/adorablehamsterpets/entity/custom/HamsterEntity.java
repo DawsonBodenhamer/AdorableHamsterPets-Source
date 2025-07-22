@@ -1294,11 +1294,11 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         // --- 1. Initial Setup ---
         ItemStack stack = player.getStackInHand(hand);
         World world = this.getWorld();
-        AdorableHamsterPets.LOGGER.info("[InteractMob {} Tick {}] Interaction start. Player: {}, Hand: {}, Item: {}", this.getId(), world.getTime(), player.getName().getString(), hand, stack.getItem());
+        AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Interaction start. Player: {}, Hand: {}, Item: {}", this.getId(), world.getTime(), player.getName().getString(), hand, stack.getItem());
 
         // --- Handle Diamond Stealing Interaction ---
         if (this.isStealingDiamond() && this.isOwner(player)) {
-            AdorableHamsterPets.LOGGER.info("[InteractMob-{}] Passed 'isStealingDiamond' check.", this.getId());
+            AdorableHamsterPets.LOGGER.debug("[InteractMob-{}] Passed 'isStealingDiamond' check.", this.getId());
             if (!world.isClient) {
                 ItemStack retrievedStack = this.getStolenItemStack().copy();
                 player.getInventory().offerOrDrop(this.getStolenItemStack().copy());
@@ -1317,7 +1317,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     float volume = (pounceSound == SoundEvents.ENTITY_GENERIC_EAT) ? 0.35f : 1.0f;
                     world.playSound(null, this.getBlockPos(), pounceSound, SoundCategory.NEUTRAL, volume, 1.7f);
                 }
-                AdorableHamsterPets.LOGGER.info("[InteractMob-{}] Diamond returned to player and goal stopped.", this.getId());
+                AdorableHamsterPets.LOGGER.debug("[InteractMob-{}] Diamond returned to player and goal stopped.", this.getId());
             }
             return ActionResult.success(world.isClient());
         }
@@ -3093,7 +3093,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 this.greenBeanBuffEndTick = currentTime + config.steamedGreenBeansBuffCooldown.get();
 
                 actionTaken = true; // Action was successful
-                AdorableHamsterPets.LOGGER.info("[FeedAttempt {} Tick {}] Applied buffs. Duration ends at tick {}. Cooldown ends at tick {}.", this.getId(), world.getTime(), buffDurationEnd, this.greenBeanBuffEndTick);
+                AdorableHamsterPets.LOGGER.trace("[FeedAttempt {} Tick {}] Applied buffs. Duration ends at tick {}. Cooldown ends at tick {}.", this.getId(), world.getTime(), buffDurationEnd, this.greenBeanBuffEndTick);
 
                 // Trigger Fed Steamed Beans Criterion
                 if (player instanceof ServerPlayerEntity serverPlayer) {

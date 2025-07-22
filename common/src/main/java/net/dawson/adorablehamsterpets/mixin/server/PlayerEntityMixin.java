@@ -1,10 +1,11 @@
 package net.dawson.adorablehamsterpets.mixin.server;
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
+import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
 import net.dawson.adorablehamsterpets.config.AhpConfig;
+import net.dawson.adorablehamsterpets.entity.AI.HamsterSeekDiamondGoal;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
-import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -196,8 +197,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                 adorablehamsterpets$diamondCheckTimer++;
                 if (adorablehamsterpets$diamondCheckTimer >= CHECK_INTERVAL_TICKS) {
                     adorablehamsterpets$diamondCheckTimer = 0;
+                    // The isDiamondNearby method internally prioritizes exposed ore.
                     if (isDiamondNearby(self, config.shoulderDiamondDetectionRadius.get())) {
-                        this.adorablehamsterpets$isDiamondAlertConditionMet = true;
+                        this.adorablehamsterpets$isDiamondAlertConditionMet = true; // Set the priming flag
                         if (adorablehamsterpets$diamondSoundCooldownTicks == 0) {
                             world.playSound(null, self.getBlockPos(),
                                     ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_DIAMOND_SNIFF_SOUNDS, random),
@@ -207,7 +209,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                             ModCriteria.HAMSTER_DIAMOND_ALERT_TRIGGERED.trigger((ServerPlayerEntity) self);
                         }
                     } else {
-                        this.adorablehamsterpets$isDiamondAlertConditionMet = false;
+                        this.adorablehamsterpets$isDiamondAlertConditionMet = false; // Clear the priming flag
                     }
                 }
             }
@@ -235,12 +237,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     }
 
     /**
-     * Scans a spherical area around the player for diamond ore blocks.
-     * This check is performed periodically when a hamster is on the player's shoulder.
+     * Scans a spherical area around the player for diamond ore blocks, prioritizing exposed ores.
      *
      * @param player The player to check around.
      * @param radius The radius of the sphere to scan, in blocks.
-     * @return {@code true} if {@link Blocks#DIAMOND_ORE} or {@link Blocks#DEEPSLATE_DIAMOND_ORE} is found within the radius, otherwise {@code false}.
+     * @return {@code true} if any diamond ore is found (with exposed ones taking precedence), otherwise {@code false}.
      */
     @Unique
     private boolean isDiamondNearby(PlayerEntity player, double radius) {
@@ -248,15 +249,25 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         BlockPos center = player.getBlockPos();
         int intRadius = (int) Math.ceil(radius);
 
+        List<BlockPos> exposedOres = new ArrayList<>();
+        List<BlockPos> buriedOres = new ArrayList<>();
+
         for (BlockPos checkPos : BlockPos.iterate(center.add(-intRadius, -intRadius, -intRadius), center.add(intRadius, intRadius, intRadius))) {
             if (checkPos.getSquaredDistance(center) <= radius * radius) {
                 BlockState state = world.getBlockState(checkPos);
                 if (state.isOf(Blocks.DIAMOND_ORE) || state.isOf(Blocks.DEEPSLATE_DIAMOND_ORE)) {
-                    return true;
+                    // Use the public static helper from the HamsterSeekDiamondGoal
+                    if (HamsterSeekDiamondGoal.isOreExposed(checkPos, world)) {
+                        exposedOres.add(checkPos.toImmutable());
+                    } else {
+                        buriedOres.add(checkPos.toImmutable());
+                    }
                 }
             }
         }
-        return false;
+        // Prioritize exposed ores. If any are found, the condition is met.
+        // If not, check if any buried ores were found as a fallback.
+        return !exposedOres.isEmpty() || !buriedOres.isEmpty();
     }
 
     /**

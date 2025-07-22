@@ -117,7 +117,7 @@ public class HamsterStealDiamondGoal extends Goal {
                 .toList();
 
         if (stealableItems.isEmpty()) {
-            AdorableHamsterPets.LOGGER.info("[StealGoal-{}] canStart FAILED: No valid stealable items configured or parsed.", this.hamster.getId());
+            AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] canStart FAILED: No valid stealable items configured or parsed.", this.hamster.getId());
             return false;
         }
 
