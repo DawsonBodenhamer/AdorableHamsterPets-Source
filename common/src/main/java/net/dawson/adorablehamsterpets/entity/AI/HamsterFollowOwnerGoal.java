@@ -1,5 +1,6 @@
 package net.dawson.adorablehamsterpets.entity.AI;
 
+import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.minecraft.entity.ai.goal.FollowOwnerGoal;
 
@@ -40,6 +41,7 @@ public class HamsterFollowOwnerGoal extends FollowOwnerGoal {
     public void start() {
         super.start();
         this.hamster.setActiveCustomGoalDebugName(this.getClass().getSimpleName());
+        AdorableHamsterPets.LOGGER.info("[AI Goal Start] Hamster {} started FollowOwnerGoal.", this.hamster.getId());
     }
 
     @Override

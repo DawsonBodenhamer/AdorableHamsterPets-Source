@@ -1,5 +1,6 @@
 package net.dawson.adorablehamsterpets.entity.AI;
 
+import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.mixin.accessor.LookAroundGoalAccessor;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
@@ -42,6 +43,7 @@ public class HamsterLookAroundGoal extends LookAroundGoal {
         super.start();
         if (this.hamsterMob instanceof HamsterEntity he) {
             he.setActiveCustomGoalDebugName(this.getClass().getSimpleName());
+            AdorableHamsterPets.LOGGER.info("[AI Goal Start] Hamster {} started LookAroundGoal.", he.getId());
         }
     }
 
