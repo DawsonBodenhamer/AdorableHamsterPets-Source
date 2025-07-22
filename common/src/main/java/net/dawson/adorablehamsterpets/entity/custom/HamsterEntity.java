@@ -673,7 +673,9 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     @Unique public transient String soundEffectId = null;
     @Unique public long stealCooldownEndTick = 0L;
     @Unique private int celebrationChaseTicks = 0;
-
+    @Unique private boolean zoomiesIsClockwise = false;
+    @Unique private double lastZoomiesAngle = 0.0;
+    @Unique private int zoomiesRadiusModifier = 0;
 
     // --- Inventory ---
     private final DefaultedList<ItemStack> items = ImplementedInventory.create(INVENTORY_SIZE);
@@ -795,6 +797,10 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     public boolean isCelebratingChase() { return this.dataTracker.get(IS_CELEBRATING_CHASE); }
     public void setCelebratingChase(boolean celebrating) { this.dataTracker.set(IS_CELEBRATING_CHASE, celebrating); }
     public boolean hasGreenBeanBuff() {return this.getDataTracker().get(GREEN_BEAN_BUFF_DURATION) > this.getWorld().getTime();}
+    public boolean getZoomiesIsClockwise() { return this.zoomiesIsClockwise; }
+    public double getLastZoomiesAngle() { return this.lastZoomiesAngle; }
+    public void setLastZoomiesAngle(double angle) { this.lastZoomiesAngle = angle; }
+    public int getZoomiesRadiusModifier() { return this.zoomiesRadiusModifier; }
 
     // --- Inventory Implementation ---
     @Override
@@ -1082,6 +1088,52 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     public void changeLookDirection(double cursorX, double cursorY) {
         if (this.isSleeping()) return;
         super.changeLookDirection(cursorX, cursorY);
+    }
+
+    /**
+     * Finds a safe spawn position for the hamster near an initial target position.
+     * The search is performed in stages for efficiency and logical placement:
+     * 1. Checks the initial target position itself.
+     * 2. Checks a few blocks directly above the target.
+     * 3. Performs a horizontal spiral search outwards on the same Y-level.
+     *
+     * @param initialTarget The desired starting point for the search.
+     * @param world         The world where the search is performed.
+     * @param searchRadius  The maximum horizontal radius for the spiral search.
+     * @return An Optional containing the first safe BlockPos found, or an empty Optional if no safe spot is found within the search radius.
+     */
+    public Optional<BlockPos> findSafeSpawnPosition(BlockPos initialTarget, World world, int searchRadius) {
+        // --- Stage 1: Initial Target Check ---
+        if (isSafeSpawnLocation(initialTarget, world)) {
+            return Optional.of(initialTarget);
+        }
+
+        // --- Stage 2: Vertical Vicinity Check (Upwards) ---
+        for (int i = 1; i <= 3; i++) {
+            BlockPos abovePos = initialTarget.up(i);
+            if (isSafeSpawnLocation(abovePos, world)) {
+                return Optional.of(abovePos);
+            }
+        }
+
+        // --- Stage 3: Horizontal Spiral Search ---
+        for (int r = 1; r <= searchRadius; r++) {
+            for (int i = -r; i <= r; i++) {
+                for (int j = -r; j <= r; j++) {
+                    // Only check the "ring" of the spiral, not the inside which was already checked
+                    if (Math.abs(i) != r && Math.abs(j) != r) {
+                        continue;
+                    }
+                    BlockPos checkPos = initialTarget.add(i, 0, j);
+                    if (isSafeSpawnLocation(checkPos, world)) {
+                        return Optional.of(checkPos);
+                    }
+                }
+            }
+        }
+
+        // --- Stage 4: Failure ---
+        return Optional.empty();
     }
 
     /**
@@ -2275,13 +2327,13 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             if (this.getVelocity().horizontalLengthSquared() > 1.0E-6) {
                 // --- Constants for Particle Physics ---
                 final double backwardsSpeed = 1.7;
-                final double scatterStrength = 0.03;
+                final double scatterStrength = 0.025;
                 final double downwardVelocity = 0.17;
-                final double positionOffsetMultiplier = 1.7;
+                final double positionOffsetMultiplier = 1.4;
 
                 // Spawn particles frequently, but not every single tick, to avoid being overwhelming.
                 if (this.random.nextInt(2) == 0) {
-                    for (int i = 0; i < 5; ++i) {
+                    for (int i = 0; i < 3; ++i) {
                         // 1. Calculate the base spawn position using the hamster's PREVIOUS tick's location.
                         Vec3d currentVelocity = this.getVelocity();
                         double baseX = this.prevX - (currentVelocity.x * positionOffsetMultiplier);
@@ -2855,52 +2907,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     }
 
     /**
-     * Finds a safe spawn position for the hamster near an initial target position.
-     * The search is performed in stages for efficiency and logical placement:
-     * 1. Checks the initial target position itself.
-     * 2. Checks a few blocks directly above the target.
-     * 3. Performs a horizontal spiral search outwards on the same Y-level.
-     *
-     * @param initialTarget The desired starting point for the search.
-     * @param world         The world where the search is performed.
-     * @param searchRadius  The maximum horizontal radius for the spiral search.
-     * @return An Optional containing the first safe BlockPos found, or an empty Optional if no safe spot is found within the search radius.
-     */
-    private Optional<BlockPos> findSafeSpawnPosition(BlockPos initialTarget, World world, int searchRadius) {
-        // --- Stage 1: Initial Target Check ---
-        if (isSafeSpawnLocation(initialTarget, world)) {
-            return Optional.of(initialTarget);
-        }
-
-        // --- Stage 2: Vertical Vicinity Check (Upwards) ---
-        for (int i = 1; i <= 3; i++) {
-            BlockPos abovePos = initialTarget.up(i);
-            if (isSafeSpawnLocation(abovePos, world)) {
-                return Optional.of(abovePos);
-            }
-        }
-
-        // --- Stage 3: Horizontal Spiral Search ---
-        for (int r = 1; r <= searchRadius; r++) {
-            for (int i = -r; i <= r; i++) {
-                for (int j = -r; j <= r; j++) {
-                    // Only check the "ring" of the spiral, not the inside which was already checked
-                    if (Math.abs(i) != r && Math.abs(j) != r) {
-                        continue;
-                    }
-                    BlockPos checkPos = initialTarget.add(i, 0, j);
-                    if (isSafeSpawnLocation(checkPos, world)) {
-                        return Optional.of(checkPos);
-                    }
-                }
-            }
-        }
-
-        // --- Stage 4: Failure ---
-        return Optional.empty();
-    }
-
-    /**
      * Checks if the given item stack is disallowed in the hamster's inventory based on a disallow list.
      * @param stack The ItemStack to check.
      * @return True if the item is explicitly disallowed, false otherwise.
@@ -3034,21 +3040,31 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 int absorptionAmplifier = config.greenBeanBuffAmplifierAbsorption.get();
                 int regenAmplifier = config.greenBeanBuffAmplifierRegen.get();
 
-                // The three 'false' arguments are: (isAmbient, showParticles, showIcon)
-                this.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, duration, speedAmplifier, true, false, true));
-                this.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, duration, strengthAmplifier, true, false, true));
-                this.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, duration, absorptionAmplifier, true, false, true));
-                this.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, duration, regenAmplifier, true, false, true));
+                // --- Set "zoomies" state ---
+                this.zoomiesIsClockwise = this.random.nextBoolean();
+                this.lastZoomiesAngle = 0.0; // Reset angle on new buff application
+
+                // Set Status Effects
+                this.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, duration, speedAmplifier));
+                this.addStatusEffect(new StatusEffectInstance(StatusEffects.STRENGTH, duration, strengthAmplifier));
+                this.addStatusEffect(new StatusEffectInstance(StatusEffects.ABSORPTION, duration, absorptionAmplifier));
+                this.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, duration, regenAmplifier));
+
+                // --- Set up zoomies state ---
+                this.zoomiesIsClockwise = this.random.nextBoolean();
+                this.zoomiesRadiusModifier = this.random.nextBetween(-2, 4);
+                // Calculate and set the initial angle.
+                double dx = this.getX() - player.getX();
+                double dz = this.getZ() - player.getZ();
+                this.lastZoomiesAngle = Math.atan2(dz, dx);
 
                 // Play sound
                 SoundEvent buffSound = getRandomSoundFrom(HAMSTER_CELEBRATE_SOUNDS, this.random);
                 world.playSound(null, this.getBlockPos(), buffSound, SoundCategory.NEUTRAL, 1.0F, 1.0F);
 
-                // Calculate when the buff's duration will end and sync to the client.
+                // Set cooldown and duration
                 long buffDurationEnd = currentTime + config.greenBeanBuffDuration.get();
                 this.getDataTracker().set(GREEN_BEAN_BUFF_DURATION, buffDurationEnd);
-
-                // Set the server-side cooldown timer.
                 this.greenBeanBuffEndTick = currentTime + config.steamedGreenBeansBuffCooldown.get();
 
                 actionTaken = true; // Action was successful
