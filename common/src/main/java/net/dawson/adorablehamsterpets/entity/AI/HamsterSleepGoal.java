@@ -72,11 +72,33 @@ public class HamsterSleepGoal extends Goal {
         this.hamster.setInSittingPose(true); // Vanilla flag to prevent other AI movement
 
         // --- Trigger Wild Settle Sleep Animation ---
-        // This animation transitions the hamster to the sleep_pose1 posture.
         if (!this.hamster.getWorld().isClient()) { // Ensure server-side
-            this.hamster.triggerAnimOnServer("mainController", "anim_hamster_wild_settle_sleep");
+            // 1. Randomly select a sleep pose (1, 2, or 3)
+            int choice = this.hamster.getRandom().nextInt(3);
+            String settleAnimId;
+            String deepSleepAnimIdForTracker;
+
+            switch (choice) {
+                case 0 -> {
+                    settleAnimId = "anim_hamster_stand_settle_sleep1";
+                    deepSleepAnimIdForTracker = "anim_hamster_sleep_pose1";
+                }
+                case 1 -> {
+                    settleAnimId = "anim_hamster_stand_settle_sleep2";
+                    deepSleepAnimIdForTracker = "anim_hamster_sleep_pose2";
+                }
+                default -> { // case 2
+                    settleAnimId = "anim_hamster_stand_settle_sleep3";
+                    deepSleepAnimIdForTracker = "anim_hamster_sleep_pose3";
+                }
+            }
+
+            // 2. Store the chosen deep sleep animation name in the DataTracker
+            this.hamster.getDataTracker().set(HamsterEntity.CURRENT_DEEP_SLEEP_ANIM_ID, deepSleepAnimIdForTracker);
+
+            // 3. Trigger the corresponding settle animation
+            this.hamster.triggerAnimOnServer("mainController", settleAnimId);
         }
-        // --- End Trigger Animation ---
 
         // --- Play Sound ---
         if (!this.hamster.getWorld().isClient()) {
