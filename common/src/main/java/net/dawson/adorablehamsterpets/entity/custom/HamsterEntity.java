@@ -121,7 +121,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         NONE,                  // Not in any part of the sleep sequence
         QUIESCENT_SITTING,     // Tamed, sitting by command, waiting for drowsiness timer
         DRIFTING_OFF,          // Playing the 90sec anim_hamster_drifting_off animation
-        SETTLING_INTO_SLUMBER, // Playing a short anim_hamster_settle_sleepX transition
+        SETTLING_INTO_SLUMBER, // Playing a short anim_hamster_sit_settle_sleepX transition
         DEEP_SLEEP             // Looping one of the anim_hamster_sleep_poseX animations
     }
     public static final int CELEBRATION_PARTICLE_DURATION_TICKS = 600;    // 3 seconds
@@ -619,9 +619,9 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private static final RawAnimation SLEEP_POSE1_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sleep_pose1");
     private static final RawAnimation SLEEP_POSE2_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sleep_pose2");
     private static final RawAnimation SLEEP_POSE3_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sleep_pose3");
-    private static final RawAnimation SETTLE_SLEEP1_ANIM = RawAnimation.begin().thenPlay("anim_hamster_settle_sleep1");
-    private static final RawAnimation SETTLE_SLEEP2_ANIM = RawAnimation.begin().thenPlay("anim_hamster_settle_sleep2");
-    private static final RawAnimation SETTLE_SLEEP3_ANIM = RawAnimation.begin().thenPlay("anim_hamster_settle_sleep3");
+    private static final RawAnimation SETTLE_SLEEP1_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sit_settle_sleep1");
+    private static final RawAnimation SETTLE_SLEEP2_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sit_settle_sleep2");
+    private static final RawAnimation SETTLE_SLEEP3_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sit_settle_sleep3");
     private static final RawAnimation WILD_SETTLE_SLEEP_ANIM = RawAnimation.begin().thenPlay("anim_hamster_wild_settle_sleep");
     private static final RawAnimation SITTING_POSE1_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sitting_pose1");
     private static final RawAnimation SITTING_POSE2_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sitting_pose2");
@@ -2036,15 +2036,15 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         String deepSleepAnimIdForTracker; // Temporary variable for clarity
                         switch (choice) {
                             case 0:
-                                settleAnimId = "anim_hamster_settle_sleep1";
+                                settleAnimId = "anim_hamster_sit_settle_sleep1";
                                 deepSleepAnimIdForTracker = "anim_hamster_sleep_pose1";
                                 break;
                             case 1:
-                                settleAnimId = "anim_hamster_settle_sleep2";
+                                settleAnimId = "anim_hamster_sit_settle_sleep2";
                                 deepSleepAnimIdForTracker = "anim_hamster_sleep_pose2";
                                 break;
                             default: // case 2
-                                settleAnimId = "anim_hamster_settle_sleep3";
+                                settleAnimId = "anim_hamster_sit_settle_sleep3";
                                 deepSleepAnimIdForTracker = "anim_hamster_sleep_pose3";
                                 break;
                         }
@@ -2434,7 +2434,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
      * <ul>
      *     <li>{@link DozingPhase#DRIFTING_OFF}: Plays {@code anim_hamster_drifting_off}. Its completion is
      *         managed by {@code driftingOffTimer} in the {@link #tick()} method.</li>
-     *     <li>{@link DozingPhase#SETTLING_INTO_SLUMBER}: A short, 1-second {@code anim_hamster_settle_sleepX}
+     *     <li>{@link DozingPhase#SETTLING_INTO_SLUMBER}: A short, 1-second {@code anim_hamster_sit_settle_sleepX}
      *         animation is triggered from {@link #tick()}. During this brief transition, this controller
      *         defaults to {@code SITTING_ANIM}. The {@code settleSleepAnimationCooldown} in {@link #tick()}
      *         manages the progression to {@code DEEP_SLEEP}.</li>
@@ -2579,9 +2579,9 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 .triggerableAnim("wakeup", WAKE_UP_ANIM)
                 .triggerableAnim("no", NO_ANIM)
                 .triggerableAnim("attack", ATTACK_ANIM)
-                .triggerableAnim("anim_hamster_settle_sleep1", SETTLE_SLEEP1_ANIM)
-                .triggerableAnim("anim_hamster_settle_sleep2", SETTLE_SLEEP2_ANIM)
-                .triggerableAnim("anim_hamster_settle_sleep3", SETTLE_SLEEP3_ANIM)
+                .triggerableAnim("anim_hamster_sit_settle_sleep1", SETTLE_SLEEP1_ANIM)
+                .triggerableAnim("anim_hamster_sit_settle_sleep2", SETTLE_SLEEP2_ANIM)
+                .triggerableAnim("anim_hamster_sit_settle_sleep3", SETTLE_SLEEP3_ANIM)
                 .triggerableAnim("anim_hamster_wild_settle_sleep", WILD_SETTLE_SLEEP_ANIM)
                 .triggerableAnim("anim_hamster_sulk", SULK_ANIM)
                 .triggerableAnim("anim_hamster_diamond_pounce", DIAMOND_POUNCE_ANIM)
