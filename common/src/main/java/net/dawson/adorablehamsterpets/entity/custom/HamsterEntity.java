@@ -392,6 +392,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             hamster.setBreedingAge(data.breedingAge());
             hamster.throwCooldownEndTick = data.throwCooldownEndTick();
             hamster.greenBeanBuffEndTick = data.greenBeanBuffEndTick();
+            hamster.getDataTracker().set(GREEN_BEAN_BUFF_DURATION, data.greenBeanBuffDuration());
             hamster.autoEatCooldownTicks = data.autoEatCooldownTicks();
             hamster.getDataTracker().set(PINK_PETAL_TYPE, data.pinkPetalType());
             hamster.getDataTracker().set(CHEEK_POUCH_UNLOCKED, data.cheekPouchUnlocked());
@@ -552,7 +553,16 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             hamster.throwTicks = 0;
             hamster.throwCooldownEndTick = currentTime + config.hamsterThrowCooldown.get();
 
-            float throwSpeed = 1.5f;
+            // --- DYNAMIC VELOCITY LOGIC ---
+            boolean isBuffed = hamster.hasGreenBeanBuff();
+            float throwSpeed = isBuffed
+                    ? config.hamsterThrowVelocityBuffed.get().floatValue()
+                    : config.hamsterThrowVelocity.get().floatValue();
+
+            // --- LOGGING ---
+            AdorableHamsterPets.LOGGER.info("[HamsterThrow] Attempting throw for player {}. IsBuffed: {}. Applying velocity: {}",
+                    player.getName().getString(), isBuffed, throwSpeed);
+
             Vec3d lookVec = player.getRotationVec(1.0f);
             Vec3d throwVec = new Vec3d(lookVec.x, lookVec.y + 0.1f, lookVec.z).normalize();
             hamster.setVelocity(throwVec.multiply(throwSpeed));
@@ -1096,6 +1106,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 this.getBreedingAge(),
                 this.throwCooldownEndTick,
                 this.greenBeanBuffEndTick,
+                this.getDataTracker().get(GREEN_BEAN_BUFF_DURATION),
                 effectsList, // Pass the NbtList directly
                 this.autoEatCooldownTicks,
                 nameOptional,
@@ -1980,9 +1991,11 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     this.setPosition(this.getX() + currentVelocity.x, this.getY() + currentVelocity.y, this.getZ() + currentVelocity.z);
                     this.velocityDirty = true;
 
-                    if (!world.isClient() && this.throwTicks > 5) {
-                        // Define an offset to push the particle spawn point backwards along the velocity vector.
-                        // This helps compensate for client-server render lag. A larger value pushes it back more.
+                    // Determine the delay before particles start spawning.
+                    int particleDelay = this.hasGreenBeanBuff() ? 3 : 5;
+
+                    if (!world.isClient() && this.throwTicks > particleDelay) {
+                        // Define an offset to push the particle spawn point backwards along the velocity vector. Larger value pushes it back more.
                         double offsetMultiplier = 1.5;
 
                         // Calculate the spawn position based on the PREVIOUS position, offset backwards.
