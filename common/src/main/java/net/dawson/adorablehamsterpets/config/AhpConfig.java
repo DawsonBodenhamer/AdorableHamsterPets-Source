@@ -201,6 +201,20 @@ public class AhpConfig extends Config {
     @Translatable.Desc("How close you need to be before the squeak says \"bling.\"")
     public ValidatedDouble shoulderDiamondDetectionRadius = new ValidatedDouble(10.0, 20.0, 5.0);
 
+    // --- Hamster Yeet Settings ---
+    @Translatable.Name("Hamster Yeet Settings")
+    @Translatable.Desc("For when you need a furry, surprisingly aerodynamic solution.")
+    public ConfigGroup yeetSettings = new ConfigGroup("yeetSettings", true);
+
+    @Translatable.Name("Throw Velocity")
+    @Translatable.Desc("The base throw speed of your furry projectile.")
+    public ValidatedDouble hamsterThrowVelocity = new ValidatedDouble(1.5, 5.0, 0.1);
+
+    @ConfigGroup.Pop
+    @Translatable.Name("Throw Velocity (Buffed)")
+    @Translatable.Desc("The throw speed of your furry projectile when under the influence of Steamed Green Beans. Goes from 'yeet' to 'yote'.")
+    public ValidatedDouble hamsterThrowVelocityBuffed = new ValidatedDouble(2.5, 5.0, 0.1);
+
     // --- Independent Diamond Seeking Settings ---
     @Translatable.Name("Independent Diamond Seeking Settings")
     @Translatable.Desc("Unleash free-range prospectors. What could go wrong?")
