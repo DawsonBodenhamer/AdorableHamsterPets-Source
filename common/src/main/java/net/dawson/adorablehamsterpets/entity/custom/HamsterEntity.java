@@ -619,10 +619,12 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private static final RawAnimation SLEEP_POSE1_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sleep_pose1");
     private static final RawAnimation SLEEP_POSE2_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sleep_pose2");
     private static final RawAnimation SLEEP_POSE3_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sleep_pose3");
-    private static final RawAnimation SETTLE_SLEEP1_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sit_settle_sleep1");
-    private static final RawAnimation SETTLE_SLEEP2_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sit_settle_sleep2");
-    private static final RawAnimation SETTLE_SLEEP3_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sit_settle_sleep3");
-    private static final RawAnimation WILD_SETTLE_SLEEP_ANIM = RawAnimation.begin().thenPlay("anim_hamster_wild_settle_sleep");
+    private static final RawAnimation SIT_SETTLE_SLEEP1_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sit_settle_sleep1");
+    private static final RawAnimation SIT_SETTLE_SLEEP2_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sit_settle_sleep2");
+    private static final RawAnimation SIT_SETTLE_SLEEP3_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sit_settle_sleep3");
+    private static final RawAnimation STAND_SETTLE_SLEEP1_ANIM = RawAnimation.begin().thenPlay("anim_hamster_stand_settle_sleep1");
+    private static final RawAnimation STAND_SETTLE_SLEEP2_ANIM = RawAnimation.begin().thenPlay("anim_hamster_stand_settle_sleep2");
+    private static final RawAnimation STAND_SETTLE_SLEEP3_ANIM = RawAnimation.begin().thenPlay("anim_hamster_stand_settle_sleep3");
     private static final RawAnimation SITTING_POSE1_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sitting_pose1");
     private static final RawAnimation SITTING_POSE2_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sitting_pose2");
     private static final RawAnimation SITTING_POSE3_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sitting_pose3");
@@ -638,8 +640,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private static final RawAnimation ATTACK_ANIM = RawAnimation.begin().thenPlay("anim_hamster_attack");
     private static final RawAnimation SULK_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sulk");
     private static final RawAnimation SULKING_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sulking");
-    public static final RawAnimation SEEKING_DIAMOND_ANIM = RawAnimation.begin().thenPlay("anim_hamster_seeking_diamond");
-    public static final RawAnimation WANTS_TO_SEEK_DIAMOND_ANIM = RawAnimation.begin().thenPlay("anim_hamster_wants_to_seek_diamond");
+    private static final RawAnimation SEEKING_DIAMOND_ANIM = RawAnimation.begin().thenPlay("anim_hamster_seeking_diamond");
+    private static final RawAnimation WANTS_TO_SEEK_DIAMOND_ANIM = RawAnimation.begin().thenPlay("anim_hamster_wants_to_seek_diamond");
     private static final RawAnimation DIAMOND_POUNCE_ANIM = RawAnimation.begin().thenPlay("anim_hamster_diamond_pounce");
     private static final RawAnimation DIAMOND_TAUNT_ANIM = RawAnimation.begin().thenPlay("anim_hamster_diamond_taunt");
     private static final RawAnimation CELEBRATE_CHASE_ANIM = RawAnimation.begin().thenPlay("anim_hamster_celebrate_chase");
@@ -2452,7 +2454,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
      */
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "mainController", 2, event -> {
+        controllers.add(new AnimationController<>(this, "mainController", 5, event -> {
             DozingPhase currentDozingPhase = this.getDozingPhase();
             int personality = this.dataTracker.get(ANIMATION_PERSONALITY_ID);
 
@@ -2533,26 +2535,32 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     }
 
 
-            // --- Wild Hamster Sleeping State ---
-            if (!this.isTamed() && this.isSleeping()) {
-                // After anim_hamster_wild_settle_sleep (triggerable) finishes, loop sleep_pose1.
-                return event.setAndContinue(SLEEP_POSE1_ANIM);
-            }
+                    // --- Wild Hamster Sleeping State ---
+                    if (!this.isTamed() && this.isSleeping()) {
+                        // Read the target deep sleep animation from the DataTracker
+                        String deepSleepId = this.dataTracker.get(CURRENT_DEEP_SLEEP_ANIM_ID);
+                        RawAnimation deepSleepAnimToPlay = switch (deepSleepId) {
+                            case "anim_hamster_sleep_pose2" -> SLEEP_POSE2_ANIM;
+                            case "anim_hamster_sleep_pose3" -> SLEEP_POSE3_ANIM;
+                            default -> SLEEP_POSE1_ANIM; // Fallback to pose 1
+                        };
+                        return event.setAndContinue(deepSleepAnimToPlay);
+                    }
 
-            // --- Player-Commanded Sitting / Tamed Quiescent Sitting ---
+                    // --- Player-Commanded Sitting / Tamed Quiescent Sitting ---
                     if (this.dataTracker.get(IS_SITTING) && !this.isKnockedOut()) {
-                if (this.dataTracker.get(IS_CLEANING)) {
-                    return event.setAndContinue(CLEANING_ANIM);
-                } else {
-                    // The logic to start cleaning lives in the tick() method.
-                    // The animation controller only reacts to the state.
-                    return event.setAndContinue(switch (personality) {
-                        case 2 -> SITTING_POSE2_ANIM;
-                        case 3 -> SITTING_POSE3_ANIM;
-                        default -> SITTING_POSE1_ANIM;
-                    });
-                }
-            }
+                        if (this.dataTracker.get(IS_CLEANING)) {
+                            return event.setAndContinue(CLEANING_ANIM);
+                        } else {
+                            // The logic to start cleaning lives in the tick() method.
+                            // The animation controller only reacts to the state.
+                            return event.setAndContinue(switch (personality) {
+                                case 2 -> SITTING_POSE2_ANIM;
+                                case 3 -> SITTING_POSE3_ANIM;
+                                default -> SITTING_POSE1_ANIM;
+                            });
+                        }
+                    }
 
             // --- Movement State ---
                     double horizontalSpeedSquared = this.getVelocity().horizontalLengthSquared();
@@ -2579,10 +2587,12 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 .triggerableAnim("wakeup", WAKE_UP_ANIM)
                 .triggerableAnim("no", NO_ANIM)
                 .triggerableAnim("attack", ATTACK_ANIM)
-                .triggerableAnim("anim_hamster_sit_settle_sleep1", SETTLE_SLEEP1_ANIM)
-                .triggerableAnim("anim_hamster_sit_settle_sleep2", SETTLE_SLEEP2_ANIM)
-                .triggerableAnim("anim_hamster_sit_settle_sleep3", SETTLE_SLEEP3_ANIM)
-                .triggerableAnim("anim_hamster_wild_settle_sleep", WILD_SETTLE_SLEEP_ANIM)
+                .triggerableAnim("anim_hamster_sit_settle_sleep1", SIT_SETTLE_SLEEP1_ANIM)
+                .triggerableAnim("anim_hamster_sit_settle_sleep2", SIT_SETTLE_SLEEP2_ANIM)
+                .triggerableAnim("anim_hamster_sit_settle_sleep3", SIT_SETTLE_SLEEP3_ANIM)
+                .triggerableAnim("anim_hamster_stand_settle_sleep1", STAND_SETTLE_SLEEP1_ANIM)
+                .triggerableAnim("anim_hamster_stand_settle_sleep2", STAND_SETTLE_SLEEP2_ANIM)
+                .triggerableAnim("anim_hamster_stand_settle_sleep3", STAND_SETTLE_SLEEP3_ANIM)
                 .triggerableAnim("anim_hamster_sulk", SULK_ANIM)
                 .triggerableAnim("anim_hamster_diamond_pounce", DIAMOND_POUNCE_ANIM)
                 .triggerableAnim("anim_hamster_celebrate_chase", CELEBRATE_CHASE_ANIM)

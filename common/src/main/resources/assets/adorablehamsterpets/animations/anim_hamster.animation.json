@@ -7601,7 +7601,7 @@
 						}
 					},
 					"position": {
-						"vector": ["easeInOutSine", "easeInOutSine", "easeInOutSine"]
+						"vector": ["0.4+easeInOutSine", "0.5+easeInOutSine", "-1.5+easeInOutSine"]
 					}
 				},
 				"left_cheek_inflated": {
