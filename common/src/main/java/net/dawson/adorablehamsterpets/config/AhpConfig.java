@@ -397,7 +397,7 @@ public class AhpConfig extends Config {
 
     // --- Wild Bush & Sunflower Settings ---
     @Translatable.Name("Wild Bush & Sunflower Settings")
-    @Translatable.Desc("For The Aspiring Landscape Artist")
+    @Translatable.Desc("For The Aspiring Landscape Artist. Note: Most of these settings require re-logging into your world to take effect.")
     public ConfigGroup worldGenAdjustments = new ConfigGroup("worldGenAdjustments", true);
 
     @Translatable.Name("Sunflower Seed Regrowth Speed")
@@ -412,8 +412,53 @@ public class AhpConfig extends Config {
     @Translatable.Desc("1 in X chunks. Low numbers may cause shrub spam.")
     public ValidatedInt wildGreenBeanBushRarity = new ValidatedInt(24, 100, 1);
 
-    @ConfigGroup.Pop
     @Translatable.Name("Cucumber Bush Rarity")
     @Translatable.Desc("1 in X chunks. Low numbers may cause shrub spam.")
     public ValidatedInt wildCucumberBushRarity = new ValidatedInt(24, 100, 1);
+
+    @Translatable.Name("Sunflower Biomes")
+    @Translatable.Desc("A list of specific biome IDs where custom Sunflowers can generate. Format: 'mod_id:biome_name'.")
+    public List<String> sunflowerBiomes = new ArrayList<>(List.of("minecraft:sunflower_plains"));
+
+    @Translatable.Name("Cucumber Bush Biomes")
+    @Translatable.Desc("A list of specific biome IDs where Wild Cucumber Bushes can generate.")
+    public List<String> cucumberBushBiomes = new ArrayList<>(List.of(
+            "minecraft:plains",
+            "minecraft:sunflower_plains",
+            "minecraft:savanna",
+            "minecraft:savanna_plateau",
+            "minecraft:forest",
+            "minecraft:birch_forest",
+            "minecraft:meadow",
+            "minecraft:wooded_badlands",
+            "minecraft:jungle",
+            "minecraft:sparse_jungle",
+            "minecraft:bamboo_jungle"
+    ));
+
+    @Translatable.Name("Cucumber Bush Biome Tags")
+    @Translatable.Desc("A list of biome tags where Wild Cucumber Bushes can generate.")
+    public List<String> cucumberBushTags = new ArrayList<>(List.of("minecraft:is_jungle"));
+
+    @Translatable.Name("Cucumber Bush Exclusions")
+    @Translatable.Desc("A list of specific biome IDs to NEVER spawn Wild Cucumber Bushes in, overriding any other settings.")
+    public List<String> cucumberBushExclusions = new ArrayList<>(List.of("mod_id:biome_name"));
+
+    @Translatable.Name("Green Bean Bush Biomes")
+    @Translatable.Desc("A list of specific biome IDs where Wild Green Bean Bushes can generate.")
+    public List<String> greenBeanBushBiomes = new ArrayList<>(List.of(
+            "minecraft:swamp",
+            "minecraft:mangrove_swamp",
+            "minecraft:lush_caves",
+            "minecraft:flower_forest"
+    ));
+
+    @Translatable.Name("Green Bean Bush Biome Tags")
+    @Translatable.Desc("A list of biome tags where Wild Green Bean Bushes can generate. Nothing here by default.")
+    public List<String> greenBeanBushTags = new ArrayList<>(List.of("mod_id:biome_name"));
+
+    @ConfigGroup.Pop
+    @Translatable.Name("Green Bean Bush Exclusions")
+    @Translatable.Desc("A list of specific biome IDs to NEVER spawn Wild Green Bean Bushes in, overriding any other settings.")
+    public List<String> greenBeanBushExclusions = new ArrayList<>(List.of("mod_id:biome_name"));
 }
