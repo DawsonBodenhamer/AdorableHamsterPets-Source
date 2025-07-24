@@ -1937,7 +1937,15 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     if (hitEntity instanceof ArmorStandEntity) {
                         playEffects = true;
                     } else if (hitEntity instanceof LivingEntity livingHit) {
-                        boolean damaged = livingHit.damage(this.getDamageSources().thrown(this, this.getOwner()), Configs.AHP.hamsterThrowDamage.get().floatValue());
+
+                        // --- THROW DAMAGE LOGIC ---
+                        // 1. Create a DamageSource where the thrown hamster is the attacker.
+                        DamageSource damageSource = this.getDamageSources().mobAttack(this);
+                        // 2. Get the damage amount from the config.
+                        float damageAmount = Configs.AHP.hamsterThrowDamage.get().floatValue();
+                        // 3. Deal the damage to the target using the correct source.
+                        boolean damaged = livingHit.damage(damageSource, damageAmount);
+
                         if (damaged) {
                             livingHit.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, 20, 0, false, false, false));
                             playEffects = true;
