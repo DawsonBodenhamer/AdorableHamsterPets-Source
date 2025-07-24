@@ -21,7 +21,6 @@ import net.dawson.adorablehamsterpets.screen.HamsterScreenHandlerFactory;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.dawson.adorablehamsterpets.tag.ModItemTags;
 import net.dawson.adorablehamsterpets.util.HamsterRenderTracker;
-import net.dawson.adorablehamsterpets.world.gen.ModEntitySpawns;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -32,7 +31,6 @@ import net.minecraft.entity.ai.goal.AttackWithOwnerGoal;
 import net.minecraft.entity.ai.goal.RevengeGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.TrackOwnerAttackerGoal;
-import net.minecraft.entity.ai.pathing.MobNavigation;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -59,6 +57,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.BiomeTags;
@@ -70,10 +69,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.*;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -261,20 +257,19 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     // --- Hamster Spawning In Different Biomes ---
     // Determine Which Hamster Variant for Each Biome
     private static HamsterVariant determineVariantForBiome(RegistryEntry<Biome> biomeEntry, net.minecraft.util.math.random.Random random) {
-        // --- Add Logging ---
+        // --- Logging ---
         String biomeName = biomeEntry.getKey().map(k -> k.getValue().toString()).orElse("unknown");
         AdorableHamsterPets.LOGGER.debug("[AHP Spawn Debug] determineVariantForBiome called for biome: {}", biomeName);
-        // --- End Add Logging ---
 
         HamsterVariant result;
         // --- 1. Specific Rare Biomes First ---
-        if (ModEntitySpawns.isIceSpikesBiome(biomeEntry)) {
+        if (isIceSpikesBiome(biomeEntry)) {
             if (random.nextInt(10) < 3) {
                 result = getRandomVariant(WHITE_VARIANTS, random);
             } else {
                 result = getRandomVariant(BLUE_VARIANTS, random);
             }
-        } else if (ModEntitySpawns.isCherryGroveBiome(biomeEntry)) {
+        } else if (isCherryGroveBiome(biomeEntry)) {
             result = getRandomVariant(LAVENDER_VARIANTS, random);
         } else if (biomeEntry.matchesKey(BiomeKeys.MUSHROOM_FIELDS)) {
             result = getRandomVariant(LAVENDER_VARIANTS, random);
@@ -282,28 +277,28 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         // --- End 1. Specific Rare Biomes First ---
 
         // --- 2. General Biome Categories ---
-        else if (ModEntitySpawns.isSnowyBiome(biomeEntry)) {
+        else if (isSnowyBiome(biomeEntry)) {
             result = getRandomVariant(WHITE_VARIANTS, random);
-        } else if (ModEntitySpawns.isOldGrowthBirchForest(biomeEntry)) {
+        } else if (isOldGrowthBirchForest(biomeEntry)) {
             result = getRandomVariant(CREAM_VARIANTS, random);
-        } else if (ModEntitySpawns.isCaveBiome(biomeEntry)) {
+        } else if (isCaveBiome(biomeEntry)) {
             int chance = random.nextInt(4);
             if (chance < 2) { result = getRandomVariant(BLACK_VARIANTS, random); }
             else if (chance == 2) { result = getRandomVariant(DARK_GRAY_VARIANTS, random); }
             else { result = getRandomVariant(LIGHT_GRAY_VARIANTS, random); }
-        } else if (ModEntitySpawns.isSwampBiome(biomeEntry)) {
+        } else if (isSwampBiome(biomeEntry)) {
             result = getRandomVariant(BLACK_VARIANTS, random);
-        } else if (ModEntitySpawns.isDesertBiome(biomeEntry)) {
+        } else if (isDesertBiome(biomeEntry)) {
             result = getRandomVariant(CREAM_VARIANTS, random);
         } else if (biomeEntry.isIn(BiomeTags.IS_BADLANDS)) {
             result = getRandomVariant(ORANGE_VARIANTS, random);
-        } else if (biomeEntry.isIn(BiomeTags.IS_BEACH) && !ModEntitySpawns.isSnowyBiome(biomeEntry)) {
+        } else if (biomeEntry.isIn(BiomeTags.IS_BEACH) && !isSnowyBiome(biomeEntry)) {
             result = getRandomVariant(CREAM_VARIANTS, random);
-        } else if ((biomeEntry.isIn(BiomeTags.IS_FOREST) || biomeEntry.isIn(BiomeTags.IS_TAIGA) || ModEntitySpawns.isJungleBiome(biomeEntry)) && !ModEntitySpawns.isSnowyBiome(biomeEntry) && !ModEntitySpawns.isCherryGroveBiome(biomeEntry) && !ModEntitySpawns.isOldGrowthBirchForest(biomeEntry)) {
+        } else if ((biomeEntry.isIn(BiomeTags.IS_FOREST) || biomeEntry.isIn(BiomeTags.IS_TAIGA) || isJungleBiome(biomeEntry)) && !isSnowyBiome(biomeEntry) && !isCherryGroveBiome(biomeEntry) && !isOldGrowthBirchForest(biomeEntry)) {
             result = getRandomVariant(CHOCOLATE_VARIANTS, random);
-        } else if (biomeEntry.isIn(BiomeTags.IS_SAVANNA) || ModEntitySpawns.isPlainsBiome(biomeEntry)) {
+        } else if (biomeEntry.isIn(BiomeTags.IS_SAVANNA) || isPlainsBiome(biomeEntry)) {
             result = getRandomVariant(ORANGE_VARIANTS, random);
-        } else if ((biomeEntry.isIn(BiomeTags.IS_MOUNTAIN) || biomeEntry.matchesKey(BiomeKeys.STONY_SHORE) || ModEntitySpawns.isWindsweptOrStonyPeaks(biomeEntry)) && !ModEntitySpawns.isSnowyBiome(biomeEntry) && !ModEntitySpawns.isIceSpikesBiome(biomeEntry)) {
+        } else if ((biomeEntry.isIn(BiomeTags.IS_MOUNTAIN) || biomeEntry.matchesKey(BiomeKeys.STONY_SHORE) || isWindsweptOrStonyPeaks(biomeEntry)) && !isSnowyBiome(biomeEntry) && !isIceSpikesBiome(biomeEntry)) {
             boolean lightOrDarkGrayChance = random.nextBoolean();
             if (lightOrDarkGrayChance) { result = getRandomVariant(DARK_GRAY_VARIANTS, random); }
             else { result = getRandomVariant(LIGHT_GRAY_VARIANTS, random); }
@@ -315,11 +310,33 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             result = getRandomVariant(ORANGE_VARIANTS, random);
         }
 
-        // --- Add Logging ---
+        // --- Logging ---
         AdorableHamsterPets.LOGGER.debug("[AHP Spawn Debug] Determined variant for {} is {}", biomeName, result.name());
-        // --- End Add Logging ---
         return result;
     }
+
+    // --- Helper Methods for Hamster Spawning ---
+    @SafeVarargs
+    private static boolean matchesAnyBiomeKey(Identifier id, RegistryKey<Biome>... keysToMatch) {
+        if (id == null) return false;
+        for (RegistryKey<Biome> k : keysToMatch) {
+            // Compare the identifier from the context to the identifier of the key
+            if (k.getValue().equals(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private static boolean isSnowyBiome(RegistryEntry<Biome> biomeEntry) {return biomeEntry.getKey().map(key -> matchesAnyBiomeKey(key.getValue(), BiomeKeys.SNOWY_PLAINS, BiomeKeys.SNOWY_TAIGA, BiomeKeys.SNOWY_SLOPES, BiomeKeys.FROZEN_PEAKS, BiomeKeys.JAGGED_PEAKS, BiomeKeys.GROVE, BiomeKeys.FROZEN_RIVER, BiomeKeys.SNOWY_BEACH, BiomeKeys.FROZEN_OCEAN, BiomeKeys.DEEP_FROZEN_OCEAN)).orElse(false);}
+    private static boolean isIceSpikesBiome(RegistryEntry<Biome> biomeEntry) {return biomeEntry.matchesKey(BiomeKeys.ICE_SPIKES);}
+    private static boolean isCherryGroveBiome(RegistryEntry<Biome> biomeEntry) {return biomeEntry.matchesKey(BiomeKeys.CHERRY_GROVE);}
+    private static boolean isDesertBiome(RegistryEntry<Biome> biomeEntry) {return biomeEntry.matchesKey(BiomeKeys.DESERT);}
+    private static boolean isPlainsBiome(RegistryEntry<Biome> biomeEntry) {return biomeEntry.getKey().map(key -> matchesAnyBiomeKey(key.getValue(), BiomeKeys.PLAINS, BiomeKeys.SUNFLOWER_PLAINS, BiomeKeys.MEADOW)).orElse(false);}
+    private static boolean isSwampBiome(RegistryEntry<Biome> biomeEntry) {return biomeEntry.getKey().map(key -> matchesAnyBiomeKey(key.getValue(), BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP)).orElse(false);}
+    private static boolean isCaveBiome(RegistryEntry<Biome> biomeEntry) {return biomeEntry.getKey().map(key -> matchesAnyBiomeKey(key.getValue(), BiomeKeys.LUSH_CAVES, BiomeKeys.DRIPSTONE_CAVES, BiomeKeys.DEEP_DARK)).orElse(false);}
+    private static boolean isOldGrowthBirchForest(RegistryEntry<Biome> biomeEntry) {return biomeEntry.matchesKey(BiomeKeys.OLD_GROWTH_BIRCH_FOREST);}
+    private static boolean isWindsweptOrStonyPeaks(RegistryEntry<Biome> biomeEntry) {return biomeEntry.getKey().map(key -> matchesAnyBiomeKey(key.getValue(), BiomeKeys.WINDSWEPT_HILLS, BiomeKeys.WINDSWEPT_GRAVELLY_HILLS, BiomeKeys.WINDSWEPT_FOREST, BiomeKeys.WINDSWEPT_SAVANNA, BiomeKeys.STONY_PEAKS)).orElse(false);}
+    private static boolean isJungleBiome(RegistryEntry<Biome> biomeEntry) {return biomeEntry.isIn(BiomeTags.IS_JUNGLE);}
     // --- End Hamster Spawning In Different Biomes ---
 
     private static HamsterVariant getRandomVariant(List<HamsterVariant> variantPool, net.minecraft.util.math.random.Random random) {
@@ -328,23 +345,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             return HamsterVariant.ORANGE;
         }
         return variantPool.get(random.nextInt(variantPool.size()));
-    }
-
-    // Heler Method for Choosing Baby Variant
-    private static List<HamsterVariant> getPoolForBaseVariant(HamsterVariant baseVariant) {
-        return switch (baseVariant) {
-            case ORANGE -> ORANGE_VARIANTS;
-            case BLACK -> BLACK_VARIANTS;
-            case BLUE -> BLUE_VARIANTS;
-            case CHOCOLATE -> CHOCOLATE_VARIANTS;
-            case CREAM -> CREAM_VARIANTS;
-            case DARK_GRAY -> DARK_GRAY_VARIANTS;
-            case LAVENDER -> LAVENDER_VARIANTS;
-            case LIGHT_GRAY -> LIGHT_GRAY_VARIANTS;
-            case WHITE -> WHITE_VARIANTS;
-            // Default case should not be reachable if baseVariant is always one of the above
-            default -> ORANGE_VARIANTS; // Fallback
-        };
     }
 
     /**
@@ -359,7 +359,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, Configs.AHP.meleeDamage.get())
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 40.0D);
     }
-
 
     /**
      * Creates a HamsterEntity instance from NBT data, typically from a player's shoulder.

@@ -60,6 +60,7 @@ public class AdorableHamsterPets {
 		// and should skip runtime-only logic to prevent crashes.
 		if (System.getProperty("fabric-api.datagen") == null) {
 			ModRegistries.initialize();
+			ModEntitySpawns.parseConfig();
 
 			// --- Networking Client to Server Registration ---
 			ModPackets.registerC2SPackets();
