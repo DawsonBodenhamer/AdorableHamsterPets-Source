@@ -1,13 +1,30 @@
 package net.dawson.adorablehamsterpets.world;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import dev.architectury.registry.level.biome.BiomeModifications;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
+import net.dawson.adorablehamsterpets.config.Configs;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.tag.BiomeTags;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeKeys;
+import net.minecraft.world.gen.feature.PlacedFeature;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class ModWorldGeneration {
+
+    // --- Caches for Parsed Config Values ---
+    private static final Set<Identifier> SUNFLOWER_IDS = new HashSet<>();
+    private static final Set<Identifier> GREEN_BEAN_BUSH_IDS = new HashSet<>();
+    private static final Set<TagKey<Biome>> GREEN_BEAN_BUSH_TAGS = new HashSet<>();
+    private static final Set<Identifier> GREEN_BEAN_BUSH_EXCLUSIONS = new HashSet<>();
+    private static final Set<Identifier> CUCUMBER_BUSH_IDS = new HashSet<>();
+    private static final Set<TagKey<Biome>> CUCUMBER_BUSH_TAGS = new HashSet<>();
+    private static final Set<Identifier> CUCUMBER_BUSH_EXCLUSIONS = new HashSet<>();
 
     public static void generateModWorldGen() {
         AdorableHamsterPets.LOGGER.info("Registering Biome Modifications for " + AdorableHamsterPets.MOD_ID);
@@ -19,27 +36,120 @@ public class ModWorldGeneration {
         throw new AssertionError();
     }
 
-    // --- Biome Helper Predicates (Centralized Logic) ---
-    public static boolean isSunflowerPlains(RegistryEntry<Biome> biome) {
-        return biome.matchesKey(BiomeKeys.SUNFLOWER_PLAINS);
+    /**
+     * Parses the feature generation lists from the config file into Sets for efficient lookup.
+     * This should be called once during mod initialization.
+     */
+    public static void parseConfig() {
+        // --- Clear all sets to allow for config reloading ---
+        SUNFLOWER_IDS.clear();
+        GREEN_BEAN_BUSH_IDS.clear();
+        GREEN_BEAN_BUSH_TAGS.clear();
+        GREEN_BEAN_BUSH_EXCLUSIONS.clear();
+        CUCUMBER_BUSH_IDS.clear();
+        CUCUMBER_BUSH_TAGS.clear();
+        CUCUMBER_BUSH_EXCLUSIONS.clear();
+
+        // --- Parse Sunflowers ---
+        Configs.AHP.sunflowerBiomes.forEach(idStr -> parseIdentifier(idStr, SUNFLOWER_IDS, "sunflowerBiomes"));
+
+        // --- Parse Green Bean Bushes ---
+        Configs.AHP.greenBeanBushBiomes.forEach(idStr -> parseIdentifier(idStr, GREEN_BEAN_BUSH_IDS, "greenBeanBushBiomes"));
+        Configs.AHP.greenBeanBushTags.forEach(tagStr -> parseTag(tagStr, GREEN_BEAN_BUSH_TAGS, "greenBeanBushTags"));
+        Configs.AHP.greenBeanBushExclusions.forEach(idStr -> parseIdentifier(idStr, GREEN_BEAN_BUSH_EXCLUSIONS, "greenBeanBushExclusions"));
+
+        // --- Parse Cucumber Bushes ---
+        Configs.AHP.cucumberBushBiomes.forEach(idStr -> parseIdentifier(idStr, CUCUMBER_BUSH_IDS, "cucumberBushBiomes"));
+        Configs.AHP.cucumberBushTags.forEach(tagStr -> parseTag(tagStr, CUCUMBER_BUSH_TAGS, "cucumberBushTags"));
+        Configs.AHP.cucumberBushExclusions.forEach(idStr -> parseIdentifier(idStr, CUCUMBER_BUSH_EXCLUSIONS, "cucumberBushExclusions"));
+
+        AdorableHamsterPets.LOGGER.info("[FeatureConfig] Parsed feature generation settings from config.");
     }
 
-    public static boolean isGreenBeanBiome(RegistryEntry<Biome> biome) {
-        return biome.matchesKey(BiomeKeys.SWAMP)
-                || biome.matchesKey(BiomeKeys.MANGROVE_SWAMP)
-                || biome.matchesKey(BiomeKeys.LUSH_CAVES)
-                || biome.matchesKey(BiomeKeys.FLOWER_FOREST);
+    /**
+     * The NeoForge-specific decider method for feature placement, driven by the parsed config.
+     *
+     * @param feature The PlacedFeature being considered for generation.
+     * @param biome   The Biome where the feature might be placed.
+     * @return True if the feature should spawn in this biome according to config rules.
+     */
+    public static boolean shouldFeatureSpawnInBiome(RegistryEntry<PlacedFeature> feature, RegistryEntry<Biome> biome) {
+        Identifier featureId = feature.getKey().map(RegistryKey::getValue).orElse(null);
+        Identifier biomeId = biome.getKey().map(RegistryKey::getValue).orElse(null);
+
+        if (featureId == null || biomeId == null) {
+            return false;
+        }
+
+        String featurePath = featureId.getPath();
+
+        return switch (featurePath) {
+            case "custom_sunflower_placed" -> SUNFLOWER_IDS.contains(biomeId);
+            case "wild_green_bean_bush_placed" -> {
+                if (GREEN_BEAN_BUSH_EXCLUSIONS.contains(biomeId)) yield false;
+                if (GREEN_BEAN_BUSH_IDS.contains(biomeId)) yield true;
+                yield GREEN_BEAN_BUSH_TAGS.stream().anyMatch(biome::isIn);
+            }
+            case "wild_cucumber_bush_placed" -> {
+                if (CUCUMBER_BUSH_EXCLUSIONS.contains(biomeId)) yield false;
+                if (CUCUMBER_BUSH_IDS.contains(biomeId)) yield true;
+                yield CUCUMBER_BUSH_TAGS.stream().anyMatch(biome::isIn);
+            }
+            // Default case for vanilla features to remove
+            // Need to check if it would have spawned there to correctly remove it.
+            case "patch_sunflower" -> SUNFLOWER_IDS.contains(biomeId);
+            default -> false;
+        };
     }
 
-    public static boolean isCucumberBiome(RegistryEntry<Biome> biome) {
-        return biome.isIn(BiomeTags.IS_JUNGLE)
-                || biome.matchesKey(BiomeKeys.PLAINS)
-                || biome.matchesKey(BiomeKeys.SUNFLOWER_PLAINS)
-                || biome.matchesKey(BiomeKeys.SAVANNA)
-                || biome.matchesKey(BiomeKeys.SAVANNA_PLATEAU)
-                || biome.matchesKey(BiomeKeys.FOREST)
-                || biome.matchesKey(BiomeKeys.BIRCH_FOREST)
-                || biome.matchesKey(BiomeKeys.MEADOW)
-                || biome.matchesKey(BiomeKeys.WOODED_BADLANDS);
+    /**
+     * The Fabric-specific decider method for feature placement, driven by the parsed config.
+     * This version uses Architectury's BiomeContext for compatibility.
+     *
+     * @param featureKey The RegistryKey of the PlacedFeature being considered.
+     * @param context    The BiomeContext for the biome where the feature might be placed.
+     * @return True if the feature should spawn in this biome according to config rules.
+     */
+    public static boolean shouldFeatureSpawnInBiome(RegistryKey<PlacedFeature> featureKey, BiomeModifications.BiomeContext context) {
+        Identifier biomeId = context.getKey().orElse(null);
+        if (biomeId == null) {
+            return false;
+        }
+
+        String featurePath = featureKey.getValue().getPath();
+
+        return switch (featurePath) {
+            case "custom_sunflower_placed" -> SUNFLOWER_IDS.contains(biomeId);
+            case "wild_green_bean_bush_placed" -> {
+                if (GREEN_BEAN_BUSH_EXCLUSIONS.contains(biomeId)) yield false;
+                if (GREEN_BEAN_BUSH_IDS.contains(biomeId)) yield true;
+                yield GREEN_BEAN_BUSH_TAGS.stream().anyMatch(context::hasTag);
+            }
+            case "wild_cucumber_bush_placed" -> {
+                if (CUCUMBER_BUSH_EXCLUSIONS.contains(biomeId)) yield false;
+                if (CUCUMBER_BUSH_IDS.contains(biomeId)) yield true;
+                yield CUCUMBER_BUSH_TAGS.stream().anyMatch(context::hasTag);
+            }
+            // This case is for correctly removing the vanilla sunflower feature
+            case "patch_sunflower" -> SUNFLOWER_IDS.contains(biomeId);
+            default -> false;
+        };
+    }
+
+    // --- Private Helper Methods for Parsing ---
+    private static void parseIdentifier(String idStr, Set<Identifier> set, String configListName) {
+        try {
+            set.add(Identifier.of(idStr));
+        } catch (Exception e) {
+            AdorableHamsterPets.LOGGER.info("[FeatureConfig] Invalid identifier in '{}' config list: '{}'", configListName, idStr);
+        }
+    }
+
+    private static void parseTag(String tagStr, Set<TagKey<Biome>> set, String configListName) {
+        try {
+            set.add(TagKey.of(RegistryKeys.BIOME, Identifier.of(tagStr)));
+        } catch (Exception e) {
+            AdorableHamsterPets.LOGGER.info("[FeatureConfig] Invalid biome tag identifier in '{}' config list: '{}'", configListName, tagStr);
+        }
     }
 }

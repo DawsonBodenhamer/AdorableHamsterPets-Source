@@ -62,6 +62,7 @@ public class AdorableHamsterPets {
 		if (System.getProperty("fabric-api.datagen") == null) {
 			ModRegistries.initialize();
 			ModEntitySpawns.parseConfig();
+			ModWorldGeneration.parseConfig();
 
 			// --- Networking Client to Server Registration ---
 			ModPackets.registerC2SPackets();
