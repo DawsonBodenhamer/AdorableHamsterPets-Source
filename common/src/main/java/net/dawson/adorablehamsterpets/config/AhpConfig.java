@@ -164,10 +164,48 @@ public class AhpConfig extends Config {
     @Translatable.Desc("Adjusts hamster spawn frequency. Higher = more chaos. 1 = blissful silence.")
     public ValidatedInt spawnWeight = new ValidatedInt(30, 100, 1);
 
-    @ConfigGroup.Pop
     @Translatable.Name("Max Group Size")
     @Translatable.Desc("Maximum hamsters per spawn group. Because sometimes one just isn't cute enough.")
     public ValidatedInt maxGroupSize = new ValidatedInt(1, 10, 1);
+
+    @Translatable.Name("Spawn Biome Tags")
+    @Translatable.Desc("A list of biome tags where hamsters can spawn. Format: 'mod_id:tag_name'. For example, 'minecraft:is_forest'.")
+    public List<String> spawnBiomeTags = new ArrayList<>(List.of(
+            "minecraft:is_beach",
+            "minecraft:is_badlands",
+            "minecraft:is_savanna",
+            "minecraft:is_jungle",
+            "minecraft:is_forest",
+            "minecraft:is_taiga",
+            "minecraft:is_mountain"
+    ));
+
+    @Translatable.Name("Include Specific Biomes")
+    @Translatable.Desc("A list of specific biome IDs to ALWAYS allow spawns in, even if they don't match the tags above. Format: 'mod_id:biome_name'. For example, 'minecraft:plains'.")
+    public List<String> includeBiomes = new ArrayList<>(List.of(
+            // Specific Biomes from old isKeyInSpawnList
+            "minecraft:snowy_plains", "minecraft:snowy_taiga", "minecraft:snowy_slopes",
+            "minecraft:frozen_peaks", "minecraft:jagged_peaks", "minecraft:grove",
+            "minecraft:frozen_river", "minecraft:snowy_beach", "minecraft:frozen_ocean",
+            "minecraft:deep_frozen_ocean", "minecraft:ice_spikes", "minecraft:cherry_grove",
+            "minecraft:lush_caves", "minecraft:dripstone_caves", "minecraft:deep_dark",
+            "minecraft:swamp", "minecraft:mangrove_swamp", "minecraft:desert",
+            "minecraft:plains", "minecraft:sunflower_plains", "minecraft:meadow",
+            "minecraft:old_growth_birch_forest", "minecraft:windswept_hills",
+            "minecraft:windswept_gravelly_hills", "minecraft:windswept_forest",
+            "minecraft:windswept_savanna", "minecraft:stony_peaks", "minecraft:sparse_jungle",
+            "minecraft:bamboo_jungle", "minecraft:stony_shore", "minecraft:mushroom_fields",
+            // Biomes that were also covered by tags, included for explicitness
+            "minecraft:forest", "minecraft:birch_forest", "minecraft:dark_forest",
+            "minecraft:taiga", "minecraft:old_growth_pine_taiga", "minecraft:old_growth_spruce_taiga",
+            "minecraft:savanna", "minecraft:savanna_plateau", "minecraft:badlands",
+            "minecraft:eroded_badlands", "minecraft:wooded_badlands", "minecraft:beach"
+    ));
+
+    @ConfigGroup.Pop
+    @Translatable.Name("Exclude Specific Biomes")
+    @Translatable.Desc("A list of specific biome IDs to NEVER allow spawns in, even if they match a tag. This overrides all other settings. Format: 'mod_id:biome_name'. For example, 'minecraft:plains'.")
+    public List<String> excludeBiomes = new ArrayList<>(List.of("mod_id:biome_name"));
 
     // --- Taming & Breeding Settings ---
     @Translatable.Name("Taming & Breeding Settings")
