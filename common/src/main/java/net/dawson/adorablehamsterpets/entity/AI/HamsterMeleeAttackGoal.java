@@ -6,6 +6,8 @@ import net.dawson.adorablehamsterpets.mixin.accessor.MeleeAttackGoalAccessor;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.sound.SoundEvent;
 
 public class HamsterMeleeAttackGoal extends MeleeAttackGoal {
@@ -38,8 +40,14 @@ public class HamsterMeleeAttackGoal extends MeleeAttackGoal {
             // Trigger Attack Animation (Server-Side)
             this.hamster.triggerAnimOnServer("mainController", "attack");
 
-            // Deal Damage
-            this.mob.tryAttack(target);
+            // --- DAMAGE LOGIC ---
+            // 1. Create a DamageSource where the hamster is the attacker.
+            DamageSource damageSource = this.hamster.getDamageSources().mobAttack(this.hamster);
+            // 2. Get the damage amount from the hamster's attributes.
+            float damageAmount = (float)this.hamster.getAttributeValue(EntityAttributes.GENERIC_ATTACK_DAMAGE);
+            // 3. Deal the damage to the target using the correct source.
+            target.damage(damageSource, damageAmount);
+
             AdorableHamsterPets.LOGGER.debug("[AttackGoal {} Tick {}] Called tryAttack() on target {}.", this.hamster.getId(), this.hamster.getWorld().getTime(), target.getId());
 
         }
