@@ -455,8 +455,17 @@ public class AhpConfig extends Config {
     @Translatable.Desc("Higher = slower, lower = faster. Photosynthesis is hard, okay?")
     public ValidatedDouble sunflowerRegrowthModifier = new ValidatedDouble(1.0, 5.0, 0.1);
 
+    @Translatable.Name("Convention Biome Tags")
+    @Translatable.Desc("A list of biome tags where these custom Sunflowers can replace vanilla ones. The 'c:is_plains' tag provides wide compatibility with modded biomes.")
+    public List<String> sunflowerBiomeTags = new ArrayList<>(List.of(
+            "c:is_plains",
+            "c:is_temperate",
+            "c:is_hot",
+            "c:is_dry"
+    ));
+
     @ConfigGroup.Pop
-    @Translatable.Name("Allowed Biomes")
+    @Translatable.Name("Specific Biomes")
     @Translatable.Desc("Specific biome IDs where these sunflowers can replace the vanilla ones. Format: 'mod_id:biome_name'. They’re picky.")
     public List<String> sunflowerBiomes = new ArrayList<>(List.of("minecraft:sunflower_plains"));
 
