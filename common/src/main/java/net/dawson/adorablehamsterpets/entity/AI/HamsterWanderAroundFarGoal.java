@@ -7,7 +7,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.Unique;
 
 import java.util.Optional;
 
@@ -39,7 +38,7 @@ public class HamsterWanderAroundFarGoal extends WanderAroundFarGoal {
         if (this.hamster.hasGreenBeanBuff()) {
 
             // For zoomies, use a high-frequency check and bypass the superclass's internal cooldown.
-            if (this.mob.getRandom().nextInt(2) != 0) {
+            if (this.mob.getRandom().nextInt(3) != 0) {
                 AdorableHamsterPets.LOGGER.trace("[WanderGoal-{}] canStart (Zoomies): FAILED - On cooldown.", this.hamster.getId());
                 return false;
             }
