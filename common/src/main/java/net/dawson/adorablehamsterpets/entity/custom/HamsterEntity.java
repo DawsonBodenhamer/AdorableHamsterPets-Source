@@ -2574,7 +2574,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
      */
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "mainController", 5, event -> {
+        controllers.add(new AnimationController<>(this, "mainController", 2, event -> {
             DozingPhase currentDozingPhase = this.getDozingPhase();
             int personality = this.dataTracker.get(ANIMATION_PERSONALITY_ID);
 
