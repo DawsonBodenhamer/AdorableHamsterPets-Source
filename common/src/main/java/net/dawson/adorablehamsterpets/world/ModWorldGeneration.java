@@ -21,9 +21,11 @@ public class ModWorldGeneration {
     private static final Set<Identifier> SUNFLOWER_IDS = new HashSet<>();
     private static final Set<Identifier> GREEN_BEAN_BUSH_IDS = new HashSet<>();
     private static final Set<TagKey<Biome>> GREEN_BEAN_BUSH_TAGS = new HashSet<>();
+    private static final Set<TagKey<Biome>> GREEN_BEAN_BUSH_CONVENTION_TAGS = new HashSet<>();
     private static final Set<Identifier> GREEN_BEAN_BUSH_EXCLUSIONS = new HashSet<>();
     private static final Set<Identifier> CUCUMBER_BUSH_IDS = new HashSet<>();
     private static final Set<TagKey<Biome>> CUCUMBER_BUSH_TAGS = new HashSet<>();
+    private static final Set<TagKey<Biome>> CUCUMBER_BUSH_CONVENTION_TAGS = new HashSet<>();
     private static final Set<Identifier> CUCUMBER_BUSH_EXCLUSIONS = new HashSet<>();
 
     public static void generateModWorldGen() {
@@ -45,9 +47,11 @@ public class ModWorldGeneration {
         SUNFLOWER_IDS.clear();
         GREEN_BEAN_BUSH_IDS.clear();
         GREEN_BEAN_BUSH_TAGS.clear();
+        GREEN_BEAN_BUSH_CONVENTION_TAGS.clear();
         GREEN_BEAN_BUSH_EXCLUSIONS.clear();
         CUCUMBER_BUSH_IDS.clear();
         CUCUMBER_BUSH_TAGS.clear();
+        CUCUMBER_BUSH_CONVENTION_TAGS.clear();
         CUCUMBER_BUSH_EXCLUSIONS.clear();
 
         // --- Parse Sunflowers ---
@@ -56,11 +60,13 @@ public class ModWorldGeneration {
         // --- Parse Green Bean Bushes ---
         Configs.AHP.greenBeanBushBiomes.forEach(idStr -> parseIdentifier(idStr, GREEN_BEAN_BUSH_IDS, "greenBeanBushBiomes"));
         Configs.AHP.greenBeanBushTags.forEach(tagStr -> parseTag(tagStr, GREEN_BEAN_BUSH_TAGS, "greenBeanBushTags"));
+        Configs.AHP.greenBeanBushConventionTags.forEach(tagStr -> parseTag(tagStr, GREEN_BEAN_BUSH_CONVENTION_TAGS, "greenBeanBushConventionTags"));
         Configs.AHP.greenBeanBushExclusions.forEach(idStr -> parseIdentifier(idStr, GREEN_BEAN_BUSH_EXCLUSIONS, "greenBeanBushExclusions"));
 
         // --- Parse Cucumber Bushes ---
         Configs.AHP.cucumberBushBiomes.forEach(idStr -> parseIdentifier(idStr, CUCUMBER_BUSH_IDS, "cucumberBushBiomes"));
         Configs.AHP.cucumberBushTags.forEach(tagStr -> parseTag(tagStr, CUCUMBER_BUSH_TAGS, "cucumberBushTags"));
+        Configs.AHP.cucumberBushConventionTags.forEach(tagStr -> parseTag(tagStr, CUCUMBER_BUSH_CONVENTION_TAGS, "cucumberBushConventionTags"));
         Configs.AHP.cucumberBushExclusions.forEach(idStr -> parseIdentifier(idStr, CUCUMBER_BUSH_EXCLUSIONS, "cucumberBushExclusions"));
 
         AdorableHamsterPets.LOGGER.info("[FeatureConfig] Parsed feature generation settings from config.");
@@ -83,22 +89,26 @@ public class ModWorldGeneration {
 
         String featurePath = featureId.getPath();
 
-        return switch (featurePath) {
-            case "custom_sunflower_placed" -> SUNFLOWER_IDS.contains(biomeId);
-            case "wild_green_bean_bush_placed" -> {
-                if (GREEN_BEAN_BUSH_EXCLUSIONS.contains(biomeId)) yield false;
-                if (GREEN_BEAN_BUSH_IDS.contains(biomeId)) yield true;
-                yield GREEN_BEAN_BUSH_TAGS.stream().anyMatch(biome::isIn);
-            }
-            case "wild_cucumber_bush_placed" -> {
-                if (CUCUMBER_BUSH_EXCLUSIONS.contains(biomeId)) yield false;
-                if (CUCUMBER_BUSH_IDS.contains(biomeId)) yield true;
-                yield CUCUMBER_BUSH_TAGS.stream().anyMatch(biome::isIn);
-            }
-            // Default case for vanilla features to remove
-            // Need to check if it would have spawned there to correctly remove it.
-            case "patch_sunflower" -> SUNFLOWER_IDS.contains(biomeId);
+        boolean isCandidate = switch (featurePath) {
+            case "custom_sunflower_placed", "patch_sunflower" -> SUNFLOWER_IDS.contains(biomeId);
+            case "wild_green_bean_bush_placed" -> GREEN_BEAN_BUSH_IDS.contains(biomeId) ||
+                    GREEN_BEAN_BUSH_TAGS.stream().anyMatch(biome::isIn) ||
+                    GREEN_BEAN_BUSH_CONVENTION_TAGS.stream().anyMatch(biome::isIn);
+            case "wild_cucumber_bush_placed" -> CUCUMBER_BUSH_IDS.contains(biomeId) ||
+                    CUCUMBER_BUSH_TAGS.stream().anyMatch(biome::isIn) ||
+                    CUCUMBER_BUSH_CONVENTION_TAGS.stream().anyMatch(biome::isIn);
             default -> false;
+        };
+
+        if (!isCandidate) {
+            return false;
+        }
+
+        // Apply exclusions as the final veto
+        return switch (featurePath) {
+            case "wild_green_bean_bush_placed" -> !GREEN_BEAN_BUSH_EXCLUSIONS.contains(biomeId);
+            case "wild_cucumber_bush_placed" -> !CUCUMBER_BUSH_EXCLUSIONS.contains(biomeId);
+            default -> true; // Sunflowers and vanilla features have no exclusion list in this system.
         };
     }
 
@@ -118,21 +128,26 @@ public class ModWorldGeneration {
 
         String featurePath = featureKey.getValue().getPath();
 
-        return switch (featurePath) {
-            case "custom_sunflower_placed" -> SUNFLOWER_IDS.contains(biomeId);
-            case "wild_green_bean_bush_placed" -> {
-                if (GREEN_BEAN_BUSH_EXCLUSIONS.contains(biomeId)) yield false;
-                if (GREEN_BEAN_BUSH_IDS.contains(biomeId)) yield true;
-                yield GREEN_BEAN_BUSH_TAGS.stream().anyMatch(context::hasTag);
-            }
-            case "wild_cucumber_bush_placed" -> {
-                if (CUCUMBER_BUSH_EXCLUSIONS.contains(biomeId)) yield false;
-                if (CUCUMBER_BUSH_IDS.contains(biomeId)) yield true;
-                yield CUCUMBER_BUSH_TAGS.stream().anyMatch(context::hasTag);
-            }
-            // This case is for correctly removing the vanilla sunflower feature
-            case "patch_sunflower" -> SUNFLOWER_IDS.contains(biomeId);
+        boolean isCandidate = switch (featurePath) {
+            case "custom_sunflower_placed", "patch_sunflower" -> SUNFLOWER_IDS.contains(biomeId);
+            case "wild_green_bean_bush_placed" -> GREEN_BEAN_BUSH_IDS.contains(biomeId) ||
+                    GREEN_BEAN_BUSH_TAGS.stream().anyMatch(context::hasTag) ||
+                    GREEN_BEAN_BUSH_CONVENTION_TAGS.stream().anyMatch(context::hasTag);
+            case "wild_cucumber_bush_placed" -> CUCUMBER_BUSH_IDS.contains(biomeId) ||
+                    CUCUMBER_BUSH_TAGS.stream().anyMatch(context::hasTag) ||
+                    CUCUMBER_BUSH_CONVENTION_TAGS.stream().anyMatch(context::hasTag);
             default -> false;
+        };
+
+        if (!isCandidate) {
+            return false;
+        }
+
+        // Apply exclusions as the final veto
+        return switch (featurePath) {
+            case "wild_green_bean_bush_placed" -> !GREEN_BEAN_BUSH_EXCLUSIONS.contains(biomeId);
+            case "wild_cucumber_bush_placed" -> !CUCUMBER_BUSH_EXCLUSIONS.contains(biomeId);
+            default -> true;
         };
     }
 
