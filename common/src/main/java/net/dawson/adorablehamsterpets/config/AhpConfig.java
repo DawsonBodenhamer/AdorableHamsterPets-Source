@@ -157,7 +157,7 @@ public class AhpConfig extends Config {
 
     // --- Spawn Settings ---
     @Translatable.Name("Spawn Settings")
-    @Translatable.Desc("How Many, How Often?")
+    @Translatable.Desc("How Many, Where, and How Often?  Note: Some of these settings require re-logging into your world to take effect.")
     public ConfigGroup hamsterSpawning = new ConfigGroup("hamsterSpawning", true);
 
     @Translatable.Name("Spawn Weight")
@@ -168,7 +168,7 @@ public class AhpConfig extends Config {
     @Translatable.Desc("Maximum hamsters per spawn group. Because sometimes one just isn't cute enough.")
     public ValidatedInt maxGroupSize = new ValidatedInt(1, 10, 1);
 
-    @Translatable.Name("Spawn Vanilla Biome Tags")
+    @Translatable.Name("Vanilla Biome Tags")
     @Translatable.Desc("A list of biome tags where hamsters can spawn. Format: 'mod_id:tag_name'. For example, 'minecraft:is_forest'.")
     public List<String> spawnBiomeTags = new ArrayList<>(List.of(
             "minecraft:is_beach",
@@ -180,7 +180,7 @@ public class AhpConfig extends Config {
             "minecraft:is_mountain"
     ));
 
-    @Translatable.Name("Spawn Convention Biome Tags")
+    @Translatable.Name("Convention Biome Tags")
     @Translatable.Desc("A list of 'c:' convention biome tags where hamsters can spawn. Used for broad mod compatibility. By default, this includes most common overworld types.")
     public List<String> spawnBiomeConventionTags = new ArrayList<>(List.of(
             "c:is_cold",
@@ -437,45 +437,52 @@ public class AhpConfig extends Config {
     @Translatable.Desc("Heals minor paper-cuts (and fragile egos).")
     public ValidatedInt greenBeanBuffAmplifierRegen = new ValidatedInt(0, 4, 0);
 
-    // --- Wild Bush & Sunflower Settings ---
-    @Translatable.Name("Wild Bush & Sunflower Settings")
-    @Translatable.Desc("For The Aspiring Landscape Artist. Note: Most of these settings require re-logging into your world to take effect.")
-    public ConfigGroup worldGenAdjustments = new ConfigGroup("worldGenAdjustments", true);
-
-    @Translatable.Name("Sunflower Seed Regrowth Speed")
-    @Translatable.Desc("Higher = slower, lower = faster. Makes perfect sense.")
-    public ValidatedDouble sunflowerRegrowthModifier = new ValidatedDouble(1.0, 5.0, 0.1);
+    // --- Worldgen: Bush & Sunflower Stuff ---
+    @Translatable.Name("Worldgen: Bush & Sunflower Stuff")
+    @Translatable.Desc("For The Aspiring Landscape Artist. Note: Most of these settings require re-logging into your world to take effect, and it's unlikely you will see changes in chunks that have already been generated.")
+    public ConfigGroup worldGenMisc = new ConfigGroup("worldGenMisc", true);
 
     @Translatable.Name("Wild Bush Regrowth Modifier")
-    @Translatable.Desc("Higher = slower, lower = faster. Still makes perfect sense.")
+    @Translatable.Desc("Higher = slower, lower = faster. Makes perfect sense.")
     public ValidatedDouble wildBushRegrowthModifier = new ValidatedDouble(1.0, 5.0, 0.1);
 
-    @Translatable.Name("Green Bean Bush Rarity")
-    @Translatable.Desc("1 in X chunks. Low numbers may cause shrub spam.")
-    public ValidatedInt wildGreenBeanBushRarity = new ValidatedInt(24, 100, 1);
+    // --- Sunflower Settings ---
+    @Translatable.Name("Sunflower Settings")
+    @Translatable.Desc("Custom sunflowers, because the vanilla ones just weren’t fabulous enough. Only changes fresh chunks.")
+    public ConfigGroup sunflowerSettings = new ConfigGroup("sunflowerSettings", true);
 
-    @Translatable.Name("Cucumber Bush Rarity")
-    @Translatable.Desc("1 in X chunks. Low numbers may cause shrub spam.")
-    public ValidatedInt wildCucumberBushRarity = new ValidatedInt(24, 100, 1);
+    @Translatable.Name("Sunflower Seed Regrowth Speed")
+    @Translatable.Desc("Higher = slower, lower = faster. Photosynthesis is hard, okay?")
+    public ValidatedDouble sunflowerRegrowthModifier = new ValidatedDouble(1.0, 5.0, 0.1);
 
-    @Translatable.Name("Sunflower Biomes")
-    @Translatable.Desc("A list of specific biome IDs where custom Sunflowers can generate. Format: 'mod_id:biome_name'.")
+    @ConfigGroup.Pop
+    @Translatable.Name("Allowed Biomes")
+    @Translatable.Desc("Specific biome IDs where these sunflowers can replace the vanilla ones. Format: 'mod_id:biome_name'. They’re picky.")
     public List<String> sunflowerBiomes = new ArrayList<>(List.of("minecraft:sunflower_plains"));
 
-    @Translatable.Name("Cucumber Bush Vanilla Biome Tags")
-    @Translatable.Desc("A list of biome tags where Wild Cucumber Bushes can generate.")
+    // --- Cucumber Bush Settings ---
+    @Translatable.Name("Cucumber Bush Settings")
+    @Translatable.Desc("Wild cucumbers, for when you need emergency salads in the savanna. Only changes fresh chunks.")
+    public ConfigGroup cucumberBushSettings = new ConfigGroup("cucumberBushSettings", true);
+
+    @Translatable.Name("Cucumber Bush Rarity")
+    @Translatable.Desc("1 in X chunks. Lower numbers means cucumbers take over the planet.")
+    public ValidatedInt wildCucumberBushRarity = new ValidatedInt(24, 100, 1);
+
+    @Translatable.Name("Vanilla Biome Tags")
+    @Translatable.Desc("Biome tags where cucumbers feel at home. Format: 'mod_id:tag_name', for example: 'minecraft:is_jungle'.")
     public List<String> cucumberBushTags = new ArrayList<>(List.of("minecraft:is_jungle"));
 
-    @Translatable.Name("Cucumber Bush Convention Biome Tags")
-    @Translatable.Desc("A list of 'c:' convention biome tags where Wild Cucumber Bushes can generate.")
+    @Translatable.Name("Convention Biome Tags")
+    @Translatable.Desc("Convention tags for maximum mod-pack harmony. Format: 'mod_id:tag_name', for example: 'minecraft:is_jungle'.")
     public List<String> cucumberBushConventionTags = new ArrayList<>(List.of(
             "c:is_temperate",
             "c:is_hot",
             "c:is_dry"
     ));
 
-    @Translatable.Name("Cucumber Bush Biomes")
-    @Translatable.Desc("A list of specific biome IDs where Wild Cucumber Bushes can generate.")
+    @Translatable.Name("Specific Biomes")
+    @Translatable.Desc("Specific biome IDs where cucumbers can sprout. Format: 'mod_id:biome_name', for example: 'minecraft:savanna'.")
     public List<String> cucumberBushBiomes = new ArrayList<>(List.of(
             "minecraft:plains",
             "minecraft:sunflower_plains",
@@ -490,10 +497,10 @@ public class AhpConfig extends Config {
             "minecraft:bamboo_jungle"
     ));
 
-    @Translatable.Name("Cucumber Bush Exclusions")
-    @Translatable.Desc("A list of specific biome IDs to NEVER spawn Wild Cucumber Bushes in, overriding any other settings.")
+    @ConfigGroup.Pop
+    @Translatable.Name("Specific Exclusions")
+    @Translatable.Desc("Biomes where cucumbers are absolutely NOT allowed. Overrides everything else. Format: 'mod_id:biome_name', for example: 'minecraft:ocean'.")
     public List<String> cucumberBushExclusions = new ArrayList<>(List.of(
-            // Exclude biomes from the convention tags that don't fit the theme
             "minecraft:swamp",
             "minecraft:mangrove_swamp",
             "minecraft:mushroom_fields",
@@ -503,19 +510,28 @@ public class AhpConfig extends Config {
             "minecraft:stony_peaks"
     ));
 
-    @Translatable.Name("Green Bean Bush Vanilla Biome Tags")
-    @Translatable.Desc("A list of biome tags where Wild Green Bean Bushes can generate. Nothing here by default.")
+    // --- Green Bean Bush Settings ---
+    @Translatable.Name("Green Bean Bush Settings")
+    @Translatable.Desc("Legumes with attitude. Tuned for that perfect mid-game caffeine hit. Only changes fresh chunks.")
+    public ConfigGroup greenBeanBushSettings = new ConfigGroup("greenBeanBushSettings", true);
+
+    @Translatable.Name("Green Bean Bush Rarity")
+    @Translatable.Desc("1 in X chunks. Lower = beanpocalypse. For those of you in the back, it means they'll spam everywhere.")
+    public ValidatedInt wildGreenBeanBushRarity = new ValidatedInt(24, 100, 1);
+
+    @Translatable.Name("Vanilla Biome Tags")
+    @Translatable.Desc("Biome tags for bean growth. Empty by default—choose wisely. Format: 'mod_id:tag_name', for example: 'minecraft:is_jungle'.")
     public List<String> greenBeanBushTags = new ArrayList<>(List.of("mod_id:biome_name"));
 
-    @Translatable.Name("Green Bean Bush Convention Biome Tags")
-    @Translatable.Desc("A list of 'c:' convention biome tags where Wild Green Bean Bushes can generate.")
+    @Translatable.Name("Convention Biome Tags")
+    @Translatable.Desc("Convention tags for mod-friendly bean spam. Format: 'mod_id:tag_name', for example: 'minecraft:is_jungle'.")
     public List<String> greenBeanBushConventionTags = new ArrayList<>(List.of(
             "c:is_wet",
             "c:is_temperate"
     ));
 
-    @Translatable.Name("Green Bean Bush Biomes")
-    @Translatable.Desc("A list of specific biome IDs where Wild Green Bean Bushes can generate.")
+    @Translatable.Name("Specific Biomes")
+    @Translatable.Desc("Specific biomes where beans sprout like gossip in chat. Format: 'mod_id:biome_name', for example: 'minecraft:swamp'.")
     public List<String> greenBeanBushBiomes = new ArrayList<>(List.of(
             "minecraft:swamp",
             "minecraft:mangrove_swamp",
@@ -524,10 +540,10 @@ public class AhpConfig extends Config {
     ));
 
     @ConfigGroup.Pop
-    @Translatable.Name("Green Bean Bush Exclusions")
-    @Translatable.Desc("A list of specific biome IDs to NEVER spawn Wild Green Bean Bushes in, overriding any other settings.")
+    @ConfigGroup.Pop
+    @Translatable.Name("Specific Exclusions")
+    @Translatable.Desc("Absolutely no beans here, thank you very much. Overrides all other settings. Format: 'mod_id:biome_name', for example: 'minecraft:beach'.")
     public List<String> greenBeanBushExclusions = new ArrayList<>(List.of(
-            // Exclude biomes from the convention tags that don't fit the theme
             "minecraft:beach",
             "minecraft:birch_forest",
             "minecraft:cherry_grove",
