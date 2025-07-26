@@ -272,7 +272,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         } else if (canSpawnGray(biomeEntry)) {
             result = random.nextBoolean() ? getRandomVariant(LIGHT_GRAY_VARIANTS, random) : getRandomVariant(DARK_GRAY_VARIANTS, random);
         } else if (canSpawnBlack(biomeEntry)) {
-            result = getRandomVariant(BLACK_VARIANTS, random);
+            // Black hamsters should not spawn with overlays in the wild.
+            result = HamsterVariant.BLACK;
         } else if (canSpawnCream(biomeEntry)) {
             result = getRandomVariant(CREAM_VARIANTS, random);
         } else if (canSpawnChocolate(biomeEntry)) {
