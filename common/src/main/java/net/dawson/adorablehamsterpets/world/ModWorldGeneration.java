@@ -6,19 +6,26 @@ import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.PlacedFeature;
+import net.minecraft.world.gen.feature.VegetationPlacedFeatures;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class ModWorldGeneration {
 
     // --- Caches for Parsed Config Values ---
     private static final Set<Identifier> SUNFLOWER_IDS = new HashSet<>();
+    private static final Set<TagKey<Biome>> SUNFLOWER_TAGS = new HashSet<>();
     private static final Set<Identifier> GREEN_BEAN_BUSH_IDS = new HashSet<>();
     private static final Set<TagKey<Biome>> GREEN_BEAN_BUSH_TAGS = new HashSet<>();
     private static final Set<TagKey<Biome>> GREEN_BEAN_BUSH_CONVENTION_TAGS = new HashSet<>();
@@ -45,6 +52,7 @@ public class ModWorldGeneration {
     public static void parseConfig() {
         // --- Clear all sets to allow for config reloading ---
         SUNFLOWER_IDS.clear();
+        SUNFLOWER_TAGS.clear();
         GREEN_BEAN_BUSH_IDS.clear();
         GREEN_BEAN_BUSH_TAGS.clear();
         GREEN_BEAN_BUSH_CONVENTION_TAGS.clear();
@@ -56,6 +64,7 @@ public class ModWorldGeneration {
 
         // --- Parse Sunflowers ---
         Configs.AHP.sunflowerBiomes.forEach(idStr -> parseIdentifier(idStr, SUNFLOWER_IDS, "sunflowerBiomes"));
+        Configs.AHP.sunflowerBiomeTags.forEach(tagStr -> parseTag(tagStr, SUNFLOWER_TAGS, "sunflowerBiomeTags"));
 
         // --- Parse Green Bean Bushes ---
         Configs.AHP.greenBeanBushBiomes.forEach(idStr -> parseIdentifier(idStr, GREEN_BEAN_BUSH_IDS, "greenBeanBushBiomes"));
@@ -74,6 +83,7 @@ public class ModWorldGeneration {
 
     /**
      * The NeoForge-specific decider method for feature placement, driven by the parsed config.
+     * For sunflowers, it also verifies that the biome already contains the vanilla sunflower feature. Fabric does this same filtering, but in the Fabric/`ModWorldGenerationImpl` class instead.
      *
      * @param feature The PlacedFeature being considered for generation.
      * @param biome   The Biome where the feature might be placed.
@@ -90,7 +100,24 @@ public class ModWorldGeneration {
         String featurePath = featureId.getPath();
 
         boolean isCandidate = switch (featurePath) {
-            case "custom_sunflower_placed", "patch_sunflower" -> SUNFLOWER_IDS.contains(biomeId);
+            case "custom_sunflower_placed", "patch_sunflower" -> {
+                boolean isAllowedByConfig = SUNFLOWER_IDS.contains(biomeId) || SUNFLOWER_TAGS.stream().anyMatch(biome::isIn);
+                if (!isAllowedByConfig) yield false;
+
+                List<RegistryEntryList<PlacedFeature>> allFeaturesByStep = biome.value().getGenerationSettings().getFeatures();
+                int vegetalStep = GenerationStep.Feature.VEGETAL_DECORATION.ordinal();
+
+                if (vegetalStep >= allFeaturesByStep.size()) yield false;
+
+                RegistryEntryList<PlacedFeature> vegetalFeatures = allFeaturesByStep.get(vegetalStep);
+                // Iterate through the entries and check their keys.
+                for (RegistryEntry<PlacedFeature> entry : vegetalFeatures) {
+                    if (entry.matchesKey(VegetationPlacedFeatures.PATCH_SUNFLOWER)) {
+                        yield true;
+                    }
+                }
+                yield false;
+            }
             case "wild_green_bean_bush_placed" -> GREEN_BEAN_BUSH_IDS.contains(biomeId) ||
                     GREEN_BEAN_BUSH_TAGS.stream().anyMatch(biome::isIn) ||
                     GREEN_BEAN_BUSH_CONVENTION_TAGS.stream().anyMatch(biome::isIn);
@@ -129,7 +156,8 @@ public class ModWorldGeneration {
         String featurePath = featureKey.getValue().getPath();
 
         boolean isCandidate = switch (featurePath) {
-            case "custom_sunflower_placed", "patch_sunflower" -> SUNFLOWER_IDS.contains(biomeId);
+            case "custom_sunflower_placed", "patch_sunflower" -> SUNFLOWER_IDS.contains(biomeId) ||
+                    SUNFLOWER_TAGS.stream().anyMatch(context::hasTag);
             case "wild_green_bean_bush_placed" -> GREEN_BEAN_BUSH_IDS.contains(biomeId) ||
                     GREEN_BEAN_BUSH_TAGS.stream().anyMatch(context::hasTag) ||
                     GREEN_BEAN_BUSH_CONVENTION_TAGS.stream().anyMatch(context::hasTag);
