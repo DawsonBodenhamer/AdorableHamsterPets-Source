@@ -19,6 +19,13 @@ public class HamsterFollowOwnerGoal extends FollowOwnerGoal {
 
     @Override
     public boolean canStart() {
+        // --- 1. Let the vanilla logic run first ---
+        // This is crucial because super.canStart() finds and sets the 'owner' field.
+        if (!super.canStart()) {
+            return false;
+        }
+
+        // --- 2. Apply  custom conditions ---
         if (this.hamster.isSitting() ||
                 this.hamster.isSleeping() ||
                 this.hamster.isKnockedOut() ||
@@ -28,10 +35,12 @@ public class HamsterFollowOwnerGoal extends FollowOwnerGoal {
             return false;
         }
 
+        // --- 3. Re-check distance with buff modification ---
         // Use accessor to get the base minimum distance
         float minDist = ((FollowOwnerGoalAccessor) this).getMinDistance();
         LivingEntity owner = ((FollowOwnerGoalAccessor) this).getOwner();
         if (owner == null) return false; // Should be handled by super, but good practice
+        if (hamster.cannotFollowOwner()) return false;
 
         // Dynamically adjust min distance for buffed state
         if (this.hamster.hasGreenBeanBuff()) {
@@ -39,7 +48,7 @@ public class HamsterFollowOwnerGoal extends FollowOwnerGoal {
         }
 
         // Re-check the distance condition with the potentially modified value
-        return !(this.hamster.squaredDistanceTo(owner) < (double)(minDist * minDist));
+        return !(hamster.squaredDistanceTo(owner) < (double) (minDist * minDist));
     }
 
     @Override
@@ -104,7 +113,7 @@ public class HamsterFollowOwnerGoal extends FollowOwnerGoal {
             } else {
                 if (this.hamster.hasGreenBeanBuff()) {
                     // "Zoomies" pathfinding logic.
-                    Vec3d targetPos = FuzzyTargeting.findTo(this.hamster, 8, 4, Vec3d.ofCenter(owner.getBlockPos()));
+                    Vec3d targetPos = FuzzyTargeting.findTo(this.hamster, 8, 5, Vec3d.ofCenter(owner.getBlockPos()));
                     if (targetPos != null) {
                         this.hamster.getNavigation().startMovingTo(targetPos.x, targetPos.y, targetPos.z, BUFFED_FOLLOW_SPEED);
                     }
