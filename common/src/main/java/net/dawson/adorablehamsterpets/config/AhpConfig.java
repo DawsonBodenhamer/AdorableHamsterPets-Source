@@ -168,7 +168,7 @@ public class AhpConfig extends Config {
     @Translatable.Desc("Maximum hamsters per spawn group. Because sometimes one just isn't cute enough.")
     public ValidatedInt maxGroupSize = new ValidatedInt(1, 10, 1);
 
-    @Translatable.Name("Spawn Biome Tags")
+    @Translatable.Name("Spawn Vanilla Biome Tags")
     @Translatable.Desc("A list of biome tags where hamsters can spawn. Format: 'mod_id:tag_name'. For example, 'minecraft:is_forest'.")
     public List<String> spawnBiomeTags = new ArrayList<>(List.of(
             "minecraft:is_beach",
@@ -178,6 +178,18 @@ public class AhpConfig extends Config {
             "minecraft:is_forest",
             "minecraft:is_taiga",
             "minecraft:is_mountain"
+    ));
+
+    @Translatable.Name("Spawn Convention Biome Tags")
+    @Translatable.Desc("A list of 'c:' convention biome tags where hamsters can spawn. Used for broad mod compatibility. By default, this includes most common overworld types.")
+    public List<String> spawnBiomeConventionTags = new ArrayList<>(List.of(
+            "c:is_cold",
+            "c:is_hot",
+            "c:is_temperate",
+            "c:is_dry",
+            "c:is_wet",
+            "c:is_dense_vegetation",
+            "c:is_sparse_vegetation"
     ));
 
     @Translatable.Name("Include Specific Biomes")
@@ -195,11 +207,41 @@ public class AhpConfig extends Config {
             "minecraft:windswept_gravelly_hills", "minecraft:windswept_forest",
             "minecraft:windswept_savanna", "minecraft:stony_peaks", "minecraft:sparse_jungle",
             "minecraft:bamboo_jungle", "minecraft:stony_shore", "minecraft:mushroom_fields",
-            // Biomes that were also covered by tags, included for explicitness
-            "minecraft:forest", "minecraft:birch_forest", "minecraft:dark_forest",
+            "minecraft:deep_dark", "minecraft:forest", "minecraft:birch_forest", "minecraft:dark_forest",
             "minecraft:taiga", "minecraft:old_growth_pine_taiga", "minecraft:old_growth_spruce_taiga",
             "minecraft:savanna", "minecraft:savanna_plateau", "minecraft:badlands",
-            "minecraft:eroded_badlands", "minecraft:wooded_badlands", "minecraft:beach"
+            "minecraft:eroded_badlands", "minecraft:wooded_badlands", "minecraft:beach",
+
+            "terralith:desert_canyon", "terralith:cave/andesite_caves", "terralith:cave/crystal_caves", "terralith:cave/deep_caves", "terralith:cave/desert_caves", "terralith:cave/diorite_caves", "terralith:cave/frostfire_caves", "terralith:cave/fungal_caves", "terralith:cave/granite_caves", "terralith:cave/ice_caves", "terralith:cave/infested_caves", "terralith:cave/mantle_caves", "terralith:cave/thermal_caves", "terralith:cave/tuff_caves", "terralith:cave/underground_jungle",
+            "terralith:alpha_islands_winter", "terralith:alpha_islands", "terralith:alpine_grove", "terralith:alpine_highlands", "terralith:amethyst_canyon", "terralith:amethyst_rainforest", "terralith:ancient_sands", "terralith:arid_highlands", "terralith:ashen_savanna",
+            "terralith:basalt_cliffs", "terralith:birch_taiga", "terralith:blooming_plateau", "terralith:blooming_valley", "terralith:brushland", "terralith:bryce_canyon", "terralith:caldera", "terralith:cloud_forest", "terralith:cold_shrubland",
+            "terralith:desert_oasis", "terralith:desert_spires", "terralith:emerald_peaks", "terralith:forested_highlands", "terralith:fractured_savanna", "terralith:frozen_cliffs", "terralith:glacial_chasm", "terralith:granite_cliffs",
+            "terralith:gravel_beach", "terralith:gravel_desert", "terralith:haze_mountain", "terralith:highlands", "terralith:hot_shrubland", "terralith:ice_marsh", "terralith:jungle_mountains",
+            "terralith:lavender_forest", "terralith:lavender_valley", "terralith:lush_desert", "terralith:lush_valley", "terralith:mirage_isles", "terralith:moonlight_grove", "terralith:moonlight_valley", "terralith:mountain_steppe",
+            "terralith:orchid_swamp", "terralith:painted_mountains", "terralith:red_oasis", "terralith:rocky_jungle", "terralith:rocky_mountains", "terralith:rocky_shrubland",
+            "terralith:sakura_grove", "terralith:sakura_valley", "terralith:sandstone_valley", "terralith:savanna_badlands", "terralith:savanna_slopes", "terralith:scarlet_mountains",
+            "terralith:shield_clearing", "terralith:shield", "terralith:shrubland", "terralith:siberian_grove", "terralith:siberian_taiga",
+            "terralith:skylands_autumn", "terralith:skylands_spring", "terralith:skylands_summer", "terralith:skylands_winter", "terralith:skylands",
+            "terralith:snowy_badlands", "terralith:snowy_cherry_grove", "terralith:snowy_maple_forest", "terralith:snowy_shield",
+            "terralith:steppe", "terralith:stony_spires", "terralith:temperate_highlands", "terralith:tropical_jungle", "terralith:valley_clearing",
+            "terralith:volcanic_crater", "terralith:volcanic_peaks", "terralith:warm_river", "terralith:warped_mesa", "terralith:white_cliffs", "terralith:white_mesa",
+            "terralith:windswept_spires", "terralith:wintry_forest", "terralith:wintry_lowlands", "terralith:yellowstone", "terralith:yosemite_cliffs", "terralith:yosemite_lowlands",
+
+            "biomesoplenty:wasteland", "biomesoplenty:wasteland_steppe",
+            "biomesoplenty:mediterranean_forest", "biomesoplenty:mystic_grove", "biomesoplenty:orchard", "biomesoplenty:pumpkin_patch",
+            "biomesoplenty:redwood_forest", "biomesoplenty:seasonal_forest", "biomesoplenty:woodland",
+            "biomesoplenty:floodplain", "biomesoplenty:fungal_jungle", "biomesoplenty:rainforest", "biomesoplenty:rocky_rainforest",
+
+            "byg:lush_stacks", "byg:orchard", "byg:frosted_coniferous_forest", "byg:allium_fields", "byg:amaranth_fields", "byg:rose_fields",
+            "byg:temperate_grove", "byg:coconino_meadow", "byg:skyris_vale", "byg:prairie", "byg:autumnal_valley", "byg:cardinal_tundra", "byg:firecracker_shrubland",
+            "byg:allium_shrubland", "byg:amaranth_grassland", "byg:araucaria_savanna", "byg:aspen_boreal", "byg:atacama_outback", "byg:baobab_savanna",
+            "byg:basalt_barrera", "byg:bayou", "byg:black_forest", "byg:canadian_shield", "byg:cika_woods", "byg:coniferous_forest",
+            "byg:crimson_tundra", "byg:cypress_swamplands", "byg:dacite_ridges", "byg:dacite_shore", "byg:dead_sea", "byg:ebony_woods",
+            "byg:enchanted_tangle", "byg:eroded_borealis", "byg:firecracker_chaparral", "byg:forgotten_forest", "byg:fragment_jungle",
+            "byg:frosted_taiga", "byg:howling_peaks", "byg:ironwood_gour", "byg:jacaranda_jungle", "byg:maple_taiga", "byg:mojave_desert",
+            "byg:overgrowth_woodlands", "byg:pumpkin_valley", "byg:rainbow_beach", "byg:red_rock_valley", "byg:redwood_thicket",
+            "byg:rugged_badlands", "byg:sakura_grove", "byg:shattered_glacier", "byg:sierra_badlands", "byg:skyrise_vale",
+            "byg:tropical_rainforest", "byg:weeping_witch_forest", "byg:white_mangrove_marshes", "byg:windswept_desert", "byg:zelkova_forest"
     ));
 
     @ConfigGroup.Pop
@@ -420,6 +462,18 @@ public class AhpConfig extends Config {
     @Translatable.Desc("A list of specific biome IDs where custom Sunflowers can generate. Format: 'mod_id:biome_name'.")
     public List<String> sunflowerBiomes = new ArrayList<>(List.of("minecraft:sunflower_plains"));
 
+    @Translatable.Name("Cucumber Bush Vanilla Biome Tags")
+    @Translatable.Desc("A list of biome tags where Wild Cucumber Bushes can generate.")
+    public List<String> cucumberBushTags = new ArrayList<>(List.of("minecraft:is_jungle"));
+
+    @Translatable.Name("Cucumber Bush Convention Biome Tags")
+    @Translatable.Desc("A list of 'c:' convention biome tags where Wild Cucumber Bushes can generate.")
+    public List<String> cucumberBushConventionTags = new ArrayList<>(List.of(
+            "c:is_temperate",
+            "c:is_hot",
+            "c:is_dry"
+    ));
+
     @Translatable.Name("Cucumber Bush Biomes")
     @Translatable.Desc("A list of specific biome IDs where Wild Cucumber Bushes can generate.")
     public List<String> cucumberBushBiomes = new ArrayList<>(List.of(
@@ -436,13 +490,29 @@ public class AhpConfig extends Config {
             "minecraft:bamboo_jungle"
     ));
 
-    @Translatable.Name("Cucumber Bush Biome Tags")
-    @Translatable.Desc("A list of biome tags where Wild Cucumber Bushes can generate.")
-    public List<String> cucumberBushTags = new ArrayList<>(List.of("minecraft:is_jungle"));
-
     @Translatable.Name("Cucumber Bush Exclusions")
     @Translatable.Desc("A list of specific biome IDs to NEVER spawn Wild Cucumber Bushes in, overriding any other settings.")
-    public List<String> cucumberBushExclusions = new ArrayList<>(List.of("mod_id:biome_name"));
+    public List<String> cucumberBushExclusions = new ArrayList<>(List.of(
+            // Exclude biomes from the convention tags that don't fit the theme
+            "minecraft:swamp",
+            "minecraft:mangrove_swamp",
+            "minecraft:mushroom_fields",
+            "minecraft:ocean",
+            "minecraft:deep_ocean",
+            "minecraft:warm_ocean",
+            "minecraft:stony_peaks"
+    ));
+
+    @Translatable.Name("Green Bean Bush Vanilla Biome Tags")
+    @Translatable.Desc("A list of biome tags where Wild Green Bean Bushes can generate. Nothing here by default.")
+    public List<String> greenBeanBushTags = new ArrayList<>(List.of("mod_id:biome_name"));
+
+    @Translatable.Name("Green Bean Bush Convention Biome Tags")
+    @Translatable.Desc("A list of 'c:' convention biome tags where Wild Green Bean Bushes can generate.")
+    public List<String> greenBeanBushConventionTags = new ArrayList<>(List.of(
+            "c:is_wet",
+            "c:is_temperate"
+    ));
 
     @Translatable.Name("Green Bean Bush Biomes")
     @Translatable.Desc("A list of specific biome IDs where Wild Green Bean Bushes can generate.")
@@ -453,12 +523,23 @@ public class AhpConfig extends Config {
             "minecraft:flower_forest"
     ));
 
-    @Translatable.Name("Green Bean Bush Biome Tags")
-    @Translatable.Desc("A list of biome tags where Wild Green Bean Bushes can generate. Nothing here by default.")
-    public List<String> greenBeanBushTags = new ArrayList<>(List.of("mod_id:biome_name"));
-
     @ConfigGroup.Pop
     @Translatable.Name("Green Bean Bush Exclusions")
     @Translatable.Desc("A list of specific biome IDs to NEVER spawn Wild Green Bean Bushes in, overriding any other settings.")
-    public List<String> greenBeanBushExclusions = new ArrayList<>(List.of("mod_id:biome_name"));
+    public List<String> greenBeanBushExclusions = new ArrayList<>(List.of(
+            // Exclude biomes from the convention tags that don't fit the theme
+            "minecraft:beach",
+            "minecraft:birch_forest",
+            "minecraft:cherry_grove",
+            "minecraft:dark_forest",
+            "minecraft:deep_ocean",
+            "minecraft:dripstone_caves",
+            "minecraft:forest",
+            "minecraft:meadow",
+            "minecraft:ocean",
+            "minecraft:old_growth_birch_forest",
+            "minecraft:plains",
+            "minecraft:river",
+            "minecraft:sunflower_plains"
+    ));
 }

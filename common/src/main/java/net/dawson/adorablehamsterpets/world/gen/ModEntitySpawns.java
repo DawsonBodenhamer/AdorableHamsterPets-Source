@@ -48,17 +48,20 @@ public class ModEntitySpawns {
         VALID_SPAWN_BLOCKS.add(Blocks.RED_TERRACOTTA);
         VALID_SPAWN_BLOCKS.add(Blocks.BLACK_TERRACOTTA);
         VALID_SPAWN_BLOCKS.add(Blocks.STONE);
+        VALID_SPAWN_BLOCKS.add(Blocks.DEEPSLATE);
         VALID_SPAWN_BLOCKS.add(Blocks.ANDESITE);
         VALID_SPAWN_BLOCKS.add(Blocks.DIORITE);
         VALID_SPAWN_BLOCKS.add(Blocks.GRANITE);
         VALID_SPAWN_BLOCKS.add(Blocks.GRAVEL);
         VALID_SPAWN_BLOCKS.add(Blocks.DIRT);
+        VALID_SPAWN_BLOCKS.add(Blocks.MUD);
+        VALID_SPAWN_BLOCKS.add(Blocks.PACKED_MUD);
+        VALID_SPAWN_BLOCKS.add(Blocks.GRASS_BLOCK);
+        VALID_SPAWN_BLOCKS.add(Blocks.MOSS_BLOCK);
         VALID_SPAWN_BLOCKS.add(Blocks.COARSE_DIRT);
         VALID_SPAWN_BLOCKS.add(Blocks.PODZOL);
         VALID_SPAWN_BLOCKS.add(Blocks.SNOW_BLOCK);
         VALID_SPAWN_BLOCKS.add(Blocks.MYCELIUM);
-        VALID_SPAWN_BLOCKS.add(Blocks.MUD);
-        VALID_SPAWN_BLOCKS.add(Blocks.PACKED_MUD);
     }
 
     /**
