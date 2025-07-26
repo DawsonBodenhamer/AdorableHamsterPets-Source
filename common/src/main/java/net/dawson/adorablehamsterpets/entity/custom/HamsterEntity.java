@@ -305,7 +305,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 || biomeEntry.matchesKey(RegistryKey.of(RegistryKeys.BIOME, Identifier.of("biomesoplenty", "fungi_forest")))
                 || biomeEntry.matchesKey(RegistryKey.of(RegistryKeys.BIOME, Identifier.of("biomesoplenty", "mystic_grove")))
                 || biomeEntry.matchesKey(RegistryKey.of(RegistryKeys.BIOME, Identifier.of("terralith", "sakura_valley")))
-                || biomeEntry.matchesKey(BiomeKeys.CHERRY_GROVE);;
+                || biomeEntry.matchesKey(BiomeKeys.CHERRY_GROVE);
 
         // Refine: Must not be a higher-priority Blue biome.
         return isLavenderTheme && !canSpawnBlue(biomeEntry);
@@ -690,6 +690,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     public static final TrackedData<ItemStack> STOLEN_ITEM_STACK = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.ITEM_STACK);
     public static final TrackedData<Boolean> IS_CELEBRATING_CHASE = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     public static final TrackedData<Long> GREEN_BEAN_BUFF_DURATION = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.LONG);
+    public static final TrackedData<Integer> CURRENT_LOOK_UP_ANIM_ID = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
 
     // --- Animation Constants ---
@@ -719,6 +720,9 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private static final RawAnimation SPRINTING_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sprinting");
     private static final RawAnimation BEGGING_ANIM = RawAnimation.begin().thenPlay("anim_hamster_begging");
     private static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenPlay("anim_hamster_idle");
+    private static final RawAnimation IDLE_LOOKING_UP1_ANIM = RawAnimation.begin().thenPlay("anim_hamster_idle_looking_up1");
+    private static final RawAnimation IDLE_LOOKING_UP2_ANIM = RawAnimation.begin().thenPlay("anim_hamster_idle_looking_up2");
+    private static final RawAnimation IDLE_LOOKING_UP3_ANIM = RawAnimation.begin().thenPlay("anim_hamster_idle_looking_up3");
     private static final RawAnimation ATTACK_ANIM = RawAnimation.begin().thenPlay("anim_hamster_attack");
     private static final RawAnimation SULK_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sulk");
     private static final RawAnimation SULKING_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sulking");
@@ -761,6 +765,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     @Unique private boolean zoomiesIsClockwise = false;
     @Unique private double lastZoomiesAngle = 0.0;
     @Unique private int zoomiesRadiusModifier = 0;
+
 
     // --- Inventory ---
     private final DefaultedList<ItemStack> items = ImplementedInventory.create(INVENTORY_SIZE);
@@ -2655,7 +2660,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         }
                     }
 
-            // --- Movement State ---
+                    // --- Movement State ---
                     double horizontalSpeedSquared = this.getVelocity().horizontalLengthSquared();
                     if (horizontalSpeedSquared > 1.0E-6) { // Check if moving at all
                         if (horizontalSpeedSquared > RUN_TO_SPRINT_THRESHOLD_SQUARED) {
@@ -2667,15 +2672,23 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         }
                     }
 
-            // --- Begging State ---
-            if (this.isBegging()) {
-                return event.setAndContinue(BEGGING_ANIM);
-            }
+                     // --- Begging State ---
+                    if (this.isBegging()) {
+                         return event.setAndContinue(BEGGING_ANIM);
+                    }
 
-            // --- Default Idle State ---
-            return event.setAndContinue(IDLE_ANIM);
+                    // --- Idle Looking Up State ---
+                     if (activeGoalName.equals(HamsterLookAtEntityGoal.class.getSimpleName())) {
+                         return switch (this.dataTracker.get(CURRENT_LOOK_UP_ANIM_ID)) {
+                    case 2 -> event.setAndContinue(IDLE_LOOKING_UP2_ANIM);
+                    case 3 -> event.setAndContinue(IDLE_LOOKING_UP3_ANIM);
+                    default -> event.setAndContinue(IDLE_LOOKING_UP1_ANIM);
+                         };
+                     }
 
-        })
+                    // --- Default Idle State ---
+                    return event.setAndContinue(IDLE_ANIM);
+                 })
                 .triggerableAnim("crash", CRASH_ANIM)
                 .triggerableAnim("wakeup", WAKE_UP_ANIM)
                 .triggerableAnim("no", NO_ANIM)
@@ -2758,6 +2771,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         builder.add(STOLEN_ITEM_STACK, ItemStack.EMPTY);
         builder.add(IS_CELEBRATING_CHASE, false);
         builder.add(GREEN_BEAN_BUFF_DURATION, 0L);
+        builder.add(CURRENT_LOOK_UP_ANIM_ID, 1);
 
     }
 
@@ -2782,7 +2796,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         this.goalSelector.add(7, new HamsterSitGoal(this));
         this.goalSelector.add(8, new HamsterSleepGoal(this));
         this.goalSelector.add(9, new HamsterWanderAroundFarGoal(this, 0.75D));
-        this.goalSelector.add(10, new HamsterLookAtEntityGoal(this, PlayerEntity.class, 6.0F, 0.02F));
+        this.goalSelector.add(10, new HamsterLookAtEntityGoal(this, PlayerEntity.class, 3.0F, 0.15F));
         this.goalSelector.add(11, new HamsterLookAroundGoal(this));
 
         // --- Target Selector Goals ---

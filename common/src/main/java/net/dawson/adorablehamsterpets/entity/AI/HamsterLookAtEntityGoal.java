@@ -38,18 +38,23 @@ public class HamsterLookAtEntityGoal extends LookAtEntityGoal {
     // --- 3. Overridden Methods ---
     @Override
     public boolean canStart() {
-        // --- 1. Check Hamster State ---
-        // Use our stored 'hamsterMob' reference
+        // --- 1. Hamster State Check (Perform this FIRST for efficiency) ---
         if (this.hamsterMob instanceof HamsterEntity hamster) {
             if (hamster.isSitting() || hamster.isSleeping() || hamster.isKnockedOut() || hamster.isSulking() || hamster.isStealingDiamond()) {
                 return false;
             }
         }
-        // The vanilla probability check
-        if (this.mob.getRandom().nextFloat() >= this.chance) {
+
+        // --- 2. Defer to Superclass Logic ---
+        boolean superCanStart = super.canStart();
+        if (!superCanStart) {
+            AdorableHamsterPets.LOGGER.info("[LookAtGoal-{}] canStart FAILED: super.canStart() returned false (chance or no target).", this.hamsterMob.getId());
             return false;
         }
-        return super.canStart();
+
+        // --- 3. Success ---
+        AdorableHamsterPets.LOGGER.info("[LookAtGoal-{}] canStart SUCCEEDED. All checks passed.", this.hamsterMob.getId());
+        return true;
     }
 
     @Override
@@ -57,7 +62,8 @@ public class HamsterLookAtEntityGoal extends LookAtEntityGoal {
         super.start();
         if (this.mob instanceof HamsterEntity he) {
             he.setActiveCustomGoalDebugName(this.getClass().getSimpleName());
-            AdorableHamsterPets.LOGGER.trace("[AI Goal Start] Hamster {} started LookAtEntityGoal.", he.getId());
+            he.getDataTracker().set(HamsterEntity.CURRENT_LOOK_UP_ANIM_ID, he.getRandom().nextBetween(1, 3));
+            AdorableHamsterPets.LOGGER.info("[AI Goal Start] Hamster {} started LookAtEntityGoal.", he.getId());
         }
     }
 
