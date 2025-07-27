@@ -59,13 +59,14 @@ dependencies {
 
 processResources {
     from project(":common").sourceSets.main.resources
-    from sourceSets.main.resources
-
-    inputs.property 'version', project.version
 
     filesMatching(["META-INF/mods.toml", "*.mixins.json"]) {
         expand version: project.version
     }
+
+    from sourceSets.main.resources
+
+    inputs.property 'version', project.version
 }
 
 shadowJar {
