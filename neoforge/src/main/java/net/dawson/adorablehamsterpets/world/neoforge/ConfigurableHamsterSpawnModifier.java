@@ -24,28 +24,16 @@ public class ConfigurableHamsterSpawnModifier implements BiomeModifier {
     public static final MapCodec<ConfigurableHamsterSpawnModifier> CODEC =
             MapCodec.unit(ConfigurableHamsterSpawnModifier::new);
 
-    /**
-     * Called by NeoForge for each biome that this modifier is applied to. This method
-     * checks if the biome is in the valid spawn list and, if so, adds the hamster
-     * spawn entry with settings read directly from the mod's configuration file.
-     *
-     * @param biome   The biome being modified.
-     * @param phase   The current modification phase. This modifier only acts during the {@link Phase#ADD}.
-     * @param builder The mutable biome information builder to apply changes to.
-     */
-    @Override
     public void modify(RegistryEntry<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
         // We only want to add spawns, so we only act during the ADD phase.
         if (phase != Phase.ADD) {
             return;
         }
 
-        // Use the common helper method to see if this biome should have hamsters.
-        if (biome.getKey().map(key -> ModEntitySpawns.isKeyInSpawnList(key.getValue())).orElse(false)) {
-            // Get the spawn settings builder for the biome.
+        // The NeoForge modifier directly checks the biome entry against the parsed config sets.
+        // This avoids the need for a BiomeContext object.
+        if (ModEntitySpawns.shouldSpawnInBiomeNeoForge(biome)) {
             var spawnBuilder = builder.getMobSpawnSettings();
-
-            // Create a new spawn entry using values from the config file.
             var spawnEntry = new SpawnSettings.SpawnEntry(
                     ModEntities.HAMSTER.get(),
                     Configs.AHP.spawnWeight.get(),
