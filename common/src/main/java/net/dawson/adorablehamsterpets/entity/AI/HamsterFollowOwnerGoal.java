@@ -3,9 +3,14 @@ package net.dawson.adorablehamsterpets.entity.AI;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.mixin.accessor.FollowOwnerGoalAccessor;
+import net.dawson.adorablehamsterpets.mixin.accessor.LandPathNodeMakerInvoker;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.FuzzyTargeting;
 import net.minecraft.entity.ai.goal.FollowOwnerGoal;
+import net.minecraft.entity.ai.pathing.PathNodeType;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 
 public class HamsterFollowOwnerGoal extends FollowOwnerGoal {
@@ -40,7 +45,6 @@ public class HamsterFollowOwnerGoal extends FollowOwnerGoal {
         float minDist = ((FollowOwnerGoalAccessor) this).getMinDistance();
         LivingEntity owner = ((FollowOwnerGoalAccessor) this).getOwner();
         if (owner == null) return false; // Should be handled by super, but good practice
-        if (hamster.cannotFollowOwner()) return false;
 
         // Dynamically adjust min distance for buffed state
         if (this.hamster.hasGreenBeanBuff()) {
@@ -91,14 +95,8 @@ public class HamsterFollowOwnerGoal extends FollowOwnerGoal {
         LivingEntity owner = ((FollowOwnerGoalAccessor) this).getOwner();
         if (owner == null) return; // Safety check
 
-        // The shouldTryTeleportToOwner() method respects the follow distance.
-        boolean shouldTeleport = this.hamster.shouldTryTeleportToOwner();
-
         // --- 2. Handle Looking ---
-        // Always look at the owner if not about to teleport.
-        if (!shouldTeleport) {
-            this.hamster.getLookControl().lookAt(owner, HamsterEntity.FAST_YAW_CHANGE, HamsterEntity.FAST_PITCH_CHANGE);
-        }
+       this.hamster.getLookControl().lookAt(owner, HamsterEntity.FAST_YAW_CHANGE, HamsterEntity.FAST_PITCH_CHANGE);
 
         // --- 4. Use Vanilla Update Timer via Accessor ---
         int currentTicks = accessor.getUpdateCountdownTicks() - 1;
@@ -107,18 +105,22 @@ public class HamsterFollowOwnerGoal extends FollowOwnerGoal {
         if (currentTicks <= 0) {
             accessor.setUpdateCountdownTicks(this.getTickCount(10));
 
-            // --- 5. Execute Teleport or Pathfinding ---
-            if (shouldTeleport) {
-                this.hamster.tryTeleportToOwner();
+            // --- Replicated 1.20.1 Teleport Logic ---
+            float maxDist = accessor.getMaxDistance();
+            if (this.hamster.hasGreenBeanBuff()) {
+                maxDist += 5.0f; // Apply buff offset to max distance as well
+            }
+
+            if (this.hamster.squaredDistanceTo(owner) >= (double)(maxDist * maxDist)) {
+                this.teleportToOwner(); // Call the new helper method
             } else {
+                // --- Pathfinding Logic ---
                 if (this.hamster.hasGreenBeanBuff()) {
-                    // "Zoomies" pathfinding logic.
                     Vec3d targetPos = FuzzyTargeting.findTo(this.hamster, 8, 5, Vec3d.ofCenter(owner.getBlockPos()));
                     if (targetPos != null) {
                         this.hamster.getNavigation().startMovingTo(targetPos.x, targetPos.y, targetPos.z, BUFFED_FOLLOW_SPEED);
                     }
                 } else {
-                    // Standard, direct pathfinding for non-buffed hamsters, using the accessor for speed.
                     this.hamster.getNavigation().startMovingTo(owner, accessor.getSpeed());
                 }
             }
@@ -131,5 +133,70 @@ public class HamsterFollowOwnerGoal extends FollowOwnerGoal {
         if (this.hamster.getActiveCustomGoalDebugName().startsWith(this.getClass().getSimpleName())) {
             this.hamster.setActiveCustomGoalDebugName("None");
         }
+    }
+
+    // --- Private Helper Methods ---
+    /**
+     * Replicates the teleportation logic from the 1.20.1 FollowOwnerGoal.
+     */
+    private void teleportToOwner() {
+        FollowOwnerGoalAccessor accessor = (FollowOwnerGoalAccessor) this;
+        LivingEntity owner = accessor.getOwner();
+        if (owner == null) return;
+
+        BlockPos blockPos = owner.getBlockPos();
+
+        for(int i = 0; i < 10; ++i) {
+            int j = this.getRandomInt(-3, 3);
+            int k = this.getRandomInt(-1, 1);
+            int l = this.getRandomInt(-3, 3);
+            boolean success = this.tryTeleportTo(blockPos.getX() + j, blockPos.getY() + k, blockPos.getZ() + l);
+            if (success) {
+                return;
+            }
+        }
+    }
+
+    /**
+     * Helper for teleportToOwner, replicates vanilla logic.
+     */
+    private boolean tryTeleportTo(int x, int y, int z) {
+        if (Math.abs((double)x - ((FollowOwnerGoalAccessor)this).getOwner().getX()) < 2.0 && Math.abs((double)z - ((FollowOwnerGoalAccessor)this).getOwner().getZ()) < 2.0) {
+            return false;
+        } else if (!this.isTeleportPositionClear(new BlockPos(x, y, z))) {
+            return false;
+        } else {
+            this.hamster.refreshPositionAndAngles((double)x + 0.5, (double)y, (double)z + 0.5, HamsterEntity.FAST_YAW_CHANGE, HamsterEntity.FAST_PITCH_CHANGE);
+            this.hamster.getNavigation().stop();
+            return true;
+        }
+    }
+
+    /**
+     * Helper for teleportToOwner, replicates vanilla logic.
+     */
+    private boolean isTeleportPositionClear(BlockPos pos) {
+        // Use the invoker to safely access the vanilla path node type logic.
+        PathNodeType pathNodeType = LandPathNodeMakerInvoker.callGetCommonNodeType(this.hamster.getWorld(), pos.mutableCopy());
+        if (pathNodeType != PathNodeType.WALKABLE) {
+            return false;
+        } else {
+            BlockPos floorPos = pos.down();
+            BlockState floorState = this.hamster.getWorld().getBlockState(floorPos);
+            // Check that the block below has a collision shape, ensuring it's a valid surface to stand on.
+            if (floorState.getCollisionShape(this.hamster.getWorld(), floorPos, ShapeContext.absent()).isEmpty()) {
+                return false;
+            } else {
+                BlockPos blockPos = pos.subtract(this.hamster.getBlockPos());
+                return this.hamster.getWorld().isSpaceEmpty(this.hamster, this.hamster.getBoundingBox().offset(blockPos));
+            }
+        }
+    }
+
+    /**
+     * Helper for teleportToOwner, replicates vanilla logic.
+     */
+    private int getRandomInt(int min, int max) {
+        return this.hamster.getRandom().nextInt(max - min + 1) + min;
     }
 }
