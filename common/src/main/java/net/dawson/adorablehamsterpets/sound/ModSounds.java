@@ -3,7 +3,6 @@ package net.dawson.adorablehamsterpets.sound;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
-import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.RegistryKeys;
@@ -221,7 +220,7 @@ public class ModSounds {
                 return SoundEvents.BLOCK_WOOD_PLACE; // "Wood"
             }
         }
-        if (item.getComponents().contains(DataComponentTypes.FOOD)) {
+        if (item.isFood()) {
             return SoundEvents.ENTITY_GENERIC_EAT; // "Crunch"
         }
 
