@@ -20,7 +20,6 @@ import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.BlockSoundGroup;
@@ -43,7 +42,6 @@ import java.util.Map;
 
 public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
 
-    private final ItemStack diamondStack = new ItemStack(Items.DIAMOND);
     private final float adultShadowRadius;
     private static final Map<Integer, HamsterCleaningSoundInstance> activeCleaningSounds = new HashMap<>();
 
@@ -193,9 +191,9 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
     }
 
     @Override
-    public void renderRecursively(MatrixStack poseStack, HamsterEntity animatable, GeoBone bone, RenderLayer renderType, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, int colour) {
-        // First, call the super method to render the bone itself
-        super.renderRecursively(poseStack, animatable, bone, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, colour);
+    public void renderRecursively(MatrixStack poseStack, HamsterEntity animatable, GeoBone bone, RenderLayer renderType, VertexConsumerProvider bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        // First, call the super method to render the bone itself, passing the correct 14 arguments
+        super.renderRecursively(poseStack, animatable, bone, renderType, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
 
         // Get the stolen item stack directly from the animatable entity
         ItemStack stolenStack = animatable.getStolenItemStack();
