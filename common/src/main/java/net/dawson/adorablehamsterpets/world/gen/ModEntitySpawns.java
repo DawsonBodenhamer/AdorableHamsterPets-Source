@@ -77,7 +77,7 @@ public class ModEntitySpawns {
         // Parse Tags
         for (String tagStr : Configs.AHP.spawnBiomeTags) {
             try {
-                PARSED_TAGS.add(TagKey.of(RegistryKeys.BIOME, Identifier.of(tagStr)));
+                PARSED_TAGS.add(TagKey.of(RegistryKeys.BIOME, new Identifier(tagStr)));
             } catch (Exception e) {
                 AdorableHamsterPets.LOGGER.info("[BiomeConfig] Invalid biome tag identifier in config: '{}'", tagStr);
             }
@@ -86,7 +86,7 @@ public class ModEntitySpawns {
         // Parse Includes
         for (String biomeIdStr : Configs.AHP.includeBiomes) {
             try {
-                PARSED_INCLUDES.add(Identifier.of(biomeIdStr));
+                PARSED_INCLUDES.add(new Identifier(biomeIdStr));
             } catch (Exception e) {
                 AdorableHamsterPets.LOGGER.warn("[BiomeConfig] Invalid biome identifier in include list: '{}'", biomeIdStr);
             }
@@ -95,7 +95,7 @@ public class ModEntitySpawns {
         // Parse Excludes
         for (String biomeIdStr : Configs.AHP.excludeBiomes) {
             try {
-                PARSED_EXCLUDES.add(Identifier.of(biomeIdStr));
+                PARSED_EXCLUDES.add(new Identifier(biomeIdStr));
             } catch (Exception e) {
                 AdorableHamsterPets.LOGGER.warn("[BiomeConfig] Invalid biome identifier in exclude list: '{}'", biomeIdStr);
             }

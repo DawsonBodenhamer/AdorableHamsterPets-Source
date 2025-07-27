@@ -182,7 +182,7 @@ public class ModWorldGeneration {
     // --- Private Helper Methods for Parsing ---
     private static void parseIdentifier(String idStr, Set<Identifier> set, String configListName) {
         try {
-            set.add(Identifier.of(idStr));
+            set.add(new Identifier(idStr));
         } catch (Exception e) {
             AdorableHamsterPets.LOGGER.info("[FeatureConfig] Invalid identifier in '{}' config list: '{}'", configListName, idStr);
         }
@@ -190,7 +190,7 @@ public class ModWorldGeneration {
 
     private static void parseTag(String tagStr, Set<TagKey<Biome>> set, String configListName) {
         try {
-            set.add(TagKey.of(RegistryKeys.BIOME, Identifier.of(tagStr)));
+            set.add(TagKey.of(RegistryKeys.BIOME, new Identifier(tagStr)));
         } catch (Exception e) {
             AdorableHamsterPets.LOGGER.info("[FeatureConfig] Invalid biome tag identifier in '{}' config list: '{}'", configListName, tagStr);
         }
