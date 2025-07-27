@@ -11,7 +11,6 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.Optional;
-import java.util.function.Supplier; // Import Supplier
 
 public record HamsterShoulderData(
         int variantId,
@@ -137,7 +136,7 @@ public record HamsterShoulderData(
     }
 
     public static HamsterShoulderData empty() {
-        return new HamsterShoulderData(0, 8.0f, new NbtCompound(), false, false, 0, 0L, 0L, new NbtList(), 0, Optional.empty(), 0, false, 1,
+        return new HamsterShoulderData(0, 8.0f, new NbtCompound(), false, false, 0, 0L, 0L, 0L, new NbtList(), 0, Optional.empty(), 0, false, 1,
                 SeekingBehaviorData.empty()
         );
     }

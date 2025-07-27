@@ -14,9 +14,8 @@ import net.dawson.adorablehamsterpets.entity.ImplementedInventory;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.dawson.adorablehamsterpets.entity.control.HamsterBodyControl;
 import net.dawson.adorablehamsterpets.item.ModItems;
-import net.dawson.adorablehamsterpets.networking.ModPackets;
 import net.dawson.adorablehamsterpets.mixin.accessor.LandPathNodeMakerInvoker;
-import net.dawson.adorablehamsterpets.screen.HamsterInventoryScreenHandler;
+import net.dawson.adorablehamsterpets.networking.ModPackets;
 import net.dawson.adorablehamsterpets.screen.HamsterScreenHandlerFactory;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.dawson.adorablehamsterpets.tag.ModItemTags;
@@ -1060,9 +1059,9 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         if (this.isStealingDiamond()) {
             nbt.putBoolean("IsStealingDiamond", true);
             nbt.putInt("StealDurationTimer", this.getStealDurationTimer());
-            // Save the stolen item stack
+            // Save the stolen item stack using the 1.20.1 method
             if (!this.getStolenItemStack().isEmpty()) {
-                nbt.put("StolenItemStack", this.getStolenItemStack().encode(registries));
+                nbt.put("StolenItemStack", this.getStolenItemStack().writeNbt(new NbtCompound()));
             }
         }
     }
@@ -1129,7 +1128,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         if (this.isStealingDiamond()) {
             this.setStealDurationTimer(nbt.getInt("StealDurationTimer"));
             if (nbt.contains("StolenItemStack", NbtElement.COMPOUND_TYPE)) {
-                ItemStack.fromNbt(registries, nbt.get("StolenItemStack")).ifPresent(this::setStolenItemStack);
+                // Use the 1.20.1 method to read the ItemStack from NBT
+                this.setStolenItemStack(ItemStack.fromNbt(nbt.getCompound("StolenItemStack")));
             }
         } else {
             // Ensure state is clean if the flag isn't set
@@ -2484,7 +2484,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         double finalVelZ = backwardsBaseVel.z + (this.random.nextGaussian() * scatterStrength);
 
                         // 4. Add the particle to the world with the calculated position and velocity.
-                        world.addParticle(ParticleTypes.WHITE_SMOKE, spawnX, spawnY, spawnZ, finalVelX, finalVelY, finalVelZ);
+                        world.addParticle(ParticleTypes.CLOUD, spawnX, spawnY, spawnZ, finalVelX, finalVelY, finalVelZ);
                     }
                 }
             }
@@ -2546,8 +2546,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         super.onDeath(source);
     }
     // --- End Override ---
-
-    // --- HamsterEntity.java ---
 
     // --- Animation ---
     /**
