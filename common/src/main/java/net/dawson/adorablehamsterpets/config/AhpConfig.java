@@ -181,7 +181,7 @@ public class AhpConfig extends Config {
     ));
 
     @Translatable.Name("Convention Biome Tags")
-    @Translatable.Desc("A list of 'c:' convention biome tags where hamsters can spawn. Used for broad mod compatibility. By default, this includes most common overworld types.")
+    @Translatable.Desc("A list of 'c:' convention biome tags where hamsters can spawn. Used for broad mod compatibility. By default, this includes most overworld tags as a 'catch-all', and the filtering for different hamster variants in each biome is hard coded.")
     public List<String> spawnBiomeConventionTags = new ArrayList<>(List.of(
             "c:is_cold",
             "c:is_hot",
@@ -483,7 +483,7 @@ public class AhpConfig extends Config {
     public List<String> cucumberBushTags = new ArrayList<>(List.of("minecraft:is_jungle"));
 
     @Translatable.Name("Convention Biome Tags")
-    @Translatable.Desc("Convention tags for maximum mod-pack harmony. Format: 'mod_id:tag_name', for example: 'minecraft:is_jungle'.")
+    @Translatable.Desc("Convention tags for maximum mod-pack harmony. Format: 'c:tag_name', for example: 'c:is_temperate'.")
     public List<String> cucumberBushConventionTags = new ArrayList<>(List.of(
             "c:is_temperate",
             "c:is_hot",
@@ -533,7 +533,7 @@ public class AhpConfig extends Config {
     public List<String> greenBeanBushTags = new ArrayList<>(List.of("mod_id:biome_name"));
 
     @Translatable.Name("Convention Biome Tags")
-    @Translatable.Desc("Convention tags for mod-friendly bean spam. Format: 'mod_id:tag_name', for example: 'minecraft:is_jungle'.")
+    @Translatable.Desc("Convention tags for mod-friendly bean spam. Format: 'c:tag_name', for example: 'c:is_wet'.")
     public List<String> greenBeanBushConventionTags = new ArrayList<>(List.of(
             "c:is_wet",
             "c:is_temperate"
