@@ -18,6 +18,7 @@ import net.dawson.adorablehamsterpets.networking.payload.StartHamsterFlightSound
 import net.dawson.adorablehamsterpets.networking.payload.StartHamsterThrowSoundPayload;
 import net.dawson.adorablehamsterpets.screen.HamsterScreenHandlerFactory;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
+import net.dawson.adorablehamsterpets.tag.ModBiomeTags;
 import net.dawson.adorablehamsterpets.tag.ModItemTags;
 import net.dawson.adorablehamsterpets.util.HamsterRenderTracker;
 import net.minecraft.advancement.criterion.Criteria;
@@ -290,7 +291,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     // --- "Hamster-Centric" Helper Methods for Variant Spawning ---
     private static boolean canSpawnBlue(RegistryEntry<Biome> biomeEntry) {
         // Broad: Use the 'is_icy' tag which covers Ice Spikes and Frozen Peaks.
-        return biomeEntry.isIn(TagKey.of(RegistryKeys.BIOME, Identifier.of("c", "is_icy")))
+        return biomeEntry.isIn(ModBiomeTags.IS_ICY)
                 || biomeEntry.matchesKey(RegistryKey.of(RegistryKeys.BIOME, Identifier.of("terralith", "glacial_chasm")))
                 || biomeEntry.matchesKey(RegistryKey.of(RegistryKeys.BIOME, Identifier.of("terralith", "mirage_isles")))
                 || biomeEntry.matchesKey(RegistryKey.of(RegistryKeys.BIOME, Identifier.of("terralith", "moonlight_valley")))
@@ -299,8 +300,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
     private static boolean canSpawnLavender(RegistryEntry<Biome> biomeEntry) {
         // Broad: Check for mushroom, magical, and mystical tags, plus specific vanilla and modded biomes.
-        boolean isLavenderTheme = biomeEntry.isIn(TagKey.of(RegistryKeys.BIOME, Identifier.of("c", "is_mushroom")))
-                || biomeEntry.isIn(TagKey.of(RegistryKeys.BIOME, Identifier.of("c", "is_magical")))
+        boolean isLavenderTheme = biomeEntry.isIn(ModBiomeTags.IS_MUSHROOM)
+                || biomeEntry.isIn(ModBiomeTags.IS_MAGICAL)
                 || biomeEntry.isIn(TagKey.of(RegistryKeys.BIOME, Identifier.of("terralith", "mystical")))
                 || biomeEntry.matchesKey(RegistryKey.of(RegistryKeys.BIOME, Identifier.of("biomesoplenty", "fungi_forest")))
                 || biomeEntry.matchesKey(RegistryKey.of(RegistryKeys.BIOME, Identifier.of("biomesoplenty", "mystic_grove")))
@@ -313,8 +314,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
     private static boolean canSpawnWhite(RegistryEntry<Biome> biomeEntry) {
         // Broad: Catches all snowy biomes, including modded ones.
-        boolean isWhiteTheme = biomeEntry.isIn(TagKey.of(RegistryKeys.BIOME, Identifier.of("c", "is_cold")))
-                || biomeEntry.isIn(TagKey.of(RegistryKeys.BIOME, Identifier.of("c", "is_snowy")))
+        boolean isWhiteTheme = biomeEntry.isIn(ModBiomeTags.IS_COLD)
+                || biomeEntry.isIn(ModBiomeTags.IS_SNOWY)
                 || biomeEntry.matchesKey(RegistryKey.of(RegistryKeys.BIOME, Identifier.of("terralith", "snowy_maple_forest")))
                 || biomeEntry.matchesKey(RegistryKey.of(RegistryKeys.BIOME, Identifier.of("terralith", "wintry_forest")))
                 || biomeEntry.matchesKey(RegistryKey.of(RegistryKeys.BIOME, Identifier.of("terralith", "alpine_grove")))
@@ -337,8 +338,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
     private static boolean canSpawnGray(RegistryEntry<Biome> biomeEntry) {
         // Broad: Catches mountains, sparse vegetation, and cliffs.
-        boolean isGrayTheme = biomeEntry.isIn(TagKey.of(RegistryKeys.BIOME, Identifier.of("c", "is_mountain")))
-                || biomeEntry.isIn(TagKey.of(RegistryKeys.BIOME, Identifier.of("c", "is_sparse_vegetation")))
+        boolean isGrayTheme = biomeEntry.isIn(ModBiomeTags.IS_MOUNTAIN)
+                || biomeEntry.isIn(ModBiomeTags.IS_SPARSE_VEGETATION)
                 || biomeEntry.isIn(TagKey.of(RegistryKeys.BIOME, Identifier.of("terralith", "cliffs")))
                 || biomeEntry.matchesKey(RegistryKey.of(RegistryKeys.BIOME, Identifier.of("terralith", "stony_spires")));
         if (!isGrayTheme) return false;
@@ -354,8 +355,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
     private static boolean canSpawnBlack(RegistryEntry<Biome> biomeEntry) {
         // Broad: Catches wet biomes, caves, and the Deep Dark.
-        boolean isBlackTheme  = biomeEntry.isIn(TagKey.of(RegistryKeys.BIOME, Identifier.of("c", "is_wet")))
-                || biomeEntry.isIn(TagKey.of(RegistryKeys.BIOME, Identifier.of("c", "is_cave")))
+        boolean isBlackTheme  = biomeEntry.isIn(ModBiomeTags.IS_WET)
+                || biomeEntry.isIn(ModBiomeTags.IS_CAVE)
                 || biomeEntry.matchesKey(BiomeKeys.DEEP_DARK);
         if (!isBlackTheme) return false;
 
@@ -369,7 +370,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
     private static boolean canSpawnCream(RegistryEntry<Biome> biomeEntry) {
         // Broad: Use the 'is_sandy' tag and specific checks for unique biomes.
-        boolean isCreamTheme = biomeEntry.isIn(TagKey.of(RegistryKeys.BIOME, Identifier.of("c", "is_sandy")))
+        boolean isCreamTheme = biomeEntry.isIn(ModBiomeTags.IS_SANDY)
                 || biomeEntry.matchesKey(BiomeKeys.OLD_GROWTH_BIRCH_FOREST)
                 || biomeEntry.matchesKey(BiomeKeys.BIRCH_FOREST)
                 || biomeEntry.matchesKey(RegistryKey.of(RegistryKeys.BIOME, Identifier.of("terralith", "ancient_sands")))
@@ -385,8 +386,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
     private static boolean canSpawnChocolate(RegistryEntry<Biome> biomeEntry) {
         // Broad: Catches all forest, taiga, and dense vegetation types.
-        boolean isChocolateTheme = biomeEntry.isIn(TagKey.of(RegistryKeys.BIOME, Identifier.of("c", "is_forest")))
-                || biomeEntry.isIn(TagKey.of(RegistryKeys.BIOME, Identifier.of("c", "is_dense_vegetation")))
+        boolean isChocolateTheme = biomeEntry.isIn(ModBiomeTags.IS_FOREST)
+                || biomeEntry.isIn(ModBiomeTags.IS_DENSE_VEGETATION)
                 || biomeEntry.matchesKey(RegistryKey.of(RegistryKeys.BIOME, Identifier.of("terralith", "cloud_forest")))
                 || biomeEntry.matchesKey(RegistryKey.of(RegistryKeys.BIOME, Identifier.of("biomesoplenty", "redwood_forest")));
         if (!isChocolateTheme) return false;
