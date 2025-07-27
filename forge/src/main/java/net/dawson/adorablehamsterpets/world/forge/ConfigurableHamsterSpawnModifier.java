@@ -2,7 +2,6 @@ package net.dawson.adorablehamsterpets.world.forge;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
-import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.dawson.adorablehamsterpets.world.gen.ModEntitySpawns;
@@ -45,9 +44,6 @@ public class ConfigurableHamsterSpawnModifier implements BiomeModifier {
 
             // Add the new spawn entry to the CREATURE spawn group.
             spawnBuilder.spawn(SpawnGroup.CREATURE, spawnEntry);
-            AdorableHamsterPets.LOGGER.debug("    -> SUCCESS: Added hamster spawn to biome '{}'", biomeName);
-        } else {
-            AdorableHamsterPets.LOGGER.debug("    -> SKIPPED: Biome '{}' is not in the hamster spawn list.", biomeName);
         }
     }
 
