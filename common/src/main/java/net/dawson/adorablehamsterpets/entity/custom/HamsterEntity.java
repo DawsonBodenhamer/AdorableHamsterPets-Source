@@ -2521,8 +2521,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     }
     // --- End Override ---
 
-    // --- HamsterEntity.java ---
-
     // --- Animation ---
     /**
      * Registers the animation controllers for the HamsterEntity.
