@@ -27,7 +27,6 @@ public class HamsterScreenHandlerFactory implements ExtendedMenuProvider {
      */
     @Override
     public Text getDisplayName() {
-        // This now correctly and exclusively provides the GUI title.
         return Text.translatable("entity.adorablehamsterpets.hamster.inventory_title");
     }
 
