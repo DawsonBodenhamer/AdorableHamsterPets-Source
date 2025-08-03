@@ -40,7 +40,7 @@ public class HamsterOverlayLayer extends GeoRenderLayer<HamsterEntity> {
 
         Identifier overlayTexture = getOverlayTexture(animatable);
 
-        // Only render if there's an overlay texture for this variant
+        // If there is no overlayTexture, do nothing.
         if (overlayTexture != null) {
             RenderLayer overlayRenderType = RenderLayer.getEntityTranslucent(overlayTexture); // Use translucent so base shows through
 
