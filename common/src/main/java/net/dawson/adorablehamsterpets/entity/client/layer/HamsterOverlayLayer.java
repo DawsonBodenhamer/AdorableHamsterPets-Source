@@ -3,8 +3,6 @@ package net.dawson.adorablehamsterpets.entity.client.layer;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterVariant;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -42,26 +40,22 @@ public class HamsterOverlayLayer extends GeoRenderLayer<HamsterEntity> {
 
         Identifier overlayTexture = getOverlayTexture(animatable);
 
-        // Only render if there's an overlay texture for this variant
+        // If there is no overlayTexture, do nothing.
         if (overlayTexture != null) {
             RenderLayer overlayRenderType = RenderLayer.getEntityTranslucent(overlayTexture); // Use translucent so base shows through
 
-            // --- FIX: Correct reRender call with packed color ---
             getRenderer().reRender(
-                    bakedModel, // 1
-                    poseStack, // 2
-                    bufferSource, // 3
-                    animatable, // 4
-                    overlayRenderType, // 5
-                    bufferSource.getBuffer(overlayRenderType), // 6
-                    partialTick, // 7
-                    packedLight, // 8
-                    OverlayTexture.DEFAULT_UV, // 9 - Use default overlay (for damage flash, etc.)
-                    // 10: Provide packed white color (ARGB)
-                    ColorHelper.Argb.getArgb(255, 255, 255, 255) // White, full alpha
+                    bakedModel,
+                    poseStack,
+                    bufferSource,
+                    animatable,
+                    overlayRenderType,
+                    bufferSource.getBuffer(overlayRenderType),
+                    partialTick,
+                    packedLight,
+                    OverlayTexture.DEFAULT_UV,
+                    ColorHelper.Argb.getArgb(255, 255, 255, 255)
             );
-            // --- END FIX ---
         }
-        // If overlayTexture is null, do nothing, only the base layer renders.
     }
 }
