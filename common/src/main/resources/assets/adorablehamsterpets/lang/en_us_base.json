@@ -50,7 +50,7 @@
   "tooltip.adorablehamsterpets.cheese.hint2": "Wave it around in front of a hamster and see what happens.",
   "tooltip.adorablehamsterpets.cheese.hint3": "Restores %s hunger and %s saturation (configurable).",
 
-  "key.category.adorablehamsterpets.main": "Adorable Hamster Pets",
+  "key.categories.adorablehamsterpets.main": "Adorable Hamster Pets",
   "key.adorablehamsterpets.throw_hamster": "Throw Hamster",
 
   "message.adorablehamsterpets.throw_cooldown": "Your hamster needs a break— try again in %d minute and %d seconds.",

@@ -58,7 +58,7 @@ public class AdorableHamsterPets {
 		// We check if the data generation API is NOT loaded. If it is loaded, we are in a datagen environment
 		// and should skip runtime-only logic to prevent crashes.
 		if (System.getProperty("fabric-api.datagen") == null) {
-			ModRegistries.initialize();
+			ModRegistries.registerCompostables();
 			ModEntitySpawns.parseConfig();
 			ModWorldGeneration.parseConfig();
 
