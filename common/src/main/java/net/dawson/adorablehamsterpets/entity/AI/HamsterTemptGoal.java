@@ -32,14 +32,25 @@ public class HamsterTemptGoal extends TemptGoal {
     // --- 3. Public Methods (Overrides from TemptGoal/Goal) ---
     @Override
     public boolean canStart() {
-        // --- 1. Sitting Check ---
+        // --- 1. Initial State Checks ---
         if (this.hamster.isSitting() || this.hamster.isCelebratingDiamond()) {
             return false;
         }
-        // --- End 1. Sitting Check ---
 
         // --- 2. Superclass Logic ---
-        return super.canStart();
+        if (!super.canStart()) {
+            return false;
+        }
+
+        // --- 3. Ownership Check ---
+        // If the hamster is tamed, only its owner can tempt it.
+        if (this.hamster.isTamed()) {
+            // The `closestPlayer` field is set by the `super.canStart()` call above.
+            return this.hamster.isOwner(this.closestPlayer);
+        }
+
+        // If the hamster is not tamed, any player can tempt it.
+        return true;
     }
 
     @Override
