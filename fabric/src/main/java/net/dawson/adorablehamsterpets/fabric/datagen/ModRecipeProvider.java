@@ -1,6 +1,7 @@
 package net.dawson.adorablehamsterpets.fabric.datagen;
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
+import net.dawson.adorablehamsterpets.block.ModBlocks;
 import net.dawson.adorablehamsterpets.item.ModItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
@@ -66,5 +67,11 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .input(ModItems.SLICED_CUCUMBER.get())
                 .criterion("has_sliced_cucumber", conditionsFromItem(ModItems.SLICED_CUCUMBER.get()))
                 .offerTo(recipeExporter, Identifier.of(AdorableHamsterPets.MOD_ID, "hamster_guide_book_from_crafting"));
+
+        // --- Custom Sunflower to Vanilla Sunflower ---
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, Items.SUNFLOWER, 1)
+                .input(ModBlocks.SUNFLOWER_BLOCK.get())
+                .criterion("has_modded_sunflower", conditionsFromItem(ModBlocks.SUNFLOWER_BLOCK.get()))
+                .offerTo(recipeExporter, Identifier.of(AdorableHamsterPets.MOD_ID, "vanilla_sunflower_from_modded"));
     }
 }
