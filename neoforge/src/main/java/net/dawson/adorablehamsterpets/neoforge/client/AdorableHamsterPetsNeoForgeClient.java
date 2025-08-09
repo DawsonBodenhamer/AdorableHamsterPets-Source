@@ -1,8 +1,8 @@
-// --- AdorableHamsterPetsNeoForgeClient.java ---
 package net.dawson.adorablehamsterpets.neoforge.client;
 
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPetsClient;
+import net.dawson.adorablehamsterpets.client.option.ModKeyBindings;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.dawson.adorablehamsterpets.entity.client.HamsterRenderer;
 import net.dawson.adorablehamsterpets.entity.client.ModModelLayers;
@@ -17,6 +17,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.dawson.adorablehamsterpets.screen.HamsterInventoryScreen;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 
@@ -30,6 +31,19 @@ public final class AdorableHamsterPetsNeoForgeClient {
     public static void onClientSetup(FMLClientSetupEvent event) {
         // General setup.
         event.enqueueWork(AdorableHamsterPetsClient::init);
+    }
+
+    /**
+     * Register key mappings using the NeoForge event.
+     */
+    @SubscribeEvent
+    public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
+        // Construct the key mapping if it hasn’t been created yet
+        if (ModKeyBindings.THROW_HAMSTER_KEY == null) {
+            ModKeyBindings.init();
+        }
+        // Use the event to register the key mapping
+        event.register(ModKeyBindings.THROW_HAMSTER_KEY);
     }
 
     /**

@@ -1,0 +1,9 @@
+{
+  "values": {
+    "adorablehamsterpets:green_beans": { "chance": 0.5 },
+    "adorablehamsterpets:cucumber":    { "chance": 0.5 },
+    "adorablehamsterpets:green_bean_seeds": { "chance": 0.25 },
+    "adorablehamsterpets:cucumber_seeds":   { "chance": 0.25 },
+    "adorablehamsterpets:sunflower_seeds":  { "chance": 0.25 }
+  }
+}
