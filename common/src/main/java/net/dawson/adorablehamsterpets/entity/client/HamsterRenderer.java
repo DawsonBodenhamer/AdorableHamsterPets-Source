@@ -70,7 +70,7 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
     public void render(HamsterEntity entity, float entityYaw, float partialTick, MatrixStack poseStack,
                        VertexConsumerProvider bufferSource, int packedLight) {
         // --- 1. Manage Cleaning Sound ---
-        boolean isCleaning = entity.getDataTracker().get(HamsterEntity.IS_CLEANING);
+        boolean isCleaning = entity.isCleaning();
         HamsterCleaningSoundInstance sound = activeCleaningSounds.get(entity.getId());
 
         if (isCleaning && (sound == null || sound.isDone())) {

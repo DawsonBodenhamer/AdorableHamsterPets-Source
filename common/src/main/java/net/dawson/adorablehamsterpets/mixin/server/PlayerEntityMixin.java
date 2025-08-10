@@ -164,6 +164,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         if (adorablehamsterpets$diamondSoundCooldownTicks > 0) adorablehamsterpets$diamondSoundCooldownTicks--;
         if (adorablehamsterpets$creeperSoundCooldownTicks > 0) adorablehamsterpets$creeperSoundCooldownTicks--;
 
+        // --- 3. Shoulder Pet Logic ---
         NbtCompound shoulderNbt = this.getHamsterShoulderEntity();
         if (!shoulderNbt.isEmpty()) {
 
@@ -219,6 +220,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Unique
     @Override
     public void adorablehamsterpets$dismountShoulderHamster() {
+        // --- LOGGING ---
+        AdorableHamsterPets.LOGGER.info("[AHP DEBUG] DISMOUNT: adorablehamsterpets$dismountShoulderHamster() was called via payload.");
+
         PlayerEntity self = (PlayerEntity) (Object) this;
         World world = self.getWorld();
         if (world.isClient) return;

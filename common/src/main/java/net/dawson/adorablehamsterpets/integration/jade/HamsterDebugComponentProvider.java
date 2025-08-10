@@ -51,10 +51,10 @@ public enum HamsterDebugComponentProvider implements IEntityComponentProvider {
 
         // --- AI Goal & Action States ---
         tooltip.add(Text.literal("--- AI & Action States ---").formatted(Formatting.GRAY));
-        tooltip.add(fText("Sitting (Command): %s", (hamster.getDataTracker().get(HamsterEntity.IS_SITTING) ? Text.literal("true").formatted(Formatting.GREEN) : Text.literal("false").formatted(Formatting.RED))));
+        tooltip.add(fText("Sitting (Command): %s", (hamster.isSitting() ? Text.literal("true").formatted(Formatting.GREEN) : Text.literal("false").formatted(Formatting.RED))));
         tooltip.add(fText("Sitting (Vanilla Pose): %s", (hamster.isInSittingPose() ? Text.literal("true").formatted(Formatting.GREEN) : Text.literal("false").formatted(Formatting.RED))));
         tooltip.add(fText("Sleeping (Wild/General): %s", (hamster.isSleeping() ? Text.literal("true").formatted(Formatting.GREEN) : Text.literal("false").formatted(Formatting.RED))));
-        tooltip.add(fText("Cleaning: %s", (hamster.getDataTracker().get(HamsterEntity.IS_CLEANING) ? Text.literal("true").formatted(Formatting.GREEN) : Text.literal("false").formatted(Formatting.RED))));
+        tooltip.add(fText("Cleaning: %s", (hamster.isCleaning() ? Text.literal("true").formatted(Formatting.GREEN) : Text.literal("false").formatted(Formatting.RED))));
 
         if (hamster.isKnockedOut()) {
             tooltip.add(fText("State: %s", Text.literal("Knocked Out").formatted(Formatting.RED, Formatting.BOLD)));

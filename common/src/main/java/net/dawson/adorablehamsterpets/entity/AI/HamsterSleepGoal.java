@@ -33,7 +33,7 @@ public class HamsterSleepGoal extends Goal {
         // Only wild hamsters sleep via this goal.
         if (this.hamster.isTamed() ||
                 this.hamster.isSleeping() ||
-                this.hamster.getDataTracker().get(HamsterEntity.IS_SITTING) ||
+                this.hamster.isSitting() ||
                 this.hamster.isKnockedOut()) {
             return false;
         }

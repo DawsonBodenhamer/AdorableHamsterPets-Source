@@ -50,6 +50,10 @@ public class AdorableHamsterPetsClient {
     private static long lastSneakPressTime = 0;
     private static boolean isWaitingForSecondSneakPress = false;
 
+    private static boolean hadShoulderHamsterLastTick = false;
+    private static int dismountDebounceTicks = 0;
+    private static final int DISMOUNT_DEBOUNCE_DEFAULT = 5;
+
     /**
      * Initializes general client-side features like screens, keybinds, and events.
      */
@@ -101,6 +105,7 @@ public class AdorableHamsterPetsClient {
     }
 
     private static void onEndClientTick(MinecraftClient client) {
+
         if (client.player == null || client.world == null) {
             renderedHamsterIdsThisTick.clear();
             renderedHamsterIdsLastTick.clear();
@@ -172,18 +177,55 @@ public class AdorableHamsterPetsClient {
     private static void handleDismountKeyPress(MinecraftClient client) {
         if (client.player == null || client.world == null) return;
 
-        // --- 1. Pre-checks for Shoulder Pet ---
-        boolean hasShoulderHamster = !((PlayerEntityAccessor) client.player).getHamsterShoulderEntity().isEmpty();
+        // --- 1. Shoulder state ---
+        boolean hasShoulderHamster =
+                !((PlayerEntityAccessor) client.player).getHamsterShoulderEntity().isEmpty();
+
+        // Detect the exact tick we JUST mounted (transition: false -> true)
+        if (hasShoulderHamster && !hadShoulderHamsterLastTick) {
+            // Drain any queued presses on BOTH possible bindings, and clear held states.
+            KeyBinding vanillaSneak = client.options.sneakKey;
+            KeyBinding customDismount = ModKeyBindings.DISMOUNT_HAMSTER_KEY;
+
+            if (vanillaSneak != null) {
+                vanillaSneak.setPressed(false);
+                while (vanillaSneak.wasPressed()) {}
+            }
+            if (customDismount != null) {
+                customDismount.setPressed(false);
+                while (customDismount.wasPressed()) {}
+            }
+
+            // Start a short debounce to ignore any immediate post-mount noise.
+            dismountDebounceTicks = DISMOUNT_DEBOUNCE_DEFAULT;
+
+            // Reset any double-tap state on fresh mount.
+            isWaitingForSecondSneakPress = false;
+
+            AdorableHamsterPets.LOGGER.info("[AHP DEBUG CLIENT] Mount transition detected -> draining input queues and starting debounce ({} ticks).",
+                    DISMOUNT_DEBOUNCE_DEFAULT);
+        }
+
+        // Remember shoulder state for next tick.
+        hadShoulderHamsterLastTick = hasShoulderHamster;
+
+        // If no hamster on shoulder, clear double-tap state and bail.
         if (!hasShoulderHamster) {
             if (isWaitingForSecondSneakPress) {
-                isWaitingForSecondSneakPress = false; // Reset state if hamster is gone
+                isWaitingForSecondSneakPress = false;
             }
+            return;
+        }
+
+        // While the debounce window is active, ignore dismount input.
+        if (dismountDebounceTicks > 0) {
+            dismountDebounceTicks--;
             return;
         }
 
         final AhpConfig config = AdorableHamsterPets.CONFIG;
 
-        // --- 2. Determine which key to listen for based on config ---
+        // --- 2. Choose which key to listen for based on config ---
         KeyBinding keyToListenFor;
         if (Configs.AHP.dismountTriggerType == DismountTriggerType.CUSTOM_KEYBIND) {
             keyToListenFor = ModKeyBindings.DISMOUNT_HAMSTER_KEY;
@@ -191,8 +233,19 @@ public class AdorableHamsterPetsClient {
             keyToListenFor = client.options.sneakKey;
         }
 
-        // --- 3. Check if the determined key was pressed ---
-        if (keyToListenFor.wasPressed()) {
+        // --- 3. Edge detection: call wasPressed() ONCE and store the result ---
+        boolean wasKeyPressed = keyToListenFor != null && keyToListenFor.wasPressed();
+
+        AdorableHamsterPets.LOGGER.info(
+                "[AHP DEBUG CLIENT] Tick Handler: Listening for '{}'. wasPressed() = {}",
+                keyToListenFor != null ? keyToListenFor.getTranslationKey() : "null-binding",
+                wasKeyPressed
+        );
+
+        if (wasKeyPressed) {
+            AdorableHamsterPets.LOGGER.info("[AHP DEBUG CLIENT] Tick Handler: SINGLE_PRESS detected. Press type config: {}",
+                    config.dismountPressType.get());
+
             // --- 4. Apply press type logic (SINGLE vs DOUBLE) ---
             if (config.dismountPressType.get() == DismountPressType.SINGLE_PRESS) {
                 // Single press always triggers the dismount
@@ -202,11 +255,11 @@ public class AdorableHamsterPetsClient {
                 long delayMillis = config.doubleTapDelayTicks.get() * 50L;
 
                 if (isWaitingForSecondSneakPress && (currentTime - lastSneakPressTime) <= delayMillis) {
-                    // Second press was within the delay window, trigger dismount
+                    AdorableHamsterPets.LOGGER.info("[AHP DEBUG CLIENT] Tick Handler: DOUBLE_TAP second press detected. Sending dismount payload.");
                     dev.architectury.networking.NetworkManager.sendToServer(new DismountHamsterPayload());
                     isWaitingForSecondSneakPress = false; // Reset the double-tap state
                 } else {
-                    // This is the first press, start the timer
+                    AdorableHamsterPets.LOGGER.info("[AHP DEBUG CLIENT] Tick Handler: DOUBLE_TAP first press detected. Starting timer.");
                     isWaitingForSecondSneakPress = true;
                     lastSneakPressTime = currentTime;
                 }
@@ -214,11 +267,11 @@ public class AdorableHamsterPetsClient {
         }
 
         // --- 5. Handle timeout for the double-tap window ---
-        // This runs every tick to reset the state if the player doesn't press the key a second time.
         if (isWaitingForSecondSneakPress) {
             long currentTime = System.currentTimeMillis();
             long delayMillis = config.doubleTapDelayTicks.get() * 50L;
             if ((currentTime - lastSneakPressTime) > delayMillis) {
+                AdorableHamsterPets.LOGGER.info("[AHP DEBUG CLIENT] Tick Handler: DOUBLE_TAP timed out.");
                 isWaitingForSecondSneakPress = false;
             }
         }
