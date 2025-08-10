@@ -38,12 +38,12 @@ public final class AdorableHamsterPetsNeoForgeClient {
      */
     @SubscribeEvent
     public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
-        // Construct the key mapping if it hasn’t been created yet
-        if (ModKeyBindings.THROW_HAMSTER_KEY == null) {
-            ModKeyBindings.init();
-        }
+        // Initialize all key binding objects.
+        ModKeyBindings.init();
+
         // Use the event to register the key mapping
         event.register(ModKeyBindings.THROW_HAMSTER_KEY);
+        event.register(ModKeyBindings.DISMOUNT_HAMSTER_KEY);
     }
 
     /**

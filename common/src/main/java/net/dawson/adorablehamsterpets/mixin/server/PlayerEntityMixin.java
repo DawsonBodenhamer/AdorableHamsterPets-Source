@@ -159,41 +159,15 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         }
         Random random = world.getRandom();
         final AhpConfig config = AdorableHamsterPets.CONFIG;
-        // --- End 1. Initial Setup and Server-Side Check ---
 
         // --- 2. Cooldown Decrement ---
         if (adorablehamsterpets$diamondSoundCooldownTicks > 0) adorablehamsterpets$diamondSoundCooldownTicks--;
         if (adorablehamsterpets$creeperSoundCooldownTicks > 0) adorablehamsterpets$creeperSoundCooldownTicks--;
-        // --- End 2. Cooldown Decrement ---
 
         NbtCompound shoulderNbt = this.getHamsterShoulderEntity();
         if (!shoulderNbt.isEmpty()) {
-            // --- 3. Handle Player Sneaking for Dismount ---
-            if (self.isSneaking()) {
-                HamsterEntity.spawnFromNbt((ServerWorld) world, self, shoulderNbt, this.adorablehamsterpets$isDiamondAlertConditionMet);
-                this.adorablehamsterpets$isDiamondAlertConditionMet = false;
 
-                this.setHamsterShoulderEntity(new NbtCompound()); // Clear the data
-
-                world.playSound(null, self.getBlockPos(), ModSounds.HAMSTER_DISMOUNT.get(), SoundCategory.PLAYERS, 0.7f, 1.0f + random.nextFloat() * 0.2f);
-
-                if (config.enableShoulderDismountMessages && !DISMOUNT_MESSAGE_KEYS.isEmpty()) {
-                    String chosenKey;
-                    if (DISMOUNT_MESSAGE_KEYS.size() == 1) {
-                        chosenKey = DISMOUNT_MESSAGE_KEYS.get(0);
-                    } else {
-                        List<String> availableKeys = new ArrayList<>(DISMOUNT_MESSAGE_KEYS);
-                        availableKeys.remove(this.adorablehamsterpets$lastDismountMessageKey);
-                        chosenKey = availableKeys.isEmpty() ? this.adorablehamsterpets$lastDismountMessageKey : availableKeys.get(random.nextInt(availableKeys.size()));
-                    }
-                    self.sendMessage(Text.translatable(chosenKey), true);
-                    this.adorablehamsterpets$lastDismountMessageKey = chosenKey;
-                }
-                return;
-            }
-            // --- End 3. Handle Player Sneaking for Dismount ---
-
-            // --- 4. Shoulder Diamond Detection ---
+            // --- 3. Shoulder Diamond Detection ---
             if (config.enableShoulderDiamondDetection) {
                 adorablehamsterpets$diamondCheckTimer++;
                 if (adorablehamsterpets$diamondCheckTimer >= CHECK_INTERVAL_TICKS) {
@@ -214,9 +188,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                     }
                 }
             }
-            // --- End 4. Shoulder Diamond Detection ---
 
-            // --- 5. Shoulder Creeper Detection ---
+            // --- 4. Shoulder Creeper Detection ---
             if (config.enableShoulderCreeperDetection) {
                 adorablehamsterpets$creeperCheckTimer++;
                 if (adorablehamsterpets$creeperCheckTimer >= CHECK_INTERVAL_TICKS) {
@@ -233,7 +206,48 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                     }
                 }
             }
-            // --- End 5. Shoulder Creeper Detection ---
+        }
+    }
+
+    // --- Dismount Shoulder Hamster ---
+    /**
+     * Executes the server-side logic to dismount a hamster from the player's shoulder.
+     * This method is triggered upon receiving a {@code DismountHamsterPayload} from the client.
+     * It handles spawning the hamster entity from its stored NBT data, clearing the player's
+     * shoulder data, and playing the necessary sounds and messages.
+     */
+    @Unique
+    @Override
+    public void adorablehamsterpets$dismountShoulderHamster() {
+        PlayerEntity self = (PlayerEntity) (Object) this;
+        World world = self.getWorld();
+        if (world.isClient) return;
+
+        PlayerEntityAccessor playerAccessor = (PlayerEntityAccessor) self;
+        NbtCompound shoulderNbt = playerAccessor.getHamsterShoulderEntity();
+        Random random = world.getRandom();
+        final AhpConfig config = AdorableHamsterPets.CONFIG;
+
+        if (!shoulderNbt.isEmpty()) {
+            HamsterEntity.spawnFromNbt((ServerWorld) world, self, shoulderNbt, this.adorablehamsterpets$isDiamondAlertConditionMet);
+            this.adorablehamsterpets$isDiamondAlertConditionMet = false;
+
+            this.setHamsterShoulderEntity(new NbtCompound());
+
+            world.playSound(null, self.getBlockPos(), ModSounds.HAMSTER_DISMOUNT.get(), SoundCategory.PLAYERS, 0.7f, 1.0f + random.nextFloat() * 0.2f);
+
+            if (config.enableShoulderDismountMessages && !DISMOUNT_MESSAGE_KEYS.isEmpty()) {
+                String chosenKey;
+                if (DISMOUNT_MESSAGE_KEYS.size() == 1) {
+                    chosenKey = DISMOUNT_MESSAGE_KEYS.get(0);
+                } else {
+                    List<String> availableKeys = new ArrayList<>(DISMOUNT_MESSAGE_KEYS);
+                    availableKeys.remove(this.adorablehamsterpets$lastDismountMessageKey);
+                    chosenKey = availableKeys.isEmpty() ? this.adorablehamsterpets$lastDismountMessageKey : availableKeys.get(random.nextInt(availableKeys.size()));
+                }
+                self.sendMessage(Text.translatable(chosenKey), true);
+                this.adorablehamsterpets$lastDismountMessageKey = chosenKey;
+            }
         }
     }
 

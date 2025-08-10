@@ -6,19 +6,32 @@ import org.lwjgl.glfw.GLFW;
 
 /** Holds the mod's key mappings. */
 public class ModKeyBindings {
-    // Translation keys for the category and action.
+    // --- Translation Keys ---
     public static final String KEY_CATEGORY_HAMSTERPETS = "key.categories.adorablehamsterpets.main";
     public static final String KEY_THROW_HAMSTER = "key.adorablehamsterpets.throw_hamster";
+    public static final String KEY_DISMOUNT_HAMSTER = "key.adorablehamsterpets.dismount_hamster";
 
-    /** The actual keybinding instance. It will be registered by the platform-specific module. */
+    // --- KeyBinding Instances ---
     public static KeyBinding THROW_HAMSTER_KEY;
+    public static KeyBinding DISMOUNT_HAMSTER_KEY;
 
-    /** Create the key mapping. Do not register it here! */
+    /**
+     * Initializes the KeyBinding objects. This should be called during client setup
+     * before the keys are registered by the platform-specific loader.
+     */
     public static void init() {
         THROW_HAMSTER_KEY = new KeyBinding(
                 KEY_THROW_HAMSTER,
                 InputUtil.Type.KEYSYM,
-                GLFW.GLFW_KEY_G,
-                KEY_CATEGORY_HAMSTERPETS);
+                GLFW.GLFW_KEY_G, // Default to 'G'
+                KEY_CATEGORY_HAMSTERPETS
+        );
+
+        // --- Use the DynamicDismountKeyBinding class ---
+        DISMOUNT_HAMSTER_KEY = new DynamicDismountKeyBinding(
+                KEY_DISMOUNT_HAMSTER,
+                InputUtil.UNKNOWN_KEY.getCode(), // Unbound by default
+                KEY_CATEGORY_HAMSTERPETS
+        );
     }
 }

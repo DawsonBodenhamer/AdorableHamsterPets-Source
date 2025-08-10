@@ -13,4 +13,6 @@ public interface PlayerEntityAccessor {
 
     int ahp_getLastGoldMessageIndex();
     void ahp_setLastGoldMessageIndex(int index);
+
+    void adorablehamsterpets$dismountShoulderHamster();
 }
