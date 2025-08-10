@@ -2,6 +2,7 @@ package net.dawson.adorablehamsterpets.networking;
 
 import dev.architectury.networking.NetworkManager;
 import net.dawson.adorablehamsterpets.AdorableHamsterPetsClient;
+import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.util.HamsterRenderTracker;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -38,6 +39,14 @@ public class ModPackets {
                         }
                     });
                 }
+        );
+
+        NetworkManager.registerReceiver(NetworkManager.Side.C2S, DismountHamsterPayload.ID, DismountHamsterPayload.CODEC,
+                (payload, context) -> context.queue(() -> {
+                    if (context.getPlayer() instanceof ServerPlayerEntity player) {
+                        ((PlayerEntityAccessor) player).adorablehamsterpets$dismountShoulderHamster();
+                    }
+                })
         );
     }
 

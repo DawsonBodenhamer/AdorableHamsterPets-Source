@@ -15,6 +15,9 @@ import net.dawson.adorablehamsterpets.client.option.ModKeyBindings;
 import net.dawson.adorablehamsterpets.client.sound.HamsterFlightSoundInstance;
 import net.dawson.adorablehamsterpets.client.sound.HamsterThrowSoundInstance;
 import net.dawson.adorablehamsterpets.config.AhpConfig;
+import net.dawson.adorablehamsterpets.config.Configs;
+import net.dawson.adorablehamsterpets.config.DismountPressType;
+import net.dawson.adorablehamsterpets.config.DismountTriggerType;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.dawson.adorablehamsterpets.entity.client.HamsterRenderer;
 import net.dawson.adorablehamsterpets.entity.client.ModModelLayers;
@@ -27,6 +30,7 @@ import net.dawson.adorablehamsterpets.screen.ModScreenHandlers;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.BookScreen;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
@@ -43,6 +47,8 @@ public class AdorableHamsterPetsClient {
 
     private static final Set<Integer> renderedHamsterIdsThisTick = new HashSet<>();
     private static final Set<Integer> renderedHamsterIdsLastTick = new HashSet<>();
+    private static long lastSneakPressTime = 0;
+    private static boolean isWaitingForSecondSneakPress = false;
 
     /**
      * Initializes general client-side features like screens, keybinds, and events.
@@ -69,14 +75,7 @@ public class AdorableHamsterPetsClient {
     }
 
     /**
-     * Registers keybindings. Separate because Forge calls this from the dedicated RegisterKeyMappingsEvent.
-     */
-    public static void initKeybindings() {
-        ModKeyBindings.registerKeyInputs();
-    }
-
-    /**
-     * Registers the screen factory. Separate because Forge needs to call it natively.
+     * Registers the screen factory. Separate because NeoForge needs to call it natively.
      */
     public static void initScreenHandlers() {
         MenuRegistry.registerScreenFactory(ModScreenHandlers.HAMSTER_INVENTORY_SCREEN_HANDLER.get(), HamsterInventoryScreen::new);
@@ -136,6 +135,9 @@ public class AdorableHamsterPetsClient {
         renderedHamsterIdsLastTick.clear();
         renderedHamsterIdsLastTick.addAll(renderedHamsterIdsThisTick);
         renderedHamsterIdsThisTick.clear();
+
+        // --- Dismount Logic ---
+        handleDismountKeyPress(client);
     }
 
 
@@ -157,6 +159,73 @@ public class AdorableHamsterPetsClient {
         Entity entity = client.world.getEntityById(hamsterEntityId);
         if (entity instanceof HamsterEntity hamster) {
             client.getSoundManager().play(new HamsterThrowSoundInstance(ModSounds.HAMSTER_THROW.get(), SoundCategory.PLAYERS, hamster));
+        }
+    }
+
+    /**
+     * Handles the client-side logic for dismounting a shoulder hamster.
+     * <p>
+     * This method is called every client tick. It checks the user's configuration to determine
+     * which key to listen for (vanilla sneak or a custom keybind) and what press behavior
+     * is required (single press or double-tap).
+     * <p>
+     * When a valid dismount action is detected, it sends a {@link DismountHamsterPayload}
+     * to the server to execute the dismount.
+     *
+     * @param client The MinecraftClient instance.
+     */
+    private static void handleDismountKeyPress(MinecraftClient client) {
+        if (client.player == null || client.world == null) return;
+
+        // --- 1. Pre-checks for Shoulder Pet ---
+        boolean hasShoulderHamster = !((PlayerEntityAccessor) client.player).getHamsterShoulderEntity().isEmpty();
+        if (!hasShoulderHamster) {
+            if (isWaitingForSecondSneakPress) {
+                isWaitingForSecondSneakPress = false; // Reset state if hamster is gone
+            }
+            return;
+        }
+
+        final AhpConfig config = AdorableHamsterPets.CONFIG;
+
+        // --- 2. Determine which key to listen for based on config ---
+        KeyBinding keyToListenFor;
+        if (Configs.AHP.dismountTriggerType == DismountTriggerType.CUSTOM_KEYBIND) {
+            keyToListenFor = ModKeyBindings.DISMOUNT_HAMSTER_KEY;
+        } else { // SNEAK_KEY
+            keyToListenFor = client.options.sneakKey;
+        }
+
+        // --- 3. Check if the determined key was pressed ---
+        if (keyToListenFor.wasPressed()) {
+            // --- 4. Apply press type logic (SINGLE vs DOUBLE) ---
+            if (config.dismountPressType.get() == DismountPressType.SINGLE_PRESS) {
+                // Single press always triggers the dismount
+                dev.architectury.networking.NetworkManager.sendToServer(new DismountHamsterPayload());
+            } else { // DOUBLE_TAP
+                long currentTime = System.currentTimeMillis();
+                long delayMillis = config.doubleTapDelayTicks.get() * 50L;
+
+                if (isWaitingForSecondSneakPress && (currentTime - lastSneakPressTime) <= delayMillis) {
+                    // Second press was within the delay window, trigger dismount
+                    dev.architectury.networking.NetworkManager.sendToServer(new DismountHamsterPayload());
+                    isWaitingForSecondSneakPress = false; // Reset the double-tap state
+                } else {
+                    // This is the first press, start the timer
+                    isWaitingForSecondSneakPress = true;
+                    lastSneakPressTime = currentTime;
+                }
+            }
+        }
+
+        // --- 5. Handle timeout for the double-tap window ---
+        // This runs every tick to reset the state if the player doesn't press the key a second time.
+        if (isWaitingForSecondSneakPress) {
+            long currentTime = System.currentTimeMillis();
+            long delayMillis = config.doubleTapDelayTicks.get() * 50L;
+            if ((currentTime - lastSneakPressTime) > delayMillis) {
+                isWaitingForSecondSneakPress = false;
+            }
         }
     }
 }

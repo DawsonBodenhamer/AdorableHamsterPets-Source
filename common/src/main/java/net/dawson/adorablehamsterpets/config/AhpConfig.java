@@ -7,6 +7,9 @@ import me.fzzyhmstrs.fzzy_config.config.ConfigAction;
 import me.fzzyhmstrs.fzzy_config.config.ConfigGroup;
 import me.fzzyhmstrs.fzzy_config.screen.widget.TextureIds;
 import me.fzzyhmstrs.fzzy_config.util.Translatable;
+import me.fzzyhmstrs.fzzy_config.validation.ValidatedField;
+import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedCondition;
+import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedEnum;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedDouble;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedFloat;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedInt;
@@ -259,9 +262,9 @@ public class AhpConfig extends Config {
     @Translatable.Desc("Taming difficulty (1 in X chance). Higher = more cucumbers sacrificed to fuzzy freeloaders.")
     public ValidatedInt tamingChanceDenominator = new ValidatedInt(3, 20, 1);
 
-    // --- Shoulder Feature Settings ---
-    @Translatable.Name("Shoulder Feature Settings")
-    @Translatable.Desc("Change how the fuzzy parrot of doom whispers danger—and diamonds—into your ear.")
+    // --- Shoulder Hamster Settings ---
+    @Translatable.Name("Shoulder Hamster Settings")
+    @Translatable.Desc("Settings for your fuzzy parrot of doom.")
     public ConfigGroup shoulder = new ConfigGroup("shoulder", true);
 
     @Translatable.Name("Enable Creeper Detection")
@@ -276,10 +279,35 @@ public class AhpConfig extends Config {
     @Translatable.Desc("Because who doesn’t enjoy unsolicited financial advice from a rodent?")
     public boolean enableShoulderDiamondDetection = true;
 
-    @ConfigGroup.Pop
     @Translatable.Name("Diamond Detection Radius (Blocks)")
     @Translatable.Desc("How close you need to be before the squeak says \"bling.\"")
     public ValidatedDouble shoulderDiamondDetectionRadius = new ValidatedDouble(10.0, 20.0, 5.0);
+
+    @Translatable.Name("Dismount Button")
+    @Translatable.Desc("Choose what action dismounts the hamster. 'SNEAK_KEY' uses your sneak key, obviously. 'CUSTOM_KEYBIND' uses a separate key you must set in Controls > Key Binds.")
+    public DismountTriggerType dismountTriggerType = DismountTriggerType.SNEAK_KEY;
+
+    @Translatable.Name("Button‑Press Behavior")
+    @Translatable.Desc("Choose whether a single press or a quick double‑tap dismounts the hamster.")
+    public ValidatedEnum<DismountPressType> dismountPressType =
+            new ValidatedEnum<>(DismountPressType.SINGLE_PRESS);
+
+    private final ValidatedField<Boolean> isDoubleTap =
+            dismountPressType.map(
+                    pt -> pt == DismountPressType.DOUBLE_TAP,
+                    b -> b ? DismountPressType.DOUBLE_TAP : DismountPressType.SINGLE_PRESS
+            );
+
+    @ConfigGroup.Pop
+    @Translatable.Name("Double-Tap Delay (Ticks)")
+    @Translatable.Desc("Max time between sneak key presses to count as a double-tap. (20 ticks = 1 second)")
+    public ValidatedCondition<Integer> doubleTapDelayTicks =
+            new ValidatedInt(10, 40, 5)
+                    .toCondition(
+                            isDoubleTap,
+                            Text.literal("Only available when Button-Press Behavior is set to DOUBLE_TAP."),
+                            () -> 10
+                    );
 
     // --- Hamster Yeet Settings ---
     @Translatable.Name("Hamster Yeet Settings")
