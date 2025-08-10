@@ -41,7 +41,7 @@ public class HamsterCleaningSoundInstance extends AbstractSoundInstance implemen
     public void tick() {
         // The only job of this tick method is to check if the sound should stop.
         // It stops if the hamster is no longer cleaning OR if the entity is invalid.
-        if (!this.hamster.getDataTracker().get(HamsterEntity.IS_CLEANING) || !this.hamster.isAlive()) {
+        if (!this.hamster.isCleaning() || !this.hamster.isAlive()) {
             this.done = true;
             return;
         }

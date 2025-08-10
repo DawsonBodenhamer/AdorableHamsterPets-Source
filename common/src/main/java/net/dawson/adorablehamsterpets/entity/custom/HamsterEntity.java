@@ -4,6 +4,7 @@ import dev.architectury.networking.NetworkManager;
 import dev.architectury.registry.menu.MenuRegistry;
 import io.netty.buffer.Unpooled;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
+import net.dawson.adorablehamsterpets.AdorableHamsterPetsClient;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
 import net.dawson.adorablehamsterpets.component.HamsterShoulderData;
@@ -467,8 +468,11 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             hamster.getDataTracker().set(GREEN_BEAN_BUFF_DURATION, data.greenBeanBuffDuration());
             hamster.autoEatCooldownTicks = data.autoEatCooldownTicks();
             hamster.getDataTracker().set(PINK_PETAL_TYPE, data.pinkPetalType());
-            hamster.getDataTracker().set(CHEEK_POUCH_UNLOCKED, data.cheekPouchUnlocked());
             hamster.getDataTracker().set(ANIMATION_PERSONALITY_ID, data.animationPersonalityId());
+            hamster.getDataTracker().set(HAMSTER_FLAGS, data.hamsterFlags());
+
+            // Explicitly clear the sitting flag to ensure the hamster always dismounts standing.
+            hamster.setHamsterFlag(SITTING_FLAG, false);
 
             // --- 2. Load Custom Name ---
             data.customName().ifPresent(name -> {
@@ -501,11 +505,14 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             hamster.isPrimedToSeekDiamonds = seekingData.isPrimedToSeekDiamonds();
             hamster.foundOreCooldownEndTick = seekingData.foundOreCooldownEndTick();
             hamster.currentOreTarget = seekingData.currentOreTarget().orElse(null);
-            hamster.getDataTracker().set(IS_SULKING, seekingData.isSulking());
 
             // --- 6. Reset Transient States ---
             hamster.isAutoEating = false;
             hamster.autoEatProgressTicks = 0;
+
+            // Explicitly reset transient action flags to prevent stuck states.
+            hamster.setHamsterFlag(CLEANING_FLAG, false);
+            hamster.setDozingPhase(DozingPhase.NONE);
             // --- End 6. Reset Transient States ---
         }
         return hamster;
@@ -686,35 +693,37 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         return HAMSTER_FOODS.contains(stack.getItem());
     }
 
+    // --- Bitmask Flags for DataTracker ---
+    public static final int SLEEPING_FLAG = 1 << 0;
+    public static final int SITTING_FLAG = 1 << 1;
+    public static final int BEGGING_FLAG = 1 << 2;
+    public static final int IN_LOVE_FLAG = 1 << 3;
+    public static final int REFUSING_FOOD_FLAG = 1 << 4;
+    public static final int THROWN_FLAG = 1 << 5;
+    public static final int LEFT_CHEEK_FULL_FLAG = 1 << 6;
+    public static final int RIGHT_CHEEK_FULL_FLAG = 1 << 7;
+    public static final int KNOCKED_OUT_FLAG = 1 << 8;
+    public static final int CHEEK_POUCH_UNLOCKED_FLAG = 1 << 9;
+    public static final int CONSIDERING_AUTO_EAT_FLAG = 1 << 10;
+    public static final int SULKING_FLAG = 1 << 11;
+    public static final int CELEBRATING_DIAMOND_FLAG = 1 << 12;
+    public static final int CLEANING_FLAG = 1 << 13;
+    public static final int STEALING_DIAMOND_FLAG = 1 << 14;
+    public static final int TAUNTING_FLAG = 1 << 15;
+    public static final int CELEBRATING_CHASE_FLAG = 1 << 16;
+
     // --- Data Trackers ---
+    private static final TrackedData<Integer> HAMSTER_FLAGS = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private static final TrackedData<Integer> VARIANT = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public static final TrackedData<Integer> ANIMATION_PERSONALITY_ID = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    public static final TrackedData<Boolean> IS_SLEEPING = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    public static final TrackedData<Boolean> IS_SITTING = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    public static final TrackedData<Boolean> IS_BEGGING = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    public static final TrackedData<Boolean> IS_IN_LOVE = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    public static final TrackedData<Boolean> IS_REFUSING_FOOD = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    public static final TrackedData<Boolean> IS_THROWN = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    public static final TrackedData<Boolean> LEFT_CHEEK_FULL = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    public static final TrackedData<Boolean> RIGHT_CHEEK_FULL = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    public static final TrackedData<Boolean> IS_KNOCKED_OUT = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     public static final TrackedData<Integer> PINK_PETAL_TYPE = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    public static final TrackedData<Boolean> CHEEK_POUCH_UNLOCKED = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    public static final TrackedData<Boolean> IS_CONSIDERING_AUTO_EAT = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     public static final TrackedData<Integer> DOZING_PHASE = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public static final TrackedData<String> CURRENT_DEEP_SLEEP_ANIM_ID = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.STRING);
-    public static final TrackedData<Boolean> IS_SULKING = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    public static final TrackedData<Boolean> IS_CELEBRATING_DIAMOND = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-    public static final TrackedData<Boolean> IS_CLEANING = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<String> ACTIVE_CUSTOM_GOAL_NAME_DEBUG = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.STRING);
-    public static final TrackedData<Boolean> IS_STEALING_DIAMOND = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     public static final TrackedData<Integer> STEAL_DURATION_TIMER = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    public static final TrackedData<Boolean> IS_TAUNTING = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     public static final TrackedData<ItemStack> STOLEN_ITEM_STACK = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.ITEM_STACK);
-    public static final TrackedData<Boolean> IS_CELEBRATING_CHASE = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     public static final TrackedData<Long> GREEN_BEAN_BUFF_DURATION = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.LONG);
     public static final TrackedData<Integer> CURRENT_LOOK_UP_ANIM_ID = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.INTEGER);
-
 
     // --- Animation Constants ---
     private static final RawAnimation CRASH_ANIM = RawAnimation.begin().thenPlay("anim_hamster_crash");
@@ -838,40 +847,41 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     // --- Data Tracker Getters/Setters ---
     public int getVariant() { return this.dataTracker.get(VARIANT); }
     public void setVariant(int variantId) { this.dataTracker.set(VARIANT, variantId); }
-    public boolean isSleeping() { return this.dataTracker.get(IS_SLEEPING); }
-    public void setSleeping(boolean sleeping) { this.dataTracker.set(IS_SLEEPING, sleeping); }
+    public boolean isSleeping() { return getHamsterFlag(SLEEPING_FLAG); }
+    public void setSleeping(boolean sleeping) { setHamsterFlag(SLEEPING_FLAG, sleeping); }
     @Override
     public boolean isSitting() {
-        return this.dataTracker.get(IS_SITTING)
-                || this.dataTracker.get(IS_SLEEPING)
-                || this.dataTracker.get(IS_KNOCKED_OUT)
-                || this.dataTracker.get(IS_SULKING);
+        return getHamsterFlag(SITTING_FLAG)
+                || getHamsterFlag(SLEEPING_FLAG)
+                || getHamsterFlag(KNOCKED_OUT_FLAG)
+                || getHamsterFlag(SULKING_FLAG);
     }
-    public boolean isBegging() { return this.dataTracker.get(IS_BEGGING); }
-    public void setBegging(boolean value) { this.dataTracker.set(IS_BEGGING, value); }
-    public boolean isInLove() { return this.dataTracker.get(IS_IN_LOVE); }
-    public void setInLove(boolean value) { this.dataTracker.set(IS_IN_LOVE, value); }
-    public boolean isRefusingFood() { return this.dataTracker.get(IS_REFUSING_FOOD); }
-    public void setRefusingFood(boolean value) { this.dataTracker.set(IS_REFUSING_FOOD, value); }
-    public boolean isThrown() { return this.dataTracker.get(IS_THROWN); }
-    public void setThrown(boolean thrown) { this.dataTracker.set(IS_THROWN, thrown); }
-    public boolean isLeftCheekFull() { return this.dataTracker.get(LEFT_CHEEK_FULL); }
-    public void setLeftCheekFull(boolean full) { this.dataTracker.set(LEFT_CHEEK_FULL, full); }
-    public boolean isRightCheekFull() { return this.dataTracker.get(RIGHT_CHEEK_FULL); }
-    public void setRightCheekFull(boolean full) { this.dataTracker.set(RIGHT_CHEEK_FULL, full); }
-    public boolean isKnockedOut() { return this.dataTracker.get(IS_KNOCKED_OUT); }
-    public void setKnockedOut(boolean knocked_out) { this.dataTracker.set(IS_KNOCKED_OUT, knocked_out); }
+    public boolean isCleaning() {return getHamsterFlag(CLEANING_FLAG);}
+    public boolean isBegging() { return getHamsterFlag(BEGGING_FLAG); }
+    public void setBegging(boolean value) { setHamsterFlag(BEGGING_FLAG, value); }
+    public boolean isInLove() { return getHamsterFlag(IN_LOVE_FLAG); }
+    public void setInLove(boolean value) { setHamsterFlag(IN_LOVE_FLAG, value); }
+    public boolean isRefusingFood() { return getHamsterFlag(REFUSING_FOOD_FLAG); }
+    public void setRefusingFood(boolean value) { setHamsterFlag(REFUSING_FOOD_FLAG, value); }
+    public boolean isThrown() { return getHamsterFlag(THROWN_FLAG); }
+    public void setThrown(boolean thrown) { setHamsterFlag(THROWN_FLAG, thrown); }
+    public boolean isLeftCheekFull() { return getHamsterFlag(LEFT_CHEEK_FULL_FLAG); }
+    public void setLeftCheekFull(boolean full) { setHamsterFlag(LEFT_CHEEK_FULL_FLAG, full); }
+    public boolean isRightCheekFull() { return getHamsterFlag(RIGHT_CHEEK_FULL_FLAG); }
+    public void setRightCheekFull(boolean full) { setHamsterFlag(RIGHT_CHEEK_FULL_FLAG, full); }
+    public boolean isKnockedOut() { return getHamsterFlag(KNOCKED_OUT_FLAG); }
+    public void setKnockedOut(boolean knocked_out) { setHamsterFlag(KNOCKED_OUT_FLAG, knocked_out); }
     public String getCurrentDeepSleepAnimationIdFromTracker() {return this.dataTracker.get(CURRENT_DEEP_SLEEP_ANIM_ID);}
     public boolean isAutoEating() {return this.isAutoEating;}
-    public boolean isConsideringAutoEat() {return this.dataTracker.get(IS_CONSIDERING_AUTO_EAT);}
+    public boolean isConsideringAutoEat() {return getHamsterFlag(CONSIDERING_AUTO_EAT_FLAG);}
     public DozingPhase getDozingPhase() {return DozingPhase.values()[this.dataTracker.get(DOZING_PHASE)];}
     public void setDozingPhase(DozingPhase phase) {this.dataTracker.set(DOZING_PHASE, phase.ordinal());}
     public void setActiveCustomGoalDebugName(String name) {this.dataTracker.set(ACTIVE_CUSTOM_GOAL_NAME_DEBUG, name);}
     public String getActiveCustomGoalDebugName() {String goalName = this.dataTracker.get(ACTIVE_CUSTOM_GOAL_NAME_DEBUG);return goalName;}
-    public boolean isSulking() {return this.dataTracker.get(IS_SULKING);}
-    public boolean isCelebratingDiamond() {return this.dataTracker.get(IS_CELEBRATING_DIAMOND);}
+    public boolean isSulking() {return getHamsterFlag(SULKING_FLAG);}
+    public boolean isCelebratingDiamond() {return getHamsterFlag(CELEBRATING_DIAMOND_FLAG);}
     public void setCelebratingDiamond(boolean celebrating) {
-        this.dataTracker.set(IS_CELEBRATING_DIAMOND, celebrating);
+        setHamsterFlag(CELEBRATING_DIAMOND_FLAG, celebrating);
         if (celebrating) {
             this.setBegging(false); // Ensure not also in normal begging state
             if (!this.getWorld().isClient()) { // Only initialize timer on server
@@ -886,7 +896,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         }
     }
     public void setSulking(boolean sulking) {
-        this.dataTracker.set(IS_SULKING, sulking);
+        setHamsterFlag(SULKING_FLAG, sulking);
         if (sulking) {
             if (!this.getWorld().isClient()) {
                 this.sulkOrchestraHitDelayTicks = 10; // 10-tick delay for orchestra hit
@@ -901,16 +911,16 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             this.sulkEntityEffectTicks = 0;
         }
     }
-    public boolean isStealingDiamond() {return this.dataTracker.get(IS_STEALING_DIAMOND);}
-    public void setStealingDiamond(boolean stealing) {this.dataTracker.set(IS_STEALING_DIAMOND, stealing);}
+    public boolean isStealingDiamond() {return getHamsterFlag(STEALING_DIAMOND_FLAG);}
+    public void setStealingDiamond(boolean stealing) {setHamsterFlag(STEALING_DIAMOND_FLAG, stealing);}
     public int getStealDurationTimer() {return this.dataTracker.get(STEAL_DURATION_TIMER);}
     public void setStealDurationTimer(int ticks) {this.dataTracker.set(STEAL_DURATION_TIMER, ticks);}
-    public boolean isTaunting() {return this.dataTracker.get(IS_TAUNTING);}
-    public void setTaunting(boolean taunting) {this.dataTracker.set(IS_TAUNTING, taunting);}
+    public boolean isTaunting() {return getHamsterFlag(TAUNTING_FLAG);}
+    public void setTaunting(boolean taunting) {setHamsterFlag(TAUNTING_FLAG, taunting);}
     public ItemStack getStolenItemStack() { return this.dataTracker.get(STOLEN_ITEM_STACK); }
     public void setStolenItemStack(ItemStack stack) { this.dataTracker.set(STOLEN_ITEM_STACK, stack); }
-    public boolean isCelebratingChase() { return this.dataTracker.get(IS_CELEBRATING_CHASE); }
-    public void setCelebratingChase(boolean celebrating) { this.dataTracker.set(IS_CELEBRATING_CHASE, celebrating); }
+    public boolean isCelebratingChase() { return getHamsterFlag(CELEBRATING_CHASE_FLAG); }
+    public void setCelebratingChase(boolean celebrating) { setHamsterFlag(CELEBRATING_CHASE_FLAG, celebrating); }
     public boolean hasGreenBeanBuff() {return this.getDataTracker().get(GREEN_BEAN_BUFF_DURATION) > this.getWorld().getTime();}
     public boolean getZoomiesIsClockwise() { return this.zoomiesIsClockwise; }
     public double getLastZoomiesAngle() { return this.lastZoomiesAngle; }
@@ -1015,22 +1025,22 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     // --- NBT Saving/Loading ---
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
-        // --- 1. Write Core Data ---
+        // --- 1. Write Core Data & Flags ---
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("HamsterVariant", this.getVariant());
 
-        // Only save "Sitting" NBT if tamed
+        // For backward compatibility, write the flags out as individual booleans.
         if (this.isTamed()) {
-            nbt.putBoolean("Sitting", this.dataTracker.get(IS_SITTING));
+            nbt.putBoolean("Sitting", getHamsterFlag(SITTING_FLAG));
         }
+        nbt.putBoolean("KnockedOut", getHamsterFlag(KNOCKED_OUT_FLAG));
+        nbt.putBoolean("CheekPouchUnlocked", getHamsterFlag(CHEEK_POUCH_UNLOCKED_FLAG));
 
-        nbt.putBoolean("KnockedOut", this.isKnockedOut());
         nbt.putLong("ThrowCooldownEnd", this.throwCooldownEndTick);
         nbt.putLong("GreenBeanBuffDuration", this.getDataTracker().get(GREEN_BEAN_BUFF_DURATION));
         nbt.putInt("AutoEatCooldown", this.autoEatCooldownTicks);
         nbt.putInt("EjectionCheckCooldown", this.ejectionCheckCooldown);
         nbt.putInt("PinkPetalType", this.dataTracker.get(PINK_PETAL_TYPE));
-        nbt.putBoolean("CheekPouchUnlocked", this.dataTracker.get(CHEEK_POUCH_UNLOCKED));
         nbt.putInt("AnimationPersonalityId", this.dataTracker.get(ANIMATION_PERSONALITY_ID));
 
         // --- 2. Write Sleep State Data ---
@@ -1053,8 +1063,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             nbt.putInt("OreTargetY", this.currentOreTarget.getY());
             nbt.putInt("OreTargetZ", this.currentOreTarget.getZ());
         }
-        nbt.putBoolean("IsSulking", this.dataTracker.get(IS_SULKING));
-        nbt.putBoolean("IsCelebratingDiamond", this.dataTracker.get(IS_CELEBRATING_DIAMOND));
+        nbt.putBoolean("IsSulking", getHamsterFlag(SULKING_FLAG));
+        nbt.putBoolean("IsCelebratingDiamond", getHamsterFlag(CELEBRATING_DIAMOND_FLAG));
 
         // --- 5. Write Diamond Stealing Data ---
         if (this.isStealingDiamond()) {
@@ -1071,23 +1081,21 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     public void readCustomDataFromNbt(NbtCompound nbt) {
         // --- 1. Read Core Data ---
         super.readCustomDataFromNbt(nbt);
-        AdorableHamsterPets.LOGGER.debug("[NBT Read {}] Start reading NBT data.", this.getId());
         this.setVariant(nbt.getInt("HamsterVariant"));
 
-        // Default wild hamsters to not sitting
-        if (this.isTamed()) {
-            boolean wasSittingNbt = nbt.getBoolean("Sitting");
-            this.setSitting(wasSittingNbt, true);
-        } else {
-            this.setSitting(false, true);
-        }
-        this.setKnockedOut(nbt.getBoolean("KnockedOut"));
+        // --- Read individual booleans and set flags for backward compatibility ---
+        boolean wasSittingNbt = this.isTamed() && nbt.getBoolean("Sitting");
+        this.setSitting(wasSittingNbt, true); // This will correctly set the SITTING_FLAG
+        setHamsterFlag(KNOCKED_OUT_FLAG, nbt.getBoolean("KnockedOut"));
+        setHamsterFlag(CHEEK_POUCH_UNLOCKED_FLAG, nbt.getBoolean("CheekPouchUnlocked"));
+        setHamsterFlag(SULKING_FLAG, nbt.getBoolean("IsSulking"));
+        setHamsterFlag(CELEBRATING_DIAMOND_FLAG, nbt.getBoolean("IsCelebratingDiamond"));
+
         this.throwCooldownEndTick = nbt.getLong("ThrowCooldownEnd");
         this.getDataTracker().set(GREEN_BEAN_BUFF_DURATION, nbt.getLong("GreenBeanBuffDuration"));
         this.autoEatCooldownTicks = nbt.getInt("AutoEatCooldown");
         this.ejectionCheckCooldown = nbt.contains("EjectionCheckCooldown", NbtElement.INT_TYPE) ? nbt.getInt("EjectionCheckCooldown") : 20;
         this.dataTracker.set(PINK_PETAL_TYPE, nbt.getInt("PinkPetalType"));
-        this.dataTracker.set(CHEEK_POUCH_UNLOCKED, nbt.getBoolean("CheekPouchUnlocked"));
         this.dataTracker.set(ANIMATION_PERSONALITY_ID, nbt.getInt("AnimationPersonalityId"));
 
         // --- 2. Read Sleep State Data ---
@@ -1096,10 +1104,10 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             if (phaseOrdinal >= 0 && phaseOrdinal < DozingPhase.values().length) {
                 this.setDozingPhase(DozingPhase.values()[phaseOrdinal]);
             } else {
-                this.setDozingPhase(DozingPhase.NONE); // Fallback for invalid ordinal
+                this.setDozingPhase(DozingPhase.NONE);
             }
         } else {
-            this.setDozingPhase(DozingPhase.NONE); // Default if tag is missing
+            this.setDozingPhase(DozingPhase.NONE);
         }
         this.dataTracker.set(CURRENT_DEEP_SLEEP_ANIM_ID, nbt.getString("CurrentDeepSleepAnimId"));
         this.quiescentSitDurationTimer = nbt.getInt("QuiescentSitTimer");
@@ -1113,7 +1121,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         }
         this.updateCheekTrackers();
 
-        // --- 4. Read Seeking and Sulking Data ---
+        // --- 4. Read Seeking Data ---
         this.isPrimedToSeekDiamonds = nbt.getBoolean("IsPrimedToSeekDiamonds");
         this.foundOreCooldownEndTick = nbt.getLong("FoundOreCooldownEndTick");
         if (nbt.contains("OreTargetX") && nbt.contains("OreTargetY") && nbt.contains("OreTargetZ")) {
@@ -1121,8 +1129,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         } else {
             this.currentOreTarget = null;
         }
-        this.dataTracker.set(IS_SULKING, nbt.getBoolean("IsSulking"));
-        this.dataTracker.set(IS_CELEBRATING_DIAMOND, nbt.getBoolean("IsCelebratingDiamond"));
 
         // --- 5. Read Diamond Stealing Data ---
         this.setStealingDiamond(nbt.getBoolean("IsStealingDiamond"));
@@ -1133,7 +1139,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 this.setStolenItemStack(ItemStack.fromNbt(nbt.getCompound("StolenItemStack")));
             }
         } else {
-            // Ensure state is clean if the flag isn't set
             this.setStealDurationTimer(0);
             this.setStolenItemStack(ItemStack.EMPTY);
         }
@@ -1170,8 +1175,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         HamsterShoulderData.SeekingBehaviorData seekingData = new HamsterShoulderData.SeekingBehaviorData(
                 this.isPrimedToSeekDiamonds,
                 this.foundOreCooldownEndTick,
-                Optional.ofNullable(this.currentOreTarget),
-                this.getDataTracker().get(IS_SULKING)
+                Optional.ofNullable(this.currentOreTarget)
         );
 
         // --- 5. Create and Return the Main Data Record ---
@@ -1179,8 +1183,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 this.getVariant(),
                 this.getHealth(),
                 inventoryNbt,
-                this.isLeftCheekFull(),
-                this.isRightCheekFull(),
                 this.getBreedingAge(),
                 this.throwCooldownEndTick,
                 this.greenBeanBuffEndTick,
@@ -1188,10 +1190,10 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 effectsList, // Pass the NbtList directly
                 this.autoEatCooldownTicks,
                 nameOptional,
-                this.getDataTracker().get(PINK_PETAL_TYPE),
-                this.getDataTracker().get(CHEEK_POUCH_UNLOCKED),
-                this.getDataTracker().get(ANIMATION_PERSONALITY_ID),
-                seekingData
+                this.dataTracker.get(PINK_PETAL_TYPE),
+                this.dataTracker.get(ANIMATION_PERSONALITY_ID),
+                seekingData,
+                this.dataTracker.get(HAMSTER_FLAGS) // Pass the entire packed integer
         );
     }
 
@@ -1286,10 +1288,12 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         }
 
         // --- 2. Update Core Sitting State ---
-        this.dataTracker.set(IS_SITTING, sitting);
-        this.setInSittingPose(sitting); // Vanilla flag, also calls the IS_SITTING override in setInSittingPose
+        setHamsterFlag(SITTING_FLAG, sitting);
 
-        // --- 3. Manage Cleaning Timers and Quiescent Sit Timer on State Change ---
+        // --- 3. Update Vanilla State ---
+        this.setInSittingPose(sitting);
+
+        // --- 4. Manage Cleaning Timers and Quiescent Sit Timer on State Change ---
         if (sitting) {
             // When commanded to sit, ensure the cleaning timer is reset.
             this.cleaningTimer = 0;
@@ -1300,8 +1304,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             // Also ensure cleaning stops if it was active.
             this.cleaningTimer = 0;
             // Explicitly set the cleaning state to false.
-            if (this.dataTracker.get(IS_CLEANING)) {
-                this.dataTracker.set(IS_CLEANING, false);
+            if (getHamsterFlag(CLEANING_FLAG)) {
+                setHamsterFlag(CLEANING_FLAG, false);
             }
         }
     }
@@ -1588,6 +1592,9 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     // Check if shoulder is empty by checking the NBT compound from our DataTracker
                     if (playerAccessor.getHamsterShoulderEntity().isEmpty()) {
 
+                        // --- LOGGING ---
+                        AdorableHamsterPets.LOGGER.info("[AHP DEBUG] MOUNTING: Entered cheese-mount logic for Hamster ID {}.", this.getId());
+
                         // --- Reset Sleep Sequence if Dozing ---
                         if (this.getDozingPhase() != DozingPhase.NONE) {
                             resetSleepSequence("Player mounted hamster with cheese.");
@@ -1600,6 +1607,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         playerAccessor.setHamsterShoulderEntity(hamsterNbt);
 
                         BlockPos hamsterPosForCheeseSound = this.getBlockPos();
+                        // --- LOGGING ---
+                        AdorableHamsterPets.LOGGER.info("[AHP DEBUG] MOUNTING: Discarding Hamster ID {}.", this.getId());
                         this.discard(); // Remove hamster from world
 
                         if (player instanceof ServerPlayerEntity serverPlayer) {
@@ -1625,7 +1634,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         player.sendMessage(Text.translatable("message.adorablehamsterpets.shoulder_occupied"), true);
                     }
                 }
-                return ActionResult.success(world.isClient());
+                return ActionResult.CONSUME;
             }
             // --- End Shoulder Mounting with Cheese ---
 
@@ -1633,7 +1642,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             // Inventory Access (Server-Side)
             if (!world.isClient() && isSneaking) {
                 // Check if pouch is unlocked OR if config disables the lock
-                if (this.dataTracker.get(CHEEK_POUCH_UNLOCKED) || !AdorableHamsterPets.CONFIG.requireFoodMixToUnlockCheeks) {
+                if (getHamsterFlag(CHEEK_POUCH_UNLOCKED_FLAG) || !AdorableHamsterPets.CONFIG.requireFoodMixToUnlockCheeks) {
 
                     // --- Reset Sleep Sequence if Dozing ---
                     if (this.getDozingPhase() != DozingPhase.NONE) {
@@ -1704,7 +1713,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             // not feeding successfully, and vanilla didn't handle it.
             if (!world.isClient() && !isSneaking) {
                 AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Fallback: Toggling sitting state.", this.getId(), world.getTime());
-                this.setSitting(!this.dataTracker.get(IS_SITTING)); // Toggle sitting state
+                this.setSitting(!this.isSitting()); // Toggle sitting state
                 this.jumping = false;
                 this.navigation.stop();
                 this.setTarget(null);
@@ -1782,9 +1791,9 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         super.setInSittingPose(inSittingPose);
 
 
-        // --- 2. Synchronize Custom DataTracker ---
-        if (this.dataTracker.get(IS_SITTING) != inSittingPose) {
-            this.dataTracker.set(IS_SITTING, inSittingPose);
+        // --- 2. Synchronize Custom Flag ---
+        if (this.getHamsterFlag(SITTING_FLAG) != inSittingPose) {
+            setHamsterFlag(SITTING_FLAG, inSittingPose);
         }
 
         // --- 3. Additional State Reset if Standing Up ---
@@ -1920,7 +1929,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             this.cleaningTimer--;
             if (this.cleaningTimer == 0) {
                 if (!this.getWorld().isClient) {
-                    this.dataTracker.set(IS_CLEANING, false);
+                    setHamsterFlag(CLEANING_FLAG, false);
                 }
                 this.cleaningCooldownTimer = 200;
             }
@@ -1940,18 +1949,18 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         if (this.sulkShockedSoundDelayTicks > 0) this.sulkShockedSoundDelayTicks--;
         if (this.diamondSparkleSoundDelayTicks > 0) this.diamondSparkleSoundDelayTicks--;
         // --- Logic for Handling Cleaning State ---
-        if (this.isKnockedOut() && this.dataTracker.get(IS_CLEANING)) {
-            this.dataTracker.set(IS_CLEANING, false);
+        if (this.isKnockedOut() && getHamsterFlag(CLEANING_FLAG)) {
+            setHamsterFlag(CLEANING_FLAG, false);
             this.cleaningTimer = 0;
         }
         DozingPhase currentPhase = this.getDozingPhase();
-        if (!this.getWorld().isClient() && this.isTamed() && this.dataTracker.get(IS_SITTING) && !this.dataTracker.get(IS_CLEANING) && this.cleaningCooldownTimer <= 0) {
+        if (!this.getWorld().isClient() && this.isTamed() && this.isSitting() && !getHamsterFlag(CLEANING_FLAG) && this.cleaningCooldownTimer <= 0) {
             // Allow cleaning if the hamster is just sitting, but not if it's actively sleeping.
             if (currentPhase == DozingPhase.NONE || currentPhase == DozingPhase.QUIESCENT_SITTING) {
                 int chanceDenominator = Configs.AHP.cleaningChanceDenominator.get();
                 if (chanceDenominator > 0 && this.random.nextInt(chanceDenominator) == 0) {
                     this.cleaningTimer = this.random.nextBetween(30, 60);
-                    this.dataTracker.set(IS_CLEANING, true);
+                    setHamsterFlag(CLEANING_FLAG, true);
                 }
             }
         }
@@ -2113,7 +2122,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             switch (currentPhase) {
                 case NONE:
                     // If commanded to sit and conditions are right, start Phase 1
-                    if (this.dataTracker.get(IS_SITTING) && canInitiateDrowsiness) {
+                    if (this.isSitting() && canInitiateDrowsiness) {
                         // Check if quiescentSitDurationTimer is 0, meaning we can start a new cycle
                         if (this.quiescentSitDurationTimer == 0) {
                             this.setDozingPhase(DozingPhase.QUIESCENT_SITTING);
@@ -2140,7 +2149,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     break;
 
                 case QUIESCENT_SITTING:
-                    if (!this.dataTracker.get(IS_SITTING) || !canInitiateDrowsiness) {
+                    if (!this.isSitting() || !canInitiateDrowsiness) {
                         // Interrupted (stood up, conditions changed, etc.)
                         resetSleepSequence("Quiescent sitting interrupted: no longer sitting or conditions unfavorable.");
                         break;
@@ -2262,7 +2271,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
             // --- Stage 1: Check Eligibility and Start "Considering" ---
             if (this.isTamed() && this.getHealth() < this.getMaxHealth() &&
-                    !this.isAutoEating() && !this.dataTracker.get(IS_CONSIDERING_AUTO_EAT) && // Not already eating or considering
+                    !this.isAutoEating() && !this.isConsideringAutoEat() && // Not already eating or considering
                     this.autoEatCooldownTicks == 0 &&
                     !this.isThrown() && !this.isKnockedOut())
             {
@@ -2271,7 +2280,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     ItemStack stack = this.items.get(i);
                     if (!stack.isEmpty() && AUTO_HEAL_FOODS.contains(stack.getItem())) {
                         // Found food, start "considering" phase
-                        this.dataTracker.set(IS_CONSIDERING_AUTO_EAT, true);
+                        setHamsterFlag(CONSIDERING_AUTO_EAT_FLAG, true);
                         this.preAutoEatDelayTicks = 40; // 2-second delay
                         AdorableHamsterPets.LOGGER.trace("[HamsterTick {}] Eligible to auto-eat. Starting 2s pre-eat delay.", this.getId());
                         break; // Stop searching for food once consideration starts
@@ -2281,8 +2290,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             // --- End Stage 1 ---
 
             // --- Stage 2: Process "Considering" Delay & Start Actual Eating ---
-            if (this.dataTracker.get(IS_CONSIDERING_AUTO_EAT) && this.preAutoEatDelayTicks == 0) {
-                this.dataTracker.set(IS_CONSIDERING_AUTO_EAT, false); // No longer just considering
+            if (this.isConsideringAutoEat() && this.preAutoEatDelayTicks == 0) {
+                setHamsterFlag(CONSIDERING_AUTO_EAT_FLAG, false); // No longer just considering
 
                 // Re-check for food in case it was removed during the delay
                 boolean foodStillAvailable = false;
@@ -2631,7 +2640,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                                         default -> SITTING_POSE1_ANIM; // Fallback
                                     };
                                     return event.setAndContinue(targetDeepSleepAnim);
-                                } else if (this.dataTracker.get(IS_SITTING)) {
+                                } else if (this.isSitting()) {
                                     // If interrupted, return to the correct personality-based sitting pose
                                     return event.setAndContinue(switch (personality) {
                                         case 2 -> SITTING_POSE2_ANIM;
@@ -2672,8 +2681,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     }
 
                     // --- Player-Commanded Sitting / Tamed Quiescent Sitting ---
-                    if (this.dataTracker.get(IS_SITTING) && !this.isKnockedOut()) {
-                        if (this.dataTracker.get(IS_CLEANING)) {
+                    if (this.isSitting() && !this.isKnockedOut()) {
+                        if (getHamsterFlag(CLEANING_FLAG)) {
                             return event.setAndContinue(CLEANING_ANIM);
                         } else {
                             // The logic to start cleaning lives in the tick() method.
@@ -2771,31 +2780,15 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
+        this.dataTracker.startTracking(HAMSTER_FLAGS, 0);
         this.dataTracker.startTracking(VARIANT, 0);
-        this.dataTracker.startTracking(ANIMATION_PERSONALITY_ID, 1);
-        this.dataTracker.startTracking(IS_SLEEPING, false);
-        this.dataTracker.startTracking(IS_SITTING, false);
-        this.dataTracker.startTracking(IS_BEGGING, false);
-        this.dataTracker.startTracking(IS_IN_LOVE, false);
-        this.dataTracker.startTracking(IS_REFUSING_FOOD, false);
-        this.dataTracker.startTracking(IS_THROWN, false);
-        this.dataTracker.startTracking(LEFT_CHEEK_FULL, false);
-        this.dataTracker.startTracking(RIGHT_CHEEK_FULL, false);
-        this.dataTracker.startTracking(IS_KNOCKED_OUT, false);
         this.dataTracker.startTracking(PINK_PETAL_TYPE, 0);
-        this.dataTracker.startTracking(CHEEK_POUCH_UNLOCKED, false);
-        this.dataTracker.startTracking(IS_CONSIDERING_AUTO_EAT, false);
         this.dataTracker.startTracking(DOZING_PHASE, DozingPhase.NONE.ordinal());
         this.dataTracker.startTracking(CURRENT_DEEP_SLEEP_ANIM_ID, "");
-        this.dataTracker.startTracking(IS_SULKING, false);
-        this.dataTracker.startTracking(IS_CELEBRATING_DIAMOND, false);
-        this.dataTracker.startTracking(IS_CLEANING, false);
         this.dataTracker.startTracking(ACTIVE_CUSTOM_GOAL_NAME_DEBUG, "None");
-        this.dataTracker.startTracking(IS_STEALING_DIAMOND, false);
+        this.dataTracker.startTracking(ANIMATION_PERSONALITY_ID, 1);
         this.dataTracker.startTracking(STEAL_DURATION_TIMER, 0);
-        this.dataTracker.startTracking(IS_TAUNTING, false);
         this.dataTracker.startTracking(STOLEN_ITEM_STACK, ItemStack.EMPTY);
-        this.dataTracker.startTracking(IS_CELEBRATING_CHASE, false);
         this.dataTracker.startTracking(GREEN_BEAN_BUFF_DURATION, 0L);
         this.dataTracker.startTracking(CURRENT_LOOK_UP_ANIM_ID, 1);
     }
@@ -3012,6 +3005,29 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     /* ──────────────────────────────────────────────────────────────────────────────
      *                       6. Private Helper Methods
      * ────────────────────────────────────────────────────────────────────────────*/
+
+    /**
+     * Gets the value of a specific boolean flag from the packed integer.
+     * @param flag The bitmask of the flag to check (e.g., SLEEPING_FLAG).
+     * @return True if the bit for the flag is set, false otherwise.
+     */
+    private boolean getHamsterFlag(int flag) {
+        return (this.dataTracker.get(HAMSTER_FLAGS) & flag) != 0;
+    }
+
+    /**
+     * Sets or clears a specific boolean flag in the packed integer.
+     * @param flag The bitmask of the flag to modify (e.g., SLEEPING_FLAG).
+     * @param value True to set the bit, false to clear it.
+     */
+    private void setHamsterFlag(int flag, boolean value) {
+        int currentFlags = this.dataTracker.get(HAMSTER_FLAGS);
+        if (value) {
+            this.dataTracker.set(HAMSTER_FLAGS, currentFlags | flag);
+        } else {
+            this.dataTracker.set(HAMSTER_FLAGS, currentFlags & ~flag);
+        }
+    }
 
     /**
      * Checks if a given block position is a safe location for a hamster to spawn.
@@ -3240,8 +3256,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
             // --- Unlock Cheek Pouch if Hamster Food Mix was fed AND a healing/breeding action occurred ---
             if (wasHealedOrBredThisTime && stack.isOf(ModItems.HAMSTER_FOOD_MIX.get())) {
-                if (!this.dataTracker.get(CHEEK_POUCH_UNLOCKED)) {
-                    this.dataTracker.set(CHEEK_POUCH_UNLOCKED, true);
+                if (!getHamsterFlag(CHEEK_POUCH_UNLOCKED_FLAG)) {
+                    setHamsterFlag(CHEEK_POUCH_UNLOCKED_FLAG, true);
                     AdorableHamsterPets.LOGGER.debug("Hamster {} cheek pouch unlocked by food mix.", this.getId());
                     if (player instanceof ServerPlayerEntity serverPlayer) {
                         ModCriteria.CHEEK_POUCH_UNLOCKED.trigger(serverPlayer, this);
@@ -3274,7 +3290,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
      */
     @Unique
     private boolean checkConditionsForInitiatingDrowsiness() {
-        if (!this.dataTracker.get(IS_SITTING)) return false; // Must be player-commanded to sit
+        if (!this.isSitting()) return false; // Must be player-commanded to sit
 
         World world = this.getWorld();
         if (Configs.AHP.requireDaytimeForTamedSleep && !world.isDay()) {
@@ -3303,7 +3319,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private boolean checkConditionsForSustainingSlumber() {
         // Includes all checks from initiating, plus ensures it's still in a sitting pose.
         // The IS_SITTING datatracker is the primary driver for player-commanded sitting.
-        return this.dataTracker.get(IS_SITTING) && checkConditionsForInitiatingDrowsiness();
+        return this.isSitting() && checkConditionsForInitiatingDrowsiness();
     }
 
     /**

@@ -4,6 +4,7 @@ import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.component.HamsterShoulderData;
 import net.dawson.adorablehamsterpets.entity.client.ModModelLayers;
 import net.dawson.adorablehamsterpets.entity.client.model.HamsterShoulderModel;
+import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterVariant;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.minecraft.client.model.ModelPart;
@@ -165,8 +166,8 @@ public class HamsterShoulderFeatureRenderer
             return;
         }
 
-        boolean leftCheekFull = data.leftCheekFull();
-        boolean rightCheekFull = data.rightCheekFull();
+        boolean leftCheekFull = ((data.hamsterFlags() & HamsterEntity.LEFT_CHEEK_FULL_FLAG) != 0);
+        boolean rightCheekFull = ((data.hamsterFlags() & HamsterEntity.RIGHT_CHEEK_FULL_FLAG) != 0);
 
         this.hamsterShoulderModel.left_cheek_deflated.visible = !leftCheekFull;
         this.hamsterShoulderModel.left_cheek_inflated.visible = leftCheekFull;

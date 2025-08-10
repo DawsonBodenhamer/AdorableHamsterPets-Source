@@ -16,38 +16,35 @@ public record HamsterShoulderData(
         int variantId,
         float health,
         NbtCompound inventoryNbt,
-        boolean leftCheekFull,
-        boolean rightCheekFull,
         int breedingAge,
         long throwCooldownEndTick,
         long greenBeanBuffEndTick,
         long greenBeanBuffDuration,
-        NbtList activeEffectsNbt, // Changed from NbtCompound to NbtList
+        NbtList activeEffectsNbt, // Changed from NbtCompound to NbtList in 1.20.1
         int autoEatCooldownTicks,
         Optional<String> customName,
         int pinkPetalType,
-        boolean cheekPouchUnlocked,
         int animationPersonalityId,
-        SeekingBehaviorData seekingBehaviorData
+        SeekingBehaviorData seekingBehaviorData,
+        int hamsterFlags // Replaces all boolean flags
 ) {
 
+    // --- Inner Record for Seeking/Sulking Data ---
     public record SeekingBehaviorData(
             boolean isPrimedToSeekDiamonds,
             long foundOreCooldownEndTick,
-            Optional<BlockPos> currentOreTarget,
-            boolean isSulking
+            Optional<BlockPos> currentOreTarget
     ) {
         public static final Codec<SeekingBehaviorData> CODEC = RecordCodecBuilder.create(instance ->
                 instance.group(
                         Codec.BOOL.fieldOf("isPrimedToSeekDiamonds").orElse(false).forGetter(SeekingBehaviorData::isPrimedToSeekDiamonds),
                         Codec.LONG.fieldOf("foundOreCooldownEndTick").orElse(0L).forGetter(SeekingBehaviorData::foundOreCooldownEndTick),
-                        BlockPos.CODEC.optionalFieldOf("currentOreTarget").forGetter(SeekingBehaviorData::currentOreTarget),
-                        Codec.BOOL.fieldOf("isSulking").orElse(false).forGetter(SeekingBehaviorData::isSulking)
+                        BlockPos.CODEC.optionalFieldOf("currentOreTarget").forGetter(SeekingBehaviorData::currentOreTarget)
                 ).apply(instance, SeekingBehaviorData::new)
         );
 
         public static SeekingBehaviorData empty() {
-            return new SeekingBehaviorData(false, 0L, Optional.empty(), false);
+            return new SeekingBehaviorData(false, 0L, Optional.empty());
         }
     }
 
@@ -78,20 +75,17 @@ public record HamsterShoulderData(
                     Codec.INT.fieldOf("variantId").forGetter(HamsterShoulderData::variantId),
                     Codec.FLOAT.fieldOf("health").forGetter(HamsterShoulderData::health),
                     NBT_COMPOUND_CODEC.fieldOf("inventoryNbt").forGetter(HamsterShoulderData::inventoryNbt),
-                    Codec.BOOL.fieldOf("leftCheekFull").forGetter(HamsterShoulderData::leftCheekFull),
-                    Codec.BOOL.fieldOf("rightCheekFull").forGetter(HamsterShoulderData::rightCheekFull),
                     Codec.INT.fieldOf("breedingAge").forGetter(HamsterShoulderData::breedingAge),
                     Codec.LONG.fieldOf("throwCooldownEndTick").forGetter(HamsterShoulderData::throwCooldownEndTick),
                     Codec.LONG.fieldOf("greenBeanBuffEndTick").forGetter(HamsterShoulderData::greenBeanBuffEndTick),
                     Codec.LONG.fieldOf("greenBeanBuffDuration").orElse(0L).forGetter(HamsterShoulderData::greenBeanBuffDuration),
-                    NBT_LIST_CODEC.fieldOf("activeEffectsNbt").forGetter(HamsterShoulderData::activeEffectsNbt), // Now expects a list
+                    NBT_LIST_CODEC.fieldOf("activeEffectsNbt").forGetter(HamsterShoulderData::activeEffectsNbt), // Now expects a list in 1.20.1
                     Codec.INT.fieldOf("autoEatCooldownTicks").forGetter(HamsterShoulderData::autoEatCooldownTicks),
                     Codec.STRING.optionalFieldOf("customName").forGetter(HamsterShoulderData::customName),
                     Codec.INT.fieldOf("pinkPetalType").orElse(0).forGetter(HamsterShoulderData::pinkPetalType),
-                    Codec.BOOL.fieldOf("cheekPouchUnlocked").orElse(false).forGetter(HamsterShoulderData::cheekPouchUnlocked),
                     Codec.INT.fieldOf("animationPersonalityId").orElse(1).forGetter(HamsterShoulderData::animationPersonalityId),
-                    SeekingBehaviorData.CODEC.fieldOf("seekingBehaviorData").orElse(SeekingBehaviorData.empty()).forGetter(HamsterShoulderData::seekingBehaviorData)
-            ).apply(instance, HamsterShoulderData::new)
+                    SeekingBehaviorData.CODEC.fieldOf("seekingBehaviorData").orElse(SeekingBehaviorData.empty()).forGetter(HamsterShoulderData::seekingBehaviorData),
+                    Codec.INT.fieldOf("hamsterFlags").orElse(0).forGetter(HamsterShoulderData::hamsterFlags)).apply(instance, HamsterShoulderData::new)
     );
 
     /**
