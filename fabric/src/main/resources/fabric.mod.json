@@ -52,6 +52,9 @@
     ],
     "architectury": {
       "common": "net.dawson.adorablehamsterpets.AdorableHamsterPets"
+    },
+    "mc-publish": {
+      "loaders": ["fabric", "quilt"]
     }
   }
 }
