@@ -220,7 +220,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Override
     public void adorablehamsterpets$dismountShoulderHamster() {
         // --- LOGGING ---
-        AdorableHamsterPets.LOGGER.info("[AHP DEBUG] DISMOUNT: adorablehamsterpets$dismountShoulderHamster() was called via payload.");
+        AdorableHamsterPets.LOGGER.debug("[AHP DEBUG] DISMOUNT: adorablehamsterpets$dismountShoulderHamster() was called via payload.");
 
         PlayerEntity self = (PlayerEntity) (Object) this;
         World world = self.getWorld();
