@@ -1361,7 +1361,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         return true;
         // --- End 6. Default: Allow Attack ---
     }
-// --- End Target Exclusion Override ---
 
     // --- Interaction Logic ---
     @Override
@@ -1371,90 +1370,13 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         World world = this.getWorld();
         AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Interaction start. Player: {}, Hand: {}, Item: {}", this.getId(), world.getTime(), player.getName().getString(), hand, stack.getItem());
 
-        // --- Handle Diamond Stealing Interaction ---
-        if (this.isStealingDiamond() && this.isOwner(player)) {
-            AdorableHamsterPets.LOGGER.debug("[InteractMob-{}] Passed 'isStealingDiamond' check.", this.getId());
-            if (!world.isClient) {
-                ItemStack retrievedStack = this.getStolenItemStack().copy();
-                player.getInventory().offerOrDrop(this.getStolenItemStack().copy());
-                this.setStolenItemStack(ItemStack.EMPTY);
-                this.setStealDurationTimer(0);
-                this.setStealingDiamond(false);
-                // Set the state flag and initialize the timer so the tick() method can handle the rotation.
-                this.setCelebratingChase(true);
-                this.celebrationChaseTicks = 30; // 1.5 second duration
-                this.triggerAnimOnServer("mainController", "anim_hamster_celebrate_chase");
-                // Play a happy/affectionate and diamond "tink" sound
-                world.playSound(null, this.getBlockPos(), ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_AFFECTION_SOUNDS, this.random), SoundCategory.NEUTRAL, 1.0f, this.getSoundPitch());
-                // Get and play the dynamic sound
-                if (!retrievedStack.isEmpty()) {
-                    SoundEvent pounceSound = ModSounds.getDynamicPounceSound(retrievedStack);
-                    float volume = (pounceSound == SoundEvents.ENTITY_GENERIC_EAT) ? 0.35f : 1.0f;
-                    world.playSound(null, this.getBlockPos(), pounceSound, SoundCategory.NEUTRAL, volume, 1.7f);
-                }
-                AdorableHamsterPets.LOGGER.debug("[InteractMob-{}] Diamond returned to player and goal stopped.", this.getId());
-            }
-            return ActionResult.success(world.isClient());
-        }
-        // --- END Handle Diamond Stealing Interaction ---
-
-        // --- Check Knocked Out, Diamond Celebration, or Sulking ---
-        // --- Check for Knocked Out ---
-        if (this.isKnockedOut()) {
-            AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Hamster is knocked out. Waking up.", this.getId(), world.getTime());
-            if (!world.isClient()) {
-                SoundEvent wakeUpSound = getRandomSoundFrom(ModSounds.HAMSTER_WAKE_UP_SOUNDS, this.random);
-                if (wakeUpSound != null) {
-                    world.playSound(null, this.getBlockPos(), wakeUpSound, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-                }
-                this.setKnockedOut(false); // Turn off knocked out
-                this.setSitting(false, true); // Make sure sitting doesn't get turned on
-                this.triggerAnimOnServer("mainController", "wakeup");
-            }
-            return ActionResult.success(world.isClient());
-        }
-
-        // --- Check for Diamond Celebration ---
-        if (this.isCelebratingDiamond()) {
-            if (!world.isClient()) {
-                this.setCelebratingDiamond(false); // Turn off celebration
-                this.setSitting(false, true); // Make sure sitting doesn't get turned on
-                SoundEvent affectionSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_AFFECTION_SOUNDS, this.random);
-                if (affectionSound != null) {
-                    world.playSound(null, this.getBlockPos(), affectionSound, SoundCategory.NEUTRAL, 1.0f, this.getSoundPitch());
-                } else { // Fallback
-                    world.playSound(null, this.getBlockPos(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.NEUTRAL, 0.5f, 1.5f);
-                }
-            }
-            return ActionResult.success(world.isClient()); // Consume the interaction
-        }
-
-        // --- Check for Sulking ---
-        if (this.isSulking()) {
-            if (!world.isClient()) {
-                this.setSulking(false); // Turn off sulking
-                this.setSitting(false, true); // Ensure sitting is also cleared
-                SoundEvent affectionSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_AFFECTION_SOUNDS, this.random);
-                if (affectionSound != null) {
-                    world.playSound(null, this.getBlockPos(), affectionSound, SoundCategory.NEUTRAL, 1.0f, this.getSoundPitch());
-                } else { // Fallback
-                    world.playSound(null, this.getBlockPos(), SoundEvents.ENTITY_CHICKEN_STEP, SoundCategory.NEUTRAL, 0.5f, 1.5f);
-                }
-            }
-            return ActionResult.success(world.isClient()); // Consume interaction
-        }
-        // --- End 2. Check Knocked Out, Diamond Celebration, or Sulking ---
-
-
         // --- 3. Interaction Cooldown Check ---
         if (this.interactionCooldown > 0) {
             AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Interaction cooldown active ({} ticks left). Passing.", this.getId(), world.getTime(), this.interactionCooldown);
             return ActionResult.PASS;
         }
-        // --- End 3. Interaction Cooldown Check ---
 
-
-        // --- 3a. Toggle Jade Debug with Guide Book ---
+        // --- 4. Toggle Jade Debug with Guide Book ---
         if (player.isSneaking() && stack.isOf(ModItems.HAMSTER_GUIDE_BOOK.get())) {
             if (!world.isClient) { // Server-side logic
                 AhpConfig currentConfig = AdorableHamsterPets.CONFIG;
@@ -1473,78 +1395,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             }
             return ActionResult.success(world.isClient()); // Consume the action
         }
-        // --- End 3a. Toggle Jade Debug with Guide Book ---
 
-
-        // --- 3b. Pink Petal Application/Cycling (Tamed Owner Only, Not Sneaking) ---
-        if (this.isTamed() && this.isOwner(player) && stack.isOf(Items.PINK_PETALS) && !player.isSneaking()) {
-            if (!world.isClient) {
-
-                // --- Reset Sleep Sequence if Dozing ---
-                if (this.getDozingPhase() != DozingPhase.NONE) {
-                    resetSleepSequence("Player interacted with pink petals.");
-                }
-
-                int currentPetalType = this.dataTracker.get(PINK_PETAL_TYPE);
-                int nextPetalType = (currentPetalType % 3) + 1; // Cycles 0->1, 1->2, 2->3, 3->1
-
-                this.dataTracker.set(PINK_PETAL_TYPE, nextPetalType);
-
-                world.playSound(null, this.getBlockPos(), SoundEvents.BLOCK_PINK_PETALS_PLACE, SoundCategory.PLAYERS, 0.7f, 1.0f + random.nextFloat() * 0.2f);
-                if (world instanceof ServerWorld serverWorld) {
-                    serverWorld.spawnParticles(ParticleTypes.FALLING_SPORE_BLOSSOM,
-                            this.getX(), this.getY() + this.getHeight() * 0.75, this.getZ(),
-                            7, (this.getWidth() / 2.0F), (this.getHeight() / 2.0F), (this.getWidth() / 2.0F), 0.0);
-                }
-
-                if (!player.getAbilities().creativeMode) {
-                    stack.decrement(1);
-                }
-                AdorableHamsterPets.LOGGER.debug("[InteractMob {}] Cycled/Applied pink petal to type {}.", this.getId(), nextPetalType);
-
-                // Trigger advancement criterion
-                if (player instanceof ServerPlayerEntity serverPlayer) {
-                    ModCriteria.APPLIED_PINK_PETAL.get().trigger(serverPlayer, this);
-                }
-            }
-            return ActionResult.success(world.isClient()); // Consume interaction
-        }
-        // --- End 3b. Pink Petal Application/Cycling ---
-
-        // --- 3c. Pink Petal Removal with Shears (Tamed Owner Only, Not Sneaking) ---
-        if (this.isTamed() && this.isOwner(player) && stack.isOf(Items.SHEARS) && !player.isSneaking()) {
-            if (this.dataTracker.get(PINK_PETAL_TYPE) > 0) { // Only if petals are currently applied
-                if (!world.isClient) {
-
-                    // --- Reset Sleep Sequence if Dozing ---
-                    if (this.getDozingPhase() != DozingPhase.NONE) {
-                        resetSleepSequence("Player used shears (removed petals).");
-                    }
-
-                    this.dataTracker.set(PINK_PETAL_TYPE, 0); // Remove petals
-
-                    world.playSound(null, this.getBlockPos(), SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.PLAYERS, 0.9f, 1.0f + random.nextFloat() * 0.1f);
-                    if (world instanceof ServerWorld serverWorld) {
-                        serverWorld.spawnParticles(new ItemStackParticleEffect(ParticleTypes.ITEM, new ItemStack(Items.PINK_PETALS)),
-                                this.getX(), this.getY() + this.getHeight() * 0.5, this.getZ(),
-                                5, (this.getWidth() / 2.0F), (this.getHeight() / 2.0F), (this.getWidth() / 2.0F), 0.05);
-                    }
-
-                    // Drop one pink petal
-                    ItemScatterer.spawn(world, this.getX(), this.getY() + 0.5, this.getZ(), new ItemStack(Items.PINK_PETALS, 1));
-
-                    if (!player.getAbilities().creativeMode) {
-                        stack.damage(1, player, LivingEntity.getSlotForHand(hand)); // Damage shears
-                    }
-                    AdorableHamsterPets.LOGGER.debug("[InteractMob {}] Removed pink petals with shears.", this.getId());
-                }
-                return ActionResult.success(world.isClient()); // Consume interaction
-            }
-        }
-        // --- End 3c. Pink Petal Removal with Shears ---
-
-
-        // --- 4. Taming Logic ---
+        // --- 5. Taming Logic ---
         if (!this.isTamed()) {
             AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Hamster not tamed. Checking for taming attempt.", this.getId(), world.getTime());
             if (player.isSneaking() && stack.isOf(ModItems.SLICED_CUCUMBER.get())) {
@@ -1555,8 +1407,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Not a taming attempt. Calling super.interactMob for untamed.", this.getId(), world.getTime());
             return super.interactMob(player, hand);
         }
-        // --- End 4. Taming Logic ---
-
 
         // --- 5. Owner Interaction Logic ---
         if (this.isOwner(player)) {
@@ -1564,48 +1414,154 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             boolean isSneaking = player.isSneaking();
             PlayerEntityAccessor playerAccessor = (PlayerEntityAccessor) player;
 
-            // --- 5a. Custom Owner Interactions ---
+            // --- Reset Sleep Sequence if Dozing ---
+            if (this.getDozingPhase() != DozingPhase.NONE) {
+                resetSleepSequence("Player attempted to feed hamster.");
+            }
+
+            // --- Handle Diamond Stealing Interaction ---
+            if (this.isStealingDiamond() && this.isOwner(player)) {
+                AdorableHamsterPets.LOGGER.debug("[InteractMob-{}] Passed 'isStealingDiamond' check.", this.getId());
+                if (!world.isClient) {
+                    ItemStack retrievedStack = this.getStolenItemStack().copy();
+                    player.getInventory().offerOrDrop(this.getStolenItemStack().copy());
+                    this.setStolenItemStack(ItemStack.EMPTY);
+                    this.setStealDurationTimer(0);
+                    this.setStealingDiamond(false);
+                    // Set the state flag and initialize the timer so the tick() method can handle the rotation.
+                    this.setCelebratingChase(true);
+                    this.celebrationChaseTicks = 30; // 1.5 second duration
+                    this.triggerAnimOnServer("mainController", "anim_hamster_celebrate_chase");
+                    // Play a happy/affectionate and diamond "tink" sound
+                    world.playSound(null, this.getBlockPos(), ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_AFFECTION_SOUNDS, this.random), SoundCategory.NEUTRAL, 1.0f, this.getSoundPitch());
+                    // Get and play the dynamic sound
+                    if (!retrievedStack.isEmpty()) {
+                        SoundEvent pounceSound = ModSounds.getDynamicPounceSound(retrievedStack);
+                        float volume = (pounceSound == SoundEvents.ENTITY_GENERIC_EAT) ? 0.35f : 1.0f;
+                        world.playSound(null, this.getBlockPos(), pounceSound, SoundCategory.NEUTRAL, volume, 1.7f);
+                    }
+                    AdorableHamsterPets.LOGGER.debug("[InteractMob-{}] Diamond returned to player and goal stopped.", this.getId());
+                }
+                return ActionResult.success(world.isClient());
+            }
+
+            // --- Check for Knocked Out ---
+            if (this.isKnockedOut()) {
+                AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Hamster is knocked out. Waking up.", this.getId(), world.getTime());
+                if (!world.isClient()) {
+                    SoundEvent wakeUpSound = getRandomSoundFrom(ModSounds.HAMSTER_WAKE_UP_SOUNDS, this.random);
+                    if (wakeUpSound != null) {
+                        world.playSound(null, this.getBlockPos(), wakeUpSound, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+                    }
+                    this.setKnockedOut(false); // Turn off knocked out
+                    this.setSitting(false, true); // Make sure sitting doesn't get turned on
+                    this.triggerAnimOnServer("mainController", "wakeup");
+                }
+                return ActionResult.success(world.isClient());
+            }
+
+            // --- Check for Diamond Celebration ---
+            if (this.isCelebratingDiamond()) {
+                if (!world.isClient()) {
+                    this.setCelebratingDiamond(false); // Turn off celebration
+                    this.setSitting(false, true); // Make sure sitting doesn't get turned on
+                    SoundEvent affectionSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_AFFECTION_SOUNDS, this.random);
+                    if (affectionSound != null) {
+                        world.playSound(null, this.getBlockPos(), affectionSound, SoundCategory.NEUTRAL, 1.0f, this.getSoundPitch());
+                    } else { // Fallback
+                        world.playSound(null, this.getBlockPos(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.NEUTRAL, 0.5f, 1.5f);
+                    }
+                }
+                return ActionResult.success(world.isClient()); // Consume the interaction
+            }
+
+            // --- Check for Sulking ---
+            if (this.isSulking()) {
+                if (!world.isClient()) {
+                    this.setSulking(false); // Turn off sulking
+                    this.setSitting(false, true); // Ensure sitting is also cleared
+                    SoundEvent affectionSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_AFFECTION_SOUNDS, this.random);
+                    if (affectionSound != null) {
+                        world.playSound(null, this.getBlockPos(), affectionSound, SoundCategory.NEUTRAL, 1.0f, this.getSoundPitch());
+                    } else { // Fallback
+                        world.playSound(null, this.getBlockPos(), SoundEvents.ENTITY_CHICKEN_STEP, SoundCategory.NEUTRAL, 0.5f, 1.5f);
+                    }
+                }
+                return ActionResult.success(world.isClient()); // Consume interaction
+            }
+
+            // --- Pink Petal Application/Cycling ---
+            if (stack.isOf(Items.PINK_PETALS) && !player.isSneaking()) {
+                if (!world.isClient) {
+                    int currentPetalType = this.dataTracker.get(PINK_PETAL_TYPE);
+                    int nextPetalType = (currentPetalType % 3) + 1; // Cycles 0->1, 1->2, 2->3, 3->1
+                    this.dataTracker.set(PINK_PETAL_TYPE, nextPetalType);
+                    world.playSound(null, this.getBlockPos(), SoundEvents.BLOCK_PINK_PETALS_PLACE, SoundCategory.PLAYERS, 0.7f, 1.0f + random.nextFloat() * 0.2f);
+                    if (world instanceof ServerWorld serverWorld) {
+                        serverWorld.spawnParticles(ParticleTypes.FALLING_SPORE_BLOSSOM,
+                                this.getX(), this.getY() + this.getHeight() * 0.75, this.getZ(),
+                                7, (this.getWidth() / 2.0F), (this.getHeight() / 2.0F), (this.getWidth() / 2.0F), 0.0);
+                    }
+                    if (!player.getAbilities().creativeMode) {
+                        stack.decrement(1);
+                    }
+                    AdorableHamsterPets.LOGGER.debug("[InteractMob {}] Cycled/Applied pink petal to type {}.", this.getId(), nextPetalType);
+                    // Trigger advancement criterion
+                    if (player instanceof ServerPlayerEntity serverPlayer) {
+                        ModCriteria.APPLIED_PINK_PETAL.get().trigger(serverPlayer, this);
+                    }
+                }
+                return ActionResult.success(world.isClient()); // Consume interaction
+            }
+
+            // --- Pink Petal Removal with Shears ---
+            if (stack.isOf(Items.SHEARS) && !player.isSneaking()) {
+                if (this.dataTracker.get(PINK_PETAL_TYPE) > 0) { // Only if petals are currently applied
+                    if (!world.isClient) {
+                        this.dataTracker.set(PINK_PETAL_TYPE, 0); // Remove petals
+                        world.playSound(null, this.getBlockPos(), SoundEvents.ENTITY_SHEEP_SHEAR, SoundCategory.PLAYERS, 0.9f, 1.0f + random.nextFloat() * 0.1f);
+                        if (world instanceof ServerWorld serverWorld) {
+                            serverWorld.spawnParticles(new ItemStackParticleEffect(ParticleTypes.ITEM, new ItemStack(Items.PINK_PETALS)),
+                                    this.getX(), this.getY() + this.getHeight() * 0.5, this.getZ(),
+                                    5, (this.getWidth() / 2.0F), (this.getHeight() / 2.0F), (this.getWidth() / 2.0F), 0.05);
+                        }
+                        // Drop one pink petal
+                        ItemScatterer.spawn(world, this.getX(), this.getY() + 0.5, this.getZ(), new ItemStack(Items.PINK_PETALS, 1));
+                        if (!player.getAbilities().creativeMode) {
+                            stack.damage(1, player, LivingEntity.getSlotForHand(hand)); // Damage shears
+                        }
+                        AdorableHamsterPets.LOGGER.debug("[InteractMob {}] Removed pink petals with shears.", this.getId());
+                    }
+                    return ActionResult.success(world.isClient()); // Consume interaction
+                }
+            }
+
             // --- Shoulder Mounting with Cheese ---
             if (!isSneaking && stack.isOf(ModItems.CHEESE.get())) {
                 if (!world.isClient) {
                     // Check if shoulder is empty by checking the NBT compound from our DataTracker
                     if (playerAccessor.getHamsterShoulderEntity().isEmpty()) {
-
-                        // --- LOGGING ---
-                        AdorableHamsterPets.LOGGER.info("[AHP DEBUG] MOUNTING: Entered cheese-mount logic for Hamster ID {}.", this.getId());
-
-                        // --- Reset Sleep Sequence if Dozing ---
-                        if (this.getDozingPhase() != DozingPhase.NONE) {
-                            resetSleepSequence("Player mounted hamster with cheese.");
-                        }
-
+                        AdorableHamsterPets.LOGGER.debug("[AHP DEBUG] MOUNTING: Entered cheese-mount logic for Hamster ID {}.", this.getId());
                         // Create the data record and serialize it to NBT
                         HamsterShoulderData data = this.saveToShoulderData();
                         NbtCompound hamsterNbt = data.toNbt();
                         // Set the player's DataTracker with the new NBT
                         playerAccessor.setHamsterShoulderEntity(hamsterNbt);
-
                         BlockPos hamsterPosForCheeseSound = this.getBlockPos();
-                        // --- LOGGING ---
-                        AdorableHamsterPets.LOGGER.info("[AHP DEBUG] MOUNTING: Discarding Hamster ID {}.", this.getId());
+                        AdorableHamsterPets.LOGGER.debug("[AHP DEBUG] MOUNTING: Discarding Hamster ID {}.", this.getId());
                         this.discard(); // Remove hamster from world
-
                         if (player instanceof ServerPlayerEntity serverPlayer) {
                             ModCriteria.HAMSTER_ON_SHOULDER.get().trigger(serverPlayer);
                         }
                         player.sendMessage(Text.translatable("message.adorablehamsterpets.shoulder_mount_success"), true);
-
                         world.playSound(null, hamsterPosForCheeseSound, ModSounds.CHEESE_USE_SOUND.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
-
                         SoundEvent mountSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_SHOULDER_MOUNT_SOUNDS, this.random);
                         if (mountSound != null) {
                             world.playSound(null, player.getBlockPos(), mountSound, SoundCategory.PLAYERS, 1.0f, this.getSoundPitch());
                         }
-
                         ((ServerWorld)world).spawnParticles(new ItemStackParticleEffect(ParticleTypes.ITEM, new ItemStack(ModItems.CHEESE.get())),
                                 hamsterPosForCheeseSound.getX() + 0.5, hamsterPosForCheeseSound.getY() + 0.5, hamsterPosForCheeseSound.getZ() + 0.5,
                                 8, 0.25D, 0.25D, 0.25D, 0.05);
-
                         if (!player.getAbilities().creativeMode) {
                             stack.decrement(1);
                         }
@@ -1615,49 +1571,29 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 }
                 return ActionResult.CONSUME;
             }
-            // --- End Shoulder Mounting with Cheese ---
 
-
-            // Inventory Access (Server-Side)
+            // --- Inventory Access ---
             if (!world.isClient() && isSneaking) {
                 // Check if pouch is unlocked OR if config disables the lock
                 if (getHamsterFlag(CHEEK_POUCH_UNLOCKED_FLAG) || !AdorableHamsterPets.CONFIG.requireFoodMixToUnlockCheeks) {
-
-                    // --- Reset Sleep Sequence if Dozing ---
-                    if (this.getDozingPhase() != DozingPhase.NONE) {
-                        resetSleepSequence("Player accessed inventory.");
-                    }
-
                     // --- Use Architectury's openExtendedMenu with the factory ---
                     MenuRegistry.openExtendedMenu((ServerPlayerEntity) player, new HamsterScreenHandlerFactory(this));
-
                 } else {
                     player.sendMessage(Text.translatable("message.adorablehamsterpets.cheek_pouch_locked").formatted(Formatting.WHITE), true);
                 }
                 return ActionResult.CONSUME; // Consume sneak action regardless of opening
             }
 
-
-            // Feeding Logic (Server-Side, only if not sneaking)
+            // --- Feeding Logic ---
             boolean isPotentialFood = isIsFood(stack) || stack.isOf(ModItems.STEAMED_GREEN_BEANS.get());
             if (!world.isClient() && !isSneaking && isPotentialFood) {
                 AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Owner not sneaking, holding potential food. Checking refusal.", this.getId(), world.getTime());
-
-                // --- Reset Sleep Sequence if Dozing ---
-                if (this.getDozingPhase() != DozingPhase.NONE) {
-                    resetSleepSequence("Player attempted to feed hamster.");
-                }
-
                 if (checkRepeatFoodRefusal(stack, player)) {
                     AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Food refused. Consuming interaction.", this.getId(), world.getTime());
                     return ActionResult.CONSUME; // Consume refusal action
                 }
-
-
                 AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Attempting feeding via tryFeedingAsTamed.", this.getId(), world.getTime());
                 boolean feedingOccurred = tryFeedingAsTamed(player, stack); // Calls the method with detailed logging
-
-
                 if (feedingOccurred) {
                     AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] tryFeedingAsTamed returned true. Setting last food, decrementing stack.", this.getId(), world.getTime());
                     this.lastFoodItem = stack.copy(); // Track last food *only* if feeding was successful
@@ -1672,10 +1608,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] tryFeedingAsTamed returned false. Passing to vanilla/sitting.", this.getId(), world.getTime());
                 }
             }
-            // --- End 5a. Custom Owner Interactions ---
 
-
-            // --- 5b. Vanilla Interaction Handling (Fallback AFTER custom checks) ---
+            // --- Vanilla Interaction Handling ---
             if (!isSneaking && !isPotentialFood && !stack.isOf(ModItems.CHEESE.get()) && !stack.isOf(Items.PINK_PETALS)) {
                 AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Not sneaking or holding handled food/petals. Calling super.interactMob.", this.getId(), world.getTime());
                 ActionResult vanillaResult = super.interactMob(player, hand);
@@ -1684,12 +1618,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     return vanillaResult;
                 }
             }
-            // --- End 5b. Vanilla Interaction Handling ---
 
-
-            // --- 5c. Sitting Logic (Fallback if nothing else handled it) ---
-            // This now acts as the default right-click action if not sneaking,
-            // not feeding successfully, and vanilla didn't handle it.
+            // --- Sitting Logic ---
             if (!world.isClient() && !isSneaking) {
                 AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Fallback: Toggling sitting state.", this.getId(), world.getTime());
                 this.setSitting(!this.isSitting()); // Toggle sitting state
@@ -1698,20 +1628,15 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 this.setTarget(null);
                 return ActionResult.CONSUME_PARTIAL; // Indicate partial consumption for state toggle
             }
-            // --- End 5c. Sitting Logic ---
-
-
             // Client-side success or fallback pass for owner
             AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Reached end of owner logic. Returning client-side success/pass.", this.getId(), world.getTime());
             return ActionResult.success(world.isClient());
-
 
         } else {
             // Interaction by a non-owner on a tamed hamster. Let vanilla handle it.
             AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Player is not owner. Calling super.interactMob.", this.getId(), world.getTime());
             return super.interactMob(player, hand);
         }
-        // --- End 5. Owner Interaction Logic ---
     }
 
     // --- Taming Override ---
