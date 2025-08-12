@@ -1,15 +1,14 @@
 name: Build & Publish Mod
 
 # PURPOSE:
-# Builds both Fabric/Quilt and NeoForge jars and publishes them to Modrinth and CurseForge.
+# Builds both Fabric/Quilt and Forge jars and publishes them to Modrinth and CurseForge.
 # TRIGGER:
 # - Automatically runs when a lightweight tag like "v3.1.0" is pushed.
 # - Can also be run manually via the "Run workflow" button (workflow_dispatch).
 #
 # NOTE:
-# - This file is for the 1.21.1 (develop) line. For 1.20.x, duplicate this file and adjust loader/globs.
+# - This file is for 1.20.x line. For 1.21.1, an alternate version of this file exists.
 # - Do NOT put comments inside the dependency lists (the lines after a "|"), as they are literal blocks.
-
 
 on:
   push:
@@ -38,7 +37,7 @@ jobs:
           java-version: '21'
           cache: gradle
 
-      # 3) Build both subprojects (fabric, neoforge). Output jars end up under each module's build/libs
+      # 3) Build both subprojects (fabric, forge). Output jars end up under each module's build/libs
       - name: Build jars
         run: |
           chmod +x ./gradlew
@@ -96,11 +95,11 @@ jobs:
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
           # Human-visible version name for Modrinth/CurseForge
-          version: ${{ steps.vars.outputs.V }}-1.21.1+fabric
+          version: ${{ steps.vars.outputs.V }}-1.20.1+fabric
           version-type: beta
 
           # EXACT jar  file path + name produced by Gradle build (fabric module)
-          files: fabric/build/libs/adorablehamsterpets-${{ steps.vars.outputs.V }}-1.21.1+fabric.jar
+          files: fabric/build/libs/adorablehamsterpets-${{ steps.vars.outputs.V }}-1.20.1+fabric.jar
 
           # Fabric/Quilt dependency slugs for Modrinth (no comments allowed inside the block)
           modrinth-dependencies: |
@@ -129,11 +128,11 @@ jobs:
           loaders: |
             fabric
             quilt
-          game-versions: 1.21.1
+          game-versions: 1.20.1
 
-      # 8) Publish NeoForge build to Modrinth & CurseForge
-      #    - Same approach as Fabric, but with NeoForge jar and its dependencies
-      - name: Publish NeoForge version
+      # 8) Publish Forge build to Modrinth & CurseForge
+      #    - Same approach as Fabric, but with Forge jar and its dependencies
+      - name: Publish Forge version
         uses: Kir-Antipov/mc-publish@v3.3
         with:
 
@@ -144,13 +143,13 @@ jobs:
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
           # Human-visible version name for Modrinth/CurseForge
-          version: ${{ steps.vars.outputs.V }}-1.21.1+neoforge
+          version: ${{ steps.vars.outputs.V }}-1.20.1+forge
           version-type: beta
 
-          # EXACT jar file path + name produced by Gradle build (neoforge module)
-          files: neoforge/build/libs/adorablehamsterpets-${{ steps.vars.outputs.V }}-1.21.1+neoforge.jar
+          # EXACT jar file path + name produced by Gradle build (forge module)
+          files: forge/build/libs/adorablehamsterpets-${{ steps.vars.outputs.V }}-1.20.1+forge.jar
 
-          # NeoForge dependency slugs for Modrinth (no comments allowed inside the block)
+          # Forge dependency slugs for Modrinth (no comments allowed inside the block)
           modrinth-dependencies: |
             architectury-api(required)
             geckolib(required)
@@ -158,7 +157,7 @@ jobs:
             kotlin-for-forge(required)
             jade(optional)
 
-          # NeoForge dependency IDs for CurseForge (no comments allowed inside the block)
+          # Forge dependency IDs for CurseForge (no comments allowed inside the block)
           curseforge-dependencies: |
             419699(required)
             388172(required)
@@ -169,6 +168,6 @@ jobs:
           # Attach the changelog snippet that was extracted above
           changelog-file: release_changelog.md
 
-          # Mark as NeoForge and target the correct MC version
-          loaders: neoforge
-          game-versions: 1.21.1
+          # Mark as Forge and target the correct MC version
+          loaders: forge
+          game-versions: 1.20.1
