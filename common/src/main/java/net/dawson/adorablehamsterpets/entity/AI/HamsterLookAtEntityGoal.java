@@ -40,7 +40,8 @@ public class HamsterLookAtEntityGoal extends LookAtEntityGoal {
     public boolean canStart() {
         // --- 1. Hamster State Check (Perform this FIRST for efficiency) ---
         if (this.hamsterMob instanceof HamsterEntity hamster) {
-            if (hamster.isSitting() || hamster.isSleeping() || hamster.isKnockedOut() || hamster.isSulking() || hamster.isStealingDiamond()) {
+            if (hamster.isSitting() || hamster.isSleeping() || hamster.isKnockedOut() || hamster.isSulking() || hamster.isStealingDiamond()
+                    || hamster.getActiveCustomGoalDebugName().equals(HamsterWanderAroundFarGoal.class.getSimpleName())) {
                 return false;
             }
         }
