@@ -14,6 +14,7 @@ public class ModPackets {
 
     // --- Packet Identifiers ---
     public static final Identifier THROW_HAMSTER_ID = Identifier.of(MOD_ID, "throw_hamster");
+    public static final Identifier DISMOUNT_HAMSTER_ID = Identifier.of(MOD_ID, "dismount_hamster");
     public static final Identifier UPDATE_HAMSTER_RENDER_STATE_ID = Identifier.of(MOD_ID, "update_hamster_render_state");
     public static final Identifier START_HAMSTER_FLIGHT_SOUND_ID = Identifier.of(MOD_ID, "start_hamster_flight_sound");
     public static final Identifier START_HAMSTER_THROW_SOUND_ID = Identifier.of(MOD_ID, "start_hamster_throw_sound");
@@ -25,6 +26,14 @@ public class ModPackets {
     public static void registerC2SPackets() {
         NetworkManager.registerReceiver(NetworkManager.Side.C2S, THROW_HAMSTER_ID,
                 (buf, context) -> context.queue(() -> HamsterEntity.tryThrowFromShoulder((ServerPlayerEntity) context.getPlayer()))
+        );
+
+        NetworkManager.registerReceiver(NetworkManager.Side.C2S, DISMOUNT_HAMSTER_ID,
+                (buf, context) -> context.queue(() -> {
+                    if (context.getPlayer() instanceof ServerPlayerEntity player) {
+                        ((PlayerEntityAccessor) player).adorablehamsterpets$dismountShoulderHamster();
+                    }
+                })
         );
 
         NetworkManager.registerReceiver(NetworkManager.Side.C2S, UPDATE_HAMSTER_RENDER_STATE_ID,
@@ -39,14 +48,6 @@ public class ModPackets {
                         }
                     });
                 }
-        );
-
-        NetworkManager.registerReceiver(NetworkManager.Side.C2S, DismountHamsterPayload.ID, DismountHamsterPayload.CODEC,
-                (payload, context) -> context.queue(() -> {
-                    if (context.getPlayer() instanceof ServerPlayerEntity player) {
-                        ((PlayerEntityAccessor) player).adorablehamsterpets$dismountShoulderHamster();
-                    }
-                })
         );
     }
 

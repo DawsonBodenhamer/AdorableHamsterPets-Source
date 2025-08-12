@@ -174,7 +174,7 @@ public class AdorableHamsterPetsClient {
      * which key to listen for (vanilla sneak or a custom keybind) and what press behavior
      * is required (single press or double-tap).
      * <p>
-     * When a valid dismount action is detected, it sends a {@link DismountHamsterPayload}
+     * When a valid dismount action is detected, it sends a packet
      * to the server to execute the dismount.
      *
      * @param client The MinecraftClient instance.
@@ -254,14 +254,17 @@ public class AdorableHamsterPetsClient {
             // --- 4. Apply press type logic (SINGLE vs DOUBLE) ---
             if (config.dismountPressType.get() == DismountPressType.SINGLE_PRESS) {
                 // Single press always triggers the dismount
-                dev.architectury.networking.NetworkManager.sendToServer(new DismountHamsterPayload());
+                // Use the 1.20.1 pattern with an Identifier and an empty buffer
+                dev.architectury.networking.NetworkManager.sendToServer(ModPackets.DISMOUNT_HAMSTER_ID, new PacketByteBuf(Unpooled.buffer()));
             } else { // DOUBLE_TAP
                 long currentTime = System.currentTimeMillis();
                 long delayMillis = config.doubleTapDelayTicks.get() * 50L;
 
                 if (isWaitingForSecondSneakPress && (currentTime - lastSneakPressTime) <= delayMillis) {
                     AdorableHamsterPets.LOGGER.debug("[AHP DEBUG CLIENT] Tick Handler: DOUBLE_TAP second press detected. Sending dismount payload.");
-                    dev.architectury.networking.NetworkManager.sendToServer(new DismountHamsterPayload());
+                    // Second press was within the delay window, trigger dismount
+                    // Use the 1.20.1 pattern with an Identifier and an empty buffer
+                    dev.architectury.networking.NetworkManager.sendToServer(ModPackets.DISMOUNT_HAMSTER_ID, new PacketByteBuf(Unpooled.buffer()));
                     isWaitingForSecondSneakPress = false; // Reset the double-tap state
                 } else {
                     AdorableHamsterPets.LOGGER.debug("[AHP DEBUG CLIENT] Tick Handler: DOUBLE_TAP first press detected. Starting timer.");
