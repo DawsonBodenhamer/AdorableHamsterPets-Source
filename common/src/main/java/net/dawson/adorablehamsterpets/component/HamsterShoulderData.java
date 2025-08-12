@@ -114,8 +114,6 @@ public record HamsterShoulderData(
         return "HamsterShoulderData[variantId=" + variantId +
                 ", health=" + health +
                 ", inventoryNbt=" + inventoryNbt.toString().substring(0, Math.min(inventoryNbt.toString().length(), 50)) + "..." +
-                ", leftFull=" + leftCheekFull +
-                ", rightFull=" + rightCheekFull +
                 ", age=" + breedingAge +
                 ", throwCooldownEnd=" + throwCooldownEndTick +
                 ", beansCooldownEnd=" + greenBeanBuffEndTick +
@@ -123,15 +121,14 @@ public record HamsterShoulderData(
                 ", autoEatCooldown=" + autoEatCooldownTicks +
                 ", customName=" + customName.orElse("None") +
                 ", pinkPetalType=" + pinkPetalType +
-                ", cheekPouchUnlocked=" + cheekPouchUnlocked +
                 ", animationPersonalityId=" + animationPersonalityId +
                 ", seekingBehaviorData=" + seekingBehaviorData.toString() +
+                ", animationPersonalityId=" + hamsterFlags +
                 "]";
     }
 
     public static HamsterShoulderData empty() {
-        return new HamsterShoulderData(0, 8.0f, new NbtCompound(), false, false, 0, 0L, 0L, 0L, new NbtList(), 0, Optional.empty(), 0, false, 1,
-                SeekingBehaviorData.empty()
+        return new HamsterShoulderData(0, 8.0f, new NbtCompound(), 0, 0L, 0L, 0L, new NbtList(), 0, Optional.empty(), 0, 1, SeekingBehaviorData.empty(), 0
         );
     }
 }
