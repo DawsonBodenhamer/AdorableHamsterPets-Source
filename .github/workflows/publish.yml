@@ -67,8 +67,8 @@ jobs:
           # Strip the leading 'v' from the tag if present
           V="${VERSION#v}"
   
-        # Grab everything after '## [<version>]' until the next '---' separator
-        # Match headings/separators with optional leading spaces and trim leading spaces.
+          # Grab everything after '## [<version>]' until the next '---' separator
+          # Match headings/separators with optional leading spaces and trim leading spaces.
           awk -v ver="$V" '
             $0 ~ "^[[:space:]]*## \\[" ver "\\]" {p=1; next}
             p && /^[[:space:]]*---/ {exit}
