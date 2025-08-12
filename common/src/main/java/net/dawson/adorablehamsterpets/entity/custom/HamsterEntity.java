@@ -3,7 +3,6 @@ package net.dawson.adorablehamsterpets.entity.custom;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.registry.menu.MenuRegistry;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
-import net.dawson.adorablehamsterpets.AdorableHamsterPetsClient;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
 import net.dawson.adorablehamsterpets.component.HamsterShoulderData;
