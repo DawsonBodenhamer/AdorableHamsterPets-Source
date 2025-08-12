@@ -54,10 +54,13 @@ public final class AdorableHamsterPetsForgeClient {
 
     @SubscribeEvent
     public static void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
-        // Call the dedicated keybinding init method.
-        AdorableHamsterPetsClient.initKeybindings();
-        // Manually register the key with Forge's event.
+        // Construct the key mapping objects if they haven’t been created yet.
+        if (ModKeyBindings.THROW_HAMSTER_KEY == null) {
+            ModKeyBindings.init();
+        }
+        // Manually register the keys with Forge's event.
         event.register(ModKeyBindings.THROW_HAMSTER_KEY);
+        event.register(ModKeyBindings.DISMOUNT_HAMSTER_KEY);
     }
 
     /* ------------------------------------------------------------ */
