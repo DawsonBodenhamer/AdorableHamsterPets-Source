@@ -23,6 +23,15 @@ loom {
     }
 }
 
+sourceSets {
+    main {
+        resources {
+            srcDir file('src/main/generated')
+            exclude('.cache/**')
+        }
+    }
+}
+
 configurations {
     common
     shadowCommon
@@ -64,12 +73,22 @@ processResources {
     }
 }
 
+tasks.named("runDatagen") {
+    outputs.dir(file('src/main/generated'))
+    mustRunAfter("clean")
+}
+
 shadowJar {
-    exclude "architectury.common.json"       // keep
-    configurations = [project.configurations.shadowCommon]  // transformed common code
-    from(sourceSets.main.output)             // ADD → include Fabric classes
+    dependsOn(tasks.named("runDatagen"))
+
+    exclude "architectury.common.json"
+    configurations = [project.configurations.shadowCommon]
+    from(sourceSets.main.output)
     archiveClassifier = "dev-shadow"
     dependsOn project(':common').tasks.named('transformProductionFabric')
+
+    dependsOn(tasks.named("runDatagen"))
+    from(file('src/main/generated'))
 }
 
 remapJar {
@@ -82,6 +101,14 @@ sourcesJar {
     def commonSources = project(":common").sourcesJar
     dependsOn commonSources
     from commonSources.archiveFile.map { zipTree(it) }
+
+    dependsOn(tasks.named("runDatagen"))
+    from(file('src/main/generated'))
+}
+
+tasks.withType(Jar).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    exclude(".cache/**")
 }
 
 components.java {
