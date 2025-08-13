@@ -25,9 +25,25 @@ sourceSets {
     main {
         resources {
             srcDir project(':fabric').file('src/main/generated')
+            exclude(".cache/**")
         }
     }
 }
+
+// ---------- Datagen wiring ----------
+// Make Forge’s resource processing wait for Fabric datagen
+processResources {
+    dependsOn(":fabric:runDatagen")      // simple string form avoids IDE “no candidates” warnings
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    exclude(".cache/**")                  // belt & suspenders
+}
+
+// And jars should also be cache-free/duplicate-tolerant
+tasks.withType(Jar).configureEach {
+    exclude(".cache/**")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+// ---------- End Datagen wiring ----------
 
 configurations {
     common {
@@ -58,6 +74,12 @@ dependencies {
 }
 
 processResources {
+    dependsOn(":fabric:runDatagen")
+    from(project(':fabric').file('src/main/generated')) {
+        exclude('.cache/**')
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
     from project(":common").sourceSets.main.resources
 
     filesMatching(["META-INF/mods.toml", "*.mixins.json"]) {
@@ -81,6 +103,10 @@ remapJar {
 }
 
 sourcesJar {
+    dependsOn(":fabric:runDatagen")
+    exclude(".cache/**")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
     def commonSources = project(":common").sourcesJar
     dependsOn commonSources
     from commonSources.archiveFile.map { zipTree(it) }

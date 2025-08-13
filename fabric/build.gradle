@@ -27,10 +27,49 @@ loom {
 sourceSets {
     main {
         resources {
-            srcDirs += project.file('src/main/generated/resources')
+            // include BOTH assets and data produced by datagen
+            srcDir file('src/main/generated')
+            exclude('.cache/**')
         }
     }
 }
+
+// ---------- Datagen wiring ----------
+// Paths that Fabric datagen writes to
+def genRoot = file("$projectDir/src/main/generated")
+def genRes  = file("$projectDir/src/main/generated/resources")
+
+// Tell Gradle what runDatagen produces (so other tasks can depend on it)
+tasks.named("runDatagen") {
+    outputs.dir(genRoot)
+    outputs.dir(genRes)
+    mustRunAfter("clean")
+}
+
+// Artifacts that read those files must wait for datagen
+jar {
+    dependsOn("runDatagen")
+}
+sourcesJar {
+    dependsOn("runDatagen")
+}
+
+// Be tolerant to accidental duplicate paths and never package the cache
+tasks.withType(Jar).configureEach {
+    exclude(".cache/**")
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.named("jar") {
+    dependsOn("runDatagen")
+    inputs.dir(file('src/main/generated'))
+}
+
+tasks.named("sourcesJar") {
+    dependsOn("runDatagen")
+    inputs.dir(file('src/main/generated'))
+}
+// ---------- End Datagen wiring ----------
 
 configurations {
     common {
@@ -64,6 +103,11 @@ dependencies {
 }
 
 processResources {
+    from(file('src/main/generated')) {
+        exclude('.cache/**')
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
     from project(":common").sourceSets.main.resources
     from sourceSets.main.resources
 
@@ -77,6 +121,17 @@ processResources {
 shadowJar {
     configurations = [project.configurations.shadowBundle]
     archiveClassifier = 'dev-shadow'
+
+    // include compiled classes + normal resources
+    from sourceSets.main.output
+
+    // include generated assets & data directly, but skip cache
+    from('src/main/generated') {
+        exclude('.cache/**')
+    }
+
+    // make sure the files exist before we package
+    dependsOn('runDatagen')
 }
 
 remapJar {
