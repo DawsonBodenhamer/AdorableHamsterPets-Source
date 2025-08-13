@@ -774,6 +774,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     @Unique private boolean zoomiesIsClockwise = false;
     @Unique private double lastZoomiesAngle = 0.0;
     @Unique private int zoomiesRadiusModifier = 0;
+    @Unique public transient float renderedSnowYOffset = 0.0f;
 
 
     // --- Inventory ---
