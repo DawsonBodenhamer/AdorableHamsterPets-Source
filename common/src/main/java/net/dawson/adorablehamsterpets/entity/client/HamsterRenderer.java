@@ -10,6 +10,7 @@ import net.dawson.adorablehamsterpets.entity.custom.HamsterVariant;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.SnowBlock;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -91,8 +92,27 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
         // Adds the entity's ID to a set to determine which entities are no longer being rendered.
         AdorableHamsterPetsClient.onHamsterRendered(entity.getId());
 
-        // --- 4. Call Superclass Method ---
+        // --- 4. Smooth Snow Layer Height Adjustment ---
+        poseStack.push();
+        float targetYOffset = 0.0f;
+        BlockPos pos = entity.getBlockPos();
+        BlockState blockState = entity.getWorld().getBlockState(pos);
+
+        // If the block is a snow layer, apply a fixed offset equal to one layer's height.
+        if (blockState.isOf(Blocks.SNOW)) {
+            targetYOffset = 1.0f / 8.0f; // 0.125f, the height of a single snow layer.
+        }
+
+        // Smoothly interpolate the current offset towards the target offset.
+        // The 0.25f factor controls the speed of the transition.
+        entity.renderedSnowYOffset += (targetYOffset - entity.renderedSnowYOffset) * 0.15f;
+        poseStack.translate(0.0, entity.renderedSnowYOffset, 0.0);
+
+        // --- 5. Call Superclass Method ---
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+
+        // --- 6. Pop Matrix for Snow Adjustment ---
+        poseStack.pop();
     }
 
     @Override
