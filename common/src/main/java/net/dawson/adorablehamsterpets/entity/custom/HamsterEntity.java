@@ -1559,7 +1559,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             }
 
             // --- Shoulder Mounting with Cheese ---
-            if (!isSneaking && stack.isOf(ModItems.CHEESE.get())) {
+            if (stack.isOf(ModItems.CHEESE.get())) {
                 if (!world.isClient) {
                     // Check if shoulder is empty by checking the NBT compound from our DataTracker
                     if (playerAccessor.getHamsterShoulderEntity().isEmpty()) {
