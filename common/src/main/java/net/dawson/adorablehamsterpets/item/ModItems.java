@@ -6,21 +6,12 @@ import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.block.ModBlocks;
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
-import net.dawson.adorablehamsterpets.sound.ModSounds;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.FoodComponent;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.UseAction;
-import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -150,56 +141,7 @@ public class ModItems {
             });
 
     public static final RegistrySupplier<Item> CHEESE = registerItem("cheese",
-            () -> new Item(new Item.Settings().food(ModFoodComponents.CHEESE)) {
-                @Override
-                public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-                    if (Configs.AHP.enableItemTooltips) {
-                        tooltip.add(Text.translatable("tooltip.adorablehamsterpets.cheese.hint1").formatted(Formatting.GOLD));
-                        tooltip.add(Text.translatable("tooltip.adorablehamsterpets.cheese.hint2").formatted(Formatting.GRAY));
-                        tooltip.add(Text.translatable("tooltip.adorablehamsterpets.cheese.hint3",
-                                Configs.AHP.cheeseNutrition.get(),
-                                String.format("%.1f", Configs.AHP.cheeseSaturation.get() * Configs.AHP.cheeseNutrition.get() * 2.0F)
-                        ).formatted(Formatting.DARK_GRAY));
-                    } else {
-                        tooltip.add(Text.literal("Adorable Hamster Pets").formatted(Formatting.BLUE, Formatting.ITALIC));
-                    }
-                    super.appendTooltip(stack, context, tooltip, type);
-                }
-
-                @Override
-                public SoundEvent getEatSound() {
-                    return ModSounds.CHEESE_EAT1.get();
-                }
-
-                @Override
-                public UseAction getUseAction(ItemStack stack) {
-                    return UseAction.EAT;
-                }
-
-                @Override
-                public int getMaxUseTime(ItemStack stack, LivingEntity user) {
-                    return 20; // Custom eating time
-                }
-
-                @Override
-                public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-                    if (user instanceof PlayerEntity player) {
-                        // Manually apply hunger and saturation from config
-                        int nutrition = Configs.AHP.cheeseNutrition.get();
-                        float saturation = Configs.AHP.cheeseSaturation.get();
-                        player.getHungerManager().add(nutrition, saturation);
-                        player.incrementStat(Stats.USED.getOrCreateStat(this));
-                        SoundEvent randomEatSound = ModSounds.getRandomSoundFrom(ModSounds.CHEESE_EAT_SOUNDS, world.random);
-                        if (randomEatSound != null) {
-                            world.playSound(null, player.getX(), player.getY(), player.getZ(), randomEatSound, player.getSoundCategory(), 1.2F, 1.0F + (world.random.nextFloat() - world.random.nextFloat()) * 0.4F);
-                        }
-                    }
-                    if (!(user instanceof PlayerEntity player) || !player.getAbilities().creativeMode) {
-                        stack.decrement(1);
-                    }
-                    return stack;
-                }
-            });
+            () -> new net.dawson.adorablehamsterpets.item.custom.CheeseItem(new Item.Settings().food(ModFoodComponents.CHEESE)));
 
     // --- Block Item Registrations ---
     public static final RegistrySupplier<Item> WILD_GREEN_BEAN_BUSH_ITEM = registerBlockItem("wild_green_bean_bush",
@@ -243,7 +185,6 @@ public class ModItems {
                     super.appendTooltip(stack, context, tooltip, type);
                 }
             });
-// --- End (New) Block Item Registrations ---
 
     // --- 3. Helper methods for registration ---
     private static RegistrySupplier<Item> registerItem(String name, Supplier<Item> itemSupplier) {
