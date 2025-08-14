@@ -34,7 +34,7 @@ public class HamsterShoulderFeatureRenderer
     // --- 1. Constants ---
     private static final float BABY_SCALE = 0.4f;
     private static final float ADULT_SCALE = 0.7f;
-    private static final float BABY_Y_OFFSET_SNEAKING = -0.55F;
+    private static final float BABY_Y_OFFSET_SNEAKING = -0.40F;
     private static final float BABY_Y_OFFSET_STANDING = -0.60F;
     private static final float ADULT_Y_OFFSET_SNEAKING = -0.85F;
     private static final float ADULT_Y_OFFSET_STANDING = -1.05F;
