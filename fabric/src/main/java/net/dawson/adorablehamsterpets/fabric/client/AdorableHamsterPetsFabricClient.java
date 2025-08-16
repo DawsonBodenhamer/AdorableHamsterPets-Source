@@ -11,7 +11,6 @@ public final class AdorableHamsterPetsFabricClient implements ClientModInitializ
         AdorableHamsterPetsClient.init();
         AdorableHamsterPetsClient.initScreenHandlers();
         AdorableHamsterPetsClient.initEntityRenderers();
-        AdorableHamsterPetsClient.initModelLayers();
 
         // --- Register keybindings for Fabric ---
         ModKeyBindings.init();
