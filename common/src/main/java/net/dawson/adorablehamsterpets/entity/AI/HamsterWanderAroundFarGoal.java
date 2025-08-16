@@ -18,13 +18,13 @@ public class HamsterWanderAroundFarGoal extends WanderAroundFarGoal {
     public HamsterWanderAroundFarGoal(HamsterEntity hamster, double speed) {
         super(hamster, speed);
         this.hamster = hamster;
-        this.setChance(120); // Default chance for non-buffed state
+        this.setChance(110); // Chance for non-buffed state
     }
 
     public HamsterWanderAroundFarGoal(HamsterEntity hamster, double speed, float probability) {
         super(hamster, speed, probability);
         this.hamster = hamster;
-        this.setChance(120); // Default chance for non-buffed state
+        this.setChance(110); // Chance for non-buffed state
     }
 
     @Override
