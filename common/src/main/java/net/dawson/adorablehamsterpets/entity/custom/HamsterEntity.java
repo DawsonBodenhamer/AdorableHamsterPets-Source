@@ -635,7 +635,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private static final RawAnimation KNOCKED_OUT_ANIM = RawAnimation.begin().thenPlay("anim_hamster_ko");
     private static final RawAnimation WAKE_UP_ANIM = RawAnimation.begin().thenPlay("anim_hamster_wakeup");
     private static final RawAnimation FLYING_ANIM = RawAnimation.begin().thenPlay("anim_hamster_flying");
-    private static final RawAnimation NO_ANIM = RawAnimation.begin().thenPlay("anim_hamster_no");
+    private static final RawAnimation STATIONARY_HEADSHAKE_ANIM = RawAnimation.begin().thenPlay("anim_hamster_stationary_headshake");
+    private static final RawAnimation MOVING_HEADSHAKE_ANIM = RawAnimation.begin().thenPlay("anim_hamster_moving_headshake");
     private static final RawAnimation SLEEP_POSE1_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sleep_pose1");
     private static final RawAnimation SLEEP_POSE2_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sleep_pose2");
     private static final RawAnimation SLEEP_POSE3_ANIM = RawAnimation.begin().thenPlay("anim_hamster_sleep_pose3");
@@ -2568,7 +2569,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                  })
                 .triggerableAnim("crash", CRASH_ANIM)
                 .triggerableAnim("wakeup", WAKE_UP_ANIM)
-                .triggerableAnim("no", NO_ANIM)
+                .triggerableAnim("stationary_headshake", STATIONARY_HEADSHAKE_ANIM)
+                .triggerableAnim("moving_headshake", MOVING_HEADSHAKE_ANIM)
                 .triggerableAnim("attack", ATTACK_ANIM)
                 .triggerableAnim("anim_hamster_sit_settle_sleep1", SIT_SETTLE_SLEEP1_ANIM)
                 .triggerableAnim("anim_hamster_sit_settle_sleep2", SIT_SETTLE_SLEEP2_ANIM)
@@ -2989,6 +2991,11 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     // --- Check for Repeatable Foods ---
     /**
      * Checks if the hamster should refuse being fed the same item twice consecutively.
+     * <p>
+     * If a refusal occurs, this method also triggers a context-aware headshake animation:
+     * {@code anim_hamster_moving_headshake} if the hamster is walking, or
+     * {@code anim_hamster_stationary_headshake} if it is still.
+     * <p>
      * An item is exempt from this check if it is included in the user-configurable
      * {@code repeatableFoods} list, managed by {@link ModItemTags#isRepeatableFood(ItemStack)}.
      *
@@ -2999,21 +3006,26 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private boolean checkRepeatFoodRefusal(ItemStack currentStack, PlayerEntity player) {
         // --- 1. Check Repeat Food Refusal ---
         if (ModItemTags.isRepeatableFood(currentStack)) return false;
+
         if (!this.lastFoodItem.isEmpty() && ItemStack.areItemsEqual(this.lastFoodItem, currentStack)) {
             this.setRefusingFood(true);
             this.refuseTimer = REFUSE_FOOD_TIMER_TICKS;
             player.sendMessage(Text.translatable("message.adorablehamsterpets.food_refusal"), true);
-            // --- Trigger Refusal Animation ---
+
+            // --- Conditional Animation Trigger ---
             if (!this.getWorld().isClient()) {
-                this.triggerAnimOnServer("mainController", "no");
+                // Check if the hamster has significant horizontal velocity.
+                boolean isMoving = this.getVelocity().horizontalLengthSquared() > 1.0E-6;
+                if (isMoving) {
+                    this.triggerAnimOnServer("mainController", "moving_headshake");
+                } else {
+                    this.triggerAnimOnServer("mainController", "stationary_headshake");
+                }
             }
-            // --- End Trigger ---
             return true;
         }
         return false;
-        // --- End 1. Check Repeat Food Refusal ---
     }
-    // --- End Check for Repeatable Foods ---
 
     /**
      * Attempts to feed the hamster, handling healing, breeding, buffs, and pouch unlocking.
