@@ -4,7 +4,6 @@ import dev.architectury.networking.NetworkManager;
 import dev.architectury.registry.menu.MenuRegistry;
 import io.netty.buffer.Unpooled;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
-import net.dawson.adorablehamsterpets.AdorableHamsterPetsClient;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
 import net.dawson.adorablehamsterpets.component.HamsterShoulderData;
@@ -57,7 +56,6 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
@@ -146,70 +144,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             PathNodeType.DAMAGE_CAUTIOUS,
             PathNodeType.WATER
     );
-
-    // --- Item Restriction Sets ---
-    private static final Set<TagKey<Item>> DISALLOWED_ITEM_TAGS = Set.of(
-            // --- Tool Tags ---
-            net.minecraft.registry.tag.ItemTags.AXES,
-            net.minecraft.registry.tag.ItemTags.HOES,
-            net.minecraft.registry.tag.ItemTags.PICKAXES,
-            net.minecraft.registry.tag.ItemTags.SHOVELS,
-            net.minecraft.registry.tag.ItemTags.SWORDS,
-            // Armor
-            net.minecraft.registry.tag.ItemTags.TRIMMABLE_ARMOR,
-            // Large Blocks/Structures
-            net.minecraft.registry.tag.ItemTags.BEDS,
-            net.minecraft.registry.tag.ItemTags.BANNERS,
-            net.minecraft.registry.tag.ItemTags.DOORS,
-            // Vehicles
-            net.minecraft.registry.tag.ItemTags.BOATS, // Covers Boats & Chest Boats
-            net.minecraft.registry.tag.ItemTags.CREEPER_DROP_MUSIC_DISCS
-
-    );
-
-    private static final Set<Item> DISALLOWED_ITEMS = Set.of(
-            // Specific Tools/Weapons not covered by tags
-            Items.BOW, Items.CROSSBOW, Items.TRIDENT, Items.FISHING_ROD,
-            // Specific Armor/Wearables
-            Items.SHIELD, Items.ELYTRA,
-            Items.TURTLE_HELMET,
-            Items.CARVED_PUMPKIN,
-            Items.PLAYER_HEAD, Items.ZOMBIE_HEAD, Items.SKELETON_SKULL, Items.WITHER_SKELETON_SKULL, Items.CREEPER_HEAD, Items.DRAGON_HEAD, Items.PIGLIN_HEAD,
-            // Vehicles/Mounts
-            Items.MINECART, Items.CHEST_MINECART, Items.FURNACE_MINECART, Items.TNT_MINECART, Items.HOPPER_MINECART, Items.COMMAND_BLOCK_MINECART,
-            Items.SADDLE,
-            // Buckets
-            Items.BUCKET, Items.WATER_BUCKET, Items.LAVA_BUCKET, Items.MILK_BUCKET, Items.POWDER_SNOW_BUCKET,
-            Items.AXOLOTL_BUCKET, Items.TADPOLE_BUCKET, Items.COD_BUCKET, Items.PUFFERFISH_BUCKET, Items.SALMON_BUCKET, Items.TROPICAL_FISH_BUCKET,
-            // Complex/Utility/Special
-            Items.ITEM_FRAME, Items.GLOW_ITEM_FRAME,
-            Items.PAINTING,
-            Items.ARMOR_STAND,
-            Items.END_CRYSTAL,
-            Items.SPYGLASS,
-            Items.NETHER_STAR, Items.DRAGON_EGG,
-            Items.BUNDLE,
-            // Mod Items
-            ModItems.HAMSTER_GUIDE_BOOK.get()
-    );
-    // --- End Item Restriction Sets ---
-
-    // Define food sets as static final fields
-    private static final Set<Item> HAMSTER_FOODS = new HashSet<>(Arrays.asList(
-            ModItems.HAMSTER_FOOD_MIX.get(), ModItems.SUNFLOWER_SEEDS.get(), ModItems.GREEN_BEANS.get(),
-            ModItems.CUCUMBER.get(), ModItems.GREEN_BEAN_SEEDS.get(), ModItems.CUCUMBER_SEEDS.get(),
-            Items.APPLE, Items.CARROT, Items.MELON_SLICE, Items.SWEET_BERRIES,
-            Items.BEETROOT, Items.WHEAT, Items.WHEAT_SEEDS
-    ));
-    private static final Set<Item> REPEATABLE_FOODS = new HashSet<>(Arrays.asList(
-            ModItems.HAMSTER_FOOD_MIX.get(), ModItems.STEAMED_GREEN_BEANS.get()
-    ));
-
-    // --- Auto-Feedable Healing Foods ---
-    private static final Set<Item> AUTO_HEAL_FOODS = new HashSet<>(List.of(
-            ModItems.HAMSTER_FOOD_MIX.get() // Only allow Hamster Food Mix
-    ));
-    // --- End Auto-Feedable Healing Foods ---
 
     // --- Variant Pool Definitions ---
     private static final List<HamsterVariant> ORANGE_VARIANTS = List.of(
@@ -682,15 +616,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             AdorableHamsterPets.LOGGER.error("[HamsterEntity] tryThrowFromShoulder: Failed to create HamsterEntity instance from NBT. Clearing shoulder data as a precaution.");
             playerAccessor.setHamsterShoulderEntity(new NbtCompound()); // Clear potentially corrupted data
         }
-    }
-
-    /**
-     * Checks if the given item stack is considered a standard hamster food item.
-     * @param stack The item stack to check.
-     * @return True if the item is in the HAMSTER_FOODS set, false otherwise.
-     */
-    private static boolean isIsFood(ItemStack stack) {
-        return HAMSTER_FOODS.contains(stack.getItem());
     }
 
     // --- Bitmask Flags for DataTracker ---
@@ -1419,7 +1344,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         // --- 5. Taming Logic ---
         if (!this.isTamed()) {
             AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Hamster not tamed. Checking for taming attempt.", this.getId(), world.getTime());
-            if (player.isSneaking() && stack.isOf(ModItems.SLICED_CUCUMBER.get())) {
+            if (player.isSneaking() && ModItemTags.isTamingFood(stack)) {
                 AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Taming attempt detected.", this.getId(), world.getTime());
                 if (!world.isClient) { tryTame(player, stack); }
                 return ActionResult.success(world.isClient());
@@ -1456,7 +1381,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     world.playSound(null, this.getBlockPos(), ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_AFFECTION_SOUNDS, this.random), SoundCategory.NEUTRAL, 1.0f, this.getSoundPitch());
                     // Get and play the dynamic sound
                     if (!retrievedStack.isEmpty()) {
-                        SoundEvent pounceSound = ModSounds.getDynamicPounceSound(retrievedStack);
+                        SoundEvent pounceSound = ModSounds.getDynamicItemSound(retrievedStack);
                         float volume = (pounceSound == SoundEvents.ENTITY_GENERIC_EAT) ? 0.35f : 1.0f;
                         world.playSound(null, this.getBlockPos(), pounceSound, SoundCategory.NEUTRAL, volume, 1.7f);
                     }
@@ -1559,7 +1484,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             }
 
             // --- Shoulder Mounting with Cheese ---
-            if (stack.isOf(ModItems.CHEESE.get())) {
+            if (ModItemTags.isShoulderMountFood(stack)) {
                 if (!world.isClient) {
                     // Check if shoulder is empty by checking the NBT compound from our DataTracker
                     if (playerAccessor.getHamsterShoulderEntity().isEmpty()) {
@@ -1569,20 +1494,25 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         NbtCompound hamsterNbt = data.toNbt();
                         // Set the player's DataTracker with the new NBT
                         playerAccessor.setHamsterShoulderEntity(hamsterNbt);
-                        BlockPos hamsterPosForCheeseSound = this.getBlockPos();
+                        BlockPos hamsterPosForMountSound = this.getBlockPos();
                         AdorableHamsterPets.LOGGER.debug("[AHP DEBUG] MOUNTING: Discarding Hamster ID {}.", this.getId());
                         this.discard(); // Remove hamster from world
                         if (player instanceof ServerPlayerEntity serverPlayer) {
                             ModCriteria.HAMSTER_ON_SHOULDER.trigger(serverPlayer);
                         }
                         player.sendMessage(Text.translatable("message.adorablehamsterpets.shoulder_mount_success"), true);
-                        world.playSound(null, hamsterPosForCheeseSound, ModSounds.CHEESE_USE_SOUND.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+
+                        // --- DYNAMIC SOUND LOGIC ---
+                        SoundEvent mountLureSound = ModSounds.getDynamicItemSound(stack);
+                        world.playSound(null, hamsterPosForMountSound, mountLureSound, SoundCategory.PLAYERS, 1.0f, 1.0f);
+                        // --- END DYNAMIC SOUND LOGIC ---
+
                         SoundEvent mountSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_SHOULDER_MOUNT_SOUNDS, this.random);
                         if (mountSound != null) {
                             world.playSound(null, player.getBlockPos(), mountSound, SoundCategory.PLAYERS, 1.0f, this.getSoundPitch());
                         }
-                        ((ServerWorld)world).spawnParticles(new ItemStackParticleEffect(ParticleTypes.ITEM, new ItemStack(ModItems.CHEESE.get())),
-                                hamsterPosForCheeseSound.getX() + 0.5, hamsterPosForCheeseSound.getY() + 0.5, hamsterPosForCheeseSound.getZ() + 0.5,
+                        ((ServerWorld)world).spawnParticles(new ItemStackParticleEffect(ParticleTypes.ITEM, stack),
+                                hamsterPosForMountSound.getX() + 0.5, hamsterPosForMountSound.getY() + 0.5, hamsterPosForMountSound.getZ() + 0.5,
                                 8, 0.25D, 0.25D, 0.25D, 0.05);
                         if (!player.getAbilities().creativeMode) {
                             stack.decrement(1);
@@ -1607,7 +1537,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             }
 
             // --- Feeding Logic ---
-            boolean isPotentialFood = isIsFood(stack) || stack.isOf(ModItems.STEAMED_GREEN_BEANS.get());
+            boolean isPotentialFood = ModItemTags.isStandardFood(stack) || ModItemTags.isBuffFood(stack) || ModItemTags.isPouchUnlockFood(stack);
             if (!world.isClient() && !isSneaking && isPotentialFood) {
                 AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Owner not sneaking, holding potential food. Checking refusal.", this.getId(), world.getTime());
                 if (checkRepeatFoodRefusal(stack, player)) {
@@ -1632,7 +1562,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             }
 
             // --- Vanilla Interaction Handling ---
-            if (!isSneaking && !isPotentialFood && !stack.isOf(ModItems.CHEESE.get()) && !stack.isOf(Items.PINK_PETALS)) {
+            if (!isSneaking && !isPotentialFood && !ModItemTags.isShoulderMountFood(stack) && !stack.isOf(Items.PINK_PETALS)) {
                 AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Not sneaking or holding handled food/petals. Calling super.interactMob.", this.getId(), world.getTime());
                 ActionResult vanillaResult = super.interactMob(player, hand);
                 AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] super.interactMob returned: {}", this.getId(), world.getTime(), vanillaResult);
@@ -1841,8 +1771,18 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         return baby;
     }
 
+    /**
+     * Checks if the given ItemStack can be used to initiate breeding.
+     * This check is now driven by the user-configurable {@code standardFoods} list
+     * via the {@link ModItemTags#isStandardFood(ItemStack)} helper method.
+     *
+     * @param stack The ItemStack to check.
+     * @return {@code true} if the item is a valid breeding food.
+     */
     @Override
-    public boolean isBreedingItem(ItemStack stack) { return isIsFood(stack); } // Use helper
+    public boolean isBreedingItem(ItemStack stack) {
+        return ModItemTags.isStandardFood(stack);
+    }
 
     // --- Tick Logic ---
     @Override
@@ -2204,7 +2144,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 // Check inventory for eligible food
                 for (int i = 0; i < this.items.size(); ++i) {
                     ItemStack stack = this.items.get(i);
-                    if (!stack.isEmpty() && AUTO_HEAL_FOODS.contains(stack.getItem())) {
+                    if (!stack.isEmpty() && ModItemTags.isAutoHealFood(stack)) {
                         // Found food, start "considering" phase
                         setHamsterFlag(CONSIDERING_AUTO_EAT_FLAG, true);
                         this.preAutoEatDelayTicks = 40; // 2-second delay
@@ -2226,7 +2166,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
                 for (int i = 0; i < this.items.size(); ++i) {
                     ItemStack stack = this.items.get(i);
-                    if (!stack.isEmpty() && AUTO_HEAL_FOODS.contains(stack.getItem())) {
+                    if (!stack.isEmpty() && ModItemTags.isAutoHealFood(stack)) {
                         foodStillAvailable = true;
                         foodToEat = stack;
                         foodSlot = i;
@@ -2732,9 +2672,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         this.goalSelector.add(3, new HamsterMateGoal(this, 0.75D));
         this.goalSelector.add(4, new HamsterFollowOwnerGoal(this, 1.0D, 4.0F, 16.0F));
         this.goalSelector.add(5, new HamsterFleeGoal<>(this, LivingEntity.class, 8.0F, 0.75D, 1.5D));
-        this.goalSelector.add(6, new HamsterTemptGoal(this, 1.0D,
-                Ingredient.ofItems(ModItems.SLICED_CUCUMBER.get(), ModItems.CHEESE.get(), ModItems.STEAMED_GREEN_BEANS.get()),
-                false));
+        this.goalSelector.add(6, new HamsterTemptGoal(this, 1.0D, false));
         this.goalSelector.add(7, new HamsterSitGoal(this));
         this.goalSelector.add(8, new HamsterSleepGoal(this));
         this.goalSelector.add(9, new HamsterWanderAroundFarGoal(this, 0.75D));
@@ -2990,27 +2928,43 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     }
 
     /**
-     * Checks if the given item stack is disallowed in the hamster's inventory based on a disallow list.
+     * Checks if the given item stack is disallowed in the hamster's inventory.
+     * The logic follows a clear priority:
+     * 1. If the item is on the `pouchAllowedItems` config list, it is ALWAYS allowed.
+     * 2. If the item is on the `pouchDisallowedItems` or `pouchDisallowedTags` config lists, it is disallowed.
+     * 3. If the item is a `BlockItem` (and wasn't on the allow list), it is disallowed.
+     * 4. If the item is a `SpawnEggItem`, it is disallowed.
+     *
      * @param stack The ItemStack to check.
-     * @return True if the item is explicitly disallowed, false otherwise.
+     * @return True if the item is disallowed, false otherwise.
      */
     public boolean isItemDisallowed(ItemStack stack) {
         if (stack.isEmpty()) return false;
 
-        Item item = stack.getItem();
-
-        // --- 1. Explicit item + tag bans ---
-        if (DISALLOWED_ITEMS.contains(item)) return true;
-        for (TagKey<Item> tag : DISALLOWED_ITEM_TAGS)
-            if (stack.isIn(tag)) return true;
-
-        // --- 2. Global block‑size rule ---
-        if (item instanceof BlockItem) {
-            // Any block not on the tiny‑block whitelist is too big
-            return !stack.isIn(ModItemTags.ALLOWED_POUCH_BLOCKS);
+        // 1. Explicit ALLOW list has highest priority.
+        if (ModItemTags.isPouchAllowed(stack)) {
+            return false; // It's allowed, so it's NOT disallowed.
         }
 
-        // --- 3. Spawn eggs ---
+        // 2. Check the new DISALLOW lists from config.
+        if (ModItemTags.isPouchDisallowed(stack)) {
+            return true;
+        }
+
+        // 3. Allow any item that is considered food.
+        if (stack.getItem().isFood()) { // Use isFood() method for 1.20.1
+            return false; // It's food, so it's NOT disallowed.
+        }
+
+        Item item = stack.getItem();
+
+        // 4. Global block-item rule (a general disallow).
+        if (item instanceof BlockItem) {
+            // Any block is disallowed by default unless it was on the allowlist.
+            return true;
+        }
+
+        // 5. Spawn eggs are always disallowed.
         return item instanceof SpawnEggItem;
     }
 
@@ -3054,9 +3008,18 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     }
 
     // --- Check for Repeatable Foods ---
+    /**
+     * Checks if the hamster should refuse being fed the same item twice consecutively.
+     * An item is exempt from this check if it is included in the user-configurable
+     * {@code repeatableFoods} list, managed by {@link ModItemTags#isRepeatableFood(ItemStack)}.
+     *
+     * @param currentStack The ItemStack the player is attempting to feed.
+     * @param player The player performing the action.
+     * @return {@code true} if the food was refused, {@code false} otherwise.
+     */
     private boolean checkRepeatFoodRefusal(ItemStack currentStack, PlayerEntity player) {
         // --- 1. Check Repeat Food Refusal ---
-        if (REPEATABLE_FOODS.contains(currentStack.getItem())) return false;
+        if (ModItemTags.isRepeatableFood(currentStack)) return false;
         if (!this.lastFoodItem.isEmpty() && ItemStack.areItemsEqual(this.lastFoodItem, currentStack)) {
             this.setRefusingFood(true);
             this.refuseTimer = REFUSE_FOOD_TIMER_TICKS;
@@ -3074,36 +3037,47 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     // --- End Check for Repeatable Foods ---
 
     /**
-     * Attempts to feed the hamster when interacted with by its owner.
-     * Handles healing, breeding initiation, and buff application.
+     * Attempts to feed the hamster, handling healing, breeding, buffs, and pouch unlocking.
+     * This logic is driven by user-configurable item lists from {@link ModItemTags},
+     * such as {@code standardFoods}, {@code buffFoods}, and {@code pouchUnlockFoods}.
      *
      * @param player The player feeding the hamster.
-     * @param stack  The ItemStack being used for feeding.
-     * @return True if the feeding action (healing, breeding, buff) was successfully processed, false otherwise.
+     * @param stack  The ItemStack being used.
+     * @return {@code true} if a feeding action was successfully processed.
      */
     private boolean tryFeedingAsTamed(PlayerEntity player, ItemStack stack) {
         // --- 1. Initial Setup & Logging ---
-        boolean isFood = isIsFood(stack);
-        boolean isBuffItem = stack.isOf(ModItems.STEAMED_GREEN_BEANS.get());
+        boolean isFood = ModItemTags.isStandardFood(stack);
+        boolean isBuffItem = ModItemTags.isBuffFood(stack);
+        boolean isPouchUnlockFood = ModItemTags.isPouchUnlockFood(stack);
         boolean canHeal = this.getHealth() < this.getMaxHealth();
         boolean readyToBreed = this.getBreedingAge() == 0 && !this.isInCustomLove(); // Check custom love timer
         World world = this.getWorld();
         final AhpConfig config = AdorableHamsterPets.CONFIG;
         boolean actionTaken = false; // Initialize return value
 
-
         AdorableHamsterPets.LOGGER.debug("[FeedAttempt {} Tick {}] Entering tryFeedingAsTamed. Item: {}, isFood={}, isBuff={}, canHeal={}, breedingAge={}, isInCustomLove={}, readyToBreed={}",
                 this.getId(), world.getTime(), stack.getItem(), isFood, isBuffItem, canHeal, this.getBreedingAge(), this.isInCustomLove(), readyToBreed);
 
-
-        if (!isFood && !isBuffItem) {
-            AdorableHamsterPets.LOGGER.debug("[FeedAttempt {} Tick {}] Item is not valid food or buff item. Returning false.", this.getId(), world.getTime());
-            return false; // Not a valid item for feeding
+        // --- 2. Check for Pouch Unlock First (Highest Priority Feeding Action) ---
+        if (isPouchUnlockFood && !getHamsterFlag(CHEEK_POUCH_UNLOCKED_FLAG)) {
+            setHamsterFlag(CHEEK_POUCH_UNLOCKED_FLAG, true);
+            AdorableHamsterPets.LOGGER.debug("Hamster {} cheek pouch unlocked by {}.", this.getId(), stack.getItem());
+            if (player instanceof ServerPlayerEntity serverPlayer) {
+                ModCriteria.CHEEK_POUCH_UNLOCKED.trigger(serverPlayer, this);
+            }
+            world.playSound(null, this.getBlockPos(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.NEUTRAL, 0.5f, 1.5f);
+            if (!world.isClient) {
+                ((ServerWorld) world).spawnParticles(
+                        new ItemStackParticleEffect(ParticleTypes.ITEM, stack.copy()),
+                        this.getX(), this.getBodyY(0.2D), this.getZ(),
+                        25, 0.25D, 0.15D, 0.25D, 0.0D
+                );
+            }
+            return true;
         }
-        // --- End 1. Initial Setup & Logging ---
 
-
-        // --- 2. Steamed Green Beans Logic ---
+        // --- 3. Check for Buff Food (Steamed Green Beans Logic) ---
         if (isBuffItem) {
             long currentTime = world.getTime();
             if (this.greenBeanBuffEndTick > currentTime) {
@@ -3159,52 +3133,26 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 }
             }
         }
-        // --- End 2. Steamed Green Beans Logic ---
 
-
-        // --- 3. Handle Standard Food (Healing/Breeding and Pouch Unlock) ---
-        else if (isFood) { // This implies stack.getItem() is in HAMSTER_FOODS
-            boolean wasHealedOrBredThisTime = false; // Local flag for this feeding instance
-
+        // --- 4. Handle Standard Food (Healing/Breeding) ---
+        else if (ModItemTags.isStandardFood(stack)) {
             if (canHeal) {
                 this.heal(config.standardFoodHealing.get());
                 actionTaken = true;
-                wasHealedOrBredThisTime = true;
                 AdorableHamsterPets.LOGGER.debug("[FeedAttempt {}] Healed with standard food.", this.getId());
             } else if (readyToBreed) {
                 this.setSitting(false, true);
                 this.setCustomInLove(player);
                 this.setInLove(true);
                 actionTaken = true;
-                wasHealedOrBredThisTime = true;
                 AdorableHamsterPets.LOGGER.debug("[FeedAttempt {}] Entered love mode with standard food.", this.getId());
             }
-
-            // --- Unlock Cheek Pouch if Hamster Food Mix was fed AND a healing/breeding action occurred ---
-            if (wasHealedOrBredThisTime && stack.isOf(ModItems.HAMSTER_FOOD_MIX.get())) {
-                if (!getHamsterFlag(CHEEK_POUCH_UNLOCKED_FLAG)) {
-                    setHamsterFlag(CHEEK_POUCH_UNLOCKED_FLAG, true);
-                    AdorableHamsterPets.LOGGER.debug("Hamster {} cheek pouch unlocked by food mix.", this.getId());
-                    if (player instanceof ServerPlayerEntity serverPlayer) {
-                        ModCriteria.CHEEK_POUCH_UNLOCKED.trigger(serverPlayer, this);
-                    }
-                    world.playSound(null, this.getBlockPos(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.NEUTRAL, 0.5f, 1.5f);
-                    if (!world.isClient) {
-                        ((ServerWorld) world).spawnParticles(
-                                new ItemStackParticleEffect(ParticleTypes.ITEM, new ItemStack(ModItems.HAMSTER_FOOD_MIX.get())),
-                                this.getX(), this.getBodyY(0.2D), this.getZ(),
-                                10, 0.25D, 0.15D, 0.25D, 0.20D
-                        );
-                    }
-                }
-            }
-            // --- End Unlock Cheek Pouch ---
-
-            if (!actionTaken) { // If not healed and not bred (e.g., full health, not ready to breed)
-                AdorableHamsterPets.LOGGER.debug("[FeedAttempt {}] Standard food used, but no action (heal/breed) taken.", this.getId());
-            }
         }
-        // --- End 3. Handle Standard Food ---
+        // If no other action was taken, it wasn't a valid feeding interaction in this context.
+        if (!actionTaken) {
+            AdorableHamsterPets.LOGGER.debug("[FeedAttempt {} Tick {}] Item {} was not a valid food for any action.",
+                    this.getId(), world.getTime(), stack.getItem());
+        }
         return actionTaken;
     }
 

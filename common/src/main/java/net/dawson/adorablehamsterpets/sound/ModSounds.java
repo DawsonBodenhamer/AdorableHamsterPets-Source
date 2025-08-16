@@ -165,14 +165,14 @@ public class ModSounds {
     }
 
     /**
-     * Determines the appropriate pounce sound effect based on the properties of the stolen item.
-     * This method categorizes items using extensive keyword lists and checks for a food component
-     * to return one of five possible sound events.
+     * Determines an appropriate interaction sound based on the properties of an item.
+     * This method categorizes items using extensive keyword lists and component checks
+     * to return one of several possible sound events.
      *
-     * @param stack The ItemStack the hamster is pouncing on.
-     * @return The SoundEvent for the pounce ("clink", "stone", "wood", "crunch", or "thud").
+     * @param stack The ItemStack to be evaluated.
+     * @return The most fitting SoundEvent for the item ("clink", "stone", "wood", "squish", "crunch", or "thud").
      */
-    public static SoundEvent getDynamicPounceSound(ItemStack stack) {
+    public static SoundEvent getDynamicItemSound(ItemStack stack) {
         if (stack.isEmpty()) {
             return SoundEvents.BLOCK_WOOL_PLACE; // Fallback for safety
         }
@@ -182,26 +182,30 @@ public class ModSounds {
         // --- Keyword Lists for Sound Categories ---
         List<String> clinkKeywords = List.of(
                 "diamond", "emerald", "amethyst", "lapis", "quartz", "raw_", "coal",
-                "ingot", "nugget", "netherite", "gold", "iron", "copper", "scrap",
-                "shard", "brick", "sherd", "flint", "prismarine", "rod",
-                "glass", "bottle", "spyglass", "tear", "pearl", "eye",
-                "bell", "trim", "charcoal", "bucket", "shears", "hoe", "axe", "pickaxe", "shovel", "sword"
+                "ingot", "nugget", "netherite", "gold", "iron", "copper", "scrap", "shard",
+                "brick", "sherd", "flint", "prismarine", "rod", "glass", "bottle", "spyglass",
+                "tear", "pearl", "eye", "bell", "trim", "charcoal", "bucket", "shears", "hoe",
+                "axe", "pickaxe", "shovel", "sword"
         );
 
         List<String> stoneKeywords = List.of(
                 "stone", "rock", "ore", "andesite", "diorite", "granite", "deepslate",
-                "tuff", "calcite", "dripstone", "sandstone", "end_stone", "netherrack",
-                "basalt", "blackstone", "obsidian", "gravel", "clay", "terracotta",
-                "concrete", "powder", "redstone", "glowstone_dust", "gunpowder", "sugar",
-                "bone_meal", "blaze_powder", "egg", "snowball"
+                "tuff", "calcite", "netherrack", "dust", "basalt", "obsidian", "gravel", "clay",
+                "terracotta", "concrete", "powder", "sugar", "bone_meal", "egg", "snowball"
         );
 
         List<String> woodKeywords = List.of(
                 "log", "wood", "planks", "stick", "sapling", "door", "trapdoor", "sign",
-                "boat", "bowl", "chest", "table", "lectern", "loom", "composter", "barrel",
-                "ladder", "fence", "gate", "plate", "button", "torch", "arrow", "bow",
-                "scaffolding", "bamboo", "propagule", "roots", "cherry", "acacia", "birch",
-                "dark_oak", "jungle", "oak", "spruce", "crimson_", "warped_", "stem", "hyphae"
+                "boat", "bowl", "chest", "table", "lectern", "loom", "composter", "barrel", "ladder",
+                "fence", "gate", "plate", "button", "torch", "arrow", "bow", "scaffolding", "bamboo",
+                "propagule", "roots", "cherry", "acacia", "birch", "dark_oak", "jungle", "oak", "spruce"
+        );
+
+        List<String> squishKeywords = List.of(
+                "cheese", "flesh", "slime", "magma", "honey", "kelp", "moss", "fungus", "wart",
+                "guts", "ink", "moist", "wet", "leaf", "lily", "pad", "vine", "pickle", "cucumber", "beans",
+                "chorus_fruit", "berries", "cabbage", "tomato", "rice", "pumpkin", "corn", "egg", "pork",
+                "beef", "mutton", "chicken", "rabbit", "cod", "salmon", "spore", "dripleaf", "warped", "stem"
         );
 
         // --- Check Categories in Order of Priority ---
@@ -212,20 +216,24 @@ public class ModSounds {
         }
         for (String keyword : stoneKeywords) {
             if (translationKey.contains(keyword)) {
-                return SoundEvents.BLOCK_STONE_PLACE; // "Stone"
+                return SoundEvents.BLOCK_STONE_PLACE; // "Scuff" (for stony items)
             }
         }
         for (String keyword : woodKeywords) {
             if (translationKey.contains(keyword)) {
-                return SoundEvents.BLOCK_WOOD_PLACE; // "Wood"
+                return SoundEvents.BLOCK_WOOD_PLACE; // "Thud" (for wooden items)
+            }
+        }
+        for (String keyword : squishKeywords) {
+            if (translationKey.contains(keyword)) {
+                return ModSounds.CHEESE_USE_SOUND.get(); // "Squish" (for wet/moist items)
             }
         }
         if (item.isFood()) {
-            return SoundEvents.ENTITY_GENERIC_EAT; // "Crunch"
+            return SoundEvents.ENTITY_GENERIC_EAT; // "Crunch" (for food items)
         }
-
         // --- Fallback for everything else ---
-        return SoundEvents.BLOCK_WOOL_PLACE; // "Thud"
+        return SoundEvents.BLOCK_WOOL_PLACE; // "Fump" (for generic/soft items)
     }
 
     // --- 5. Main Registration Call ---

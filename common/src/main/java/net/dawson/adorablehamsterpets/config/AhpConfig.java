@@ -158,6 +158,93 @@ public class AhpConfig extends Config {
     @Translatable.Desc("Hamsters need their space. (20 ticks = 1 s)")
     public ValidatedInt breedingCooldownTicks = new ValidatedInt(6000, 24000, 600);
 
+    // --- Core Item Tag Overrides ---
+    @Translatable.Name("Core Item Tag Overrides")
+    @Translatable.Desc("For the advanced user who looks at a perfectly functional system and thinks, 'I can make this weirder.' Edit these lists to change what items your hamsters consider food, bait, treasure, and all other interactions. Use item IDs (e.g., 'minecraft:diamond') or tags (e.g., '#minecraft:fishes'). Mess it up? That's a you problem.")
+    public ConfigGroup itemTags = new ConfigGroup("itemTags", true);
+
+    @Translatable.Name("Taming Baits")
+    @Translatable.Desc("The official list of bribes for convincing wild fluffballs to join your cause. By default, it's just sliced cucumbers. Feel free to add 'minecraft:nether_star' if you enjoy making poor life choices. Compatible with Cultural Delights by default!")
+    public List<String> tamingFoods = new ArrayList<>(List.of("adorablehamsterpets:sliced_cucumber", "culturaldelights:cut_cucumber"));
+
+    @Translatable.Name("Standard Diet")
+    @Translatable.Desc("The hamster's everyday menu. These items will heal them or, if they're at full health, might give them... ideas about starting a family. Don't make it weird.")
+    public List<String> standardFoods = new ArrayList<>(List.of(
+            "adorablehamsterpets:hamster_food_mix", "adorablehamsterpets:sunflower_seeds", "adorablehamsterpets:green_beans",
+            "adorablehamsterpets:cucumber", "adorablehamsterpets:green_bean_seeds", "adorablehamsterpets:cucumber_seeds",
+            "minecraft:apple", "minecraft:carrot", "minecraft:melon_slice", "minecraft:sweet_berries",
+            "minecraft:beetroot", "minecraft:wheat", "minecraft:wheat_seeds",
+
+            // Farmer's Delight
+            "farmersdelight:cabbage_leaf", "farmersdelight:cabbage_seeds",
+            "farmersdelight:tomato_seeds", "farmersdelight:cooked_rice",
+            "farmersdelight:pumpkin_slice",
+
+            // Cultural Delights
+            "culturaldelights:cut_cucumber", "culturaldelights:cucumber_seeds", "culturaldelights:corn_kernels"
+    ));
+
+    @Translatable.Name("High-Value Heistables")
+    @Translatable.Desc("The list of items a hamster might try to... 'borrow' if you leave them on the ground. A chase will ensue. You have been warned.")
+    public List<String> stealableItems = new ArrayList<>(List.of("minecraft:diamond"));
+
+    @Translatable.Name("Performance-Enhancers")
+    @Translatable.Desc("The list of questionable substances that grant your hamster temporary superpowers. By default, it's just steamed green beans.")
+    public List<String> buffFoods = new ArrayList<>(List.of("adorablehamsterpets:steamed_green_beans"));
+
+    @Translatable.Name("Shoulder Summoning Lures")
+    @Translatable.Desc("The specific item that convinces a tamed hamster your shoulder is the best seat in the house. Defaults to cheese, because of course it does.")
+    public List<String> shoulderMountFoods = new ArrayList<>(List.of("adorablehamsterpets:cheese"));
+
+    @Translatable.Name("Cheek Pouch Keys")
+    @Translatable.Desc("The one-time offering required to earn a hamster's ultimate trust, unlocking their cheek inventory. Make it something special. Or don't. See if I care.")
+    public List<String> pouchUnlockFoods = new ArrayList<>(List.of("adorablehamsterpets:hamster_food_mix"));
+
+    @Translatable.Name("Picky Eater Solutions")
+    @Translatable.Desc("Items on this list are so delicious, your hamster will never refuse them, even if you feed it to them twice. For the truly spoiled rodent.")
+    public List<String> repeatableFoods = new ArrayList<>(List.of("adorablehamsterpets:hamster_food_mix", "adorablehamsterpets:steamed_green_beans"));
+
+    @Translatable.Name("Passively Munchable Snacks")
+    @Translatable.Desc("The specific items a hamster will eat directly from its cheek pouch to heal itself when injured. Keep it exclusive, or let them feast on enchanted apples. Your call.")
+    public List<String> autoHealFoods = new ArrayList<>(List.of("adorablehamsterpets:hamster_food_mix"));
+
+    @Translatable.Name("Cheek Pouch Smuggling List")
+    @Translatable.Desc("Fine-tune exactly what your hamster is (and isn't) allowed to carry. The 'Allowed' list acts as a high-priority override to the 'Disallowed' lists and general rules.")
+    public ConfigGroup pouchRestrictions = new ConfigGroup("pouchRestrictions", true);
+
+    @Translatable.Name("Allowed Items")
+    @Translatable.Desc("A specific list of items and tags that are allowed in the hamster's cheek pouch. You can add things to this list to bypass the default 'no tools or big blocks' rule, since this overrides the 'disallowed' settings.")
+    public List<String> pouchAllowedItems = new ArrayList<>(List.of(
+            "minecraft:torch", "minecraft:soul_torch", "minecraft:redstone_torch",
+            "minecraft:repeater", "minecraft:comparator", "minecraft:lever",
+            "#minecraft:buttons", "#minecraft:rails",
+            "#minecraft:pressure_plates"
+    ));
+
+    @Translatable.Name("Pouch Disallowed Items")
+    @Translatable.Desc("A list of specific item IDs that are NEVER allowed in the cheek pouch, unless they are on the 'Allowed' list above. Mostly stuff that's too big, too pointy, or just plain illogical. Lol.")
+    public List<String> pouchDisallowedItems = new ArrayList<>(List.of(
+            "minecraft:bow", "minecraft:crossbow", "minecraft:trident", "minecraft:fishing_rod",
+            "minecraft:shield", "minecraft:elytra", "minecraft:turtle_helmet", "minecraft:carved_pumpkin",
+            "minecraft:player_head", "minecraft:zombie_head", "minecraft:skeleton_skull", "minecraft:wither_skeleton_skull", "minecraft:creeper_head", "minecraft:dragon_head", "minecraft:piglin_head",
+            "minecraft:minecart", "minecraft:chest_minecart", "minecraft:furnace_minecart", "minecraft:tnt_minecart", "minecraft:hopper_minecart", "minecraft:command_block_minecart",
+            "minecraft:saddle", "minecraft:bucket", "minecraft:water_bucket", "minecraft:lava_bucket", "minecraft:milk_bucket", "minecraft:powder_snow_bucket",
+            "minecraft:axolotl_bucket", "minecraft:tadpole_bucket", "minecraft:cod_bucket", "minecraft:pufferfish_bucket", "minecraft:salmon_bucket", "minecraft:tropical_fish_bucket",
+            "minecraft:item_frame", "minecraft:glow_item_frame", "minecraft:painting", "minecraft:armor_stand",
+            "minecraft:end_crystal", "minecraft:spyglass", "minecraft:nether_star", "minecraft:dragon_egg", "minecraft:bundle",
+            "adorablehamsterpets:hamster_guide_book"
+    ));
+
+    @ConfigGroup.Pop
+    @ConfigGroup.Pop
+    @Translatable.Name("Pouch Disallowed Tags")
+    @Translatable.Desc("A list of item tags that are NEVER allowed in the cheek pouch, unless they are on the 'Allowed' list above. A broad-spectrum approach to preventing your hamster from swallowing an entire sword.")
+    public List<String> pouchDisallowedTags = new ArrayList<>(List.of(
+            "#minecraft:axes", "#minecraft:hoes", "#minecraft:pickaxes", "#minecraft:shovels", "#minecraft:swords",
+            "#minecraft:trimmable_armor", "#minecraft:beds", "#minecraft:banners", "#minecraft:doors",
+            "#minecraft:boats"
+    ));
+
     // --- Spawn Settings ---
     @Translatable.Name("Spawn Settings")
     @Translatable.Desc("How Many, Where, and How Often?  Note: Some of these settings require re-logging into your world to take effect.")
@@ -349,10 +436,6 @@ public class AhpConfig extends Config {
     @Translatable.Name("Enable Diamond Stealing")
     @Translatable.Desc("Permits hamsters to engage in spontaneous, high-stakes games of keep-away with your valuables. A chase ensues. Obviously.")
     public boolean enableDiamondStealing = true;
-
-    @Translatable.Name("Stealable Items")
-    @Translatable.Desc("A list of item IDs hamsters find irresistible. Format: 'mod_id:item_id'. Example: 'minecraft:diamond'.")
-    public List<String> stealableItems = new ArrayList<>(List.of("minecraft:diamond"));
 
     @Translatable.Name("Pounce Chance")
     @Translatable.Desc("Probability (0.1 to 1.0) a hamster will succumb to temptation. High by default. You shouldn't leave your diamonds lying around anyway.")

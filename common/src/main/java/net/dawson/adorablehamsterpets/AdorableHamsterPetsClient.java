@@ -9,6 +9,7 @@ import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
 import dev.architectury.registry.client.rendering.RenderTypeRegistry;
 import dev.architectury.registry.menu.MenuRegistry;
 import io.netty.buffer.Unpooled;
+import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.block.ModBlocks;
 import net.dawson.adorablehamsterpets.client.option.ModKeyBindings;
@@ -28,6 +29,7 @@ import net.dawson.adorablehamsterpets.networking.ModPackets;
 import net.dawson.adorablehamsterpets.screen.HamsterInventoryScreen;
 import net.dawson.adorablehamsterpets.screen.ModScreenHandlers;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
+import net.dawson.adorablehamsterpets.tag.ModItemTags;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.BookScreen;
 import net.minecraft.client.option.KeyBinding;
@@ -38,6 +40,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.HitResult;
 
 import java.util.HashSet;
@@ -59,6 +62,16 @@ public class AdorableHamsterPetsClient {
      */
     public static void init() {
         RenderTypeRegistry.register(RenderLayer.getCutout(), ModBlocks.GREEN_BEANS_CROP.get(), ModBlocks.CUCUMBER_CROP.get(), ModBlocks.SUNFLOWER_BLOCK.get(), ModBlocks.WILD_CUCUMBER_BUSH.get(), ModBlocks.WILD_GREEN_BEAN_BUSH.get());
+
+        // --- Register Fzzy Config Client Update Listener ---
+        // This event fires on the client after the user saves changes in the GUI.
+        ConfigApiJava.event().onUpdateClient((id, config) -> {
+            if (id.equals(Identifier.of(AdorableHamsterPets.MOD_ID, "main"))) {
+                ModItemTags.parseConfig();
+                AdorableHamsterPets.LOGGER.info("Reloaded Adorable Hamster Pets item tag config on client following GUI update. *wink wink*");
+            }
+        });
+
         ModPackets.registerS2CPackets();
         ClientTickEvent.CLIENT_POST.register(AdorableHamsterPetsClient::onEndClientTick);
         ColorHandlerRegistry.registerItemColors((stack, tintIndex) -> -1, ModItems.HAMSTER_SPAWN_EGG.get());
