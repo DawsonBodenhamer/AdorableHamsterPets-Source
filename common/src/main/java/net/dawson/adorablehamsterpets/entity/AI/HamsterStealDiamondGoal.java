@@ -4,6 +4,7 @@ import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
+import net.dawson.adorablehamsterpets.tag.ModItemTags;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.ai.FuzzyTargeting;
 import net.minecraft.entity.ai.goal.Goal;
@@ -124,7 +125,7 @@ public class HamsterStealDiamondGoal extends Goal {
         List<ItemEntity> nearbyItems = this.world.getEntitiesByClass(
                 ItemEntity.class,
                 this.hamster.getBoundingBox().expand(10.0),
-                itemEntity -> stealableItems.contains(itemEntity.getStack().getItem()) && itemEntity.isOnGround()
+                itemEntity -> ModItemTags.isStealableItem(itemEntity.getStack()) && itemEntity.isOnGround()
         );
 
         Optional<ItemEntity> closestItem = nearbyItems.stream()
@@ -221,7 +222,7 @@ public class HamsterStealDiamondGoal extends Goal {
                 this.world.spawnEntity(new ItemEntity(this.world, this.hamster.getX(), this.hamster.getY(), this.hamster.getZ(), stolenStack.copy()));
                 this.hamster.playSound(ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_HURT_SOUNDS, this.hamster.getRandom()), 1.0f, 1.0f);
                 // Get and play the dynamic sound
-                SoundEvent pounceSound = ModSounds.getDynamicPounceSound(stolenStack);
+                SoundEvent pounceSound = ModSounds.getDynamicItemSound(stolenStack);
                 float volume = (pounceSound == SoundEvents.ENTITY_GENERIC_EAT) ? 0.35f : 1.0f;
                 this.world.playSound(null, this.hamster.getBlockPos(), pounceSound, SoundCategory.NEUTRAL, volume, 1.7f);
                 AdorableHamsterPets.LOGGER.trace ("[StealGoal-{}] Dropped stolen item {} because timer expired.", this.hamster.getId(), stolenStack.getItem());
@@ -357,7 +358,7 @@ public class HamsterStealDiamondGoal extends Goal {
 
                     // --- Play Sounds and Spawn Particles Simultaneously ---
                     // Get the dynamic sound for the item
-                    SoundEvent pounceSound = ModSounds.getDynamicPounceSound(stackToSteal);
+                    SoundEvent pounceSound = ModSounds.getDynamicItemSound(stackToSteal);
                     float volume = (pounceSound == SoundEvents.ENTITY_GENERIC_EAT) ? 0.35f : 1.0f;
                     this.world.playSound(null, this.hamster.getBlockPos(), pounceSound, SoundCategory.NEUTRAL, volume, 1.7f);
 

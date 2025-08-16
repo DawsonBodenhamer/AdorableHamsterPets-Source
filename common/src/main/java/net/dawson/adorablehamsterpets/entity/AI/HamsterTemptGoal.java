@@ -1,6 +1,7 @@
 package net.dawson.adorablehamsterpets.entity.AI;
 
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
+import net.dawson.adorablehamsterpets.tag.ModItemTags;
 import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -12,14 +13,12 @@ public class HamsterTemptGoal extends TemptGoal {
 
     // --- 1. Fields ---
     private final HamsterEntity hamster;
-    private final Predicate<ItemStack> temptPredicate; // Stores the item predicate for tempting
     private int recheckTimer = 0; // Frequency of begging state updates
 
     // --- 2. Constructors ---
-    public HamsterTemptGoal(HamsterEntity hamster, double speed, Predicate<ItemStack> predicate, boolean canBeScared) {
-        super(hamster, speed, predicate, canBeScared); // Call to superclass constructor
+    public HamsterTemptGoal(HamsterEntity hamster, double speed, boolean canBeScared) {
+        super(hamster, speed, ModItemTags::isTamingFood, canBeScared); // Call to superclass constructor
         this.hamster = hamster;
-        this.temptPredicate = predicate;
         // setControls(EnumSet.of(Control.MOVE, Control.LOOK)) is handled by superclass.
     }
 
@@ -110,6 +109,6 @@ public class HamsterTemptGoal extends TemptGoal {
     private boolean isHoldingTemptItem(PlayerEntity player) {
         ItemStack mainHandStack = player.getMainHandStack();
         ItemStack offHandStack = player.getOffHandStack();
-        return this.temptPredicate.test(mainHandStack) || this.temptPredicate.test(offHandStack);
+        return ModItemTags.isTamingFood(mainHandStack) || ModItemTags.isTamingFood(offHandStack);
     }
 }
