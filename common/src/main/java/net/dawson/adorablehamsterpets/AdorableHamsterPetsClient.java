@@ -3,7 +3,6 @@ package net.dawson.adorablehamsterpets;
 import dev.architectury.event.CompoundEventResult;
 import dev.architectury.event.events.client.ClientTickEvent;
 import dev.architectury.event.events.common.InteractionEvent;
-import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
 import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
 import dev.architectury.registry.client.rendering.RenderTypeRegistry;
@@ -21,8 +20,6 @@ import net.dawson.adorablehamsterpets.config.DismountPressType;
 import net.dawson.adorablehamsterpets.config.DismountTriggerType;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.dawson.adorablehamsterpets.entity.client.HamsterRenderer;
-import net.dawson.adorablehamsterpets.entity.client.ModModelLayers;
-import net.dawson.adorablehamsterpets.entity.client.model.HamsterShoulderModel;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.item.ModItems;
 import net.dawson.adorablehamsterpets.networking.ModPackets;
@@ -103,13 +100,6 @@ public class AdorableHamsterPetsClient {
      */
     public static void initEntityRenderers() {
         EntityRendererRegistry.register(ModEntities.HAMSTER, HamsterRenderer::new);
-    }
-
-    /**
-     * Registers entity model layer definitions. Called from a dedicated event handler.
-     */
-    public static void initModelLayers() {
-        EntityModelLayerRegistry.register(ModModelLayers.HAMSTER_SHOULDER_LAYER, HamsterShoulderModel::getTexturedModelData);
     }
 
     public static void onHamsterRendered(int entityId) {

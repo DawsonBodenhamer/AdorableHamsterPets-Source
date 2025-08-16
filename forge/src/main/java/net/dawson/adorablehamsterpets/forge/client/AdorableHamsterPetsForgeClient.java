@@ -5,9 +5,7 @@ import net.dawson.adorablehamsterpets.AdorableHamsterPetsClient;
 import net.dawson.adorablehamsterpets.client.option.ModKeyBindings;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.dawson.adorablehamsterpets.entity.client.HamsterRenderer;
-import net.dawson.adorablehamsterpets.entity.client.ModModelLayers;
 import net.dawson.adorablehamsterpets.entity.client.feature.HamsterShoulderFeatureRenderer;
-import net.dawson.adorablehamsterpets.entity.client.model.HamsterShoulderModel;
 import net.dawson.adorablehamsterpets.screen.HamsterInventoryScreen;
 import net.dawson.adorablehamsterpets.screen.ModScreenHandlers;
 import net.minecraft.client.gui.screen.ingame.HandledScreens;
@@ -72,14 +70,6 @@ public final class AdorableHamsterPetsForgeClient {
         event.registerEntityRenderer(ModEntities.HAMSTER.get(), HamsterRenderer::new);
     }
 
-    @SubscribeEvent
-    public static void onRegisterLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(
-                ModModelLayers.HAMSTER_SHOULDER_LAYER,
-                HamsterShoulderModel::getTexturedModelData
-        );
-    }
-
     /**
      * Add the shoulder-hamster feature to both vanilla player models.
      * Vanilla (and thus Forge) identify them with the keys
@@ -90,23 +80,13 @@ public final class AdorableHamsterPetsForgeClient {
         // Steve
         PlayerEntityRenderer steveRenderer = event.getSkin("default");
         if (steveRenderer != null) {
-            steveRenderer.addFeature(
-                    new HamsterShoulderFeatureRenderer(
-                            steveRenderer,
-                            event.getEntityModels()
-                    )
-            );
+            steveRenderer.addFeature(new HamsterShoulderFeatureRenderer(steveRenderer));
         }
 
         // Alex
         PlayerEntityRenderer alexRenderer = event.getSkin("slim");
         if (alexRenderer != null) {
-            alexRenderer.addFeature(
-                    new HamsterShoulderFeatureRenderer(
-                            alexRenderer,
-                            event.getEntityModels()
-                    )
-            );
+            alexRenderer.addFeature(new HamsterShoulderFeatureRenderer(alexRenderer));
         }
     }
 }
