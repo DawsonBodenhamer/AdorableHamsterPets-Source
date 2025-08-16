@@ -2676,7 +2676,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         this.goalSelector.add(7, new HamsterSitGoal(this));
         this.goalSelector.add(8, new HamsterSleepGoal(this));
         this.goalSelector.add(9, new HamsterWanderAroundFarGoal(this, 0.75D));
-        this.goalSelector.add(10, new HamsterLookAtEntityGoal(this, PlayerEntity.class, 3.0F, 0.15F));
+        this.goalSelector.add(10, new HamsterLookAtEntityGoal(this, PlayerEntity.class, 2.0F, 0.15F));
         this.goalSelector.add(11, new HamsterLookAroundGoal(this));
 
         // --- Target Selector Goals ---
