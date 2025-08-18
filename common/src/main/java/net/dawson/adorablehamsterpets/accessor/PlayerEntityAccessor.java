@@ -1,6 +1,9 @@
 package net.dawson.adorablehamsterpets.accessor;
 
+import net.dawson.adorablehamsterpets.entity.ShoulderLocation;
 import net.minecraft.nbt.NbtCompound;
+
+import java.util.ArrayDeque;
 
 /**
  * Accessor interface to expose custom methods injected into PlayerEntity by PlayerEntityMixin.
@@ -8,11 +11,19 @@ import net.minecraft.nbt.NbtCompound;
  * referencing the mixin class directly.
  */
 public interface PlayerEntityAccessor {
-    NbtCompound getHamsterShoulderEntity();
-    void setHamsterShoulderEntity(NbtCompound nbt);
+    NbtCompound getShoulderHamster(ShoulderLocation location);
+    void setShoulderHamster(ShoulderLocation location, NbtCompound nbt);
+
+    boolean hasAnyShoulderHamster();
 
     int ahp_getLastGoldMessageIndex();
     void ahp_setLastGoldMessageIndex(int index);
 
-    void adorablehamsterpets$dismountShoulderHamster();
+    void adorablehamsterpets$dismountShoulderHamster(boolean isThrow);
+
+    default void adorablehamsterpets$dismountShoulderHamster() {
+        adorablehamsterpets$dismountShoulderHamster(false);
+    }
+
+    ArrayDeque<ShoulderLocation> adorablehamsterpets$getMountOrderQueue();
 }
