@@ -11,6 +11,7 @@ import net.dawson.adorablehamsterpets.command.ModCommands;
 import net.dawson.adorablehamsterpets.config.AhpConfig;
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
+import net.dawson.adorablehamsterpets.entity.ShoulderLocation;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.item.ModItemGroups;
 import net.dawson.adorablehamsterpets.item.ModItems;
@@ -146,27 +147,25 @@ public class AdorableHamsterPets {
 	 * @param wasDeath  A boolean flag indicating whether the clone was caused by player death.
 	 */
 	private static void onPlayerClone(ServerPlayerEntity oldPlayer, ServerPlayerEntity newPlayer, boolean wasDeath) {
-		// --- 1. Get Shoulder Data from the Old Player ---
 		PlayerEntityAccessor oldPlayerAccessor = (PlayerEntityAccessor) oldPlayer;
-		NbtCompound shoulderNbt = oldPlayerAccessor.getHamsterShoulderEntity();
+		PlayerEntityAccessor newPlayerAccessor = (PlayerEntityAccessor) newPlayer;
 
-		// --- 2. Check if a Hamster Was on the Shoulder ---
-		if (shoulderNbt.isEmpty()) {
-			return; // No hamster data to process.
-		}
+		for (ShoulderLocation location : ShoulderLocation.values()) {
+			NbtCompound shoulderNbt = oldPlayerAccessor.getShoulderHamster(location);
+			if (shoulderNbt.isEmpty()) {
+				continue;
+			}
 
-		// --- 3. Handle Death vs. Non-Death Scenarios ---
-		if (oldPlayer.isDead()) {
-			// --- Player Died: Spawn the hamster at the death location ---
-			ServerWorld world = oldPlayer.getServerWorld();
-			// The 'isDiamondAlertActive' parameter is false as it's not relevant to respawning.
-			HamsterEntity.spawnFromNbt(world, oldPlayer, shoulderNbt, false);
-			AdorableHamsterPets.LOGGER.debug("Player {} died. Spawning shoulder hamster at death location.", oldPlayer.getName().getString());
-		} else {
-			// --- Player Cloned (e.g., End Portal): Transfer hamster to the new player instance ---
-			PlayerEntityAccessor newPlayerAccessor = (PlayerEntityAccessor) newPlayer;
-			newPlayerAccessor.setHamsterShoulderEntity(shoulderNbt);
-			AdorableHamsterPets.LOGGER.debug("Player {} was cloned. Transferring shoulder hamster to new entity.", newPlayer.getName().getString());
+			if (wasDeath) {
+				// Player Died: Spawn the hamster at the death location
+				ServerWorld world = oldPlayer.getServerWorld();
+				HamsterEntity.spawnFromNbt(world, oldPlayer, shoulderNbt, false, null);
+				AdorableHamsterPets.LOGGER.debug("Player {} died. Spawning {} hamster at death location.", oldPlayer.getName().getString(), location);
+			} else {
+				// Player Cloned (e.g., End Portal): Transfer hamster to the new player instance
+				newPlayerAccessor.setShoulderHamster(location, shoulderNbt);
+				AdorableHamsterPets.LOGGER.debug("Player {} was cloned. Transferring {} hamster to new entity.", newPlayer.getName().getString(), location);
+			}
 		}
 	}
 }

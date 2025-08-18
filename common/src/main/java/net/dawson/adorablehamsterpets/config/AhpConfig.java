@@ -8,6 +8,7 @@ import me.fzzyhmstrs.fzzy_config.config.ConfigGroup;
 import me.fzzyhmstrs.fzzy_config.screen.widget.TextureIds;
 import me.fzzyhmstrs.fzzy_config.util.Translatable;
 import me.fzzyhmstrs.fzzy_config.validation.ValidatedField;
+import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedBoolean;
 import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedCondition;
 import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedEnum;
 import me.fzzyhmstrs.fzzy_config.validation.number.ValidatedDouble;
@@ -354,6 +355,10 @@ public class AhpConfig extends Config {
     @Translatable.Desc("Settings for your fuzzy parrot of doom.")
     public ConfigGroup shoulder = new ConfigGroup("shoulder", true);
 
+    @Translatable.Name("Core Settings")
+    @Translatable.Desc("Just the basic stuff. You know, detecting creepers, sniffing diamonds. Just average Minecraft stuff really. No big deal. Why are you clapping and squealing? Stop that. You look silly.")
+    public ConfigGroup shoulderCore = new ConfigGroup("shoulderCore", true);
+
     @Translatable.Name("Enable Creeper Detection")
     @Translatable.Desc("May save your inventory. Or your ears.")
     public boolean enableShoulderCreeperDetection = true;
@@ -366,9 +371,18 @@ public class AhpConfig extends Config {
     @Translatable.Desc("Because who doesn’t enjoy unsolicited financial advice from a rodent?")
     public boolean enableShoulderDiamondDetection = true;
 
+    @ConfigGroup.Pop
     @Translatable.Name("Diamond Detection Radius (Blocks)")
     @Translatable.Desc("How close you need to be before the squeak says \"bling.\"")
     public ValidatedDouble shoulderDiamondDetectionRadius = new ValidatedDouble(10.0, 20.0, 5.0);
+
+    @Translatable.Name("Dismount Settings")
+    @Translatable.Desc("Here's where you decide how to get the little rascals off your shoulders. Warning: they can be clingy.")
+    public ConfigGroup shoulderDismount = new ConfigGroup("shoulderDismount", true);
+
+    @Translatable.Name("Dismount Order")
+    @Translatable.Desc("Determines the sequence for dismounting hamsters with a key press. LIFO (Last-In, First-Out) dismounts the most recently added hamster. FIFO (First-In, First-Out) dismounts the oldest one.")
+    public ValidatedEnum<DismountOrder> dismountOrder = new ValidatedEnum<>(DismountOrder.LIFO);
 
     @Translatable.Name("Dismount Button")
     @Translatable.Desc("Choose what action dismounts the hamster. 'SNEAK_KEY' uses your sneak key, obviously. 'CUSTOM_KEYBIND' uses a separate key you must set in Controls > Key Binds.")
@@ -395,6 +409,47 @@ public class AhpConfig extends Config {
                             Text.literal("Only available when Button-Press Behavior is set to DOUBLE_TAP."),
                             () -> 10
                     );
+
+    @Translatable.Name("Animation Settings")
+    @Translatable.Desc("Control how lively your shoulder-mounted companions are. I mean, I don't like to toot my own horn or anything, but this is pretty great. Now please excuse me while I bask in my humility.")
+    public ConfigGroup shoulderAnimations = new ConfigGroup("shoulderAnimations", true);
+
+    @Translatable.Name("Enable Dynamic Animations")
+    @Translatable.Desc("If true, hamsters on your shoulder will randomly cycle through standing, sitting, and laying down while on the shoulder. If false, they will remain in a single state defined below.")
+    public ValidatedBoolean enableDynamicShoulderAnimations = new ValidatedBoolean(true);
+
+    private final ValidatedField<Boolean> dynamicShoulderDisabled =
+            enableDynamicShoulderAnimations.map(
+                    value -> !value,
+                    value -> !value
+            );
+
+    @Translatable.Name("Forced Animation State")
+    @Translatable.Desc("If dynamic animations are disabled, choose the single state shoulder pets should remain in. Sometimes this setting can have a delay before kicking in, but if it doesn't seem to be working at all, try switching the 'Forced State' from one option to another. Usually this just makes it \"work.\" I'm not sure why lol")
+    public ValidatedCondition<ForcedShoulderState> forcedShoulderState =
+            new ValidatedEnum<>(ForcedShoulderState.ALWAYS_STAND)
+                    .toCondition(
+                            // use the inverted validated field as the gating condition
+                            dynamicShoulderDisabled,
+                            // message shown when the condition fails
+                            Text.literal("Only available when 'Enable Dynamic Shoulder Animations' is turned OFF."),
+                            // fallback when the condition fails
+                            () -> ForcedShoulderState.ALWAYS_STAND
+                    );
+
+    @Translatable.Name("Force Lay Down on Sprint")
+    @Translatable.Desc("If true, shoulder hamsters will be forced into their 'laying down' animation while you sprint, as if holding on for dear life. If false, they will continue their normal animation cycle.")
+    public boolean forceLayDownOnSprint = true;
+
+    @Translatable.Name("Min Animation State Duration")
+    @Translatable.Desc("The minimum time (in seconds) a shoulder hamster will stay in any one animation state (standing, sitting, or laying down) before transitioning to the next.")
+    public ValidatedInt shoulderMinStateSeconds = new ValidatedInt(20, 280, 5);
+
+    @ConfigGroup.Pop
+    @ConfigGroup.Pop
+    @Translatable.Name("Max Animation State Duration")
+    @Translatable.Desc("The maximum time (in seconds) a shoulder hamster will stay in any one animation state. A random duration between the min and max is chosen for each transition.")
+    public ValidatedInt shoulderMaxStateSeconds = new ValidatedInt(45, 300, 6);
 
     // --- Hamster Yeet Settings ---
     @Translatable.Name("Hamster Yeet Settings")

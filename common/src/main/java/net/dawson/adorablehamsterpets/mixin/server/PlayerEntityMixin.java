@@ -1,11 +1,16 @@
 package net.dawson.adorablehamsterpets.mixin.server;
 
+import dev.architectury.networking.NetworkManager;
+import io.netty.buffer.Unpooled;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
 import net.dawson.adorablehamsterpets.config.AhpConfig;
+import net.dawson.adorablehamsterpets.config.DismountOrder;
 import net.dawson.adorablehamsterpets.entity.AI.HamsterSeekDiamondGoal;
+import net.dawson.adorablehamsterpets.entity.ShoulderLocation;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
+import net.dawson.adorablehamsterpets.networking.ModPackets;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -19,6 +24,9 @@ import net.minecraft.entity.mob.CreeperEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.NbtString;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -27,6 +35,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -35,6 +44,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,33 +54,25 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
     // --- 1. DataTracker Definition ---
     @Unique
-    private static final TrackedData<NbtCompound> HAMSTER_SHOULDER_ENTITY = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
+    private static final TrackedData<NbtCompound> SHOULDER_HAMSTERS = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
 
     // --- Constants and Static Utilities ---
-    @Unique
-    private static final int CHECK_INTERVAL_TICKS = 20;
-    @Unique
-    private static final List<String> DISMOUNT_MESSAGE_KEYS = Arrays.asList(
+    @Unique private static final int CHECK_INTERVAL_TICKS = 20;
+    @Unique private static final List<String> DISMOUNT_MESSAGE_KEYS = Arrays.asList(
             "message.adorablehamsterpets.dismount.1", "message.adorablehamsterpets.dismount.2",
             "message.adorablehamsterpets.dismount.3", "message.adorablehamsterpets.dismount.4",
             "message.adorablehamsterpets.dismount.5", "message.adorablehamsterpets.dismount.6"
     );
 
     // --- Fields ---
-    @Unique
-    private int adorablehamsterpets$diamondCheckTimer = 0;
-    @Unique
-    private int adorablehamsterpets$creeperCheckTimer = 0;
-    @Unique
-    private int adorablehamsterpets$diamondSoundCooldownTicks = 0;
-    @Unique
-    private int adorablehamsterpets$creeperSoundCooldownTicks = 0;
-    @Unique
-    private String adorablehamsterpets$lastDismountMessageKey = "";
-    @Unique
-    private boolean adorablehamsterpets$isDiamondAlertConditionMet = false;
-    @Unique
-    private int adorablehamsterpets$lastGoldMessageIndex = -1;
+    @Unique private int adorablehamsterpets$diamondCheckTimer = 0;
+    @Unique private int adorablehamsterpets$creeperCheckTimer = 0;
+    @Unique private int adorablehamsterpets$diamondSoundCooldownTicks = 0;
+    @Unique private int adorablehamsterpets$creeperSoundCooldownTicks = 0;
+    @Unique private String adorablehamsterpets$lastDismountMessageKey = "";
+    @Unique private boolean adorablehamsterpets$isDiamondAlertConditionMet = false;
+    @Unique private int adorablehamsterpets$lastGoldMessageIndex = -1;
+    @Unique private final transient ArrayDeque<ShoulderLocation> adorablehamsterpets$mountOrderQueue = new ArrayDeque<>();
 
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
@@ -80,17 +82,29 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Inject(method = "initDataTracker", at = @At("TAIL"))
     private void adorablehamsterpets$initDataTracker(CallbackInfo ci) {
         // For 1.20.1, use startTracking instead of builder.add
-        this.dataTracker.startTracking(HAMSTER_SHOULDER_ENTITY, new NbtCompound());
+        this.dataTracker.startTracking(SHOULDER_HAMSTERS, new NbtCompound());
     }
 
     // --- 3. NBT Read/Write ---
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
     private void adorablehamsterpets$writeNbt(NbtCompound nbt, CallbackInfo ci) {
-        // --- Diagnostic Logging ---
         AdorableHamsterPets.LOGGER.debug("[AHP Mixin] PlayerEntityMixin writeNbt is RUNNING for entity {}.", this.getId());
-        if (!this.getHamsterShoulderEntity().isEmpty()) {
-            nbt.put("ShoulderHamster", this.getHamsterShoulderEntity());
+
+        // --- Save the single compound from the DataTracker ---
+        NbtCompound shoulderPetsNbt = this.getDataTracker().get(SHOULDER_HAMSTERS);
+        if (!shoulderPetsNbt.isEmpty()) {
+            nbt.put("ShoulderHamsters", shoulderPetsNbt);
         }
+
+        // --- Save Mount Order Queue ---
+        if (!this.adorablehamsterpets$mountOrderQueue.isEmpty()) {
+            NbtList mountOrderList = new NbtList();
+            for (ShoulderLocation location : this.adorablehamsterpets$mountOrderQueue) {
+                mountOrderList.add(NbtString.of(location.name()));
+            }
+            nbt.put("MountOrderQueue", mountOrderList);
+        }
+
         if (this.adorablehamsterpets$lastGoldMessageIndex != -1) {
             nbt.putInt("LastGoldMessageIndex", this.adorablehamsterpets$lastGoldMessageIndex);
         }
@@ -98,11 +112,49 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
     private void adorablehamsterpets$readNbt(NbtCompound nbt, CallbackInfo ci) {
-        // --- Diagnostic Logging ---
         AdorableHamsterPets.LOGGER.debug("[AHP Mixin] PlayerEntityMixin readNbt is RUNNING for entity {}.", this.getId());
-        if (nbt.contains("ShoulderHamster", 10)) {
-            this.setHamsterShoulderEntity(nbt.getCompound("ShoulderHamster"));
+
+        // --- Backward Compatibility: Check for old single hamster data ---
+        if (nbt.contains("ShoulderHamster", NbtElement.COMPOUND_TYPE)) {
+            NbtCompound oldHamsterNbt = nbt.getCompound("ShoulderHamster");
+            if (!oldHamsterNbt.isEmpty()) {
+                NbtCompound newShoulderPetsNbt = new NbtCompound();
+                newShoulderPetsNbt.put(ShoulderLocation.RIGHT_SHOULDER.name(), oldHamsterNbt);
+                this.getDataTracker().set(SHOULDER_HAMSTERS, newShoulderPetsNbt);
+                this.adorablehamsterpets$mountOrderQueue.clear();
+                this.adorablehamsterpets$mountOrderQueue.add(ShoulderLocation.RIGHT_SHOULDER);
+                nbt.remove("ShoulderHamster"); // Remove old tag to complete migration
+                AdorableHamsterPets.LOGGER.info("Migrated legacy shoulder hamster data for player {}.", this.getDisplayName().getString());
+            }
+        } else if (nbt.contains("ShoulderHamsters", NbtElement.COMPOUND_TYPE)) {
+            // --- Standard Read for New Data Format ---
+            this.getDataTracker().set(SHOULDER_HAMSTERS, nbt.getCompound("ShoulderHamsters"));
         }
+
+        // --- Read Mount Order Queue ---
+        this.adorablehamsterpets$mountOrderQueue.clear();
+        if (nbt.contains("MountOrderQueue", NbtElement.LIST_TYPE)) {
+            NbtList mountOrderList = nbt.getList("MountOrderQueue", NbtElement.STRING_TYPE);
+            for (NbtElement element : mountOrderList) {
+                try {
+                    this.adorablehamsterpets$mountOrderQueue.add(ShoulderLocation.valueOf(element.asString()));
+                } catch (IllegalArgumentException e) {
+                    AdorableHamsterPets.LOGGER.warn("Found invalid ShoulderLocation name in NBT: {}", element.asString());
+                }
+            }
+        }
+
+        // --- Self-Healing Logic for Potential Corrupted State ---
+        if (this.adorablehamsterpets$mountOrderQueue.isEmpty() && this.hasAnyShoulderHamster()) {
+            AdorableHamsterPets.LOGGER.info("Player {} has shoulder hamsters but an empty mount queue. Rebuilding queue...", this.getDisplayName().getString());
+            for (ShoulderLocation location : ShoulderLocation.values()) {
+                if (!this.getShoulderHamster(location).isEmpty()) {
+                    this.adorablehamsterpets$mountOrderQueue.addLast(location);
+                }
+            }
+            AdorableHamsterPets.LOGGER.info("Successfully rebuilt mount queue for player {}. New queue: {}", this.getDisplayName().getString(), this.adorablehamsterpets$mountOrderQueue);
+        }
+
         if (nbt.contains("LastGoldMessageIndex", NbtElement.INT_TYPE)) {
             this.adorablehamsterpets$lastGoldMessageIndex = nbt.getInt("LastGoldMessageIndex");
         } else {
@@ -124,27 +176,27 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     }
 
     // --- 4. Public Accessors for the DataTracker ---
-
-    /**
-     * Retrieves the NBT data for the hamster currently on the player's shoulder.
-     * This data is stored in a custom {@link TrackedData} field and synced from server to client.
-     *
-     * @return An {@link NbtCompound} containing the shoulder hamster's data. Returns an empty compound if no hamster is on the shoulder.
-     */
     @Unique
-    public NbtCompound getHamsterShoulderEntity() {
-        return this.getDataTracker().get(HAMSTER_SHOULDER_ENTITY);
+    @Override
+    public NbtCompound getShoulderHamster(ShoulderLocation location) {
+        NbtCompound allShoulderPets = this.getDataTracker().get(SHOULDER_HAMSTERS);
+        // Return the specific compound, or an empty one if it doesn't exist.
+        return allShoulderPets.getCompound(location.name());
     }
 
-    /**
-     * Sets the NBT data for the hamster on the player's shoulder.
-     * This updates the custom {@link TrackedData} field, which is then synced to clients.
-     *
-     * @param nbt The {@link NbtCompound} to set. Use an empty compound to remove the shoulder hamster.
-     */
     @Unique
-    public void setHamsterShoulderEntity(NbtCompound nbt) {
-        this.getDataTracker().set(HAMSTER_SHOULDER_ENTITY, nbt);
+    @Override
+    public void setShoulderHamster(ShoulderLocation location, NbtCompound nbt) {
+        NbtCompound allShoulderPets = new NbtCompound();
+        // Create a mutable copy to avoid modifying the original from the DataTracker directly.
+        allShoulderPets.copyFrom(this.getDataTracker().get(SHOULDER_HAMSTERS));
+
+        if (nbt == null || nbt.isEmpty()) {
+            allShoulderPets.remove(location.name());
+        } else {
+            allShoulderPets.put(location.name(), nbt);
+        }
+        this.getDataTracker().set(SHOULDER_HAMSTERS, allShoulderPets);
     }
 
     // --- 5. Tick Logic ---
@@ -164,8 +216,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
         if (adorablehamsterpets$creeperSoundCooldownTicks > 0) adorablehamsterpets$creeperSoundCooldownTicks--;
 
         // --- 3. Shoulder Pet Logic ---
-        NbtCompound shoulderNbt = this.getHamsterShoulderEntity();
-        if (!shoulderNbt.isEmpty()) {
+        if (this.hasAnyShoulderHamster()) {
 
             // --- 3. Shoulder Diamond Detection ---
             if (config.enableShoulderDiamondDetection) {
@@ -213,32 +264,121 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     /**
      * Executes the server-side logic to dismount a hamster from the player's shoulder.
      * This method is triggered upon receiving a {@code DismountHamsterPayload} from the client.
-     * It handles spawning the hamster entity from its stored NBT data, clearing the player's
+     * It handles choosing which hamster to dismount if there are more than one,
+     * spawning the hamster entity from its stored NBT data, clearing the player's
      * shoulder data, and playing the necessary sounds and messages.
      */
     @Unique
     @Override
-    public void adorablehamsterpets$dismountShoulderHamster() {
-        // --- LOGGING ---
-        AdorableHamsterPets.LOGGER.debug("[AHP DEBUG] DISMOUNT: adorablehamsterpets$dismountShoulderHamster() was called via payload.");
-
+    public void adorablehamsterpets$dismountShoulderHamster(boolean isThrow) {
         PlayerEntity self = (PlayerEntity) (Object) this;
         World world = self.getWorld();
-        if (world.isClient) return;
+        if (world.isClient || this.adorablehamsterpets$mountOrderQueue.isEmpty()) {
+            return;
+        }
 
-        PlayerEntityAccessor playerAccessor = (PlayerEntityAccessor) self;
-        NbtCompound shoulderNbt = playerAccessor.getHamsterShoulderEntity();
-        Random random = world.getRandom();
         final AhpConfig config = AdorableHamsterPets.CONFIG;
+        Random random = world.getRandom();
 
-        if (!shoulderNbt.isEmpty()) {
-            HamsterEntity.spawnFromNbt((ServerWorld) world, self, shoulderNbt, this.adorablehamsterpets$isDiamondAlertConditionMet);
-            this.adorablehamsterpets$isDiamondAlertConditionMet = false;
+        // --- 1. Determine which hamster to dismount/throw ---
+        ShoulderLocation locationToProcess = config.dismountOrder.get() == DismountOrder.LIFO
+                ? this.adorablehamsterpets$mountOrderQueue.peekLast()  // Peek, don't remove yet
+                : this.adorablehamsterpets$mountOrderQueue.peekFirst();
 
-            this.setHamsterShoulderEntity(new NbtCompound());
+        if (locationToProcess == null) return;
 
+        NbtCompound shoulderNbt = this.getShoulderHamster(locationToProcess);
+        if (shoulderNbt.isEmpty()) {
+            AdorableHamsterPets.LOGGER.warn("Dismount queue pointed to an empty slot ({}). This may indicate a desync.", locationToProcess);
+            // Remove the bad entry from the queue
+            if (config.dismountOrder.get() == DismountOrder.LIFO) this.adorablehamsterpets$mountOrderQueue.pollLast();
+            else this.adorablehamsterpets$mountOrderQueue.pollFirst();
+            return;
+        }
+
+        // --- 2. Create Hamster Instance for Validation ---
+        HamsterEntity hamster = HamsterEntity.createFromNbt((ServerWorld) world, self, shoulderNbt);
+        if (hamster == null) {
+            AdorableHamsterPets.LOGGER.error("Failed to create hamster from NBT for slot {}. Clearing data.", locationToProcess);
+            this.setShoulderHamster(locationToProcess, new NbtCompound());
+            // Also remove from queue
+            if (config.dismountOrder.get() == DismountOrder.LIFO) this.adorablehamsterpets$mountOrderQueue.pollLast();
+            else this.adorablehamsterpets$mountOrderQueue.pollFirst();
+            return;
+        }
+
+        // --- 3. Handle Throw-Specific Logic & Validation ---
+        if (isThrow) {
+            if (hamster.isBaby()) {
+                self.sendMessage(Text.translatable("message.adorablehamsterpets.baby_throw_refusal").formatted(Formatting.RED), true);
+                return; // Abort, do not dismount
+            }
+
+            long currentTime = world.getTime();
+            if (hamster.throwCooldownEndTick > currentTime) {
+                long remainingTicks = hamster.throwCooldownEndTick - currentTime;
+                long totalSecondsRemaining = remainingTicks / 20;
+                long minutes = totalSecondsRemaining / 60;
+                long seconds = totalSecondsRemaining % 60;
+                self.sendMessage(Text.translatable("message.adorablehamsterpets.throw_cooldown", minutes, seconds).formatted(Formatting.RED), true);
+                return; // Abort, do not dismount
+            }
+
+            // Set the initial position to the player's eye level
+            hamster.refreshPositionAndAngles(self.getX(), self.getEyeY() - 0.1, self.getZ(), self.getYaw(), self.getPitch());
+
+            // Set Throw States
+            hamster.setThrown(true);
+            hamster.interactionCooldown = 10;
+            hamster.throwCooldownEndTick = currentTime + config.hamsterThrowCooldown.get();
+
+            // Dynamic Velocity Logic
+            boolean isBuffed = hamster.hasGreenBeanBuff();
+            float throwSpeed = isBuffed ? config.hamsterThrowVelocityBuffed.get().floatValue() : config.hamsterThrowVelocity.get().floatValue();
+            Vec3d lookVec = self.getRotationVec(1.0f);
+            Vec3d throwVec = new Vec3d(lookVec.x, lookVec.y + 0.1f, lookVec.z).normalize();
+            hamster.setVelocity(throwVec.multiply(throwSpeed));
+            hamster.velocityDirty = true;
+        }
+
+        // --- 4. Finalize Dismount/Throw ---
+        // Now that all checks have passed, officially remove from queue
+        if (config.dismountOrder.get() == DismountOrder.LIFO) this.adorablehamsterpets$mountOrderQueue.pollLast();
+        else this.adorablehamsterpets$mountOrderQueue.pollFirst();
+
+        this.setShoulderHamster(locationToProcess, new NbtCompound()); // Clear the slot
+
+        // --- 5. Spawn and Play Effects ---
+        HamsterEntity.spawnFromNbt((ServerWorld) world, self, shoulderNbt, this.adorablehamsterpets$isDiamondAlertConditionMet, hamster);
+        this.adorablehamsterpets$isDiamondAlertConditionMet = false;
+
+        if (isThrow) {
+            // --- Throw-Specific Effects (1.20.1 Networking API) ---
+            PacketByteBuf flightBuf = new PacketByteBuf(Unpooled.buffer());
+            flightBuf.writeInt(hamster.getId());
+            PacketByteBuf throwBuf = new PacketByteBuf(Unpooled.buffer());
+            throwBuf.writeInt(hamster.getId());
+
+            NetworkManager.sendToPlayer((ServerPlayerEntity) self, ModPackets.START_HAMSTER_FLIGHT_SOUND_ID, flightBuf);
+            NetworkManager.sendToPlayer((ServerPlayerEntity) self, ModPackets.START_HAMSTER_THROW_SOUND_ID, throwBuf);
+
+            double radius = 64.0;
+            Vec3d hamsterPos = hamster.getPos();
+            Box searchBox = new Box(hamsterPos.subtract(radius, radius, radius), hamsterPos.add(radius, radius, radius));
+            List<ServerPlayerEntity> nearbyPlayers = ((ServerWorld) world).getPlayers(p -> p != self && searchBox.contains(p.getPos()));
+
+            PacketByteBuf flightBufNearby = new PacketByteBuf(Unpooled.buffer());
+            flightBufNearby.writeInt(hamster.getId());
+            PacketByteBuf throwBufNearby = new PacketByteBuf(Unpooled.buffer());
+            throwBufNearby.writeInt(hamster.getId());
+
+            NetworkManager.sendToPlayers(nearbyPlayers, ModPackets.START_HAMSTER_FLIGHT_SOUND_ID, flightBufNearby);
+            NetworkManager.sendToPlayers(nearbyPlayers, ModPackets.START_HAMSTER_THROW_SOUND_ID, throwBufNearby);
+
+            ModCriteria.HAMSTER_THROWN.trigger((ServerPlayerEntity) self);
+        } else {
+            // --- Standard Dismount Effects ---
             world.playSound(null, self.getBlockPos(), ModSounds.HAMSTER_DISMOUNT.get(), SoundCategory.PLAYERS, 0.7f, 1.0f + random.nextFloat() * 0.2f);
-
             if (config.enableShoulderDismountMessages && !DISMOUNT_MESSAGE_KEYS.isEmpty()) {
                 String chosenKey;
                 if (DISMOUNT_MESSAGE_KEYS.size() == 1) {
@@ -310,6 +450,14 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
     @Unique
     @Override
+    public boolean hasAnyShoulderHamster() {
+        return !getShoulderHamster(ShoulderLocation.RIGHT_SHOULDER).isEmpty() ||
+                !getShoulderHamster(ShoulderLocation.LEFT_SHOULDER).isEmpty() ||
+                !getShoulderHamster(ShoulderLocation.HEAD).isEmpty();
+    }
+
+    @Unique
+    @Override
     public int ahp_getLastGoldMessageIndex() {
         return this.adorablehamsterpets$lastGoldMessageIndex;
     }
@@ -318,5 +466,11 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Override
     public void ahp_setLastGoldMessageIndex(int index) {
         this.adorablehamsterpets$lastGoldMessageIndex = index;
+    }
+
+    @Unique
+    @Override
+    public ArrayDeque<ShoulderLocation> adorablehamsterpets$getMountOrderQueue() {
+        return this.adorablehamsterpets$mountOrderQueue;
     }
 }

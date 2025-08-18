@@ -120,7 +120,7 @@ public class AdorableHamsterPetsClient {
                 client.player.sendMessage(Text.translatable("message.adorablehamsterpets.throwing_disabled"), true);
             } else {
                 boolean lookingAtReachableBlock = client.crosshairTarget != null && client.crosshairTarget.getType() == HitResult.Type.BLOCK;
-                boolean hasShoulderHamsterClient = !((PlayerEntityAccessor) client.player).getHamsterShoulderEntity().isEmpty();
+                boolean hasShoulderHamsterClient = ((PlayerEntityAccessor) client.player).hasAnyShoulderHamster();
 
                 if (!lookingAtReachableBlock && hasShoulderHamsterClient) {
                     // Send an empty buffer for the throw packet
@@ -186,8 +186,7 @@ public class AdorableHamsterPetsClient {
         if (client.player == null || client.world == null) return;
 
         // --- 1. Shoulder state ---
-        boolean hasShoulderHamster =
-                !((PlayerEntityAccessor) client.player).getHamsterShoulderEntity().isEmpty();
+        boolean hasShoulderHamster = ((PlayerEntityAccessor) client.player).hasAnyShoulderHamster();
 
         // Detect the exact tick we JUST mounted (transition: false -> true)
         if (hasShoulderHamster && !hadShoulderHamsterLastTick) {
