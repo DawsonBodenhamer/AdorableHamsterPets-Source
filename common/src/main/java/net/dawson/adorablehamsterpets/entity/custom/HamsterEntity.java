@@ -463,6 +463,9 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             return;
         }
 
+        // --- Set the suffocation grace period ---
+        hamster.suffocationGracePeriod = 200; // 10 seconds
+
         // --- 2. Prime for Diamond Seeking (if applicable) ---
         if (wasDiamondAlertActive && Configs.AHP.enableIndependentDiamondSeeking) {
             hamster.isPrimedToSeekDiamonds = true;
@@ -647,8 +650,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     @Unique private double lastZoomiesAngle = 0.0;
     @Unique private int zoomiesRadiusModifier = 0;
     @Unique public transient float renderedSnowYOffset = 0.0f;
-    @Unique public transient boolean isShoulderPet = false;
     @Unique public transient ShoulderLocation shoulderLocation = ShoulderLocation.RIGHT_SHOULDER;
+    @Unique public int suffocationGracePeriod = 0;
 
 
     // --- Inventory ---
@@ -1717,6 +1720,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     public void tick() {
         // --- 1. Decrement Timers ---
         if (this.interactionCooldown > 0) this.interactionCooldown--;
+        if (this.suffocationGracePeriod > 0) this.suffocationGracePeriod--;
         // --- Cleaning Timer Logic ---
         if (this.cleaningCooldownTimer > 0) this.cleaningCooldownTimer--;
         if (this.cleaningTimer > 0) {
@@ -2038,7 +2042,23 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         World world = this.getWorld();
         if (!world.isClient()) {
 
-            // --- 4a. Ejection Logic ---
+            // --- 4a. Suffocation Self-Rescue Logic ---
+            if (this.suffocationGracePeriod > 0 && this.isInsideWall()) {
+                // Search for a safe spot directly above the hamster
+                for (int i = 1; i <= 5; i++) {
+                    BlockPos checkPos = this.getBlockPos().up(i);
+                    if (isSafeSpawnLocation(checkPos, world)) {
+                        // Found a safe spot, teleport the hamster
+                        this.teleport(checkPos.getX() + 0.5, checkPos.getY(), checkPos.getZ() + 0.5, false);
+                        AdorableHamsterPets.LOGGER.debug("[HamsterSelfRescue] Hamster {} teleported from {} to safe location {}.",
+                                this.getId(), this.getBlockPos().down(i), checkPos);
+                        this.suffocationGracePeriod = 0; // End the grace period
+                        break; // Stop searching
+                    }
+                }
+            }
+
+            // --- 4b. Ejection Logic ---
             if (this.ejectionCheckCooldown <= 0) {
                 this.ejectionCheckCooldown = 100; // Reset cooldown (check every 5 seconds)
                 boolean ejectedItem = false; // Flag to only eject one item per cycle
@@ -2058,11 +2078,9 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     }
                 }
             }
-            // --- End 4a. Ejection Logic ---
 
-            // --- 4b. Auto Eating Logic ---
+            // --- 4c. Auto Eating Logic ---
             // This section now handles the multi-stage auto-eating: considering, eating, healing.
-
             // --- Stage 1: Check Eligibility and Start "Considering" ---
             if (this.isTamed() && this.getHealth() < this.getMaxHealth() &&
                     !this.isAutoEating() && !this.isConsideringAutoEat() && // Not already eating or considering
