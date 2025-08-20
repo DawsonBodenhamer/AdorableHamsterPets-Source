@@ -10,6 +10,7 @@ import dev.architectury.registry.menu.MenuRegistry;
 import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.block.ModBlocks;
+import net.dawson.adorablehamsterpets.client.ShoulderHamsterManager;
 import net.dawson.adorablehamsterpets.client.option.ModKeyBindings;
 import net.dawson.adorablehamsterpets.client.sound.HamsterFlightSoundInstance;
 import net.dawson.adorablehamsterpets.client.sound.HamsterThrowSoundInstance;
@@ -114,6 +115,8 @@ public class AdorableHamsterPetsClient {
             renderedHamsterIdsLastTick.clear();
             return;
         }
+
+        ShoulderHamsterManager.clientTick();
 
         if (ModKeyBindings.THROW_HAMSTER_KEY.wasPressed()) {
             final AhpConfig currentConfig = AdorableHamsterPets.CONFIG;
