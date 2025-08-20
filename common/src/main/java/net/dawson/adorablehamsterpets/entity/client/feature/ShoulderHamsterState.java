@@ -8,13 +8,13 @@ import net.minecraft.util.math.random.Random;
  * Manages the animation state for a single shoulder-mounted hamster.
  * This class is used exclusively on the client within the HamsterShoulderFeatureRenderer.
  */
-public class ShoulderPetState {
+public class ShoulderHamsterState {
     private ShoulderAnimationState currentState;
     private int timer; // Ticks remaining in the current state
     private final Random random = Random.create();
     private int sprintTransitionDelay = 0;
 
-    public ShoulderPetState() {
+    public ShoulderHamsterState() {
         // Start in a random state
         this.currentState = ShoulderAnimationState.values()[random.nextInt(ShoulderAnimationState.values().length)];
         this.timer = getNewRandomDuration();
