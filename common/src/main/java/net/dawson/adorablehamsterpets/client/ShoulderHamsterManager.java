@@ -3,7 +3,7 @@ package net.dawson.adorablehamsterpets.client;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.dawson.adorablehamsterpets.entity.ShoulderLocation;
-import net.dawson.adorablehamsterpets.entity.client.feature.ShoulderPetState;
+import net.dawson.adorablehamsterpets.entity.client.feature.ShoulderHamsterState;
 import net.dawson.adorablehamsterpets.entity.client.renderer.ShoulderHamsterRenderer;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.minecraft.client.MinecraftClient;
@@ -23,7 +23,7 @@ public class ShoulderHamsterManager {
     // --- Caches for Dummy Entities and their States ---
     private static final Map<ShoulderLocation, HamsterEntity> dummyHamsters = new EnumMap<>(ShoulderLocation.class);
     private static final Map<ShoulderLocation, ShoulderHamsterRenderer> hamsterRenderers = new EnumMap<>(ShoulderLocation.class);
-    private static final Map<ShoulderLocation, ShoulderPetState> petStates = new EnumMap<>(ShoulderLocation.class);
+    private static final Map<ShoulderLocation, ShoulderHamsterState> hamsterStates = new EnumMap<>(ShoulderLocation.class);
 
     /**
      * Initializes the dummy entities and renderers.
@@ -60,13 +60,13 @@ public class ShoulderHamsterManager {
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.player == null) {
             // Clear states if player is not in world
-            if (!petStates.isEmpty()) petStates.clear();
+            if (!hamsterStates.isEmpty()) hamsterStates.clear();
             return;
         }
 
         PlayerEntityAccessor playerAccessor = (PlayerEntityAccessor) client.player;
         if (!playerAccessor.hasAnyShoulderHamster()) {
-            if (!petStates.isEmpty()) petStates.clear();
+            if (!hamsterStates.isEmpty()) hamsterStates.clear();
             return;
         }
 
@@ -79,7 +79,7 @@ public class ShoulderHamsterManager {
         for (ShoulderLocation location : ShoulderLocation.values()) {
             NbtCompound shoulderNbt = playerAccessor.getShoulderHamster(location);
             if (!shoulderNbt.isEmpty()) {
-                ShoulderPetState state = petStates.computeIfAbsent(location, l -> new ShoulderPetState());
+                ShoulderHamsterState state = hamsterStates.computeIfAbsent(location, l -> new ShoulderHamsterState());
                 HamsterEntity dummy = dummyHamsters.get(location);
                 if (dummy != null) {
                     // This is the core logic: update the state machine on the main client thread.
@@ -87,7 +87,7 @@ public class ShoulderHamsterManager {
                 }
             } else {
                 // Remove state for empty slots
-                petStates.remove(location);
+                hamsterStates.remove(location);
             }
         }
     }
