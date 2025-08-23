@@ -23,13 +23,11 @@ public class ShoulderHamsterRenderer extends HamsterRenderer {
 
     /**
      * Overrides the main render method to bypass logic that is not relevant
-     * for a shoulder-mounted entity, such as cleaning sounds and snow offsets.
+     * for a shoulder-mounted entity, such as cleaning sounds and snow offset.
      */
     @Override
     public void render(HamsterEntity entity, float entityYaw, float partialTick, MatrixStack poseStack,
                        VertexConsumerProvider bufferSource, int packedLight) {
-        // We intentionally do NOT call the superclass's sound or snow logic here.
-        // We only adjust the shadow radius and then call the core rendering method from the grandparent class.
         this.shadowRadius = entity.isBaby() ? 0.1F : 0.2F;
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
@@ -42,8 +40,6 @@ public class ShoulderHamsterRenderer extends HamsterRenderer {
     public void renderFinal(MatrixStack poseStack, HamsterEntity animatable, BakedGeoModel model,
                             VertexConsumerProvider bufferSource, @Nullable VertexConsumer buffer,
                             float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        // We call the grandparent's renderFinal to ensure the model renders correctly,
-        // but we skip the logic in our own HamsterRenderer that handles particles and sounds.
         super.renderFinal(poseStack, animatable, model, bufferSource, buffer, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }
