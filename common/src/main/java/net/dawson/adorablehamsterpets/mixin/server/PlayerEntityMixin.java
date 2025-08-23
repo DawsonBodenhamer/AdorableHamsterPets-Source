@@ -1,9 +1,11 @@
 package net.dawson.adorablehamsterpets.mixin.server;
 
+import com.mojang.authlib.GameProfile;
 import dev.architectury.networking.NetworkManager;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
+import net.dawson.adorablehamsterpets.client.state.ClientShoulderHamsterData;
 import net.dawson.adorablehamsterpets.config.AhpConfig;
 import net.dawson.adorablehamsterpets.config.DismountOrder;
 import net.dawson.adorablehamsterpets.entity.AI.HamsterSeekDiamondGoal;
@@ -54,6 +56,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     // --- 1. DataTracker Definition ---
     @Unique
     private static final TrackedData<NbtCompound> SHOULDER_HAMSTERS = DataTracker.registerData(PlayerEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
+    @Unique
+    private transient ClientShoulderHamsterData adorablehamsterpets$clientShoulderData;
 
     // --- Constants and Static Utilities ---
     @Unique private static final int CHECK_INTERVAL_TICKS = 20;
@@ -72,6 +76,15 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Unique private boolean adorablehamsterpets$isDiamondAlertConditionMet = false;
     @Unique private int adorablehamsterpets$lastGoldMessageIndex = -1;
     @Unique private final transient ArrayDeque<ShoulderLocation> adorablehamsterpets$mountOrderQueue = new ArrayDeque<>();
+
+    // --- Inject into the constructor to initialize the data holder ---
+    @Inject(method = "<init>", at = @At("TAIL"))
+    private void adorablehamsterpets$onInit(World world, BlockPos pos, float yaw, GameProfile gameProfile, CallbackInfo ci) {
+        // This ensures every PlayerEntity on the client gets its own data manager instance.
+        if (world.isClient) {
+            this.adorablehamsterpets$clientShoulderData = new ClientShoulderHamsterData();
+        }
+    }
 
     protected PlayerEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
@@ -460,5 +473,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Override
     public ArrayDeque<ShoulderLocation> adorablehamsterpets$getMountOrderQueue() {
         return this.adorablehamsterpets$mountOrderQueue;
+    }
+
+    @Unique
+    @Override
+    public ClientShoulderHamsterData adorablehamsterpets$getClientShoulderData() {
+        // On the server, this will be null, which is fine as it's only used by client code.
+        return this.adorablehamsterpets$clientShoulderData;
     }
 }

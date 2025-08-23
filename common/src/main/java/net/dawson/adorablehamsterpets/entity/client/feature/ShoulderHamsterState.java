@@ -22,12 +22,14 @@ public class ShoulderHamsterState {
 
     /**
      * Ticks the state machine. This should be called once per game tick.
-     * @param hamster The dummy hamster entity this state machine is controlling.
      * @param isPlayerSprinting True if the player is currently sprinting.
      */
-    public void tick(HamsterEntity hamster, boolean isPlayerSprinting) {
-        // --- 1. Sprint Logic (Highest Priority) ---
-        if (Configs.AHP.forceLayDownOnSprint && isPlayerSprinting) {
+    public void tick(boolean isPlayerSprinting, boolean isPlayerWalking) {
+        // --- 1. Movement Logic (Highest Priority) ---
+        boolean shouldForceLayDown = (Configs.AHP.forceLayDownOnSprint && isPlayerSprinting) ||
+                (Configs.AHP.forceLayDownOnWalk && isPlayerWalking);
+
+        if (shouldForceLayDown) {
             // If not already laying down or preparing to, start the transition.
             if (this.currentState != ShoulderAnimationState.LAYING_DOWN && this.sprintTransitionDelay == 0) {
                 this.sprintTransitionDelay = random.nextBetween(1, 7);
@@ -43,7 +45,7 @@ public class ShoulderHamsterState {
                 }
             }
             // The state is now either LAYING_DOWN or a previous state during the delay.
-            // No other logic should run this tick.
+            // No other logic should run this tick. A 'return' is unnecessary here, as the last statement in a 'void' method
         }
         // --- 2. Normal State Logic (Runs only if not sprinting) ---
         else {
@@ -75,10 +77,14 @@ public class ShoulderHamsterState {
                 }
             }
         }
+    }
 
-        // --- 3. Apply the Final State ---
-        // This runs every tick, ensuring the hamster's visual state is always in sync.
-        updateHamsterEntityState(hamster, this.currentState);
+    /**
+     * Gets the current animation state determined by the state machine.
+     * @return The current ShoulderAnimationState.
+     */
+    public ShoulderAnimationState getCurrentState() {
+        return this.currentState;
     }
 
     /**

@@ -437,6 +437,10 @@ public class AhpConfig extends Config {
                             () -> ForcedShoulderState.ALWAYS_STAND
                     );
 
+    @Translatable.Name("Force Lay Down on Walk")
+    @Translatable.Desc("False by default. If true, shoulder hamsters will be forced into their 'laying down' animation when you move, as if trying not to fall off. If false, they will continue their normal animation cycle.")
+    public boolean forceLayDownOnWalk = false;
+
     @Translatable.Name("Force Lay Down on Sprint")
     @Translatable.Desc("If true, shoulder hamsters will be forced into their 'laying down' animation while you sprint, as if holding on for dear life. If false, they will continue their normal animation cycle.")
     public boolean forceLayDownOnSprint = true;
