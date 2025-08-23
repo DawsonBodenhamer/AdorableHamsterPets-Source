@@ -11,10 +11,10 @@ import io.netty.buffer.Unpooled;
 import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.block.ModBlocks;
-import net.dawson.adorablehamsterpets.client.ShoulderHamsterManager;
 import net.dawson.adorablehamsterpets.client.option.ModKeyBindings;
 import net.dawson.adorablehamsterpets.client.sound.HamsterFlightSoundInstance;
 import net.dawson.adorablehamsterpets.client.sound.HamsterThrowSoundInstance;
+import net.dawson.adorablehamsterpets.client.state.ClientShoulderHamsterData;
 import net.dawson.adorablehamsterpets.config.AhpConfig;
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.config.DismountPressType;
@@ -108,14 +108,20 @@ public class AdorableHamsterPetsClient {
     }
 
     private static void onEndClientTick(MinecraftClient client) {
+        // Tick the Per-Player Shoulder Pet State Manager
+        if (client.player != null) {
+            ClientShoulderHamsterData clientData = ((PlayerEntityAccessor) client.player).adorablehamsterpets$getClientShoulderData();
+            if (clientData != null) {
+                clientData.clientTick(client.player);
+            }
+        }
 
+        // Handle Key Presses and Other Logic
         if (client.player == null || client.world == null) {
             renderedHamsterIdsThisTick.clear();
             renderedHamsterIdsLastTick.clear();
             return;
         }
-
-        ShoulderHamsterManager.clientTick();
 
         if (ModKeyBindings.THROW_HAMSTER_KEY.wasPressed()) {
             final AhpConfig currentConfig = AdorableHamsterPets.CONFIG;

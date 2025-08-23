@@ -1,13 +1,16 @@
 package net.dawson.adorablehamsterpets.entity.client.feature;
 
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
-import net.dawson.adorablehamsterpets.client.ShoulderHamsterManager;
+import net.dawson.adorablehamsterpets.client.state.ClientShoulderHamsterData;
 import net.dawson.adorablehamsterpets.component.HamsterShoulderData;
+import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.dawson.adorablehamsterpets.entity.ShoulderLocation;
 import net.dawson.adorablehamsterpets.entity.client.renderer.ShoulderHamsterRenderer;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
@@ -16,6 +19,10 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.RotationAxis;
+import net.minecraft.world.World;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 /**
  * Renders a Hamster model on the player's shoulder if shoulder data is present.
@@ -27,6 +34,10 @@ public class HamsterShoulderFeatureRenderer
 
     // --- 1. Constants ---
     private static final float HAMSTER_SHOULDER_SCALE = 0.8f;
+
+    // --- 2. Fields (Lazy Initialization) ---
+    private final Map<ShoulderLocation, HamsterEntity> dummyHamsters = new EnumMap<>(ShoulderLocation.class);
+    private final Map<ShoulderLocation, ShoulderHamsterRenderer> hamsterRenderers = new EnumMap<>(ShoulderLocation.class);
 
     // --- 3. Constructor ---
     public HamsterShoulderFeatureRenderer(
@@ -46,21 +57,22 @@ public class HamsterShoulderFeatureRenderer
             return;
         }
 
+        // --- Lazy Initialization (checks if the map is empty) ---
+        if (this.dummyHamsters.isEmpty()) {
+            initializeDummies(player.getWorld());
+        }
+
+        // --- Get the per-player data holder ---
+        ClientShoulderHamsterData clientData = playerAccessor.adorablehamsterpets$getClientShoulderData();
+        if (clientData == null) return; // Safety check
+
         // --- Render Hamster for Each Occupied Slot ---
         for (ShoulderLocation location : ShoulderLocation.values()) {
             NbtCompound shoulderNbt = playerAccessor.getShoulderHamster(location);
             if (!shoulderNbt.isEmpty()) {
-                HamsterEntity dummy = ShoulderHamsterManager.getDummy(location);
-                ShoulderHamsterRenderer renderer = ShoulderHamsterManager.getRenderer(location);
-
-                if (dummy != null && renderer != null) {
-                    // Sync the animation clock to the game's main clock.
-                    dummy.age = player.age;
-
-                    HamsterShoulderData.fromNbt(shoulderNbt).ifPresent(shoulderData ->
-                            renderShoulderHamster(matrices, vertexConsumers, light, player, shoulderData, tickDelta, dummy, renderer, location)
-                    );
-                }
+                HamsterShoulderData.fromNbt(shoulderNbt).ifPresent(shoulderData ->
+                        renderShoulderHamster(matrices, vertexConsumers, light, player, shoulderData, tickDelta, clientData, location)
+                );
             }
         }
     }
@@ -93,15 +105,19 @@ public class HamsterShoulderFeatureRenderer
     private void renderShoulderHamster(
             MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light,
             AbstractClientPlayerEntity player, HamsterShoulderData shoulderData, float tickDelta,
-            HamsterEntity dummyHamster, ShoulderHamsterRenderer hamsterRenderer, ShoulderLocation location
+            ClientShoulderHamsterData clientData, ShoulderLocation location
     ) {
-        // --- 1. Update Dummy Entity State from Data ---
-        applyShoulderData(dummyHamster, shoulderData, player);
-        dummyHamster.shoulderLocation = location; // Inform the dummy of its location for animation
+        // --- 1. Get the correct dummy and renderer for this specific location ---
+        HamsterEntity dummyHamster = this.dummyHamsters.get(location);
+        ShoulderHamsterRenderer hamsterRenderer = this.hamsterRenderers.get(location);
+        if (dummyHamster == null || hamsterRenderer == null) return;
+
+        // --- 2. Update Dummy Entity State from Pre-Ticked Data ---
+        updateDummyState(dummyHamster, shoulderData, clientData, location, player);
 
         matrices.push();
 
-        // --- 2. Apply Transformations Based on Location ---
+        // --- 3. Apply Transformations Based on Location ---
         boolean isSlim = player.getSkinTextures().model() == SkinTextures.Model.SLIM;
 
         switch (location) {
@@ -127,9 +143,63 @@ public class HamsterShoulderFeatureRenderer
         matrices.scale(HAMSTER_SHOULDER_SCALE, HAMSTER_SHOULDER_SCALE, HAMSTER_SHOULDER_SCALE);
         float renderYaw = 180.0F - player.getBodyYaw();
 
-        // --- 3. Render the Dummy Entity ---
+        // --- 4. Render the Dummy Entity ---
         hamsterRenderer.render(dummyHamster, renderYaw, tickDelta, matrices, vertexConsumers, light);
 
         matrices.pop();
+    }
+
+    /**
+     * Applies all pre-calculated state to the dummy entity right before rendering.
+     * This is the final step that bridges the client-thread logic with the render-thread object.
+     */
+    private void updateDummyState(HamsterEntity dummyHamster, HamsterShoulderData nbtData, ClientShoulderHamsterData clientData, ShoulderLocation location, PlayerEntity owner) {
+        // --- 1. Apply visual data from NBT ---
+        applyShoulderData(dummyHamster, nbtData, owner);
+
+        // --- 2. Apply animation clock from client data ---
+        dummyHamster.age = clientData.getAnimationAge(location);
+
+        // --- 3. Apply animation state from client data ---
+        ShoulderHamsterState state = clientData.getHamsterState(location);
+        if (state != null) {
+            ShoulderAnimationState currentState = state.getCurrentState();
+            dummyHamster.getDataTracker().set(HamsterEntity.SHOULDER_ANIMATION_STATE, currentState.ordinal());
+            dummyHamster.setSitting(currentState == ShoulderAnimationState.SITTING, true);
+        }
+
+        // --- 4. Inform dummy of its location for animation controller ---
+        dummyHamster.shoulderLocation = location;
+    }
+
+    /**
+     * Initializes the dummy hamster entities and their specialized renderers, one for each shoulder location.
+     * This is called once, the first time the feature needs to be rendered.
+     */
+    private void initializeDummies(World world) {
+        if (world == null) return; // Cannot proceed without a world instance
+
+        // We need an EntityRendererFactory.Context to create the renderers.
+        MinecraftClient client = MinecraftClient.getInstance();
+        EntityRendererFactory.Context context = new EntityRendererFactory.Context(
+                client.getEntityRenderDispatcher(),
+                client.getItemRenderer(),
+                client.getBlockRenderManager(),
+                client.getEntityRenderDispatcher().getHeldItemRenderer(),
+                client.getResourceManager(),
+                client.getEntityModelLoader(),
+                client.textRenderer
+        );
+
+        for (ShoulderLocation location : ShoulderLocation.values()) {
+            // Create a unique dummy entity for this location
+            HamsterEntity dummy = new HamsterEntity(ModEntities.HAMSTER.get(), world);
+            dummy.setNoGravity(true);
+            dummy.setSilent(true);
+            this.dummyHamsters.put(location, dummy);
+
+            // Create a unique renderer for this location
+            this.hamsterRenderers.put(location, new ShoulderHamsterRenderer(context));
+        }
     }
 }

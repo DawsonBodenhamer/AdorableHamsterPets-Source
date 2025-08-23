@@ -1,5 +1,6 @@
 package net.dawson.adorablehamsterpets.accessor;
 
+import net.dawson.adorablehamsterpets.client.state.ClientShoulderHamsterData;
 import net.dawson.adorablehamsterpets.entity.ShoulderLocation;
 import net.minecraft.nbt.NbtCompound;
 
@@ -26,4 +27,6 @@ public interface PlayerEntityAccessor {
     }
 
     ArrayDeque<ShoulderLocation> adorablehamsterpets$getMountOrderQueue();
+
+    ClientShoulderHamsterData adorablehamsterpets$getClientShoulderData();
 }
