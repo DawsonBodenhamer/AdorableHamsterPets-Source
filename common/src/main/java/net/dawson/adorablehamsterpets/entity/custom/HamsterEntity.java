@@ -1471,6 +1471,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     } else {
                         player.sendMessage(Text.translatable("message.adorablehamsterpets.shoulder_occupied"), true);
                     }
+                } else {
+                    player.swingHand(hand);
                 }
                 return ActionResult.CONSUME;
             }
