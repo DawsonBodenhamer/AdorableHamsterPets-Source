@@ -120,10 +120,23 @@ public class AhpConfig extends Config {
     public boolean requireFoodMixToUnlockCheeks = true;
 
     @ClientModifiable
-    @ConfigGroup.Pop
     @Translatable.Name("Use 'Hampter' as Default Name")
     @Translatable.Desc("Changes the default entity name from 'Hamster' to 'Hampter'. Note: This has no visible effect in vanilla Minecraft, as mobs don't show nameplates by default. It's primarily for use with mods like Auto Leveling that display entity names.")
     public boolean useHampterName = false;
+
+    @Translatable.Name("Mob Interactions")
+    @Translatable.Desc("Configure how hamsters interact with (or terrify) other creatures.")
+    public ConfigGroup mobInteractions = new ConfigGroup("mobInteractions", true);
+
+    @Translatable.Name("Frighten Ravagers")
+    @Translatable.Desc("Should Ravagers, the hulking beasts of destruction, flee in terror from a tiny ball of fluff? Yes. Yes, they should.")
+    public boolean enableRavagerFlee = true;
+
+    @ConfigGroup.Pop
+    @ConfigGroup.Pop
+    @Translatable.Name("Frighten Spiders")
+    @Translatable.Desc("Turns your hamster into a mobile arachnid-repellent unit. Highly effective.")
+    public boolean enableSpiderFlee = true;
 
     // --- Core Cooldown Settings ---
     @Translatable.Name("Core Cooldown Settings")
