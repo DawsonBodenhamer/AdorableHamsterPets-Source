@@ -4,7 +4,8 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "adorablehamsterpets-common-refmap.json",
   "mixins": [
-    "server.CreeperEntityMixin",
+    "server.RavagerEntityMixin",
+    "server.SpiderEntityMixin",
     "server.PlayerEntityMixin",
     "accessor.MeleeAttackGoalAccessor",
     "accessor.LandPathNodeMakerInvoker",
