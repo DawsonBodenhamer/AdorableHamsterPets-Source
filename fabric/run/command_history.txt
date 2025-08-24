@@ -1,4 +1,0 @@
-/time set day
-/function adorablehamsterpets:debug/spawn_variants_circle_ai
-/function
-/function adorablehamsterpets:technical/give_guide_book

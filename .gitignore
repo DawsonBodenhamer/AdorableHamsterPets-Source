@@ -9,9 +9,9 @@
 # =================================================
 # Gradle & Build Output
 # =================================com
-.gradle/
-build/
-out/
+**/.gradle/
+**/build/
+**/out/
 
 # Platform-specific build outputs
 /fabric/build/
@@ -21,13 +21,15 @@ out/
 # Architectury & Loom
 # =================================================
 # Generated folders
-run/
-runs/
-fabric/run/
-forge/run/
-neoforge/run/
-dev/
-jars/
+**/run/
+**/runs/
+**/dev/
+**/jars/
+
+# Specific module run dirs
+/fabric/run/
+/forge/run/
+/neoforge/run/
 
 # Generated files
 *dev.jar
@@ -39,15 +41,11 @@ jars/
 *-all.jar
 
 # Generated data and resources
-src/main/generated/
-common/src/main/generated/
-fabric/src/main/generated/
-forge/src/main/generated/
-neoforge/src/main/generated/
+**/src/main/generated/
 
 # =================================================
 # Logs and other temporary files
 # =================================================
 logs/
-*.log
+**/*.log
 .DS_Store
