@@ -20,6 +20,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.world.World;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -114,6 +116,18 @@ public class HamsterShoulderFeatureRenderer
 
         // --- 2. Update Dummy Entity State from Pre-Ticked Data ---
         updateDummyState(dummyHamster, shoulderData, clientData, location, player);
+
+        // Manually reset the animation manager's update timer.
+        // This forces GeckoLib to perform a full animation update for this specific dummy instance,
+        // overwriting any polluted state from other entities rendered in the same batch by Iris.
+        // WITHOUT THIS BLOCK, IRIS WILL BREAK THE SHOULDER HAMSTERS
+        AnimatableInstanceCache cache = dummyHamster.getAnimatableInstanceCache();
+        if (cache != null) {
+            AnimatableManager<?> manager = cache.getManagerForId(dummyHamster.getId());
+            if (manager != null) {
+                manager.updatedAt(0);
+            }
+        }
 
         matrices.push();
 
