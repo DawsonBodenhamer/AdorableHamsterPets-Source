@@ -110,10 +110,23 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
         entity.renderedSnowYOffset += (targetYOffset - entity.renderedSnowYOffset) * 0.15f;
         poseStack.translate(0.0, entity.renderedSnowYOffset, 0.0);
 
-        // --- 5. Call Superclass Method ---
+        // --- 5. Force Animation Update for In-World Entities ---
+        // This prevents animation state from shoulder-pet dummies (rendered in the FeatureRenderer)
+        // from "bleeding" onto in-world hamsters when using mods like Flashback or Iris.
+        if (!entity.isShoulderPet()) {
+            software.bernie.geckolib.animatable.instance.AnimatableInstanceCache cache = entity.getAnimatableInstanceCache();
+            if (cache != null) {
+                software.bernie.geckolib.animation.AnimatableManager<?> manager = cache.getManagerForId(entity.getId());
+                if (manager != null) {
+                    manager.updatedAt(0);
+                }
+            }
+        }
+
+        // --- 6. Call Superclass Method ---
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
 
-        // --- 6. Pop Matrix for Snow Adjustment ---
+        // --- 7. Pop Matrix for Snow Adjustment ---
         poseStack.pop();
     }
 

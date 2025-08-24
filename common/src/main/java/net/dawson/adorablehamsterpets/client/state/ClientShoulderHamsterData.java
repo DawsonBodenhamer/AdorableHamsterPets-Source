@@ -3,7 +3,7 @@ package net.dawson.adorablehamsterpets.client.state;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.entity.ShoulderLocation;
 import net.dawson.adorablehamsterpets.entity.client.feature.ShoulderHamsterState;
-import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,7 +24,7 @@ public class ClientShoulderHamsterData {
      *
      * @param player The client player entity this data is attached to.
      */
-    public void clientTick(ClientPlayerEntity player) {
+    public void clientTick(AbstractClientPlayerEntity player) {
         PlayerEntityAccessor playerAccessor = (PlayerEntityAccessor) player;
 
         // Determine player movement state once
