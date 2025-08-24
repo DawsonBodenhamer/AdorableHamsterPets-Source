@@ -14,9 +14,9 @@
     "accessor.FollowOwnerGoalAccessor"
   ],
   "client": [
-
     "client.PlayerEntityRendererMixin",
-    "client.LivingEntityRendererInvoker"
+    "client.LivingEntityRendererInvoker",
+    "client.AbstractClientPlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1
