@@ -14,14 +14,13 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
-import net.minecraft.client.util.SkinTextures;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.world.World;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -132,7 +131,7 @@ public class HamsterShoulderFeatureRenderer
         matrices.push();
 
         // --- 3. Apply Transformations Based on Location ---
-        boolean isSlim = player.getSkinTextures().model() == SkinTextures.Model.SLIM;
+        boolean isSlim = "slim".equals(player.getModel()); // Do this for 1.20.1
 
         switch (location) {
             case RIGHT_SHOULDER:

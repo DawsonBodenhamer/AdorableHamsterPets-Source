@@ -10,7 +10,6 @@ import net.dawson.adorablehamsterpets.entity.custom.HamsterVariant;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.SnowBlock;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -112,11 +111,11 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
         // This prevents animations from shoulder-pet dummies (FeatureRenderer)
         // from "bleeding" onto in-world hamsters during Flashback replays.
         if (!entity.isShoulderPet()) {
-            software.bernie.geckolib.animatable.instance.AnimatableInstanceCache cache = entity.getAnimatableInstanceCache();
+            software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache cache = entity.getAnimatableInstanceCache();
             if (cache != null) {
-                software.bernie.geckolib.animation.AnimatableManager<?> manager = cache.getManagerForId(entity.getId());
+                software.bernie.geckolib.core.animation.AnimatableManager<?> manager = cache.getManagerForId(entity.getId());
                 if (manager != null) {
-                    manager.updatedAt(0);
+                    manager.updatedAt(0.0);
                 }
             }
         }
