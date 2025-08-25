@@ -296,7 +296,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 && !canSpawnWhite(biomeEntry)
                 && !biomeEntry.isIn(BiomeTags.IS_BADLANDS)
                 && !biomeEntry.isIn(BiomeTags.IS_JUNGLE)
-                && !biomeEntry.isIn(BiomeTags.IS_SAVANNA);
+                && !biomeEntry.isIn(BiomeTags.IS_SAVANNA)
+                && !biomeEntry.isIn(ModBiomeTags.IS_SANDY);
     }
 
     private static boolean canSpawnBlack(RegistryEntry<Biome> biomeEntry) {
