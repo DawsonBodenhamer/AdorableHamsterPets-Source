@@ -100,7 +100,7 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
 
         // If the block is a snow layer, apply a fixed offset equal to one layer's height.
         if (blockState.isOf(Blocks.SNOW)) {
-            targetYOffset = 1.0f / 8.0f; // 0.125f, the height of a single snow layer.
+            targetYOffset = 1.0f / 8.0f;
         }
 
         // Smoothly interpolate the current offset towards the target offset.
@@ -109,8 +109,8 @@ public class HamsterRenderer extends GeoEntityRenderer<HamsterEntity> {
         poseStack.translate(0.0, entity.renderedSnowYOffset, 0.0);
 
         // --- 5. Force Animation Update for In-World Entities ---
-        // This prevents animation state from shoulder-pet dummies (rendered in the FeatureRenderer)
-        // from "bleeding" onto in-world hamsters when using mods like Flashback or Iris.
+        // This prevents animations from shoulder-pet dummies (FeatureRenderer)
+        // from "bleeding" onto in-world hamsters during Flashback replays.
         if (!entity.isShoulderPet()) {
             software.bernie.geckolib.animatable.instance.AnimatableInstanceCache cache = entity.getAnimatableInstanceCache();
             if (cache != null) {
