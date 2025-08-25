@@ -16,6 +16,8 @@ import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.world.World;
@@ -131,25 +133,45 @@ public class HamsterShoulderFeatureRenderer
         matrices.push();
 
         // --- 3. Apply Transformations Based on Location ---
+        ItemStack chestStack = player.getInventory().getArmorStack(2);
+        boolean isWearingChestplate = !chestStack.isEmpty() && !chestStack.isOf(Items.ELYTRA);
         boolean isSlim = "slim".equals(player.getModel()); // Do this for 1.20.1
 
         switch (location) {
-            case RIGHT_SHOULDER:
+            case RIGHT_SHOULDER -> {
                 this.getContextModel().rightArm.rotate(matrices);
-                float xOffsetRight = isSlim ? -0.08F : -0.12F; // Apply different offset for slim vs wide
-                matrices.translate(xOffsetRight, -0.12F, -0.016F);
+                float xOffset, yOffset;
+                if (isWearingChestplate) {
+                    // Universal offsets for when armor is worn
+                    xOffset = -0.18F;
+                    yOffset = -0.18F;
+                } else {
+                    // Original offsets based on player model
+                    xOffset = isSlim ? -0.08F : -0.12F;
+                    yOffset = -0.12F;
+                }
+                matrices.translate(xOffset, yOffset, -0.016F);
                 matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(15.0F));
-                break;
-            case LEFT_SHOULDER:
+            }
+            case LEFT_SHOULDER -> {
                 this.getContextModel().leftArm.rotate(matrices);
-                float xOffsetLeft = isSlim ? 0.08F : 0.12F; // Apply different offset for slim vs wide
-                matrices.translate(xOffsetLeft, -0.12F, -0.016F);
+                float xOffset, yOffset;
+                if (isWearingChestplate) {
+                    // Universal offsets for when armor is worn
+                    xOffset = 0.18F;
+                    yOffset = -0.18F;
+                } else {
+                    // Original offsets based on player model
+                    xOffset = isSlim ? 0.08F : 0.12F;
+                    yOffset = -0.12F;
+                }
+                matrices.translate(xOffset, yOffset, -0.016F);
                 matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-15.0F));
-                break;
-            case HEAD:
+            }
+            case HEAD -> {
                 this.getContextModel().head.rotate(matrices);
                 matrices.translate(0.0F, -0.5F, -0.05F);
-                break;
+            }
         }
 
         matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(180.0F));
