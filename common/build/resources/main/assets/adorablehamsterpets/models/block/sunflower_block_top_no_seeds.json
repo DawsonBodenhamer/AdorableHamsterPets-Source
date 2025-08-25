@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/sunflower_top",
-  "textures": {
-    "front": "adorablehamsterpets:block/sunflower_front_no_seeds",
-    "back": "adorablehamsterpets:block/sunflower_back",
-    "top": "adorablehamsterpets:block/sunflower_top"
-  }
-}
