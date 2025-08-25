@@ -49,6 +49,7 @@
   "tooltip.adorablehamsterpets.cheese.hint1": "A culinary masterpiece. Irresistible to small, furry opportunists.",
   "tooltip.adorablehamsterpets.cheese.hint2": "Wave it around in front of a hamster and see what happens.",
   "tooltip.adorablehamsterpets.cheese.hint3": "Restores %s hunger and %s saturation (configurable).",
+  "tooltip.adorablehamsterpets.cheese.appleskin_warning": "This old version's AppleSkin HUD can't handle my dynamic stats, so if you changed the config, the HUD is just... aspirational.",
 
   "key.categories.adorablehamsterpets.main": "Adorable Hamster Pets",
   "key.adorablehamsterpets.throw_hamster": "Throw Hamster",
