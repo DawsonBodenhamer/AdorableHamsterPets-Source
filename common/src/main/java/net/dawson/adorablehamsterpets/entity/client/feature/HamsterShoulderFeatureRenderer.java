@@ -8,6 +8,7 @@ import net.dawson.adorablehamsterpets.entity.ShoulderLocation;
 import net.dawson.adorablehamsterpets.entity.client.renderer.ShoulderHamsterRenderer;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -21,6 +22,7 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.world.World;
+import org.joml.Matrix4f;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
@@ -130,9 +132,14 @@ public class HamsterShoulderFeatureRenderer
             }
         }
 
+        // --- 3. Physics Simulation ---
+        float renderOffsetY = clientData.getRenderOffsetY(location, tickDelta);
+        float renderScaleY = clientData.getRenderScaleY(location, tickDelta);
+        dummyHamster.dynamicScaleY = renderScaleY; // Set the scale on the dummy entity
+
         matrices.push();
 
-        // --- 3. Apply Transformations Based on Location ---
+        // --- 4. Apply Transformations Based on Location ---
         ItemStack chestStack = player.getInventory().getArmorStack(2);
         boolean isWearingChestplate = !chestStack.isEmpty() && !chestStack.isOf(Items.ELYTRA);
         boolean isSlim = "slim".equals(player.getModel()); // Do this for 1.20.1
@@ -174,14 +181,35 @@ public class HamsterShoulderFeatureRenderer
             }
         }
 
+        // --- 5. Apply Physics Offset ---
+        // The negative sign is crucial to convert our simulation's "up is positive"
+        // into the model's "up is negative" local coordinate space.
+        matrices.translate(0.0F, -renderOffsetY, 0.0F);
+
         matrices.multiply(RotationAxis.POSITIVE_X.rotationDegrees(180.0F));
         matrices.scale(HAMSTER_SHOULDER_SCALE, HAMSTER_SHOULDER_SCALE, HAMSTER_SHOULDER_SCALE);
         float renderYaw = 180.0F - player.getBodyYaw();
 
-        // --- 4. Render the Dummy Entity ---
+        // --- 6. Render the Dummy Entity ---
         hamsterRenderer.render(dummyHamster, renderYaw, tickDelta, matrices, vertexConsumers, light);
 
         matrices.pop();
+    }
+
+    /**
+     * Calculates the absolute world-space Y-coordinate of a player model's bone.
+     *
+     * @param matrices   The current MatrixStack from the render method.
+     * @param anchorBone The ModelPart (e.g., head, rightArm) to measure.
+     * @return The world-space Y-coordinate of the bone's pivot point.
+     */
+    private double getAnchorBoneWorldY(MatrixStack matrices, ModelPart anchorBone) {
+        MatrixStack tempMatrices = new MatrixStack();
+        tempMatrices.multiplyPositionMatrix(matrices.peek().getPositionMatrix());
+        anchorBone.rotate(tempMatrices);
+        Matrix4f finalMatrix = tempMatrices.peek().getPositionMatrix();
+        // The Y translation component is at index m31 in a Matrix4f
+        return finalMatrix.m31();
     }
 
     /**

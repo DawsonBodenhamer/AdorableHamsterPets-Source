@@ -326,5 +326,17 @@
     "sounds": [
       "adorablehamsterpets:hamster_diamond_pounce"
     ]
+  },
+  "hamster_shoulder_impact1": {
+    "subtitle": "subtitles.adorablehamsterpets.hamster_bounce",
+    "sounds": [ "adorablehamsterpets:hamster_shoulder_impact1" ]
+  },
+  "hamster_shoulder_impact2": {
+    "subtitle": "subtitles.adorablehamsterpets.hamster_bounce",
+    "sounds": [ "adorablehamsterpets:hamster_shoulder_impact2" ]
+  },
+  "hamster_shoulder_impact3": {
+    "subtitle": "subtitles.adorablehamsterpets.hamster_bounce",
+    "sounds": [ "adorablehamsterpets:hamster_shoulder_impact3" ]
   }
 }

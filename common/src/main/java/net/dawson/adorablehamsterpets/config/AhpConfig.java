@@ -459,14 +459,29 @@ public class AhpConfig extends Config {
     public boolean forceLayDownOnSprint = true;
 
     @Translatable.Name("Min Animation State Duration")
-    @Translatable.Desc("The minimum time (in seconds) a shoulder hamster will stay in any one animation state (standing, sitting, or laying down) before transitioning to the next.")
+    @Translatable.Desc("The minimum time (in seconds) a shoulder hamster will stay in any one animation state (standing, sitting, or laying down). A random duration between the min and max is chosen for each transition.")
     public ValidatedInt shoulderMinStateSeconds = new ValidatedInt(20, 280, 5);
 
     @ConfigGroup.Pop
-    @ConfigGroup.Pop
     @Translatable.Name("Max Animation State Duration")
-    @Translatable.Desc("The maximum time (in seconds) a shoulder hamster will stay in any one animation state. A random duration between the min and max is chosen for each transition.")
+    @Translatable.Desc("The maximum time (in seconds) a shoulder hamster will stay in any one animation state (standing, sitting, or laying down). A random duration between the min and max is chosen for each transition.")
     public ValidatedInt shoulderMaxStateSeconds = new ValidatedInt(45, 300, 6);
+
+    @Translatable.Name("Audio Settings")
+    @Translatable.Desc("For when the squeaks become... a bit much.")
+    public ConfigGroup shoulderAudio = new ConfigGroup("shoulderAudio", true);
+
+    @ClientModifiable
+    @Translatable.Name("Silence Idle Sounds")
+    @Translatable.Desc("Mutes the ambient squeaks from shoulder-mounted hamsters. The bounce and alert sounds will still play.")
+    public boolean silenceShoulderIdleSounds = false;
+
+    @ClientModifiable
+    @ConfigGroup.Pop
+    @ConfigGroup.Pop
+    @Translatable.Name("Mute 1st-Person Physics SFX")
+    @Translatable.Desc("Mutes the hamster landing/bounce sound effect from the physics simulation when you are in first-person view.")
+    public boolean silencePhysicsSoundsInFirstPerson = false;
 
     // --- Hamster Yeet Settings ---
     @Translatable.Name("Hamster Yeet Settings")

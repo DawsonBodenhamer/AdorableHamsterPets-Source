@@ -140,6 +140,11 @@ public class ModSounds {
     // --- Pounce Sound ---
     public static final RegistrySupplier<SoundEvent> HAMSTER_DIAMOND_POUNCE = registerSoundEvent("hamster_diamond_pounce");
 
+    // --- Shoulder Impact Sounds (1-3) ---
+    public static final RegistrySupplier<SoundEvent> HAMSTER_SHOULDER_IMPACT1 = registerSoundEvent("hamster_shoulder_impact1");
+    public static final RegistrySupplier<SoundEvent> HAMSTER_SHOULDER_IMPACT2 = registerSoundEvent("hamster_shoulder_impact2");
+    public static final RegistrySupplier<SoundEvent> HAMSTER_SHOULDER_IMPACT3 = registerSoundEvent("hamster_shoulder_impact3");
+
     // --- 3. Public Sound Lists (using RegistrySuppliers) ---
     public static final List<RegistrySupplier<SoundEvent>> HAMSTER_ATTACK_SOUNDS = List.of(HAMSTER_ATTACK1, HAMSTER_ATTACK2, HAMSTER_ATTACK3, HAMSTER_ATTACK4);
     public static final List<RegistrySupplier<SoundEvent>> HAMSTER_IDLE_SOUNDS = List.of(HAMSTER_IDLE1, HAMSTER_IDLE2, HAMSTER_IDLE3, HAMSTER_IDLE4, HAMSTER_IDLE5, HAMSTER_IDLE6, HAMSTER_IDLE7, HAMSTER_IDLE8, HAMSTER_IDLE9, HAMSTER_IDLE10, HAMSTER_IDLE11);
@@ -157,6 +162,7 @@ public class ModSounds {
     public static final List<RegistrySupplier<SoundEvent>> HAMSTER_BOUNCE_SOUNDS = List.of(HAMSTER_BOUNCE);
     public static final List<RegistrySupplier<SoundEvent>> HAMSTER_AFFECTION_SOUNDS = List.of(HAMSTER_AFFECTION1, HAMSTER_AFFECTION2, HAMSTER_AFFECTION3);
     public static final List<RegistrySupplier<SoundEvent>> DIAMOND_SPARKLE_SOUNDS = List.of(DIAMOND_SPARKLE1, DIAMOND_SPARKLE2, DIAMOND_SPARKLE3);
+    public static final List<RegistrySupplier<SoundEvent>> HAMSTER_SHOULDER_IMPACT_SOUNDS = List.of(HAMSTER_SHOULDER_IMPACT1, HAMSTER_SHOULDER_IMPACT2, HAMSTER_SHOULDER_IMPACT3);
 
     // --- 4. Helper Methods ---
     private static RegistrySupplier<SoundEvent> registerSoundEvent(String name) {
