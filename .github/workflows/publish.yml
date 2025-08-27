@@ -72,7 +72,6 @@ jobs:
             $0 ~ "^[[:space:]]*## \\[" ver "\\]" {p=1; next}
             p && /^[[:space:]]*---/ {exit}
             p {
-              sub(/^[[:space:]]+/, "")
               print
             }
           ' CHANGELOG.md > release_changelog.md
