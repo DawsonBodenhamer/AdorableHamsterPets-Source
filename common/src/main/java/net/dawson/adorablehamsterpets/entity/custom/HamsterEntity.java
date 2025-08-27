@@ -652,6 +652,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     @Unique public transient float renderedSnowYOffset = 0.0f;
     @Unique public transient ShoulderLocation shoulderLocation = ShoulderLocation.RIGHT_SHOULDER;
     @Unique public int suffocationGracePeriod = 0;
+    @Unique public transient float dynamicScaleY = 1.0f;
 
 
     // --- Inventory ---

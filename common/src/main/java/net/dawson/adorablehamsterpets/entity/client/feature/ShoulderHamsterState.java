@@ -2,6 +2,11 @@ package net.dawson.adorablehamsterpets.entity.client.feature;
 
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
+import net.dawson.adorablehamsterpets.sound.ModSounds;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.sound.PositionedSoundInstance;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.random.Random;
 
 /**
@@ -13,6 +18,7 @@ public class ShoulderHamsterState {
     private int timer; // Ticks remaining in the current state
     private final Random random = Random.create();
     private int sprintTransitionDelay = 0;
+    private int idleSoundCooldown = 0;
 
     public ShoulderHamsterState() {
         // Start in a random state
@@ -74,6 +80,33 @@ public class ShoulderHamsterState {
                         case ALWAYS_LAY_DOWN -> ShoulderAnimationState.LAYING_DOWN;
                         default -> ShoulderAnimationState.STANDING;
                     };
+                }
+            }
+        }
+
+        // --- 3. Idle Sound Logic ---
+        // Check the config setting first.
+        if (!Configs.AHP.silenceShoulderIdleSounds) {
+            // Use a random chance to play the sound periodically.
+            if (this.idleSoundCooldown > 0) {
+                this.idleSoundCooldown--;
+            } else if (this.random.nextInt(250) == 0) { // Average once every 12.5 seconds
+                MinecraftClient client = MinecraftClient.getInstance();
+                if (client.player != null) {
+                    SoundEvent idleSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_IDLE_SOUNDS, this.random);
+                    if (idleSound != null) {
+                        client.getSoundManager().play(
+                                new PositionedSoundInstance(
+                                        idleSound,
+                                        SoundCategory.PLAYERS,
+                                        0.25f, // Quieter volume for shoulder pets
+                                        1.2f + (this.random.nextFloat() - 0.5f) * 0.4f, // Higher, varied pitch
+                                        this.random,
+                                        client.player.getX(), client.player.getY(), client.player.getZ()
+                                )
+                        );
+                        this.idleSoundCooldown = 100; // 5-second cooldown after playing a sound
+                    }
                 }
             }
         }

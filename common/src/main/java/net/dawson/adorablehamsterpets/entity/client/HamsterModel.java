@@ -2,8 +2,6 @@ package net.dawson.adorablehamsterpets.entity.client;
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimationState;
@@ -73,30 +71,27 @@ public class HamsterModel extends GeoModel<HamsterEntity> {
             rightCheekInfBone.setHidden(!rightFull);
         }
 
-        // --- Baby/Adult Scaling Logic ---
+        // --- Scaling Logic ---
         // bodyParentBone scale is intentionally not set here, allowing JSON breathing anims to work proportionally.
         if (rootBone != null && headParentBone != null) {
-            if (entity.isBaby()) {
-                // Baby Scaling
-                rootBone.setScaleX(BABY_SCALE);
-                rootBone.setScaleY(BABY_SCALE);
-                rootBone.setScaleZ(BABY_SCALE);
+            // 1. Determine the base scale for the entire model and the head.
+            float baseScale = entity.isBaby() ? BABY_SCALE : ADULT_SCALE;
+            float headScale = entity.isBaby() ? BABY_HEAD_SCALE : ADULT_HEAD_SCALE;
 
-                // Scale up head slightly.
-                headParentBone.setScaleX(BABY_HEAD_SCALE);
-                headParentBone.setScaleY(BABY_HEAD_SCALE);
-                headParentBone.setScaleZ(BABY_HEAD_SCALE);
-            } else {
-                // Adult Scaling (Explicit Reset)
-                rootBone.setScaleX(ADULT_SCALE);
-                rootBone.setScaleY(ADULT_SCALE);
-                rootBone.setScaleZ(ADULT_SCALE);
+            // 2. Start with the base scale for all axes.
+            rootBone.setScaleX(baseScale);
+            rootBone.setScaleY(baseScale);
+            rootBone.setScaleZ(baseScale);
 
-                headParentBone.setScaleX(ADULT_HEAD_SCALE);
-                headParentBone.setScaleY(ADULT_HEAD_SCALE);
-                headParentBone.setScaleZ(ADULT_HEAD_SCALE);
+            // 3. If it's a shoulder pet, apply the dynamic squash/stretch by overriding just the Y-axis scale.
+            if (entity.isShoulderPet()) {
+                rootBone.setScaleY(baseScale * entity.dynamicScaleY);
             }
+
+            // 4. Set the head scale independently.
+            headParentBone.setScaleX(headScale);
+            headParentBone.setScaleY(headScale);
+            headParentBone.setScaleZ(headScale);
         }
-        // --- End Baby/Adult Scaling Logic ---
     }
 }
