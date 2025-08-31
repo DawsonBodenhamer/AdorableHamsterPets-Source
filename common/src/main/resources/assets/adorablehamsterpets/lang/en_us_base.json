@@ -30,7 +30,7 @@
   "block.adorablehamsterpets.sunflower_block.hint1": "Sometimes yields seeds... key recipe ingredients?",
   "block.adorablehamsterpets.sunflower_block.hint2": "Requires time to replenish its seedy bounty.",
 
-  "tooltip.adorablehamsterpets.hamster_guide_book.hint1": "Can be crafted with $(l:crops_food/cucumber#item)<dark_green><b>Sliced Cucumber</> and a <gold><b>Book</>.",
+  "tooltip.adorablehamsterpets.hamster_guide_book.hint1": "Can be crafted with Sliced Cucumber and a Book.",
   "tooltip.adorablehamsterpets.green_bean_seeds.hint1": "Plant these to grow beans. Beans that empower...",
   "tooltip.adorablehamsterpets.green_bean_seeds.hint2": "Requires commitment. And maybe some dirt.",
   "tooltip.adorablehamsterpets.cucumber_seeds.hint1": "Grow cucumbers. Cucumbers that might... persuade?",

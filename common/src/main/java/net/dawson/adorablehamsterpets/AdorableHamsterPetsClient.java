@@ -72,21 +72,6 @@ public class AdorableHamsterPetsClient {
         ModPackets.registerS2CPackets();
         ClientTickEvent.CLIENT_POST.register(AdorableHamsterPetsClient::onEndClientTick);
         ColorHandlerRegistry.registerItemColors((stack, tintIndex) -> -1, ModItems.HAMSTER_SPAWN_EGG.get());
-
-
-        InteractionEvent.RIGHT_CLICK_ITEM.register((player, hand) -> {
-            ItemStack stack = player.getStackInHand(hand);
-            if (player.getWorld().isClient && stack.isOf(ModItems.HAMSTER_GUIDE_BOOK.get())) {
-                if (stack.contains(DataComponentTypes.WRITTEN_BOOK_CONTENT)) {
-                    BookScreen.Contents contents = BookScreen.Contents.create(stack);
-                    if (contents != null) {
-                        MinecraftClient.getInstance().setScreen(new BookScreen(contents));
-                        return CompoundEventResult.interrupt(true, stack);
-                    }
-                }
-            }
-            return CompoundEventResult.pass();
-        });
     }
 
     /**

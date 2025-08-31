@@ -23,7 +23,7 @@ public class ModItems {
 
     // --- 2. Change Item fields to RegistrySuppliers ---
     public static final RegistrySupplier<Item> HAMSTER_GUIDE_BOOK = registerItem("hamster_guide_book",
-            () -> new net.dawson.adorablehamsterpets.item.custom.HamsterGuideBook(new Item.Settings().maxCount(1)));
+            () -> new net.dawson.adorablehamsterpets.item.custom.PatchouliGuideBookItem(new Item.Settings().maxCount(1)));
 
     public static final RegistrySupplier<Item> HAMSTER_SPAWN_EGG = registerItem("hamster_spawn_egg",
             () -> new SpawnEggItem(ModEntities.HAMSTER.get(), 0x9c631f, 0xffffff, new Item.Settings()));
