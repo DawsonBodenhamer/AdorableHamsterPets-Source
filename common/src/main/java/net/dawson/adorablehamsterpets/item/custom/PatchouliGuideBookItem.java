@@ -43,7 +43,6 @@ public class PatchouliGuideBookItem extends Item {
             tooltip.add(Text.translatable("tooltip.adorablehamsterpets.hamster_guide_book.hint1")
                     .formatted(Formatting.GRAY));
         }
-        tooltip.add(Text.literal("Adorable Hamster Pets").formatted(Formatting.BLUE, Formatting.ITALIC));
         super.appendTooltip(stack, world, tooltip, context);
     }
 }
