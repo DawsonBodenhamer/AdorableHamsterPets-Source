@@ -1,0 +1,25 @@
+{
+  "name": "book.adorablehamsterpets.entry.haute_couture",
+  "icon": "minecraft:pink_petals",
+  "category": "adorablehamsterpets:accessories",
+  "entry_color": "00AAAA",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "adorablehamsterpets:page",
+      "header": "book.adorablehamsterpets.entry.haute_couture",
+      "header_color": "00AAAA",
+      "text": "book.adorablehamsterpets.entry.haute_couture.page1.body",
+      "text_color": "000000"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "adorablehamsterpets:hamster{PinkPetalType: 3, HamsterVariant: 1}",
+      "default_rotation": 55,
+      "scale": 1.2,
+      "rotate" : false,
+      "name": "Hamster",
+      "text": "Maybe change to the image instead?"
+    }
+  ]
+}

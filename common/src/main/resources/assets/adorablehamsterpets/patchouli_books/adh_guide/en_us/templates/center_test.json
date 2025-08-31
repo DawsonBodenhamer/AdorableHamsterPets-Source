@@ -1,0 +1,74 @@
+{
+  "components": [
+    {
+      "type": "patchouli:item",
+      "item": "minecraft:dirt",
+      "x": 0,
+      "y": 110
+    },
+    {
+      "type": "patchouli:item",
+      "item": "minecraft:dirt",
+      "x": 20,
+      "y": 110
+    },
+    {
+      "type": "patchouli:item",
+      "item": "minecraft:dirt",
+      "x": 40,
+      "y": 110
+    },
+    {
+      "type": "patchouli:item",
+      "item": "minecraft:dirt",
+      "x": 60,
+      "y": 110
+    },
+    {
+      "type": "patchouli:item",
+      "item": "minecraft:dirt",
+      "x": 80,
+      "y": 110
+    },{
+      "type": "patchouli:item",
+      "item": "minecraft:dirt",
+      "x": 100,
+      "y": 110
+    },{
+      "type": "patchouli:item",
+      "item": "minecraft:dirt",
+      "x": 125,
+      "y": 110
+    },
+    {
+      "type": "patchouli:item",
+      "item": "minecraft:dirt",
+      "x": 145,
+      "y": 110
+    },
+    {
+      "type": "patchouli:item",
+      "item": "minecraft:dirt",
+      "x": 165,
+      "y": 110
+    },
+    {
+      "type": "patchouli:item",
+      "item": "minecraft:dirt",
+      "x": 185,
+      "y": 110
+    },
+    {
+      "type": "patchouli:item",
+      "item": "minecraft:dirt",
+      "x": 205,
+      "y": 110
+    },
+    {
+      "type": "patchouli:item",
+      "item": "minecraft:dirt",
+      "x": 225,
+      "y": 110
+    }
+  ]
+}

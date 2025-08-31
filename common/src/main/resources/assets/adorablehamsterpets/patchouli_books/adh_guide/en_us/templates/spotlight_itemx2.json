@@ -1,0 +1,31 @@
+{
+  "include": [
+    { "template": "page",
+      "as": "page",
+      "using": {
+        "header": "#header",
+        "header_color": "#header_color",
+        "text": "#text",
+        "text_color": "#text_color"
+      }
+    },
+    { "template": "output_item_x2",
+      "as": "page",
+      "using": {
+        "item_output1": "#item_output1",
+        "item_output2": "#item_output2"
+      },
+      "x": 170,
+      "y": 130
+    }
+  ],
+  "components": [
+    {
+      "type": "patchouli:item",
+      "item": "#item_input",
+      "link_recipe": true,
+      "x": 150,
+      "y": 130
+    }
+  ]
+}
