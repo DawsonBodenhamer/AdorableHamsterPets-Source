@@ -108,6 +108,7 @@ jobs:
             geckolib(required)
             fzzy-config(required)
             fabric-language-kotlin(required)
+            patchouli(required)
             modmenu(optional)
             jade(optional)
 
@@ -118,6 +119,7 @@ jobs:
             388172(required)
             1005914(required)
             308769(required)
+            393236(required)
             308702(optional)
             324717(optional)
 
@@ -155,6 +157,7 @@ jobs:
             geckolib(required)
             fzzy-config(required)
             kotlin-for-forge(required)
+            patchouli(required)
             jade(optional)
 
           # NeoForge dependency IDs for CurseForge (no comments allowed inside the block)
@@ -163,6 +166,7 @@ jobs:
             388172(required)
             1005914(required)
             351264(required)
+            306770(required)
             324717(optional)
 
           # Attach the changelog snippet that was extracted above
