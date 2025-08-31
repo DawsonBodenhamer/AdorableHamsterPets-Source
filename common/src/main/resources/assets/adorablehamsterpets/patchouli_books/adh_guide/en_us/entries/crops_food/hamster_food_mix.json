@@ -1,0 +1,21 @@
+{
+  "name": "book.adorablehamsterpets.entry.hamster_food_mix",
+  "icon": "adorablehamsterpets:hamster_food_mix",
+  "category": "adorablehamsterpets:crops_food",
+  "entry_color": "00AAAA",
+  "sortnum": 4,
+  "pages": [
+    {
+      "type": "adorablehamsterpets:page",
+      "header": "book.adorablehamsterpets.entry.hamster_food_mix",
+      "header_color": "00AAAA",
+      "text": "book.adorablehamsterpets.entry.hamster_food_mix.page1.body",
+      "text_color": "000000"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "adorablehamsterpets:hamster_food_mix_from_ingredients",
+      "text": ""
+    }
+  ]
+}

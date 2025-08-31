@@ -1,0 +1,35 @@
+{
+  "include": [
+    { "template": "page",
+      "as": "page",
+      "using": {
+        "header": "#header",
+        "header_color": "#header_color",
+        "text": "#text",
+        "text_color": "#text_color"
+      }
+    },
+    { "template": "output_item_x2",
+      "as": "page",
+      "using": {
+        "item_output1": "#item_output1",
+        "item_output2": "#item_output2"
+      },
+      "x": 170,
+      "y": 130
+    }
+  ],
+  "components": [
+    {
+      "type": "patchouli:image",
+      "image": "#image_input",
+      "width": 16,
+      "height": 16,
+      "texture_width": 16,
+      "texture_height": 16,
+      "scale": 1,
+      "x": 150,
+      "y": 130
+    }
+  ]
+}

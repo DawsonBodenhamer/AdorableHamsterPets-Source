@@ -1,0 +1,23 @@
+{
+  "components": [
+    {
+      "type": "patchouli:text",
+      "text": "<b>\uD83E\uDC46",
+      "x": 0,
+      "y": 5
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#item_output1",
+      "link_recipe": true,
+      "x": 10,
+      "y": 0
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#item_output2",
+      "x": 30,
+      "y": 0
+    }
+  ]
+}

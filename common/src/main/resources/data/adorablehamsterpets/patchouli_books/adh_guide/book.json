@@ -1,0 +1,31 @@
+{
+  "name": "item.adorablehamsterpets.hamster_guide_book",
+  "subtitle": "item.adorablehamsterpets.hamster_guide_book.subtitle",
+  "landing_text": "tooltip.adorablehamsterpets.hamster_guide_book.hint1",
+  "version": 1,
+  "book_texture": "patchouli:textures/gui/book_green.png",
+  "model": "adorablehamsterpets:hamster_guide_book",
+  "index_icon": "adorablehamsterpets:hamster_guide_book",
+  "creative_tab": "adorablehamsterpets:adorable_hamster_pets",
+  "text_color": "000000",
+  "header_color": "333333",
+  "link_hover_color": "FF5555",
+  "use_resource_pack": true,
+  "show_progress": false,
+  "text_overflow_mode": "resize",
+  "i18n": true,
+  "pause_game": true,
+  "macros": {
+    "<b>": "$(l)",
+    "<i>": "$(o)",
+    "</>": "$()",
+    "<red>": "$(#AA0000)",
+    "<gold>": "$(#FFAA00)",
+    "<yellow>": "$(#FFFF55)",
+    "<dark_green>": "$(#00AA00)",
+    "<green>": "$(#55FF55)",
+    "<aqua>": "$(#55FFFF)",
+    "<light_purple>": "$(#FF55FF)",
+    "<dark_purple>": "$(#AA00AA)"
+  }
+}

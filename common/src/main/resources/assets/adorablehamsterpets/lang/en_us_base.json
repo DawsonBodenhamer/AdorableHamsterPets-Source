@@ -11,7 +11,8 @@
   "item.adorablehamsterpets.cheese": "§eCheese§",
   "item.adorablehamsterpets.hamster_food_mix": "Hamster Food Mix",
   "item.adorablehamsterpets.hamster_spawn_egg": "Hamster Spawn Egg",
-  "item.adorablehamsterpets.hamster_guide_book": "§f§lHamster Tips:§r§6§o Guidebook to the Tiny, Furry Heart§r",
+  "item.adorablehamsterpets.hamster_guide_book": "§f§lHamster Tips§r§6§o",
+  "item.adorablehamsterpets.hamster_guide_book.subtitle": "§r§6§oGuidebook to the Tiny, Furry Heart§r",
 
   "itemgroup.adorablehamsterpets.main": "Adorable Hamster Pets",
 
@@ -29,7 +30,7 @@
   "block.adorablehamsterpets.sunflower_block.hint1": "Sometimes yields seeds... key recipe ingredients?",
   "block.adorablehamsterpets.sunflower_block.hint2": "Requires time to replenish its seedy bounty.",
 
-  "tooltip.adorablehamsterpets.hamster_guide_book.hint1": "Can be crafted with Sliced Cucumber and a Book.",
+  "tooltip.adorablehamsterpets.hamster_guide_book.hint1": "Can be crafted with $(l:crops_food/cucumber#item)<dark_green><b>Sliced Cucumber</> and a <gold><b>Book</>.",
   "tooltip.adorablehamsterpets.green_bean_seeds.hint1": "Plant these to grow beans. Beans that empower...",
   "tooltip.adorablehamsterpets.green_bean_seeds.hint2": "Requires commitment. And maybe some dirt.",
   "tooltip.adorablehamsterpets.cucumber_seeds.hint1": "Grow cucumbers. Cucumbers that might... persuade?",
@@ -284,7 +285,99 @@
   "book.adorablehamsterpets.page23.emphasis_no_refunds": "*(No refunds)*",
   "book.adorablehamsterpets.page23.body4": "Now go forth.",
 
-  "config.adorablehamsterpets.main.helpAndResources": "Help & Other Distractions",
+
+
+
+
+
+
+  "book.adorablehamsterpets.category.the_hamster_life": "§r§6The Hamster Life",
+  "book.adorablehamsterpets.category.the_hamster_life.desc": "So, you want hamsters?$(br2)An admirable, if slightly predictable, goal.$(br2)This guide contains dubious wisdom gleaned from watching small rodents. Use at your own risk.",
+  "book.adorablehamsterpets.entry.regional_rodents": "Regional Rodents",
+  "book.adorablehamsterpets.entry.regional_rodents.page1.body": "Word on the block is, hamsters adapt. Expect different fur stylings depending on where they originated. Some coats are more... <gold><i>exclusive</> than others. Breeding can sometimes result in new white markings.",
+  "book.adorablehamsterpets.entry.taming": "§r§3Taming",
+  "book.adorablehamsterpets.entry.taming.page1.header": "Getting Started",
+  "book.adorablehamsterpets.entry.taming.page1.body": "First, you need bait. The good stuff comes from $(l:crops_food/cucumber)<dark_green><b>Cucumbers</>. Find $(l:crops_food/cucumber#bush)<dark_green><b>Wild Cucumber Bushes</> in warmer places — plains, savannas, maybe jungle edges. <b>Right-click</> 'em for seeds.",
+  "book.adorablehamsterpets.entry.taming.page2.header": "The Taming Tool",
+  "book.adorablehamsterpets.entry.taming.page2.body": "Plant those $(l:crops_food/cucumber#crop)<dark_green><b>Cucumber Seeds</> on farmland. Once grown, harvest the $(l:crops_food/cucumber#crop)<dark_green><b>Cucumbers</>.$(br2)Now, the crucial step: craft the cucumber into $(l:crops_food/cucumber#item)<dark_green><b>Sliced Cucumber</>. This is what the little fuzzballs actually I want.",
+  "book.adorablehamsterpets.entry.taming.page3.header": "Taming Revisited",
+  "book.adorablehamsterpets.entry.taming.page3.body": "Right, the actual taming.$(br)Remember: <dark_purple><b>Sneak</>(<b>$(k:sneak)</>). Hold $(l:crops_food/cucumber#item)<dark_green><b>Sliced Cucumber</>. Approach slowly. Hope it doesn't notice your desperation. Repeat until furry friend acquired",
+  "book.adorablehamsterpets.entry.basic_care": "Basic Care",
+  "book.adorablehamsterpets.entry.basic_care.page1.body": "They follow.$(br)Constantly.$(br)Right-click your tamed hamster to make it <dark_purple><b>Sit/Stay</>. It might fall asleep. <b>Right-click</> again to resume the stalking.",
+  "book.adorablehamsterpets.entry.feeding": "Feeding",
+  "book.adorablehamsterpets.entry.feeding.page1.header": "Healing",
+  "book.adorablehamsterpets.entry.feeding.page1.body": "If your hamster has had a disagreement with, well, anything. feed it $(l:crops_food)<dark_green><b>seeds or basic crops</> to patch it up.$(br2)For serious healing, craft $(l:crops_food/food_mix)<dark_green><b>Food Mix (sunflower seeds, pumpkin seeds, carrot, wheat seeds).",
+  "book.adorablehamsterpets.entry.feeding.page2.header": "Breeding",
+  "book.adorablehamsterpets.entry.feeding.page2.body": "If its healthy, the same basic food might trigger... <light_purple><b>Love Mode</>. Find another hamster also in Love Mode. Stand back. Nature happens.",
+  "book.adorablehamsterpets.entry.feeding.page3.header": "Pickiness",
+  "book.adorablehamsterpets.entry.feeding.page3.body": "Do not feed it the same mundane item twice in a row. It has standards. It will refuse.$(br2)Exceptions: $(l:crops_food/food_mix)<dark_green><b>Hamster Food Mix</> (gourmet stuff) and $(l:crops_food/green_beans#item)<gold><b>Steamed Green Beans</>.",
+  "book.adorablehamsterpets.entry.feeding.page4.header": "Buffs",
+  "book.adorablehamsterpets.entry.feeding.page4.body": "Those $(l:crops_food/green_beans#item)<gold><b>Steamed Green Beans</>? (Smelt regular Green Beans). They grant Speed, Strength, Absorption & Regen for a bit. Impressive!$(br2)...But there is a cooldown before it works again. Less impressive.",
+
+  "book.adorablehamsterpets.category.accessories": "§r§6Hamster Accessories",
+  "book.adorablehamsterpets.category.accessories.desc": "CATEGORY_ACCESSORIES_PLACEHOLDER",
+  "book.adorablehamsterpets.entry.haute_couture": "Hamster Haute Couture",
+  "book.adorablehamsterpets.entry.haute_couture.page1.body": "Stumbled upon some <light_purple><b>Pink Petals</>? Try <b>right-clicking</> your hamster with them. It's called fashion, look it up. Click again to undo your questionable style choices. No refunds on the petals.",
+
+  "book.adorablehamsterpets.category.shoulder_riding": "Shoulder Riding",
+  "book.adorablehamsterpets.category.shoulder_riding.desc": "Wield $(l:crops_food/cheese)<gold><b>Cheese</>. Have it with intent near your tamed companion. Things might happen. (You can also eat the cheese. It's suspiciously nourishing and slips right down the old gullet, if you can stomach the... moist sounds.)",
+  "book.adorablehamsterpets.entry.shoulder_perks": "Shoulder Perks",
+  "book.adorablehamsterpets.entry.shoulder_perks.page1.body": "Your shoulder companion may alert you to nearby <dark_green><b>Creepers</> that have noticed you, or shiny <aqua><b>Diamonds</>. Listen for the unique squeaks and sniffs amongst your own panicked breathing.$(br2)$(br2)More on that →",
+  "book.adorablehamsterpets.entry.shoulder_perks.page2.header": "Creeper Paranoia",
+  "book.adorablehamsterpets.entry.shoulder_perks.page2.body": "That panicked squeak? A <dark_green><b>Creeper</> has targeted YOU. Not just nearby, <red><b><i>\"targeting\"</>.$(br2)Maybe your hamster is worried its comfy shoulder perch is about to vanish.",
+  "book.adorablehamsterpets.entry.shoulder_perks.page3.header": "Tiny Prospector?",
+  "book.adorablehamsterpets.entry.shoulder_perks.page3.body": "Heard those <aqua><b>diamond detecting sniffs from your shoulder</>? Try letting your fuzzy friend down while it's still got the scent.$(br2)If it was really onto something, it might just decide to lead you to the $(l:other_features/subterranean_shinies)<b>jackpot</>.",
+  "book.adorablehamsterpets.entry.the_hamster_yeet": "The Hamster the_hamster_yeet™",
+  "book.adorablehamsterpets.entry.the_hamster_yeet.page1.body": "For when words fail and you need a furry, surprisingly aerodynamic solution. Aim (don't stare right at a block), press <dark_purple><b>$(k:adorablehamsterpets.throw_hamster)</>. Effective against Creepers. Hamster passes out upon impact. Go console it.",
+
+  "book.adorablehamsterpets.category.other_features": "§r§6Other Hamster Features",
+  "book.adorablehamsterpets.category.other_features.desc": "CATEGORY_OTHER_HAMSTER_FEATURES_PLACEHOLDER",
+  "book.adorablehamsterpets.entry.cheek_pouches": "Cheek Pouches",
+  "book.adorablehamsterpets.entry.cheek_pouches.page1.body": "Inventory... in their face. Feed epic snack to earn trust... and cheek access. Then <dark_purple><b>Sneak + Right-click</> a tamed hamster for 6 slots of prime real estate.$(br)If hurt, it can automatically eat $(l:crops_food/food_mix)<dark_green><b>Hamster Food Mix</> from its cheeks if available.",
+  "book.adorablehamsterpets.entry.subterranean_shinies": "Subterranean Shinies",
+  "book.adorablehamsterpets.entry.subterranean_shinies.page1.body": "Those excited sniffs? Your pocket prospector smells <aqua><b>Diamonds!</> Checks a 10-block radius by default.$(br2)It pauses between alerts, so listen carefully before you start digging... again.",
+
+  "book.adorablehamsterpets.category.crops_food": "§r§6Crops&Food",
+  "book.adorablehamsterpets.category.crops_food.desc": "CATEGORY_CROPS_PLACEHOLDER",
+  "book.adorablehamsterpets.entry.harvesting_notes": "Harvesting Notes",
+  "book.adorablehamsterpets.entry.harvesting_notes.page1.body": "$(l:crops_food/sunflower)<gold><b>Sunflowers</> sometimes yield seeds on right-click. They regrow eventually. <dark_green><b>Wild Bushes</> drop farmable seeds too.",
+  "book.adorablehamsterpets.entry.sunflower": "Sunflower",
+  "book.adorablehamsterpets.entry.sunflower.page1.body": "Find these <dark_green><b>Sunflower</>, in the wild and right click em to get the seeds and grew a another one (or make a $(l:crops_food/food_mix)<dark_green><b>Hamster Food Mix</>)",
+  "book.adorablehamsterpets.entry.sunflower.page1.image_title": "Sunflower",
+  "book.adorablehamsterpets.entry.cucumber" : "Cucumbers",
+  "book.adorablehamsterpets.entry.cucumber.page1.body": "Find these <dark_green><b>Wild Cucumber bush</>, in the wild and right click em to get the seeds and grew a fresh domesticated one (or make a $(l:crops_food/food_mix)<dark_green><b>Hamster Food Mix</>)",
+  "book.adorablehamsterpets.entry.cucumber.page1.image_title": "Wild Cucumber Bush",
+  "book.adorablehamsterpets.entry.cucumber.page2.header": "Cucumber Crop",
+  "book.adorablehamsterpets.entry.cucumber.page2.body": "Plant the seeds, wait till they grow, and break the crop to get the <dark_green><b>Cucumber</>. (And seeds. For replanting purposes)",
+  "book.adorablehamsterpets.entry.cucumber.page3.header": "Sliced Cucumber",
+  "book.adorablehamsterpets.entry.cucumber.page3.body": "You can cut it, to get the beloved <dark_green><b>Sliced cucumber</>, for $(l:the_hamster_life/feeding)<dark_purple><b>healing</> and $(l:the_hamster_life/taming)<dark_purple><b>taming</> the hamster (see the page above)",
+  "book.adorablehamsterpets.entry.green_beans" : "Green Beans",
+  "book.adorablehamsterpets.entry.green_beans.page1.body": "Find these <dark_green><b>Wild Green Bean Bush</>, in the world and right click em to get the seeds and grew a fresh domesticated one (or make a $(l:crops_food/food_mix)<dark_green><b>Hamster Food Mix</>)",
+  "book.adorablehamsterpets.entry.green_beans.page1.image_title": "Wild Green Bean Bush",
+  "book.adorablehamsterpets.entry.green_beans.page2.header": "Green Beans Crop",
+  "book.adorablehamsterpets.entry.green_beans.page2.body": "Plant the seeds, wait till they grow, and break the crop to get the <dark_green><b>Green Beans</>. (And seeds. For replanting purposes)",
+  "book.adorablehamsterpets.entry.green_beans.page3.header": "Steamed Green Beans",
+  "book.adorablehamsterpets.entry.green_beans.page3.body": "You can put into the furnace to cook the delicious, <dark_green><b>Steamed Green Beans</> for $(l:the_hamster_life/feeding)<dark_purple><b>healing</> and $(l:the_hamster_life/feeding#buffs)<dark_purple><b>buffing</> your hamster (see the page above)",
+  "book.adorablehamsterpets.entry.hamster_food_mix" : "Hamster Food Mix",
+  "book.adorablehamsterpets.entry.hamster_food_mix.page1.body": "A delicious meal that you can craft rom cucumber ...",
+  "book.adorablehamsterpets.entry.cheese" : "Cheese",
+  "book.adorablehamsterpets.entry.cheese.page1.body": "A cheese wonder ...",
+
+  "book.adorablehamsterpets.category.settings": "§r§6Settings",
+  "book.adorablehamsterpets.category.settings.desc": "CATEGORY_SETTINGS_PLACEHOLDER",
+  "book.adorablehamsterpets.entry.note_on_keys": "A Note on Keys",
+  "book.adorablehamsterpets.entry.note_on_keys.page1.body": "Is <dark_purple><b>$(k:adorablehamsterpets.throw_hamster)</> not throwing your hamster? Did you add this mod to an existing world? Woopsy.$(br2)Go to: <gold><b>Options > Controls > Key Binds</>. Find <gold><b>\"Throw Hamster.\"</>, and set it to <dark_purple><b>G</> (or your preferred key).",
+  "book.adorablehamsterpets.entry.control_freaks": "For The Control Freaks",
+  "book.adorablehamsterpets.entry.control_freaks.page1.body": "Not a fan of earning your hamster's trust for cheek storage? Wish those tooltips would just vanish? Good news for the micromanagers: this mod is highly configurable. Tweak to your heart's content. Or break everything.",
+  "book.adorablehamsterpets.entry.missing_book": "Lost a book?",
+  "book.adorablehamsterpets.entry.missing_book.page1.body": "Misplaced this invaluable tome of rodent wisdom, or need another one?$(br2)Shocking. $(c:/give @p patchouli:guide_book[patchouli:book=\"adorablehamsterpets:adh_guide\"])CLICK HERE</>, or craft another with a vanilla <gold><b>Book</> and some $(l:crops_food/cucumber#item)<dark_green><b>Sliced Cucumber</>. Don't ask why Sliced Cucumber. It's a long story involving a very particular hamster and an unfortunate picnic incident.",
+
+
+
+
+
+
+"config.adorablehamsterpets.main.helpAndResources": "Help & Other Distractions",
   "config.adorablehamsterpets.main.helpAndResources.desc": "Buttons to press when you're lost, bored, or have found a bug that isn't just a hamster exhibiting existential angst.",
   "config.adorablehamsterpets.main.helpAndResources.giveGuideBook": "I Lost My Book!",
   "config.adorablehamsterpets.main.helpAndResources.giveGuideBook.desc": "Misplaced your invaluable tome of rodent wisdom? Click here. I won't tell anyone.",
