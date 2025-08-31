@@ -57,6 +57,7 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
@@ -132,6 +133,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         SETTLING_INTO_SLUMBER, // Playing a short anim_hamster_sit_settle_sleepX transition
         DEEP_SLEEP             // Looping one of the anim_hamster_sleep_poseX animations
     }
+
     public static final int CELEBRATION_PARTICLE_DURATION_TICKS = 600;    // 3 seconds
     private static final float DEFAULT_FOOTSTEP_VOLUME = 0.10F;
     private static final float GRAVEL_VOLUME_MODIFIER = 0.60F;
@@ -146,7 +148,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             PathNodeType.WATER
     );
 
-    // --- Variant Pool Definitions ---
     private static final List<HamsterVariant> ORANGE_VARIANTS = List.of(
             HamsterVariant.ORANGE, HamsterVariant.ORANGE_OVERLAY1, HamsterVariant.ORANGE_OVERLAY2,
             HamsterVariant.ORANGE_OVERLAY3, HamsterVariant.ORANGE_OVERLAY4, HamsterVariant.ORANGE_OVERLAY5,
@@ -188,8 +189,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             HamsterVariant.LIGHT_GRAY_OVERLAY6, HamsterVariant.LIGHT_GRAY_OVERLAY7, HamsterVariant.LIGHT_GRAY_OVERLAY8
     );
     private static final List<HamsterVariant> WHITE_VARIANTS = List.of(HamsterVariant.WHITE); // White has no overlays
-
-    // --- End Variant Pool Definitions ---
 
     // --- Hamster Spawning In Different Biomes ---
     /**
@@ -1257,13 +1256,13 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         World world = this.getWorld();
         AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Interaction start. Player: {}, Hand: {}, Item: {}", this.getId(), world.getTime(), player.getName().getString(), hand, stack.getItem());
 
-        // --- 3. Interaction Cooldown Check ---
+        // --- 2. Interaction Cooldown Check ---
         if (this.interactionCooldown > 0) {
             AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Interaction cooldown active ({} ticks left). Passing.", this.getId(), world.getTime(), this.interactionCooldown);
             return ActionResult.PASS;
         }
 
-        // --- 4. Toggle Jade Debug with Guide Book ---
+        // --- 3. Toggle Jade Debug with Guide Book ---
         if (player.isSneaking() && stack.isOf(ModItems.HAMSTER_GUIDE_BOOK.get())) {
             if (!world.isClient) { // Server-side logic
                 AhpConfig currentConfig = AdorableHamsterPets.CONFIG;

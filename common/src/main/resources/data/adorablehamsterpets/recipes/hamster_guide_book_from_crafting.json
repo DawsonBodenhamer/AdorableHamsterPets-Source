@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "adorablehamsterpets:sliced_cucumber"
+    }
+  ],
+  "result": {
+    "id": "adorablehamsterpets:hamster_guide_book",
+    "count": 1,
+    "components": {
+      "patchouli:book": "adorablehamsterpets:adh_guide"
+    }
+  }
+}

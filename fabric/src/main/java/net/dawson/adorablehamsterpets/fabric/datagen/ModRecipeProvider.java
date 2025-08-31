@@ -60,13 +60,6 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .criterion("has_milk_bucket", conditionsFromItem(Items.MILK_BUCKET))
                 .offerTo(exporter);
 
-        // Hamster Guide Book Recipe (NO NBT in result here)
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.HAMSTER_GUIDE_BOOK.get(), 1)
-                .input(Items.BOOK)
-                .input(ModItems.SLICED_CUCUMBER.get())
-                .criterion("has_sliced_cucumber", conditionsFromItem(ModItems.SLICED_CUCUMBER.get()))
-                .offerTo(exporter, Identifier.of(AdorableHamsterPets.MOD_ID, "hamster_guide_book_from_crafting"));
-
         // --- Custom Sunflower to Vanilla Sunflower ---
         ShapelessRecipeJsonBuilder.create(RecipeCategory.DECORATIONS, Items.SUNFLOWER, 1)
                 .input(ModBlocks.SUNFLOWER_BLOCK.get())

@@ -23,7 +23,7 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(AdorableHamsterPets.MOD_ID, RegistryKeys.ITEM);
 
     public static final RegistrySupplier<Item> HAMSTER_GUIDE_BOOK = registerItem("hamster_guide_book",
-            () -> new net.dawson.adorablehamsterpets.item.custom.HamsterGuideBook(new Item.Settings().maxCount(1)));
+            () -> new net.dawson.adorablehamsterpets.item.custom.PatchouliGuideBookItem(new Item.Settings().maxCount(1)));
 
     public static final RegistrySupplier<Item> HAMSTER_SPAWN_EGG = registerSpawnEgg();
 

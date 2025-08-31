@@ -72,20 +72,6 @@ public class AdorableHamsterPetsClient {
         ModPackets.registerS2CPackets();
         ClientTickEvent.CLIENT_POST.register(AdorableHamsterPetsClient::onEndClientTick);
         ColorHandlerRegistry.registerItemColors((stack, tintIndex) -> -1, ModItems.HAMSTER_SPAWN_EGG.get());
-
-
-        InteractionEvent.RIGHT_CLICK_ITEM.register((player, hand) -> {
-            ItemStack stack = player.getStackInHand(hand);
-            if (player.getWorld().isClient && stack.isOf(ModItems.HAMSTER_GUIDE_BOOK.get())) {
-                // Check if the book has content before trying to open it.
-                if (stack.hasNbt() && stack.getNbt().contains("pages")) {
-                    // Directly create WrittenBookContents to bypass the vanilla item check.
-                    MinecraftClient.getInstance().setScreen(new BookScreen(new BookScreen.WrittenBookContents(stack)));
-                    return CompoundEventResult.interrupt(true, stack);
-                }
-            }
-            return CompoundEventResult.pass();
-        });
     }
 
     /**
