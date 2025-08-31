@@ -52,6 +52,13 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.adorablehamsterpets]]
+modId = "patchouli"
+type = "required"
+versionRange = "[1.21.1-92-NEOFORGE,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.adorablehamsterpets]]
 modId = "jade"
 type = "optional"
 versionRange = "[15.9.3,)"
