@@ -11,11 +11,13 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public class ModPackets {
 
     /**
-     * Registers all C2S (Client-to-Server) packet receivers.
-     * This method should be called from the common initializer, as the server
-     * needs to be aware of these packets.
+     * Registers all C2S (Client-to-Server) and S2C (Server-to-Client) packets.
+     * This method should be called from the common initializer to ensure both the client
+     * and server are aware of all packet types and their codecs. The handlers for S2C
+     * packets are automatically only executed on the client by Architectury.
      */
-    public static void registerC2SPackets() {
+    public static void register() {
+        // --- C2S Packets ---
         NetworkManager.registerReceiver(NetworkManager.Side.C2S, ThrowHamsterPayload.ID, ThrowHamsterPayload.CODEC,
                 (payload, context) -> context.queue(() -> HamsterEntity.tryThrowFromShoulder((ServerPlayerEntity) context.getPlayer()))
         );
@@ -27,18 +29,12 @@ public class ModPackets {
         NetworkManager.registerReceiver(NetworkManager.Side.C2S, DismountHamsterPayload.ID, DismountHamsterPayload.CODEC,
                 (payload, context) -> context.queue(() -> {
                     if (context.getPlayer() instanceof ServerPlayerEntity player) {
-                        ((PlayerEntityAccessor) player).adorablehamsterpets$dismountShoulderHamster();
+                        ((PlayerEntityAccessor) player).adorablehamsterpets$dismountShoulderHamster(false);
                     }
                 })
         );
-    }
 
-    /**
-     * Registers all S2C (Server-to-Client) packet receivers.
-     * This method MUST be called from a client-only initializer to prevent
-     * server-side crashes.
-     */
-    public static void registerS2CPackets() {
+        // --- S2C Packets ---
         NetworkManager.registerReceiver(NetworkManager.Side.S2C, StartHamsterFlightSoundPayload.ID, StartHamsterFlightSoundPayload.CODEC,
                 (payload, context) -> context.queue(() -> AdorableHamsterPetsClient.handleStartFlightSound(payload))
         );
