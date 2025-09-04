@@ -22,8 +22,13 @@ public class ModPackets {
     /**
      * Registers all C2S (Client-to-Server) packet receivers.
      * This method should be called from the common initializer.
+     * Registers all C2S (Client-to-Server) and S2C (Server-to-Client) packets.
+     * This method should be called from the common initializer to ensure both the client
+     * and server are aware of all packet types and their codecs. The handlers for S2C
+     * packets are automatically only executed on the client by Architectury.
      */
-    public static void registerC2SPackets() {
+    public static void register() {
+        // --- C2S Packet Receivers ---
         NetworkManager.registerReceiver(NetworkManager.Side.C2S, THROW_HAMSTER_ID,
                 (buf, context) -> context.queue(() -> HamsterEntity.tryThrowFromShoulder((ServerPlayerEntity) context.getPlayer()))
         );
@@ -31,7 +36,7 @@ public class ModPackets {
         NetworkManager.registerReceiver(NetworkManager.Side.C2S, DISMOUNT_HAMSTER_ID,
                 (buf, context) -> context.queue(() -> {
                     if (context.getPlayer() instanceof ServerPlayerEntity player) {
-                        ((PlayerEntityAccessor) player).adorablehamsterpets$dismountShoulderHamster();
+                        ((PlayerEntityAccessor) player).adorablehamsterpets$dismountShoulderHamster(false);
                     }
                 })
         );
@@ -49,13 +54,8 @@ public class ModPackets {
                     });
                 }
         );
-    }
 
-    /**
-     * Registers all S2C (Server-to-Client) packet receivers.
-     * This method MUST be called from a client-only initializer.
-     */
-    public static void registerS2CPackets() {
+        // --- S2C Packet Receivers ---
         NetworkManager.registerReceiver(NetworkManager.Side.S2C, START_HAMSTER_FLIGHT_SOUND_ID,
                 (buf, context) -> {
                     int entityId = buf.readInt();
