@@ -23,7 +23,6 @@ import java.util.function.BiConsumer;
  * <p>
  * 1.  Copies every entry from {@code en_us_base.json}.<br>
  * 2.  Appends all automatically-generated config-GUI keys from Fzzy Config,
- *     <b>plus</b> a <code>config.</code>-prefixed mirror of each key so the GUI can find them.
  */
 public class EnUsGenerator extends FabricLanguageProvider {
 
@@ -38,6 +37,7 @@ public class EnUsGenerator extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(TranslationBuilder builder) {
+
         /* ------------------------------------------------------------
          * 1)  Load every manual translation from en_us_base.json
          * ------------------------------------------------------------ */
@@ -66,13 +66,9 @@ public class EnUsGenerator extends FabricLanguageProvider {
          * 2)  Auto-generate config translations.
          *     If a key already exists, skip it.
          * ------------------------------------------------------------ */
-        BiConsumer<String, String> safeDualWriter = (key, value) -> {
+        BiConsumer<String, String> safeSingleWriter = (key, value) -> {
             if (seen.add(key)) {
-                builder.add(key, value);          // original key
-            }
-            String guiKey = "config." + key;
-            if (seen.add(guiKey)) {
-                builder.add(guiKey, value);       // Mod-Menu / GUI key
+                builder.add(key, value); // Only add the standard key
             }
         };
 
@@ -80,8 +76,8 @@ public class EnUsGenerator extends FabricLanguageProvider {
                 AhpConfig.class,
                 Identifier.of(AdorableHamsterPets.MOD_ID, "main"),
                 "en_us",
-                true,
-                safeDualWriter
+                /* includeDescriptions = */ true,
+                safeSingleWriter
         );
     }
 }
