@@ -57,7 +57,7 @@ public class AhpConfig extends Config {
             .desc(Text.translatable("config.adorablehamsterpets.main.helpAndResources.reportBug.desc"))
             .decoration(TextureIds.INSTANCE.getDECO_LINK())
             .build(new ClickEvent(ClickEvent.Action.OPEN_URL,
-                    "https://github.com/DawsonBodenhamer/Adorable-Hamster-Pets-1.21/issues"));
+                    "https://github.com/DawsonBodenhamer/AdorableHamsterPets-Public/issues"));
 
     @ClientModifiable
     @Translatable.Name("Join Discord")
