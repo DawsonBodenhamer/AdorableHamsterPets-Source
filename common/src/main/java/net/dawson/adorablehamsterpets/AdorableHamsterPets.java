@@ -26,7 +26,10 @@ import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementProgress;
 import net.minecraft.advancement.PlayerAdvancementTracker;
 import net.minecraft.entity.SpawnRestriction;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -130,6 +133,9 @@ public class AdorableHamsterPets {
 				LOGGER.warn("Could not find flag advancement: {}", flagAdvId);
 			}
 		}
+
+		// Upgrade any old hamster tips guide books in the player's inventory
+		replaceOldBooksInInventory(player.getInventory());
 	}
 
 	/**
@@ -168,4 +174,41 @@ public class AdorableHamsterPets {
 			}
 		}
 	}
+
+	/**
+	 * Iterates through an inventory and replaces any outdated Hamster Guide Books
+	 * with the new Patchouli-compatible version.
+	 *
+	 * @param inventory The inventory to scan and upgrade.
+	 */
+    public static void replaceOldBooksInInventory(Inventory inventory) {
+        if (inventory == null) return;
+
+        // --- 1. Define the Patchouli NBT key and target book ID for 1.20.1---
+        // Patchouli identifies a book via a root-level String NBT: "patchouli:book" -> "<namespace>:<book_id>"
+        final String PATCHOULI_BOOK_TAG = "patchouli:book";
+        final String TARGET_BOOK_ID = new Identifier(MOD_ID, "hamster_tips_guide_book").toString();
+
+        // --- 2. Iterate through all slots in the provided inventory ---
+        for (int i = 0; i < inventory.size(); i++) {
+            ItemStack stack = inventory.getStack(i);
+
+            // --- 3. Check if the item is an OLD guide book ---
+            // It's an old book if it's the guide book item but lacks the Patchouli NBT tag.
+            if (!stack.isEmpty() && stack.isOf(ModItems.HAMSTER_GUIDE_BOOK.get())) {
+                NbtCompound nbt = stack.getNbt();
+                boolean hasPatchouliBookTag = nbt != null && nbt.contains(PATCHOULI_BOOK_TAG, NbtElement.STRING_TYPE);
+
+                if (!hasPatchouliBookTag) {
+                    // --- 4. Create the new, upgraded book stack ---
+                    ItemStack newBookStack = new ItemStack(ModItems.HAMSTER_GUIDE_BOOK.get(), stack.getCount());
+                    newBookStack.getOrCreateNbt().putString(PATCHOULI_BOOK_TAG, TARGET_BOOK_ID);
+
+                    // --- 5. Replace the old stack with the new one ---
+                    inventory.setStack(i, newBookStack);
+                    LOGGER.info("Upgraded an old Hamster Tips Guide Book to the new Patchouli version.");
+                }
+            }
+        }
+    }
 }

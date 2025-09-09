@@ -1,0 +1,63 @@
+{
+  "name": "book.adorablehamsterpets.entry.cucumber",
+  "icon": "adorablehamsterpets:cucumber",
+  "category": "adorablehamsterpets:crops_food",
+  "entry_color": "00AAAA",
+  "sortnum": 2,
+  "pages": [
+    {
+      "anchor": "bush",
+      "type": "adorablehamsterpets:spotlight_itemx1",
+      "header": "book.adorablehamsterpets.entry.cucumber",
+      "header_color": "00AAAA",
+      "text": "book.adorablehamsterpets.entry.cucumber.page1.body",
+      "text_color": "000000",
+      "item_input": "adorablehamsterpets:wild_cucumber_bush",
+      "item_output1": "adorablehamsterpets:cucumber_seeds"
+    },
+    {
+      "type": "patchouli:image",
+      "title": "book.adorablehamsterpets.entry.cucumber.page1.image_title",
+      "images": [
+        "adorablehamsterpets:patchouli_books/hamster_tips_guide_book/images/cucumber/cucumber_wild_bush.png"
+      ],
+      "border": false,
+      "text": ""
+    },
+    {
+      "anchor": "crop",
+      "type": "adorablehamsterpets:spotlight_imagex2",
+      "header": "book.adorablehamsterpets.entry.cucumber.page2.header",
+      "header_color": "00AAAA",
+      "text": "book.adorablehamsterpets.entry.cucumber.page2.body",
+      "text_color": "000000",
+      "image_input": "adorablehamsterpets:textures/block/cucumber_crop_stage3.png",
+      "item_output1": "adorablehamsterpets:cucumber",
+      "item_output2": "adorablehamsterpets:cucumber_seeds"
+    },
+    {
+      "type": "patchouli:image",
+      "title": "",
+      "images": [
+        "adorablehamsterpets:patchouli_books/hamster_tips_guide_book/images/cucumber/cucumber_crop.png"
+      ],
+      "border": false,
+      "text": ""
+    },
+    {
+      "anchor": "item",
+      "type": "adorablehamsterpets:spotlight_itemx1",
+      "header": "book.adorablehamsterpets.entry.cucumber.page3.header",
+      "header_color": "00AAAA",
+      "text": "book.adorablehamsterpets.entry.cucumber.page3.body",
+      "text_color": "000000",
+      "item_input": "adorablehamsterpets:cucumber",
+      "item_output1": "adorablehamsterpets:sliced_cucumber"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "adorablehamsterpets:sliced_cucumber",
+      "text": ""
+    }
+  ]
+}
