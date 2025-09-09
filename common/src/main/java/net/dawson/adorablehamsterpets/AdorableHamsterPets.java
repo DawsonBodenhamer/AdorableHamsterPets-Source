@@ -25,9 +25,13 @@ import net.dawson.adorablehamsterpets.world.ModWorldGeneration;
 import net.dawson.adorablehamsterpets.world.gen.ModEntitySpawns;
 import net.minecraft.advancement.AdvancementProgress;
 import net.minecraft.advancement.PlayerAdvancementTracker;
+import net.minecraft.component.ComponentType;
 import net.minecraft.entity.SpawnLocationTypes;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
@@ -132,6 +136,9 @@ public class AdorableHamsterPets {
 				LOGGER.warn("Could not find flag advancement: {}", flagAdvId);
 			}
 		}
+
+		// Upgrade any old hamster tips guide books in the player's inventory
+		replaceOldBooksInInventory(player.getInventory());
 	}
 
 	/**
@@ -167,6 +174,37 @@ public class AdorableHamsterPets {
 				// Player Cloned (e.g., End Portal): Transfer hamster to the new player instance
 				newPlayerAccessor.setShoulderHamster(location, shoulderNbt);
 				AdorableHamsterPets.LOGGER.debug("Player {} was cloned. Transferring {} hamster to new entity.", newPlayer.getName().getString(), location);
+			}
+		}
+	}
+
+	/**
+	 * Iterates through an inventory and replaces any outdated Hamster Guide Books
+	 * with the new Patchouli-compatible version.
+	 *
+	 * @param inventory The inventory to scan and upgrade.
+	 */
+	public static void replaceOldBooksInInventory(Inventory inventory) {
+		// --- 1. Get the component type for Patchouli books ---
+		ComponentType<Identifier> bookComponent = (ComponentType<Identifier>) Registries.DATA_COMPONENT_TYPE.get(Identifier.of("patchouli", "book"));
+		if (bookComponent == null) {
+			return;
+		}
+
+		// --- 2. Iterate through all slots in the provided inventory ---
+		for (int i = 0; i < inventory.size(); i++) {
+			ItemStack stack = inventory.getStack(i);
+
+			// --- 3. Check if the item is an OLD guide book ---
+			// It's an old book if it's the guide book item but lacks the Patchouli component.
+			if (stack.isOf(ModItems.HAMSTER_GUIDE_BOOK.get()) && !stack.contains(bookComponent)) {
+				// --- 4. Create the new, upgraded book stack ---
+				ItemStack newBookStack = new ItemStack(ModItems.HAMSTER_GUIDE_BOOK.get(), stack.getCount());
+				newBookStack.set(bookComponent, Identifier.of(MOD_ID, "hamster_tips_guide_book"));
+
+				// --- 5. Replace the old stack with the new one ---
+				inventory.setStack(i, newBookStack);
+				LOGGER.info("Upgraded an old Hamster Tips Guide Book to the new Patchouli version.");
 			}
 		}
 	}

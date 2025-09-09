@@ -1,0 +1,31 @@
+{
+  "name": "book.adorablehamsterpets.entry.taming",
+  "icon": "minecraft:lead",
+  "category": "adorablehamsterpets:the_hamster_life",
+  "entry_color": "00AAAA",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "adorablehamsterpets:page",
+      "header": "book.adorablehamsterpets.entry.taming.page1.header",
+      "header_color": "00AAAA",
+      "text": "book.adorablehamsterpets.entry.taming.page1.body",
+      "text_color": "000000"
+    },
+    {
+      "type": "adorablehamsterpets:page",
+      "header": "book.adorablehamsterpets.entry.taming.page2.header",
+      "header_color": "00AAAA",
+      "text": "book.adorablehamsterpets.entry.taming.page2.body",
+      "text_color": "000000"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "book.adorablehamsterpets.entry.taming.page3.body"
+    },
+    {
+      "type": "patchouli:empty",
+      "draw_filler": false
+    }
+  ]
+}

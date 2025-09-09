@@ -3,6 +3,7 @@
   "package": "net.dawson.adorablehamsterpets.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "server.ServerPlayerEntityMixin",
     "server.RavagerEntityMixin",
     "server.SpiderEntityMixin",
     "server.PlayerEntityMixin",
@@ -13,6 +14,7 @@
     "accessor.FollowOwnerGoalAccessor"
   ],
   "client": [
+    "client.GuiBookLandingMixin",
     "client.PlayerEntityRendererMixin",
     "client.LivingEntityRendererInvoker",
     "client.AbstractClientPlayerEntityMixin"

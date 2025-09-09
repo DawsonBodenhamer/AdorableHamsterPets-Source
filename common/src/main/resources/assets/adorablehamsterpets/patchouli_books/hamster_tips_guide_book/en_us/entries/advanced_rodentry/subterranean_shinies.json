@@ -1,0 +1,20 @@
+{
+  "name": "book.adorablehamsterpets.entry.subterranean_shinies",
+  "icon": "minecraft:diamond",
+  "category": "adorablehamsterpets:advanced_rodentry",
+  "entry_color": "00AAAA",
+  "sortnum": 1,
+  "pages": [
+    {
+      "type": "adorablehamsterpets:page",
+      "header": "book.adorablehamsterpets.entry.subterranean_shinies",
+      "header_color": "00AAAA",
+      "text": "book.adorablehamsterpets.entry.subterranean_shinies.page1.body",
+      "text_color": "000000"
+    },
+    {
+      "type": "patchouli:empty",
+      "draw_filler": false
+    }
+  ]
+}
