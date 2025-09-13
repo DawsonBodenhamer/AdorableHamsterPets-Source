@@ -13,13 +13,13 @@
       "text": "book.adorablehamsterpets.entry.haute_couture.page1.body"
     },
     {
-      "type": "patchouli:entity",
-      "entity": "adorablehamsterpets:hamster{PinkPetalType: 3, HamsterVariant: 1}",
-      "default_rotation": 55,
-      "scale": 1.2,
-      "rotate" : false,
-      "name": "Hamster",
-      "text": "Maybe change to the image instead?"
+      "type": "patchouli:image",
+      "title": "",
+      "images": [
+        "adorablehamsterpets:patchouli_books/hamster_tips_guide_book/images/accessories/accessory_pink_petal.png"
+      ],
+      "border": false,
+      "text": ""
     },
     {
       "type": "patchouli:text",
