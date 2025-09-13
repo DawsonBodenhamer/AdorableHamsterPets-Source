@@ -13,10 +13,15 @@
     "accessor.LookAtEntityGoalAccessor",
     "accessor.LookAroundGoalAccessor",
     "accessor.FollowOwnerGoalAccessor",
-    "accessor.TemptGoalAccessor"
+    "accessor.TemptGoalAccessor",
+    "client.accessor.GuiBookAccessor",
+    "client.accessor.GuiButtonEntryAccessor",
+    "client.accessor.PressableWidgetAccessor"
   ],
   "client": [
     "client.GuiBookLandingMixin",
+    "client.GuiButtonEntryMixin",
+    "client.GuiBookEntryListMixin",
     "client.PlayerEntityRendererMixin",
     "client.LivingEntityRendererInvoker",
     "client.AbstractClientPlayerEntityMixin"
