@@ -39,7 +39,8 @@
       "type": "patchouli:image",
       "title": "",
       "images": [
-        "adorablehamsterpets:patchouli_books/hamster_tips_guide_book/images/green_beans/green_beans_crop.png"
+        "adorablehamsterpets:patchouli_books/hamster_tips_guide_book/images/green_beans/green_beans_crop.png",
+        "adorablehamsterpets:patchouli_books/hamster_tips_guide_book/images/green_beans/green_beans_item.png"
       ],
       "border": false,
       "text": ""
