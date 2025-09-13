@@ -11,10 +11,14 @@
     "accessor.LandPathNodeMakerInvoker",
     "accessor.LookAtEntityGoalAccessor",
     "accessor.LookAroundGoalAccessor",
-    "accessor.FollowOwnerGoalAccessor"
+    "accessor.FollowOwnerGoalAccessor",
+    "client.accessor.GuiBookAccessor",
+    "client.accessor.GuiButtonEntryAccessor"
   ],
   "client": [
     "client.GuiBookLandingMixin",
+    "client.GuiButtonEntryMixin",
+    "client.GuiBookEntryListMixin",
     "client.PlayerEntityRendererMixin",
     "client.LivingEntityRendererInvoker",
     "client.AbstractClientPlayerEntityMixin"
