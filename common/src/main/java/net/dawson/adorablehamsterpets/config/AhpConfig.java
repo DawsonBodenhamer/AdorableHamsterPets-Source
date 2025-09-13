@@ -1,6 +1,6 @@
 package net.dawson.adorablehamsterpets.config;
 
-import me.fzzyhmstrs.fzzy_config.annotations.ClientModifiable;
+import me.fzzyhmstrs.fzzy_config.annotations.NonSync;
 import me.fzzyhmstrs.fzzy_config.annotations.RootConfig;
 import me.fzzyhmstrs.fzzy_config.config.Config;
 import me.fzzyhmstrs.fzzy_config.config.ConfigAction;
@@ -39,7 +39,7 @@ public class AhpConfig extends Config {
     @Translatable.Desc("Buttons for when you’re lost, bored, or met a bug that’s not just existential hamster angst.")
     public ConfigGroup helpAndResources = new ConfigGroup("helpAndResources", false);
 
-    @ClientModifiable
+    @NonSync
     @Translatable.Name("I Lost My Book!")
     @Translatable.Desc("Misplaced your invaluable tome of rodent wisdom? Click here. I won't tell anyone.")
     public ConfigAction giveGuideBook = new ConfigAction.Builder()
@@ -49,7 +49,7 @@ public class AhpConfig extends Config {
             .build(new ClickEvent(ClickEvent.Action.RUN_COMMAND,
                     "/function adorablehamsterpets:technical/give_guide_book"));
 
-    @ClientModifiable
+    @NonSync
     @Translatable.Name("Report a Bug")
     @Translatable.Desc("Found a game-breaking issue? Or a hamster phasing through the floor? Let me know on Github. The more details, the better. And believe it or not, I do check this frequently.")
     public ConfigAction reportBug = new ConfigAction.Builder()
@@ -59,7 +59,7 @@ public class AhpConfig extends Config {
             .build(new ClickEvent(ClickEvent.Action.OPEN_URL,
                     "https://github.com/DawsonBodenhamer/AdorableHamsterPets-Public/issues"));
 
-    @ClientModifiable
+    @NonSync
     @Translatable.Name("Join Discord")
     @Translatable.Desc("Join 'The Hamster Pouch' official Discord server. A place to share screenshots, get support, or just witness the ongoing development chaos. You're invited.")
     public ConfigAction joinDiscord = new ConfigAction.Builder()
@@ -69,7 +69,7 @@ public class AhpConfig extends Config {
             .build(new ClickEvent(ClickEvent.Action.OPEN_URL,
                     "https://discord.gg/w54mk5bqdf"));
 
-    @ClientModifiable
+    @NonSync
     @ConfigGroup.Pop
     @Translatable.Name("Visit My Website")
     @Translatable.Desc("Shameless plug for my other, less-rodent-focused work. Click if you dare.")
@@ -85,22 +85,22 @@ public class AhpConfig extends Config {
     @Translatable.Desc("Because Sanity is Overrated")
     public ConfigGroup uiPreferences = new ConfigGroup("uiPreferences", true);
 
-    @ClientModifiable
+    @NonSync
     @Translatable.Name("Enable Auto Guidebook Delivery")
     @Translatable.Desc("Hand-delivers the sacred texts on first login. Read it—or don’t. I'm not your conscience.")
     public boolean enableAutoGuidebookDelivery = true;
 
-    @ClientModifiable
+    @NonSync
     @Translatable.Name("Enable Mod Item Tooltips")
     @Translatable.Desc("Helpful whispers on what the heck that cucumber is for.")
     public boolean enableItemTooltips = true;
 
-    @ClientModifiable
+    @NonSync
     @Translatable.Name("Enable Shoulder Dismount Messages")
     @Translatable.Desc("Little status mumbles when your co-pilot disembarks.")
     public boolean enableShoulderDismountMessages = true;
 
-    @ClientModifiable
+    @NonSync
     @ConfigGroup.Pop
     @Translatable.Name("Enable Jade Hamster Debug Info")
     @Translatable.Desc("More stats than anyone asked for. Defaults to off—mercifully.")
@@ -119,7 +119,6 @@ public class AhpConfig extends Config {
     @Translatable.Desc("Gate cheek-pouch storage behind gourmet cuisine, because drama.")
     public boolean requireFoodMixToUnlockCheeks = true;
 
-    @ClientModifiable
     @Translatable.Name("Use 'Hampter' as Default Name")
     @Translatable.Desc("Changes the default entity name from 'Hamster' to 'Hampter'. Note: This has no visible effect in vanilla Minecraft, as mobs don't show nameplates by default. It's primarily for use with mods like Auto Leveling that display entity names.")
     public boolean useHampterName = false;
@@ -372,18 +371,22 @@ public class AhpConfig extends Config {
     @Translatable.Desc("Just the basic stuff. You know, detecting creepers, sniffing diamonds. Just average Minecraft stuff really. No big deal. Why are you clapping and squealing? Stop that. You look silly.")
     public ConfigGroup shoulderCore = new ConfigGroup("shoulderCore", true);
 
+    @NonSync
     @Translatable.Name("Enable Creeper Detection")
     @Translatable.Desc("May save your inventory. Or your ears.")
     public boolean enableShoulderCreeperDetection = true;
 
+    @NonSync
     @Translatable.Name("Creeper Detection Radius (Blocks)")
     @Translatable.Desc("Adjust paranoia levels.")
     public ValidatedDouble shoulderCreeperDetectionRadius = new ValidatedDouble(16.0, 16.0, 1.0);
 
+    @NonSync
     @Translatable.Name("Enable Diamond Detection")
     @Translatable.Desc("Because who doesn’t enjoy unsolicited financial advice from a rodent?")
     public boolean enableShoulderDiamondDetection = true;
 
+    @NonSync
     @ConfigGroup.Pop
     @Translatable.Name("Diamond Detection Radius (Blocks)")
     @Translatable.Desc("How close you need to be before the squeak says \"bling.\"")
@@ -393,14 +396,17 @@ public class AhpConfig extends Config {
     @Translatable.Desc("Here's where you decide how to get the little rascals off your shoulders. Warning: they can be clingy.")
     public ConfigGroup shoulderDismount = new ConfigGroup("shoulderDismount", true);
 
+    @NonSync
     @Translatable.Name("Dismount Order")
     @Translatable.Desc("Determines the sequence for dismounting hamsters with a key press. LIFO (Last-In, First-Out) dismounts the most recently added hamster. FIFO (First-In, First-Out) dismounts the oldest one.")
     public ValidatedEnum<DismountOrder> dismountOrder = new ValidatedEnum<>(DismountOrder.LIFO);
 
+    @NonSync
     @Translatable.Name("Dismount Button")
     @Translatable.Desc("Choose what action dismounts the hamster. 'SNEAK_KEY' uses your sneak key, obviously. 'CUSTOM_KEYBIND' uses a separate key you must set in Controls > Key Binds.")
     public DismountTriggerType dismountTriggerType = DismountTriggerType.SNEAK_KEY;
 
+    @NonSync
     @Translatable.Name("Button‑Press Behavior")
     @Translatable.Desc("Choose whether a single press or a quick double‑tap dismounts the hamster.")
     public ValidatedEnum<DismountPressType> dismountPressType =
@@ -412,6 +418,7 @@ public class AhpConfig extends Config {
                     b -> b ? DismountPressType.DOUBLE_TAP : DismountPressType.SINGLE_PRESS
             );
 
+    @NonSync
     @ConfigGroup.Pop
     @Translatable.Name("Double-Tap Delay (Ticks)")
     @Translatable.Desc("Max time between sneak key presses to count as a double-tap. (20 ticks = 1 second)")
@@ -423,10 +430,12 @@ public class AhpConfig extends Config {
                             () -> 10
                     );
 
+    @NonSync
     @Translatable.Name("Animation Settings")
     @Translatable.Desc("Control how lively your shoulder-mounted companions are. I mean, I don't like to toot my own horn or anything, but this is pretty great. Now please excuse me while I bask in my humility.")
     public ConfigGroup shoulderAnimations = new ConfigGroup("shoulderAnimations", true);
 
+    @NonSync
     @Translatable.Name("Enable Dynamic Animations")
     @Translatable.Desc("If true, hamsters on your shoulder will randomly cycle through standing, sitting, and laying down while on the shoulder. If false, they will remain in a single state defined below.")
     public ValidatedBoolean enableDynamicShoulderAnimations = new ValidatedBoolean(true);
@@ -437,6 +446,7 @@ public class AhpConfig extends Config {
                     value -> !value
             );
 
+    @NonSync
     @Translatable.Name("Forced Animation State")
     @Translatable.Desc("If dynamic animations are disabled, choose the single state shoulder pets should remain in. Sometimes this setting can have a delay before kicking in, but if it doesn't seem to be working at all, try switching the 'Forced State' from one option to another. Usually this just makes it \"work.\" I'm not sure why lol")
     public ValidatedCondition<ForcedShoulderState> forcedShoulderState =
@@ -450,33 +460,38 @@ public class AhpConfig extends Config {
                             () -> ForcedShoulderState.ALWAYS_STAND
                     );
 
+    @NonSync
     @Translatable.Name("Force Lay Down on Walk")
     @Translatable.Desc("False by default. If true, shoulder hamsters will be forced into their 'laying down' animation when you move, as if trying not to fall off. If false, they will continue their normal animation cycle.")
     public boolean forceLayDownOnWalk = false;
 
+    @NonSync
     @Translatable.Name("Force Lay Down on Sprint")
     @Translatable.Desc("If true, shoulder hamsters will be forced into their 'laying down' animation while you sprint, as if holding on for dear life. If false, they will continue their normal animation cycle.")
     public boolean forceLayDownOnSprint = true;
 
+    @NonSync
     @Translatable.Name("Min Animation State Duration")
     @Translatable.Desc("The minimum time (in seconds) a shoulder hamster will stay in any one animation state (standing, sitting, or laying down). A random duration between the min and max is chosen for each transition.")
     public ValidatedInt shoulderMinStateSeconds = new ValidatedInt(20, 280, 5);
 
+    @NonSync
     @ConfigGroup.Pop
     @Translatable.Name("Max Animation State Duration")
     @Translatable.Desc("The maximum time (in seconds) a shoulder hamster will stay in any one animation state (standing, sitting, or laying down). A random duration between the min and max is chosen for each transition.")
     public ValidatedInt shoulderMaxStateSeconds = new ValidatedInt(45, 300, 6);
 
+    @NonSync
     @Translatable.Name("Audio Settings")
     @Translatable.Desc("For when the squeaks become... a bit much.")
     public ConfigGroup shoulderAudio = new ConfigGroup("shoulderAudio", true);
 
-    @ClientModifiable
+    @NonSync
     @Translatable.Name("Silence Idle Sounds")
     @Translatable.Desc("Mutes the ambient squeaks from shoulder-mounted hamsters. The bounce and alert sounds will still play.")
     public boolean silenceShoulderIdleSounds = false;
 
-    @ClientModifiable
+    @NonSync
     @ConfigGroup.Pop
     @ConfigGroup.Pop
     @Translatable.Name("Mute 1st-Person Physics SFX")
@@ -550,18 +565,22 @@ public class AhpConfig extends Config {
     @Translatable.Desc("Even digital rodents need beauty sleep— adjust according to your patience levels.")
     public ConfigGroup tamedSleepSettings = new ConfigGroup("tamedSleepSettings", true);
 
+    @NonSync
     @Translatable.Name("Threat Radius (Blocks)")
     @Translatable.Desc("How close a hostile mob can get before a hamster wakes up from it's power nap.")
     public ValidatedInt tamedSleepThreatDetectionRadiusBlocks = new ValidatedInt(8, 32, 1);
 
+    @NonSync
     @Translatable.Name("Require Daytime?")
     @Translatable.Desc("Night-owl hamsters? Your choice.")
     public boolean requireDaytimeForTamedSleep = true;
 
+    @NonSync
     @Translatable.Name("Min Sit Time Before Drowsy (Secs)")
     @Translatable.Desc("Minimum seconds before a sitting hamster gets sleepy.")
     public ValidatedInt tamedQuiescentSitMinSeconds = new ValidatedInt(120, 300, 1);
 
+    @NonSync
     @ConfigGroup.Pop
     @Translatable.Name("Max Sit Time Before Drowsy (Secs)")
     @Translatable.Desc("Maximum seconds before the inevitable deep snooze.")
