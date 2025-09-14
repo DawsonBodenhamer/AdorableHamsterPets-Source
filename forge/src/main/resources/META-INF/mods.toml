@@ -52,11 +52,18 @@ ordering="NONE"
 side="BOTH"
 
 [[dependencies.adorablehamsterpets]]
-modId = "jade"
+modId="patchouli"
+mandatory=true
+versionRange = "[1.20.1-84.1-FORGE,)"
+ordering="NONE"
+side="BOTH"
+
+[[dependencies.adorablehamsterpets]]
+modId="jade"
 mandatory=false
-versionRange = "[11.7.0,)"
-ordering = "NONE"
-side = "BOTH"
+versionRange="[11.7.0,)"
+ordering="NONE"
+side="BOTH"
 
 [[mixins]]
 config = "adorablehamsterpets.mixins.json"
