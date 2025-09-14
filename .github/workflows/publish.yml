@@ -108,6 +108,7 @@ jobs:
             fzzy-config(required)
             fabric-language-kotlin(required)
             modmenu(optional)
+            patchouli(required)
             jade(optional)
 
           # Fabric/Quilt dependency IDs For CurseForge (no comments allowed inside the block)
@@ -118,6 +119,7 @@ jobs:
             1005914(required)
             308769(required)
             308702(optional)
+            393236(required)
             324717(optional)
 
           # Attach the changelog snippet that was extracted above
@@ -154,6 +156,7 @@ jobs:
             geckolib(required)
             fzzy-config(required)
             kotlin-for-forge(required)
+            patchouli(required)
             jade(optional)
 
           # Forge dependency IDs for CurseForge (no comments allowed inside the block)
@@ -162,6 +165,7 @@ jobs:
             388172(required)
             1005914(required)
             351264(required)
+            306770(required)
             324717(optional)
 
           # Attach the changelog snippet that was extracted above
