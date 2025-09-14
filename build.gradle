@@ -39,6 +39,7 @@ subprojects {
         maven { name = "Modrinth"; url = "https://api.modrinth.com/maven" }
         maven { name = "GeckoLib"; url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/' }
         maven { url = "https://thedarkcolour.github.io/KotlinForForge/" }
+        maven { name = "Patchouli"; url = 'https://maven.blamejared.com' }
     }
 
     dependencies {

@@ -97,6 +97,7 @@ dependencies {
     modImplementation "me.fzzyhmstrs:fzzy_config:${rootProject.fzzy_config_version}"
     modRuntimeOnly "maven.modrinth:fabric-language-kotlin:${rootProject.flk_version}"
     modImplementation include("maven.modrinth:placeholder-api:2.1.1+1.20")
+    modImplementation "vazkii.patchouli:Patchouli:1.20.1-84.1-FABRIC"
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')

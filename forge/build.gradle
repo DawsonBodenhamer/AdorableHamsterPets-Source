@@ -69,6 +69,9 @@ dependencies {
     modImplementation "me.fzzyhmstrs:fzzy_config:${rootProject.fzzy_config_version}+forge"
     modRuntimeOnly "thedarkcolour:kotlinforforge:${rootProject.kff_version}"
 
+    modCompileOnly "vazkii.patchouli:Patchouli:1.20.1-84.1-FORGE:api"
+    modRuntimeOnly  "vazkii.patchouli:Patchouli:1.20.1-84.1-FORGE"
+
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionForge')
 }
