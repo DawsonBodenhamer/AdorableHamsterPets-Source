@@ -49,7 +49,7 @@ public abstract class GuiButtonEntryMixin extends ButtonWidget {
      * Injects into the start of the renderWidget method to replace its logic, but ONLY for the Hamster Tips guide book.
      * This new implementation draws the entry title with text wrapping.
      */
-    @Inject(method = "renderWidget", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "renderButton", at = @At("HEAD"), cancellable = true)
     private void adorablehamsterpets$renderWrappedWidget(DrawContext graphics, int mouseX, int mouseY, float partialTicks, CallbackInfo ci) {
         // --- SAFETY CHECK ---
         // If this button is not the Hamster Tips guide book, do nothing and let the original method run.
