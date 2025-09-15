@@ -36,6 +36,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.Heightmap;
+import vazkii.patchouli.api.PatchouliAPI;
 
 public class AdorableHamsterPets {
 	public static final String MOD_ID = "adorablehamsterpets";
@@ -180,14 +181,18 @@ public class AdorableHamsterPets {
 
 	/**
 	 * Iterates through an inventory and replaces any outdated Hamster Guide Books
-	 * with the new Patchouli-compatible version.
+	 * with the new Patchouli-compatible version added in version 3.3.0.
 	 *
 	 * @param inventory The inventory to scan and upgrade.
 	 */
 	public static void replaceOldBooksInInventory(Inventory inventory) {
 		// --- 1. Get the component type for Patchouli books ---
+		// Suppress the "unchecked" warning because the 'patchouli:book' component is of type ComponentType<Identifier>.
+		@SuppressWarnings("unchecked")
 		ComponentType<Identifier> bookComponent = (ComponentType<Identifier>) Registries.DATA_COMPONENT_TYPE.get(Identifier.of("patchouli", "book"));
+
 		if (bookComponent == null) {
+			// This can happen if Patchouli is not present, so fail gracefully.
 			return;
 		}
 
