@@ -1,6 +1,6 @@
 # This function is executed by the server AS the player who ran the command link.
 # It gives the player one instance of the custom guide book.
-give @s adorablehamsterpets:hamster_guide_book[patchouli:book="adorablehamsterpets:hamster_tips_guide_book"] 1
+give @s adorablehamsterpets:hamster_guide_book{"patchouli:book":"adorablehamsterpets:hamster_tips_guide_book"} 1
 
 # --- Play Sound and Particle Effects ---
 playsound minecraft:block.enchantment_table.use player @s ~ ~ ~ 0.5 1.2

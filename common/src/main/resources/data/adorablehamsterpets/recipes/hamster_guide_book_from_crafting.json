@@ -10,10 +10,7 @@
     }
   ],
   "result": {
-    "id": "adorablehamsterpets:hamster_guide_book",
-    "count": 1,
-    "components": {
-      "patchouli:book": "adorablehamsterpets:hamster_tips_guide_book"
-    }
+    "item": "adorablehamsterpets:hamster_guide_book",
+    "count": 1
   }
 }
