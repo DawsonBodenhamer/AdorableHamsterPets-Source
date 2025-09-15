@@ -2,7 +2,7 @@ package net.dawson.adorablehamsterpets.mixin.client;
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.mixin.client.accessor.GuiBookAccessor;
-import net.dawson.adorablehamsterpets.mixin.client.accessor.PressableWidgetAccessor;
+import net.dawson.adorablehamsterpets.mixin.client.accessor.ClickableWidgetAccessor;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.widget.ButtonWidget;
@@ -182,7 +182,7 @@ public abstract class GuiBookEntryListMixin extends GuiBook {
 
             ButtonWidget button = new GuiButtonEntry(self, bookLeft + x, bookTop + yOffset, entry, self::handleButtonEntry);
             // Use accessor to set the height on 1.20.1
-            ((PressableWidgetAccessor) button).adorablehamsterpets$setHeight(buttonHeight);
+            ((ClickableWidgetAccessor) button).adorablehamsterpets$setHeight(buttonHeight);
 
             self.addDrawableChild(button);
             this.entryButtons.add(button);

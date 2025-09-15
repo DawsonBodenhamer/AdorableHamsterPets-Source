@@ -16,7 +16,7 @@
     "accessor.TemptGoalAccessor",
     "client.accessor.GuiBookAccessor",
     "client.accessor.GuiButtonEntryAccessor",
-    "client.accessor.PressableWidgetAccessor"
+    "client.accessor.ClickableWidgetAccessor"
   ],
   "client": [
     "client.GuiBookLandingMixin",
