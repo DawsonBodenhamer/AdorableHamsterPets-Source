@@ -6,7 +6,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen;
-import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -57,9 +56,7 @@ public class PatchouliGuideBookItem extends Item {
 
         // --- 3. Determine screen context ---
         // A tooltip is needed anywhere Jade does NOT add its own tooltip.
-        boolean needsToolTip = (currentScreen == null ||
-                currentScreen.getClass() == InventoryScreen.class ||
-                currentScreen.getClass() == CreativeInventoryScreen.class);
+        boolean needsToolTip = (currentScreen == null || currentScreen.getClass() == CreativeInventoryScreen.class);
 
         // --- 4. Add the mod name line if needed ---
         // Add line if EITHER Jade is not installed OR we are in a screen that needs a tooltip.
