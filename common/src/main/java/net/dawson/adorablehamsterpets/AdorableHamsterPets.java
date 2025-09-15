@@ -177,7 +177,7 @@ public class AdorableHamsterPets {
 
 	/**
 	 * Iterates through an inventory and replaces any outdated Hamster Guide Books
-	 * with the new Patchouli-compatible version.
+	 * with the new Patchouli-compatible version added in version 3.3.0.
 	 *
 	 * @param inventory The inventory to scan and upgrade.
 	 */
