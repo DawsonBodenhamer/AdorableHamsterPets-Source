@@ -41,7 +41,6 @@ public class AhpConfig extends Config {
 
     @NonSync
     @Translatable.Name("I Lost My Book!")
-    @Translatable.Desc("Misplaced your invaluable tome of rodent wisdom? Click here. I won't tell anyone.")
     public ConfigAction giveGuideBook = new ConfigAction.Builder()
             .title(Text.translatable("config.adorablehamsterpets.main.helpAndResources.giveGuideBook"))
             .desc(Text.translatable("config.adorablehamsterpets.main.helpAndResources.giveGuideBook.desc"))
@@ -51,7 +50,6 @@ public class AhpConfig extends Config {
 
     @NonSync
     @Translatable.Name("Report a Bug")
-    @Translatable.Desc("Found a game-breaking issue? Or a hamster phasing through the floor? Let me know on Github. The more details, the better. And believe it or not, I do check this frequently.")
     public ConfigAction reportBug = new ConfigAction.Builder()
             .title(Text.translatable("config.adorablehamsterpets.main.helpAndResources.reportBug"))
             .desc(Text.translatable("config.adorablehamsterpets.main.helpAndResources.reportBug.desc"))
@@ -61,7 +59,6 @@ public class AhpConfig extends Config {
 
     @NonSync
     @Translatable.Name("Join Discord")
-    @Translatable.Desc("Join 'The Hamster Pouch' official Discord server. A place to share screenshots, get support, or just witness the ongoing development chaos. You're invited.")
     public ConfigAction joinDiscord = new ConfigAction.Builder()
             .title(Text.translatable("config.adorablehamsterpets.main.helpAndResources.joinDiscord"))
             .desc(Text.translatable("config.adorablehamsterpets.main.helpAndResources.joinDiscord.desc"))
@@ -72,13 +69,160 @@ public class AhpConfig extends Config {
     @NonSync
     @ConfigGroup.Pop
     @Translatable.Name("Visit My Website")
-    @Translatable.Desc("Shameless plug for my other, less-rodent-focused work. Click if you dare.")
     public ConfigAction visitWebsite = new ConfigAction.Builder()
             .title(Text.translatable("config.adorablehamsterpets.main.helpAndResources.visitWebsite"))
             .desc(Text.translatable("config.adorablehamsterpets.main.helpAndResources.visitWebsite.desc"))
             .decoration(TextureIds.INSTANCE.getDECO_LINK())
             .build(new ClickEvent(ClickEvent.Action.OPEN_URL,
                     "https://www.fortheking.design"));
+
+    // --- Announcements & Update Notifications ---
+    @Translatable.Name("Announcements & Update Notifications")
+    @Translatable.Desc("Tweak the little bell icon that appears when I have something important (or trivial) to tell you.")
+    public ConfigGroup announcements = new ConfigGroup("announcements", true);
+
+    @NonSync
+    @Translatable.Name("Snooze Update Reminder (Days)")
+    @Translatable.Desc("For when you see the update notification and think, 'That's a problem for future me.' Future you will be so proud. This is where you select many days to hide the 'Update Available' notification when you click 'Remind Me Later'.")
+    public ValidatedInt snoozeUpdateReminderDays = new ValidatedInt(5, 14, 1);
+
+    @NonSync
+    @Translatable.Name("Optional Announcements")
+    public ConfigAction reEnableOptionalAnnouncements = new ConfigAction.Builder()
+            .title(Text.translatable("config.adorablehamsterpets.main.announcements.reEnableOptionalAnnouncements"))
+            .desc(Text.translatable("config.adorablehamsterpets.main.announcements.reEnableOptionalAnnouncements.desc"))
+            .decoration(TextureIds.INSTANCE.getDECO_ALERT())
+            .build(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ahp_client reenable_announcements"));
+
+    @NonSync
+    @Translatable.Name("Announcement History")
+    public ConfigAction resetAllAnnouncementDismissals = new ConfigAction.Builder()
+            .title(Text.translatable("config.adorablehamsterpets.main.announcements.resetAllAnnouncementDismissals"))
+            .desc(Text.translatable("config.adorablehamsterpets.main.announcements.resetAllAnnouncementDismissals.desc"))
+            .decoration(TextureIds.INSTANCE.getKEYBIND_CLEAR())
+            .build(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ahp_client reset_announcements"));
+
+    @NonSync
+    @Translatable.Name("HUD Icon Settings")
+    @Translatable.Desc("Options for the little bell with hamster ears that just hangs out in the corner of your screen when notifications are pending.")
+    public ConfigGroup hudIconSettings = new ConfigGroup("hudIconSettings", true);
+
+    @NonSync
+    @Translatable.Name("Enable HUD Icon")
+    @Translatable.Desc("Decide if the bell haunts you full-time on the HUD or only ambushes you when you're trying to organize your inventory. If disabled, you will only see notifications when you open an inventory.")
+    public ValidatedBoolean enableHudIcon = new ValidatedBoolean(true);
+
+    private final ValidatedField<Boolean> isHudIconEnabled = enableHudIcon.map(b -> b, b -> b);
+
+    @NonSync
+    @Translatable.Name("HUD Icon Position Preset")
+    @Translatable.Desc("Banish the bell to a corner of your choosing. It's your screen. Establish dominance.")
+    public ValidatedCondition<IconPositionPreset> hudIconPositionPreset =
+            new ValidatedEnum<>(IconPositionPreset.TOP_LEFT)
+                    .toCondition(
+                            isHudIconEnabled,
+                            Text.literal("Only available when 'Enable HUD Icon' is ON."),
+                            () -> IconPositionPreset.TOP_LEFT
+                    );
+
+    @NonSync
+    @Translatable.Name("HUD Icon Offset X")
+    @Translatable.Desc("Shove the icon horizontally. For when 'top-left' isn't specific enough for your discerning taste.")
+    public ValidatedCondition<Integer> hudIconOffsetX =
+            new ValidatedInt(10, 500, -500)
+                    .toCondition(
+                            isHudIconEnabled,
+                            Text.literal("Only available when 'Enable HUD Icon' is ON."),
+                            () -> 10
+                    );
+
+    @NonSync
+    @Translatable.Name("HUD Icon Offset Y")
+    @Translatable.Desc("Adjust the vertical placement. Does it block your view? Is it not blocking your view enough? The power is yours.")
+    public ValidatedCondition<Integer> hudIconOffsetY =
+            new ValidatedInt(10, 500, -500)
+                    .toCondition(
+                            isHudIconEnabled,
+                            Text.literal("Only available when 'Enable HUD Icon' is ON."),
+                            () -> 10
+                    );
+
+    @NonSync
+    @ConfigGroup.Pop
+    @Translatable.Name("HUD Icon Scale")
+    @Translatable.Desc("Make it bigger. Make it smaller. Make it an affront to good taste. I'm not your art director.")
+    public ValidatedFloat hudIconScale = new ValidatedFloat(1.0f, 3.0f, 0.5f);
+
+    @NonSync
+    @Translatable.Name("Widget Icon Settings")
+    @Translatable.Desc("Configure the bell with hamster ears that haunts the corners of your inventory screens.")
+    public ConfigGroup widgetIconSettings = new ConfigGroup("widgetIconSettings", true);
+
+    @NonSync
+    @Translatable.Name("Enable GUI Widget Icon")
+    @Translatable.Desc("Decide if the bell icon should ambush you while you're sorting your inventory. If disabled, it will only bother you on the main menu or the game HUD if you have those enabled. Your screen, your rules.")
+    public ValidatedBoolean enableWidgetIcon = new ValidatedBoolean(true);
+
+    private final ValidatedField<Boolean> isWidgetIconEnabled = enableWidgetIcon.map(b -> b, b -> b);
+
+    @NonSync
+    @Translatable.Name("Survival Inventory")
+    @Translatable.Desc("Control the icon's placement for standard GUIs. Because nothing says 'immersion' like a perfectly aligned notification bell. Position is relative to the GUI's top-right corner.")
+    public ConfigGroup survivalWidgetIconSettings = new ConfigGroup("survivalWidgetIconSettings", true);
+
+    @NonSync
+    @Translatable.Name("Offset X")
+    @Translatable.Desc("Shove it sideways. *NOTE: Due to current bug with FzzyConfig, you'll need to click on 'Widget Icon Settings' group to manually expand it.")
+    public ValidatedCondition<Integer> survivalWidgetIconOffsetX =
+            new ValidatedInt(0, 100, -100)
+                    .toCondition(
+                            isWidgetIconEnabled,
+                            Text.literal("Only available when 'Enable GUI Widget Icon' is ON."),
+                            () -> 0
+                    );
+
+    @NonSync
+    @ConfigGroup.Pop
+    @Translatable.Name("Offset Y")
+    @Translatable.Desc("Shove it vertically. *NOTE: Due to current bug with FzzyConfig, you'll need to click on 'Widget Icon Settings' group to manually expand it.")
+    public ValidatedCondition<Integer> survivalWidgetIconOffsetY =
+            new ValidatedInt(0, 100, -100)
+                    .toCondition(
+                            isWidgetIconEnabled,
+                            Text.literal("Only available when 'Enable GUI Widget Icon' is ON."),
+                            () -> 0
+                    );
+
+    @NonSync
+    @Translatable.Name("Creative Inventory")
+    @Translatable.Desc("Control the icon's placement for the creative mode GUI. Because nothing says 'immersion' like a perfectly aligned notification bell. Position is relative to the GUI's top-right corner.")
+    public ConfigGroup creativeWidgetIconSettings = new ConfigGroup("creativeWidgetIconSettings", true);
+
+    @NonSync
+    @Translatable.Name("Offset X")
+    @Translatable.Desc("Shove it sideways. *NOTE: Due to current bug with FzzyConfig, you'll need to click on 'Widget Icon Settings' group to manually expand it.")
+    public ValidatedCondition<Integer> creativeWidgetIconOffsetX =
+            new ValidatedInt(0, 100, -100)
+                    .toCondition(
+                            isWidgetIconEnabled,
+                            Text.literal("Only available when 'Enable GUI Widget Icon' is ON."),
+                            () -> 0
+                    );
+
+    @NonSync
+    @ConfigGroup.Pop
+    @ConfigGroup.Pop
+    @ConfigGroup.Pop
+    @Translatable.Name("Offset Y")
+    @Translatable.Desc("Shove it vertically. *NOTE: Due to current bug with FzzyConfig, you'll need to click on 'Widget Icon Settings' group to manually expand it.")
+    public ValidatedCondition<Integer> creativeWidgetIconOffsetY =
+            new ValidatedInt(0, 100, -100)
+                    .toCondition(
+                            isWidgetIconEnabled,
+                            Text.literal("Only available when 'Enable GUI Widget Icon' is ON."),
+                            () -> 0
+                    );
+
 
     // --- UI & Quality of Life ---
     @Translatable.Name("UI & Quality of Life")

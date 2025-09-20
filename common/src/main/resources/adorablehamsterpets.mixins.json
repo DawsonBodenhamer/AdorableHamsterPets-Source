@@ -13,7 +13,9 @@
     "accessor.LookAroundGoalAccessor",
     "accessor.FollowOwnerGoalAccessor",
     "client.accessor.GuiBookAccessor",
-    "client.accessor.GuiButtonEntryAccessor"
+    "client.accessor.GuiButtonEntryAccessor",
+    "accessor.BookContentsBuilderAccessor",
+    "accessor.ValidatedFieldAccessor"
   ],
   "client": [
     "client.GuiBookLandingMixin",
@@ -21,7 +23,13 @@
     "client.GuiBookEntryListMixin",
     "client.PlayerEntityRendererMixin",
     "client.LivingEntityRendererInvoker",
-    "client.AbstractClientPlayerEntityMixin"
+    "client.AbstractClientPlayerEntityMixin",
+    "client.TitleScreenMixin",
+    "client.BookContentsMixin",
+    "client.BookContentsBuilderMixin",
+    "client.accessor.HandledScreenAccessor",
+    "client.GuiButtonBookMarkReadMixin",
+    "client.GuiBookIndexMixin"
   ],
   "injectors": {
     "defaultRequire": 1
