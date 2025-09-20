@@ -73,6 +73,7 @@ public class ModModelProvider extends FabricModelProvider {
     // generates model json files for all items
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
+        itemModelGenerator.register(ModItems.ANNOUNCEMENT_BELL_ICON.get(), Models.GENERATED);
         itemModelGenerator.register(ModItems.HAMSTER_SPAWN_EGG.get(), Models.GENERATED);
         itemModelGenerator.register(ModItems.CUCUMBER.get(), Models.GENERATED);
         itemModelGenerator.register(ModItems.SLICED_CUCUMBER.get(), Models.GENERATED);

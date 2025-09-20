@@ -9,10 +9,24 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import vazkii.patchouli.client.book.BookCategory;
 import vazkii.patchouli.client.book.gui.GuiBook;
 import vazkii.patchouli.client.book.gui.GuiBookLanding;
+import vazkii.patchouli.client.book.gui.button.GuiButtonCategory;
 import vazkii.patchouli.common.book.Book;
 
+/**
+ * Mixin to customize the Patchouli {@link GuiBookLanding} screen specifically for the
+ * Adorable Hamster Pets guide book. This class implements two key visual overrides:
+ * <p>
+ * 1.  <b>Custom Header Rendering:</b> It replaces the default header drawing logic to render a
+ *     custom-positioned, multi-line wrapped subtitle that would otherwise overflow onto the opposite page.
+ * 2.  <b>Centered Category Grid:</b> It intercepts the category button layout logic to
+ *     recalculate icon positions, ensuring that the final row of the category grid is
+ *     centered on the page for a more balanced appearance.
+ * <p>
+ * All modifications are gated behind a check to ensure they only apply to the Hamster Tips guide book.
+ */
 @Mixin(value = GuiBookLanding.class, remap = false)
 public abstract class GuiBookLandingMixin extends GuiBook {
 
@@ -31,6 +45,25 @@ public abstract class GuiBookLandingMixin extends GuiBook {
     private boolean isHamsterBook() {
         // The 'book' field is inherited from the parent GuiBook class.
         return this.book != null && this.book.id.equals(Identifier.of(AdorableHamsterPets.MOD_ID, "hamster_tips_guide_book"));
+    }
+
+    /**
+     * Computes the total number of category buttons (visible categories + index).
+     * This is used to calculate the centered grid layout.
+     */
+    private int getTotalIcons() {
+        // Do not alter pamphlet (non-category) mode
+        if (this.book.getContents().pamphletCategory != null) {
+            return 0;
+        }
+        int count = 0;
+        for (BookCategory cat : this.book.getContents().categories.values()) {
+            if (cat.getParentCategory() == null && !cat.shouldHide()) {
+                count++;
+            }
+        }
+        // +1 for the index button
+        return count + 1;
     }
 
     /**
@@ -77,6 +110,44 @@ public abstract class GuiBookLandingMixin extends GuiBook {
         graphics.drawTextWrapped(this.textRenderer, subtitleText, subtitleX, subtitleY, wrapWidth, titleColor);
 
         // --- 5. Cancel the Original Method ---
+        ci.cancel();
+    }
+
+    /**
+     * Intercepts category button placement to center the last row.
+     */
+    @Inject(method = "addCategoryButton", at = @At("HEAD"), cancellable = true)
+    private void adorablehamsterpets$onAddCategoryButton(int i, BookCategory category, CallbackInfo ci) {
+        // Only affect the Hamster guide and normal category pages
+        if (!isHamsterBook() || this.book.getContents().pamphletCategory != null) {
+            return;
+        }
+
+        int total = getTotalIcons();
+        if (total == 0) {
+            return;
+        }
+
+        int columns = 4;
+        int row = i / columns;
+        int lastRow = (total - 1) / columns;
+        int rowItems = (row == lastRow) ? (total - lastRow * columns) : columns;
+        int shift = (columns - rowItems) * 12; // 12px = half of a column (24px)
+
+        int x = RIGHT_PAGE_X + 10 + shift + (i % columns) * 24;
+        int y = TOP_PADDING + 25 + row * 24;
+
+        // Create the appropriate button
+        GuiButtonCategory button;
+        GuiBookLanding self = (GuiBookLanding) (Object) this;
+        if (category == null) {
+            button = new GuiButtonCategory(this, x, y, this.book.getIcon(), Text.translatable("patchouli.gui.lexicon.index"), self::handleButtonIndex);
+        } else {
+            button = new GuiButtonCategory(this, x, y, category, self::handleButtonCategory);
+        }
+        this.addDrawableChild(button);
+
+        // Cancel original positioning
         ci.cancel();
     }
 }

@@ -1,5 +1,7 @@
 package net.dawson.adorablehamsterpets;
 
+import dev.architectury.event.events.client.ClientGuiEvent;
+import dev.architectury.event.events.client.ClientPlayerEvent;
 import dev.architectury.event.events.client.ClientTickEvent;
 import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
 import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
@@ -9,9 +11,14 @@ import io.netty.buffer.Unpooled;
 import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.block.ModBlocks;
+import net.dawson.adorablehamsterpets.client.announcements.AnnouncementHudRenderer;
+import net.dawson.adorablehamsterpets.client.announcements.AnnouncementManager;
+import net.dawson.adorablehamsterpets.client.event.AHPClientScreenEvents;
+import net.dawson.adorablehamsterpets.client.gui.widgets.AnnouncementIconAnimator;
 import net.dawson.adorablehamsterpets.client.option.ModKeyBindings;
 import net.dawson.adorablehamsterpets.client.sound.HamsterFlightSoundInstance;
 import net.dawson.adorablehamsterpets.client.sound.HamsterThrowSoundInstance;
+import net.dawson.adorablehamsterpets.command.ModClientCommands;
 import net.dawson.adorablehamsterpets.config.AhpConfig;
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.config.DismountPressType;
@@ -36,7 +43,9 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.HitResult;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class AdorableHamsterPetsClient {
@@ -50,23 +59,41 @@ public class AdorableHamsterPetsClient {
     private static int dismountDebounceTicks = 0;
     private static final int DISMOUNT_DEBOUNCE_DEFAULT = 5;
 
+    // --- Announcement System Fields ---
+    private static final AnnouncementHudRenderer announcementHudRenderer = new AnnouncementHudRenderer();
+    private static List<AnnouncementManager.PendingNotification> pendingNotifications = Collections.emptyList();
+
+    /**
+     * Public getter for other client classes to access the cached list of pending notifications.
+     * @return The current list of pending notifications.
+     */
+    public static List<AnnouncementManager.PendingNotification> getPendingNotifications() {
+        return pendingNotifications;
+    }
+
     /**
      * Initializes general client-side features like screens, keybinds, and events.
      */
     public static void init() {
+        // --- Initializers ---
         RenderTypeRegistry.register(RenderLayer.getCutout(), ModBlocks.GREEN_BEANS_CROP.get(), ModBlocks.CUCUMBER_CROP.get(), ModBlocks.SUNFLOWER_BLOCK.get(), ModBlocks.WILD_CUCUMBER_BUSH.get(), ModBlocks.WILD_GREEN_BEAN_BUSH.get());
-
-        // --- Register Fzzy Config Client Update Listener ---
-        // This event fires on the client after the user saves changes in the GUI.
         ConfigApiJava.event().onUpdateClient((id, config) -> {
             if (id.equals(Identifier.of(AdorableHamsterPets.MOD_ID, "main"))) {
                 ModItemTags.parseConfig();
                 AdorableHamsterPets.LOGGER.info("Reloaded Adorable Hamster Pets item tag config on client following GUI update. *wink wink*");
             }
         });
-
-        ClientTickEvent.CLIENT_POST.register(AdorableHamsterPetsClient::onEndClientTick);
         ColorHandlerRegistry.registerItemColors((stack, tintIndex) -> -1, ModItems.HAMSTER_SPAWN_EGG.get());
+
+        // Announcement System
+        AnnouncementManager.INSTANCE.initialize();
+        AHPClientScreenEvents.register();
+        ModClientCommands.register();
+
+        // --- Event Registrations ---
+        ClientTickEvent.CLIENT_POST.register(AdorableHamsterPetsClient::onEndClientTick);
+        ClientPlayerEvent.CLIENT_PLAYER_JOIN.register(player -> AnnouncementManager.INSTANCE.processDeferredReadMarks());
+        ClientGuiEvent.RENDER_HUD.register((context, tickCounter) -> announcementHudRenderer.render(context, tickCounter.getTickDelta(true)));
     }
 
     /**
@@ -88,7 +115,16 @@ public class AdorableHamsterPetsClient {
     }
 
     private static void onEndClientTick(MinecraftClient client) {
-        // Handle Key Presses and Other Logic
+        // --- Announcement System Tick Logic ---
+        boolean isGuiOpen = client.currentScreen != null;
+        AnnouncementIconAnimator.INSTANCE.tick(isGuiOpen);
+
+        if (client.world != null) {
+            // Update the cached list of pending notifications once per tick.
+            pendingNotifications = AnnouncementManager.INSTANCE.getPendingNotifications();
+        }
+
+        // -- Key Presses and Other Tick Logic ---
         if (client.player == null || client.world == null) {
             renderedHamsterIdsThisTick.clear();
             renderedHamsterIdsLastTick.clear();

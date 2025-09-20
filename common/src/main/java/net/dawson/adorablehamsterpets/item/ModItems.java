@@ -184,6 +184,11 @@ public class ModItems {
                 }
             });
 
+    // So Patchouli can display custom bell icon in its category list
+    public static final RegistrySupplier<Item> ANNOUNCEMENT_BELL_ICON = registerItem("announcement_bell_icon",
+            () -> new Item(new Item.Settings()));
+
+    // --- 3. Helper methods for registration ---
     private static RegistrySupplier<Item> registerItem(String name, Supplier<Item> itemSupplier) {
         return ITEMS.register(Identifier.of(AdorableHamsterPets.MOD_ID, name), itemSupplier);
     }
