@@ -19,6 +19,8 @@
   "entity.adorablehamsterpets.hamster": "Hamster",
   "entity.adorablehamsterpets.hampter": "Hampter",
   "entity.adorablehamsterpets.hamster.inventory_title": "Hamster Inventory",
+  "entity.adorablehamsterpets.hamster.inventory_left_cheek_title": "Left Cheek",
+  "entity.adorablehamsterpets.hamster.inventory_right_cheek_title": "Right Cheek",
 
   "block.adorablehamsterpets.wild_green_bean_bush": "Wild Green Bean Bush",
   "block.adorablehamsterpets.wild_cucumber_bush": "Wild Cucumber Bush",

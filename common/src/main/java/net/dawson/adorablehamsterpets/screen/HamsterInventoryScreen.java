@@ -91,12 +91,12 @@ public class HamsterInventoryScreen extends HandledScreen<HamsterInventoryScreen
         context.drawText(this.textRenderer, this.playerInventoryTitle, this.playerInventoryTitleX, this.playerInventoryTitleY, 4210752, false);
 
         // --- "Left Cheek" and "Right Cheek" Text ---
-        String customTextLeft = "Left Cheek";
+        Text customTextLeft = Text.translatable("entity.adorablehamsterpets.hamster.inventory_left_cheek_title");
         int customTextLeftX = 25;
         int customTextLeftY = 80;
         context.drawText(this.textRenderer, customTextLeft, customTextLeftX, customTextLeftY, 4210752, false);
 
-        String customTextRight = "Right Cheek";
+        Text customTextRight = Text.translatable("entity.adorablehamsterpets.hamster.inventory_right_cheek_title");
         int customTextRightX = 95;
         int customTextRightY = 80;
         context.drawText(this.textRenderer, customTextRight, customTextRightX, customTextRightY, 4210752, false);
