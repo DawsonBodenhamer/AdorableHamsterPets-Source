@@ -36,7 +36,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.Heightmap;
-import vazkii.patchouli.api.PatchouliAPI;
 
 public class AdorableHamsterPets {
 	public static final String MOD_ID = "adorablehamsterpets";
