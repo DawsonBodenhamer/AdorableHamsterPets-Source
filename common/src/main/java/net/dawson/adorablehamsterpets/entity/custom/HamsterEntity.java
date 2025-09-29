@@ -1196,7 +1196,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     @Override
     public boolean canAttackWithOwner(LivingEntity target, LivingEntity owner) {
         UUID ownerUuid = owner.getUuid();
-        // AdorableHamsterPets.LOGGER.debug("[canAttackWithOwner] Hamster: {}, Target: {}, Owner: {}", this.getName().getString(), target.getName().getString(), owner.getName().getString());
+        AdorableHamsterPets.LOGGER.trace("[canAttackWithOwner] Hamster: {}, Target: {}, Owner: {}", this.getName().getString(), target.getName().getString(), owner.getName().getString());
 
         // --- 1. Basic Exclusions (Self, Owner) ---
         if (target == this || target == owner) {
@@ -1215,7 +1215,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         if (target instanceof TameableEntity tameablePet) {
             UUID petOwnerUuid = tameablePet.getOwnerUuid();
             if (petOwnerUuid != null && petOwnerUuid.equals(ownerUuid)) {
-                // AdorableHamsterPets.LOGGER.debug("[canAttackWithOwner] Target is a TameableEntity owned by the same player. Preventing attack.");
+                AdorableHamsterPets.LOGGER.trace("[canAttackWithOwner] Target is a TameableEntity owned by the same player. Preventing attack.");
                 return false;
             }
         }
@@ -1224,7 +1224,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         else if (target instanceof net.minecraft.entity.passive.AbstractHorseEntity horsePet) {
             Entity horseOwnerEntity = horsePet.getOwner();
             if (horseOwnerEntity != null && horseOwnerEntity.getUuid().equals(ownerUuid)) {
-                // AdorableHamsterPets.LOGGER.debug("[canAttackWithOwner] Target is an AbstractHorseEntity owned by the same player. Preventing attack.");
+                AdorableHamsterPets.LOGGER.trace("[canAttackWithOwner] Target is an AbstractHorseEntity owned by the same player. Preventing attack.");
                 return false;
             }
         }
@@ -1233,7 +1233,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         else if (target instanceof Ownable ownableFallback) {
             Entity fallbackOwnerEntity = ownableFallback.getOwner();
             if (fallbackOwnerEntity != null && fallbackOwnerEntity.getUuid().equals(ownerUuid)) {
-                // AdorableHamsterPets.LOGGER.debug("[canAttackWithOwner] Target is an Ownable (fallback) owned by the same player. Preventing attack.");
+                AdorableHamsterPets.LOGGER.trace("[canAttackWithOwner] Target is an Ownable (fallback) owned by the same player. Preventing attack.");
                 return false;
             }
         }
@@ -1249,11 +1249,11 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         // --- 1. Initial Setup ---
         ItemStack stack = player.getStackInHand(hand);
         World world = this.getWorld();
-        AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Interaction start. Player: {}, Hand: {}, Item: {}", this.getId(), world.getTime(), player.getName().getString(), hand, stack.getItem());
+        AdorableHamsterPets.LOGGER.trace("[InteractMob {} Tick {}] Interaction start. Player: {}, Hand: {}, Item: {}", this.getId(), world.getTime(), player.getName().getString(), hand, stack.getItem());
 
         // --- 2. Interaction Cooldown Check ---
         if (this.interactionCooldown > 0) {
-            AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Interaction cooldown active ({} ticks left). Passing.", this.getId(), world.getTime(), this.interactionCooldown);
+            AdorableHamsterPets.LOGGER.trace("[InteractMob {} Tick {}] Interaction cooldown active ({} ticks left). Passing.", this.getId(), world.getTime(), this.interactionCooldown);
             return ActionResult.PASS;
         }
 
@@ -1279,19 +1279,19 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
         // --- 5. Taming Logic ---
         if (!this.isTamed()) {
-            AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Hamster not tamed. Checking for taming attempt.", this.getId(), world.getTime());
+            AdorableHamsterPets.LOGGER.trace("[InteractMob {} Tick {}] Hamster not tamed. Checking for taming attempt.", this.getId(), world.getTime());
             if (player.isSneaking() && ModItemTags.isTamingFood(stack)) {
-                AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Taming attempt detected.", this.getId(), world.getTime());
+                AdorableHamsterPets.LOGGER.trace("[InteractMob {} Tick {}] Taming attempt detected.", this.getId(), world.getTime());
                 if (!world.isClient) { tryTame(player, stack); }
                 return ActionResult.success(world.isClient());
             }
-            AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Not a taming attempt. Calling super.interactMob for untamed.", this.getId(), world.getTime());
+            AdorableHamsterPets.LOGGER.trace("[InteractMob {} Tick {}] Not a taming attempt. Calling super.interactMob for untamed.", this.getId(), world.getTime());
             return super.interactMob(player, hand);
         }
 
         // --- 5. Owner Interaction Logic ---
         if (this.isOwner(player)) {
-            AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Player is owner. Processing owner interactions.", this.getId(), world.getTime());
+            AdorableHamsterPets.LOGGER.trace("[InteractMob {} Tick {}] Player is owner. Processing owner interactions.", this.getId(), world.getTime());
             boolean isSneaking = player.isSneaking();
             PlayerEntityAccessor playerAccessor = (PlayerEntityAccessor) player;
 
@@ -1302,7 +1302,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
             // --- Handle Diamond Stealing Interaction ---
             if (this.isStealingDiamond() && this.isOwner(player)) {
-                AdorableHamsterPets.LOGGER.debug("[InteractMob-{}] Passed 'isStealingDiamond' check.", this.getId());
+                AdorableHamsterPets.LOGGER.trace("[InteractMob-{}] Passed 'isStealingDiamond' check.", this.getId());
                 if (!world.isClient) {
                     ItemStack retrievedStack = this.getStolenItemStack().copy();
                     player.getInventory().offerOrDrop(this.getStolenItemStack().copy());
@@ -1321,14 +1321,14 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         float volume = (pounceSound == SoundEvents.ENTITY_GENERIC_EAT) ? 0.35f : 1.0f;
                         world.playSound(null, this.getBlockPos(), pounceSound, SoundCategory.NEUTRAL, volume, 1.7f);
                     }
-                    AdorableHamsterPets.LOGGER.debug("[InteractMob-{}] Diamond returned to player and goal stopped.", this.getId());
+                    AdorableHamsterPets.LOGGER.trace("[InteractMob-{}] Diamond returned to player and goal stopped.", this.getId());
                 }
                 return ActionResult.success(world.isClient());
             }
 
             // --- Check for Knocked Out ---
             if (this.isKnockedOut()) {
-                AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Hamster is knocked out. Waking up.", this.getId(), world.getTime());
+                AdorableHamsterPets.LOGGER.trace("[InteractMob {} Tick {}] Hamster is knocked out. Waking up.", this.getId(), world.getTime());
                 if (!world.isClient()) {
                     SoundEvent wakeUpSound = getRandomSoundFrom(ModSounds.HAMSTER_WAKE_UP_SOUNDS, this.random);
                     if (wakeUpSound != null) {
@@ -1386,7 +1386,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     if (!player.getAbilities().creativeMode) {
                         stack.decrement(1);
                     }
-                    AdorableHamsterPets.LOGGER.debug("[InteractMob {}] Cycled/Applied pink petal to type {}.", this.getId(), nextPetalType);
+                    AdorableHamsterPets.LOGGER.trace("[InteractMob {}] Cycled/Applied pink petal to type {}.", this.getId(), nextPetalType);
                     // Trigger advancement criterion
                     if (player instanceof ServerPlayerEntity serverPlayer) {
                         ModCriteria.APPLIED_PINK_PETAL.get().trigger(serverPlayer, this);
@@ -1411,7 +1411,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         if (!player.getAbilities().creativeMode) {
                             stack.damage(1, player, LivingEntity.getSlotForHand(hand)); // Damage shears
                         }
-                        AdorableHamsterPets.LOGGER.debug("[InteractMob {}] Removed pink petals with shears.", this.getId());
+                        AdorableHamsterPets.LOGGER.trace("[InteractMob {}] Removed pink petals with shears.", this.getId());
                     }
                     return ActionResult.success(world.isClient()); // Consume interaction
                 }
@@ -1431,7 +1431,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     }
 
                     if (availableSlot != null) {
-                        AdorableHamsterPets.LOGGER.debug("[AHP DEBUG] MOUNTING: Found available slot '{}' for Hamster ID {}.", availableSlot, this.getId());
+                        AdorableHamsterPets.LOGGER.trace("[AHP DEBUG] MOUNTING: Found available slot '{}' for Hamster ID {}.", availableSlot, this.getId());
 
                         // --- Save, Set, and Update Queue ---
                         HamsterShoulderData data = this.saveToShoulderData();
@@ -1486,15 +1486,15 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             // --- Feeding Logic ---
             boolean isPotentialFood = ModItemTags.isStandardFood(stack) || ModItemTags.isBuffFood(stack) || ModItemTags.isPouchUnlockFood(stack);
             if (!world.isClient() && !isSneaking && isPotentialFood) {
-                AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Owner not sneaking, holding potential food. Checking refusal.", this.getId(), world.getTime());
+                AdorableHamsterPets.LOGGER.trace("[InteractMob {} Tick {}] Owner not sneaking, holding potential food. Checking refusal.", this.getId(), world.getTime());
                 if (checkRepeatFoodRefusal(stack, player)) {
-                    AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Food refused. Consuming interaction.", this.getId(), world.getTime());
+                    AdorableHamsterPets.LOGGER.trace("[InteractMob {} Tick {}] Food refused. Consuming interaction.", this.getId(), world.getTime());
                     return ActionResult.CONSUME; // Consume refusal action
                 }
-                AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Attempting feeding via tryFeedingAsTamed.", this.getId(), world.getTime());
+                AdorableHamsterPets.LOGGER.trace("[InteractMob {} Tick {}] Attempting feeding via tryFeedingAsTamed.", this.getId(), world.getTime());
                 boolean feedingOccurred = tryFeedingAsTamed(player, stack); // Calls the method with detailed logging
                 if (feedingOccurred) {
-                    AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] tryFeedingAsTamed returned true. Setting last food, decrementing stack.", this.getId(), world.getTime());
+                    AdorableHamsterPets.LOGGER.trace("[InteractMob {} Tick {}] tryFeedingAsTamed returned true. Setting last food, decrementing stack.", this.getId(), world.getTime());
                     this.lastFoodItem = stack.copy(); // Track last food *only* if feeding was successful
                     if (!player.getAbilities().creativeMode) {
                         stack.decrement(1);
@@ -1504,15 +1504,15 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     // If tryFeedingAsTamed returned false (e.g., cooldown, full health+no breed),
                     // We might still want to allow vanilla interaction or sitting.
                     // Let's PASS for now to allow super.interactMob to run.
-                    AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] tryFeedingAsTamed returned false. Passing to vanilla/sitting.", this.getId(), world.getTime());
+                    AdorableHamsterPets.LOGGER.trace("[InteractMob {} Tick {}] tryFeedingAsTamed returned false. Passing to vanilla/sitting.", this.getId(), world.getTime());
                 }
             }
 
             // --- Vanilla Interaction Handling ---
             if (!isSneaking && !isPotentialFood && !ModItemTags.isShoulderMountFood(stack) && !stack.isOf(Items.PINK_PETALS)) {
-                AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Not sneaking or holding handled food/petals. Calling super.interactMob.", this.getId(), world.getTime());
+                AdorableHamsterPets.LOGGER.trace("[InteractMob {} Tick {}] Not sneaking or holding handled food/petals. Calling super.interactMob.", this.getId(), world.getTime());
                 ActionResult vanillaResult = super.interactMob(player, hand);
-                AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] super.interactMob returned: {}", this.getId(), world.getTime(), vanillaResult);
+                AdorableHamsterPets.LOGGER.trace("[InteractMob {} Tick {}] super.interactMob returned: {}", this.getId(), world.getTime(), vanillaResult);
                 if (vanillaResult.isAccepted()) {
                     return vanillaResult;
                 }
@@ -1520,7 +1520,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
             // --- Sitting Logic ---
             if (!world.isClient() && !isSneaking) {
-                AdorableHamsterPets.LOGGER.debug("[InteractMob {} Tick {}] Fallback: Toggling sitting state.", this.getId(), world.getTime());
+                AdorableHamsterPets.LOGGER.trace("[InteractMob {} Tick {}] Fallback: Toggling sitting state.", this.getId(), world.getTime());
                 this.setSitting(!this.isSitting()); // Toggle sitting state
                 this.jumping = false;
                 this.navigation.stop();

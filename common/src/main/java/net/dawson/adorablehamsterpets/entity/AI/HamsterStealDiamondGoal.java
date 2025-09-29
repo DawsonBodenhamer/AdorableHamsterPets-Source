@@ -118,7 +118,7 @@ public class HamsterStealDiamondGoal extends Goal {
                 .toList();
 
         if (stealableItems.isEmpty()) {
-            AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] canStart FAILED: No valid stealable items configured or parsed.", this.hamster.getId());
+            AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] canStart FAILED: No valid stealable items configured or parsed.", this.hamster.getId());
             return false;
         }
 
@@ -184,7 +184,7 @@ public class HamsterStealDiamondGoal extends Goal {
             // --- RESUME LOGIC ---
             this.stealDurationTimer = this.hamster.getStealDurationTimer();
             this.targetItem = null; // No item entity to target, it's already "stolen"
-            AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] Resuming steal. Duration left: {} ticks.", this.hamster.getId(), this.stealDurationTimer);
+            AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] Resuming steal. Duration left: {} ticks.", this.hamster.getId(), this.stealDurationTimer);
 
             // Immediately decide whether to flee or taunt based on distance to owner
             if (this.hamster.distanceTo(this.owner) < Configs.AHP.minFleeDistance.get()) {
@@ -203,7 +203,7 @@ public class HamsterStealDiamondGoal extends Goal {
             this.hamster.setStealDurationTimer(this.stealDurationTimer);
             this.repositionTarget = null;
             this.repositionAttempts = 0;
-            AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] Goal started fresh. State: MOVING_TO_DIAMOND. Duration: {} ticks.", this.hamster.getId(), this.stealDurationTimer);
+            AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] Goal started fresh. State: MOVING_TO_DIAMOND. Duration: {} ticks.", this.hamster.getId(), this.stealDurationTimer);
         }
     }
 
@@ -272,7 +272,7 @@ public class HamsterStealDiamondGoal extends Goal {
                 // If navigation stops before reaching the target, try to reposition.
                 if (this.hamster.getNavigation().isIdle()) {
                     this.currentState = State.REPOSITIONING;
-                    AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] Navigator is idle, transitioning to REPOSITIONING.", this.hamster.getId());
+                    AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] Navigator is idle, transitioning to REPOSITIONING.", this.hamster.getId());
                     return; // End this tick, start repositioning on the next
                 }
                 if (this.hamster.distanceTo(this.targetItem) < 1.5) {
@@ -287,7 +287,7 @@ public class HamsterStealDiamondGoal extends Goal {
                     if (celebrationSound != null) {
                         this.hamster.playSound(celebrationSound, 0.7f, this.hamster.getSoundPitch());
                     }
-                    AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] State changed to POUNCING.", this.hamster.getId());
+                    AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] State changed to POUNCING.", this.hamster.getId());
                 }
                 break;
 
@@ -295,7 +295,7 @@ public class HamsterStealDiamondGoal extends Goal {
                 if (this.targetItem == null) return;
                 // Check if exceeded repositioning budget.
                 if (this.repositionAttempts >= 3) {
-                    AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] Exceeded max reposition attempts. Stopping goal.", this.hamster.getId());
+                    AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] Exceeded max reposition attempts. Stopping goal.", this.hamster.getId());
                     this.stealDurationTimer = 0; // Force the goal to stop.
                     // Also apply the cooldown to prevent an immediate restart loop.
                     return;
@@ -319,7 +319,7 @@ public class HamsterStealDiamondGoal extends Goal {
                 if (this.hamster.getNavigation().isIdle()) {
                     this.repositionTarget = null; // Clear the target to find a new one next tick if needed
                     this.currentState = State.MOVING_TO_DIAMOND;
-                    AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] Repositioning move complete. Transitioning back to MOVING_TO_DIAMOND.", this.hamster.getId());
+                    AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] Repositioning move complete. Transitioning back to MOVING_TO_DIAMOND.", this.hamster.getId());
                 }
                 break;
 
@@ -370,7 +370,7 @@ public class HamsterStealDiamondGoal extends Goal {
                     }
 
                     this.currentState = State.FLEEING;
-                    AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] Pounce finished. Item stolen. State changed to FLEEING.", this.hamster.getId());
+                    AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] Pounce finished. Item stolen. State changed to FLEEING.", this.hamster.getId());
                 }
                 break;
 
@@ -387,7 +387,7 @@ public class HamsterStealDiamondGoal extends Goal {
                 } else {
                     this.currentState = State.TAUNTING;
                     this.hamster.getNavigation().stop();
-                    AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] State changed to TAUNTING.", this.hamster.getId());
+                    AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] State changed to TAUNTING.", this.hamster.getId());
                 }
                 break;
 
@@ -414,7 +414,7 @@ public class HamsterStealDiamondGoal extends Goal {
                     this.currentState = State.FLEEING;
                     this.hamster.setTaunting(false); // Immediately turn off taunting when fleeing
                     this.tauntSettleTicks = 0; // Reset the settle timer
-                    AdorableHamsterPets.LOGGER.debug("[StealGoal-{}] State changed back to FLEEING.", this.hamster.getId());
+                    AdorableHamsterPets.LOGGER.trace("[StealGoal-{}] State changed back to FLEEING.", this.hamster.getId());
                 }
                 break;
         }

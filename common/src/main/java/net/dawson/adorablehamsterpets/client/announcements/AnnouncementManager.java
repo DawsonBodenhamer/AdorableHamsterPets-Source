@@ -105,7 +105,7 @@ public class AnnouncementManager {
      */
     public void queueDeferredReadMark(Identifier entryId) {
         this.deferredReadMarks.add(entryId);
-        AdorableHamsterPets.LOGGER.debug("[Announcements] Queued deferred read mark for entry: {}", entryId);
+        AdorableHamsterPets.LOGGER.trace("[Announcements] Queued deferred read mark for entry: {}", entryId);
     }
 
     /**
@@ -117,7 +117,7 @@ public class AnnouncementManager {
             return;
         }
 
-        AdorableHamsterPets.LOGGER.debug("[Announcements] Processing {} deferred read marks...", deferredReadMarks.size());
+        AdorableHamsterPets.LOGGER.trace("[Announcements] Processing {} deferred read marks...", deferredReadMarks.size());
         // Get the book from the common BookRegistry's public map.
         Book book = BookRegistry.INSTANCE.books.get(Identifier.of(AdorableHamsterPets.MOD_ID, "hamster_tips_guide_book"));
         if (book == null) {
@@ -138,7 +138,7 @@ public class AnnouncementManager {
         }
 
         if (successCount > 0) {
-            AdorableHamsterPets.LOGGER.debug("[Announcements] Successfully processed {} deferred read marks.", successCount);
+            AdorableHamsterPets.LOGGER.trace("[Announcements] Successfully processed {} deferred read marks.", successCount);
         }
 
         deferredReadMarks.clear();
@@ -173,12 +173,12 @@ public class AnnouncementManager {
     }
 
     public void initialize() {
-        AdorableHamsterPets.LOGGER.info("[Announcements] Initializing AnnouncementManager..."); // LOG 1: Start
+        AdorableHamsterPets.LOGGER.trace("[Announcements] Initializing AnnouncementManager..."); // LOG 1: Start
         this.httpClient = HttpClient.newHttpClient();
         Path configDir = Platform.getConfigFolder().resolve(AdorableHamsterPets.MOD_ID);
         this.stateFilePath = configDir.resolve("announcements.json");
         this.manifestCacheFilePath = configDir.resolve("manifest.cache.json");
-        AdorableHamsterPets.LOGGER.debug("[Announcements] State file path resolved to: {}", stateFilePath.toAbsolutePath()); // LOG 2: Path
+        AdorableHamsterPets.LOGGER.trace("[Announcements] State file path resolved to: {}", stateFilePath.toAbsolutePath()); // LOG 2: Path
         try {
             Files.createDirectories(configDir);
         } catch (IOException e) {
@@ -187,7 +187,7 @@ public class AnnouncementManager {
         loadState();
         loadCachedManifest();
         processExpiredSnoozes();
-        AdorableHamsterPets.LOGGER.info("[Announcements] Initialization complete."); // LOG 3: Finish
+        AdorableHamsterPets.LOGGER.trace("[Announcements] Initialization complete."); // LOG 3: Finish
     }
 
     private void processExpiredSnoozes() {
@@ -284,9 +284,9 @@ public class AnnouncementManager {
     }
 
     private void loadState() {
-        AdorableHamsterPets.LOGGER.debug("[Announcements] Attempting to load state from {}...", stateFilePath.toAbsolutePath()); // LOG 4: Load Start
+        AdorableHamsterPets.LOGGER.trace("[Announcements] Attempting to load state from {}...", stateFilePath.toAbsolutePath()); // LOG 4: Load Start
         if (Files.exists(stateFilePath)) {
-            AdorableHamsterPets.LOGGER.debug("[Announcements] announcements.json found. Reading file."); // LOG 5a: File Found
+            AdorableHamsterPets.LOGGER.trace("[Announcements] announcements.json found. Reading file."); // LOG 5a: File Found
             try (FileReader reader = new FileReader(stateFilePath.toFile())) {
                 ClientAnnouncementState.CODEC.parse(JsonOps.INSTANCE, GSON.fromJson(reader, com.google.gson.JsonElement.class))
                         .resultOrPartial(AdorableHamsterPets.LOGGER::error)
@@ -295,20 +295,20 @@ public class AnnouncementManager {
                 AdorableHamsterPets.LOGGER.error("[Announcements] CRITICAL: Failed to load announcement state from existing file.", e);
             }
         } else {
-            AdorableHamsterPets.LOGGER.info("[Announcements] announcements.json not found. Creating default state file."); // LOG 5b: File Not Found
+            AdorableHamsterPets.LOGGER.trace("[Announcements] announcements.json not found. Creating default state file."); // LOG 5b: File Not Found
             saveState(); // Create default file if it doesn't exist
         }
     }
 
     private void saveState() {
-        AdorableHamsterPets.LOGGER.debug("[Announcements] Attempting to save state..."); // LOG 6: Save Start
+        AdorableHamsterPets.LOGGER.trace("[Announcements] Attempting to save state..."); // LOG 6: Save Start
         ClientAnnouncementState.CODEC.encodeStart(JsonOps.INSTANCE, this.clientState)
                 .resultOrPartial(error -> AdorableHamsterPets.LOGGER.error("[Announcements] CRITICAL: Failed to encode client state to JSON: {}", error)) // LOG 7: Encode Error
                 .ifPresent(jsonElement -> {
-                    AdorableHamsterPets.LOGGER.debug("[Announcements] State encoded successfully. Writing to file: {}", stateFilePath.toAbsolutePath()); // LOG 8: Writing
+                    AdorableHamsterPets.LOGGER.trace("[Announcements] State encoded successfully. Writing to file: {}", stateFilePath.toAbsolutePath()); // LOG 8: Writing
                     try (FileWriter writer = new FileWriter(stateFilePath.toFile())) {
                         GSON.toJson(jsonElement, writer);
-                        AdorableHamsterPets.LOGGER.debug("[Announcements] Successfully saved announcement state."); // LOG 9: Success
+                        AdorableHamsterPets.LOGGER.trace("[Announcements] Successfully saved announcement state."); // LOG 9: Success
                     } catch (IOException e) {
                         AdorableHamsterPets.LOGGER.error("[Announcements] CRITICAL: FAILED TO SAVE ANNOUNCEMENT STATE TO FILE.", e); // LOG 10: Write Error
                     }
@@ -319,7 +319,7 @@ public class AnnouncementManager {
         this.clientState = ClientAnnouncementState.createDefault();
         saveState();
         PatchouliIntegration.clearAllVirtualEntriesFromHistory();
-        AdorableHamsterPets.LOGGER.debug("Client announcement state has been reset.");
+        AdorableHamsterPets.LOGGER.info("Client announcement state has been reset.");
     }
 
     private void loadCachedManifest() {
@@ -330,7 +330,7 @@ public class AnnouncementManager {
                         .ifPresent(cachedManifest -> {
                             this.manifest = cachedManifest;
                             this.manifestLoaded = true; // Mark as loaded from cache
-                            AdorableHamsterPets.LOGGER.info("[Announcements] Loaded cached manifest with {} messages.", manifest.messages().size());
+                            AdorableHamsterPets.LOGGER.trace("[Announcements] Loaded cached manifest with {} messages.", manifest.messages().size());
                         });
             } catch (IOException e) {
                 AdorableHamsterPets.LOGGER.error("[Announcements] Failed to load cached manifest.", e);
@@ -344,7 +344,7 @@ public class AnnouncementManager {
                 .ifPresent(jsonElement -> {
                     try (FileWriter writer = new FileWriter(manifestCacheFilePath.toFile())) {
                         GSON.toJson(jsonElement, writer);
-                        AdorableHamsterPets.LOGGER.debug("[Announcements] Successfully saved manifest to cache.");
+                        AdorableHamsterPets.LOGGER.trace("[Announcements] Successfully saved manifest to cache.");
                     } catch (IOException e) {
                         AdorableHamsterPets.LOGGER.error("[Announcements] FAILED TO SAVE MANIFEST TO CACHE.", e);
                     }
@@ -367,9 +367,9 @@ public class AnnouncementManager {
 
         return httpClient.sendAsync(requestBuilder.build(), HttpResponse.BodyHandlers.ofString())
                 .thenAccept(response -> {
-                    AdorableHamsterPets.LOGGER.debug("[Announcements] Manifest fetch completed with status code {}. Current screen: {}", response.statusCode(), MinecraftClient.getInstance().currentScreen);
+                    AdorableHamsterPets.LOGGER.trace("[Announcements] Manifest fetch completed with status code {}. Current screen: {}", response.statusCode(), MinecraftClient.getInstance().currentScreen);
                     if (response.statusCode() == 200) { // OK
-                        AdorableHamsterPets.LOGGER.debug("[Announcements] Fetched new manifest.");
+                        AdorableHamsterPets.LOGGER.trace("[Announcements] Fetched new manifest.");
                         AnnouncementManifest.CODEC.parse(JsonOps.INSTANCE, GSON.fromJson(response.body(), com.google.gson.JsonElement.class))
                                 .resultOrPartial(AdorableHamsterPets.LOGGER::error)
                                 .ifPresent(newManifest -> {
@@ -401,7 +401,7 @@ public class AnnouncementManager {
                                     }
                                 });
                     } else if (response.statusCode() == 304) { // Not Modified
-                        AdorableHamsterPets.LOGGER.info("[Announcements] Manifest is up to date (304 Not Modified).");
+                        AdorableHamsterPets.LOGGER.trace("[Announcements] Manifest is up to date (304 Not Modified).");
                     } else {
                         AdorableHamsterPets.LOGGER.warn("[Announcements] Failed to fetch manifest, status code: {}", response.statusCode());
                     }

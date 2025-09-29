@@ -93,14 +93,14 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     // --- 2. DataTracker Registration ---
     @Inject(method = "initDataTracker", at = @At("TAIL"))
     private void adorablehamsterpets$initDataTracker(DataTracker.Builder builder, CallbackInfo ci) {
-        AdorableHamsterPets.LOGGER.debug("[AHP Mixin] PlayerEntityMixin initDataTracker is RUNNING for entity {}.", this.getId());
+        AdorableHamsterPets.LOGGER.trace("[AHP Mixin] PlayerEntityMixin initDataTracker is RUNNING for entity {}.", this.getId());
         builder.add(SHOULDER_HAMSTERS, new NbtCompound());
     }
 
     // --- 3. NBT Read/Write ---
     @Inject(method = "writeCustomDataToNbt", at = @At("TAIL"))
     private void adorablehamsterpets$writeNbt(NbtCompound nbt, CallbackInfo ci) {
-        AdorableHamsterPets.LOGGER.debug("[AHP Mixin] PlayerEntityMixin writeNbt is RUNNING for entity {}.", this.getId());
+        AdorableHamsterPets.LOGGER.trace("[AHP Mixin] PlayerEntityMixin writeNbt is RUNNING for entity {}.", this.getId());
 
         // --- Save the single compound from the DataTracker ---
         NbtCompound shoulderPetsNbt = this.getDataTracker().get(SHOULDER_HAMSTERS);
@@ -124,7 +124,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
     @Inject(method = "readCustomDataFromNbt", at = @At("TAIL"))
     private void adorablehamsterpets$readNbt(NbtCompound nbt, CallbackInfo ci) {
-        AdorableHamsterPets.LOGGER.debug("[AHP Mixin] PlayerEntityMixin readNbt is RUNNING for entity {}.", this.getId());
+        AdorableHamsterPets.LOGGER.trace("[AHP Mixin] PlayerEntityMixin readNbt is RUNNING for entity {}.", this.getId());
 
         // --- Backward Compatibility: Check for old single hamster data ---
         if (nbt.contains("ShoulderHamster", NbtElement.COMPOUND_TYPE)) {

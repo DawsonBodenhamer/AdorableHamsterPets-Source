@@ -80,7 +80,7 @@ public class HamsterFollowOwnerGoal extends FollowOwnerGoal {
     public void start() {
         super.start();
         this.hamster.setActiveCustomGoalDebugName(this.getClass().getSimpleName() + (this.hamster.hasGreenBeanBuff() ? " (Zoomies)" : ""));
-        AdorableHamsterPets.LOGGER.debug("[FollowGoal-{}] start: Goal has started. IsBuffed: {}", this.hamster.getId(), this.hamster.hasGreenBeanBuff());
+        AdorableHamsterPets.LOGGER.trace("[FollowGoal-{}] start: Goal has started. IsBuffed: {}", this.hamster.getId(), this.hamster.hasGreenBeanBuff());
     }
 
     @Override

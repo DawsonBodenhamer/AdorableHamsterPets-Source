@@ -27,7 +27,7 @@ public class PatchouliIntegration {
             data.viewedEntries.add(entryId);
             entry.markReadStateDirty();
             PersistentData.save();
-            AdorableHamsterPets.LOGGER.info("[Announcements] Marked Patchouli entry '{}' as read.", entryId);
+            AdorableHamsterPets.LOGGER.debug("[Announcements] Marked Patchouli entry '{}' as read.", entryId);
         }
     }
 
@@ -48,7 +48,7 @@ public class PatchouliIntegration {
                 entry.markReadStateDirty(); // Tell Patchouli its visual state needs an update
             }
             PersistentData.save(); // Save the changes to patchouli_data.json
-            AdorableHamsterPets.LOGGER.info("[Announcements] Marked Patchouli entry '{}' as unread.", entryId);
+            AdorableHamsterPets.LOGGER.debug("[Announcements] Marked Patchouli entry '{}' as unread.", entryId);
         }
     }
 
@@ -75,7 +75,7 @@ public class PatchouliIntegration {
                 book.getContents().entries.values().forEach(BookEntry::markReadStateDirty);
             }
             PersistentData.save();
-            AdorableHamsterPets.LOGGER.info("[Announcements] Cleared all virtual announcement entries from Patchouli history.");
+            AdorableHamsterPets.LOGGER.debug("[Announcements] Cleared all virtual announcement entries from Patchouli history.");
         }
     }
 }

@@ -18,7 +18,7 @@ public abstract class PlayerEntityRendererMixin {
     @Inject(method = "<init>", at = @At("RETURN"))
     private void onInit(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo ci) {
         // --- Diagnostic Logging ---
-        AdorableHamsterPets.LOGGER.debug("[AHP Mixin] PlayerEntityRendererMixin constructor injection is RUNNING.");
+        AdorableHamsterPets.LOGGER.trace("[AHP Mixin] PlayerEntityRendererMixin constructor injection is RUNNING.");
         // Cast 'this' (PlayerEntityRenderer) to LivingEntityRenderer first
         LivingEntityRenderer<?, ?> livingRenderer = (LivingEntityRenderer<?, ?>) (Object) this;
         // Then cast the LivingEntityRenderer instance to our separate Invoker interface

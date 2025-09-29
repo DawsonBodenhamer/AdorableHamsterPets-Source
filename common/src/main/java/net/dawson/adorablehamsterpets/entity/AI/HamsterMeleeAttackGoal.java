@@ -26,7 +26,7 @@ public class HamsterMeleeAttackGoal extends MeleeAttackGoal {
 
             // Reset cooldown using the custom duration
             this.resetCooldown();
-            AdorableHamsterPets.LOGGER.debug("[AttackGoal {} Tick {}] Attack condition met (cooldown {}, in range), attacking target {}. Cooldown reset to {}.",
+            AdorableHamsterPets.LOGGER.trace("[AttackGoal {} Tick {}] Attack condition met (cooldown {}, in range), attacking target {}. Cooldown reset to {}.",
                     this.hamster.getId(), this.hamster.getWorld().getTime(), this.getCooldown(), // Log cooldown *before* reset for clarity
                     target.getId(), this.getMaxCooldown()); // Log the value it's being reset to
 
@@ -34,7 +34,7 @@ public class HamsterMeleeAttackGoal extends MeleeAttackGoal {
             SoundEvent attackSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_ATTACK_SOUNDS, this.hamster.getRandom());
             if (attackSound != null) {
                 this.hamster.playSound(attackSound, 1.2F, this.hamster.getSoundPitch());
-                AdorableHamsterPets.LOGGER.debug("[AttackGoal {} Tick {}] Played attack sound: {}", this.hamster.getId(), this.hamster.getWorld().getTime(), attackSound.getId());
+                AdorableHamsterPets.LOGGER.trace("[AttackGoal {} Tick {}] Played attack sound: {}", this.hamster.getId(), this.hamster.getWorld().getTime(), attackSound.getId());
             }
 
             // Trigger Attack Animation (Server-Side)
@@ -48,7 +48,7 @@ public class HamsterMeleeAttackGoal extends MeleeAttackGoal {
             // 3. Deal the damage to the target using the correct source.
             target.damage(damageSource, damageAmount);
 
-            AdorableHamsterPets.LOGGER.debug("[AttackGoal {} Tick {}] Called tryAttack() on target {}.", this.hamster.getId(), this.hamster.getWorld().getTime(), target.getId());
+            AdorableHamsterPets.LOGGER.trace("[AttackGoal {} Tick {}] Called tryAttack() on target {}.", this.hamster.getId(), this.hamster.getWorld().getTime(), target.getId());
 
         }
     }
@@ -76,7 +76,7 @@ public class HamsterMeleeAttackGoal extends MeleeAttackGoal {
     @Override
     public void start() {
         super.start();
-        AdorableHamsterPets.LOGGER.debug("[AttackGoal {} Tick {}] Goal started.", this.hamster.getId(), this.hamster.getWorld().getTime());
+        AdorableHamsterPets.LOGGER.trace("[AttackGoal {} Tick {}] Goal started.", this.hamster.getId(), this.hamster.getWorld().getTime());
         // Use the accessor to set the cooldown to 0, making the hamster able to attack immediately.
         ((MeleeAttackGoalAccessor) this).setCooldown(0);
         this.hamster.setActiveCustomGoalDebugName(this.getClass().getSimpleName());
@@ -85,7 +85,7 @@ public class HamsterMeleeAttackGoal extends MeleeAttackGoal {
     @Override
     public void stop() {
         super.stop();
-        AdorableHamsterPets.LOGGER.debug("[AttackGoal {} Tick {}] Goal stopped.", this.hamster.getId(), this.hamster.getWorld().getTime());
+        AdorableHamsterPets.LOGGER.trace("[AttackGoal {} Tick {}] Goal stopped.", this.hamster.getId(), this.hamster.getWorld().getTime());
         if (this.hamster.getActiveCustomGoalDebugName().equals(this.getClass().getSimpleName())) {
             this.hamster.setActiveCustomGoalDebugName("None");
         }

@@ -327,7 +327,7 @@ public class HamsterSeekDiamondGoal extends Goal {
         } else {
             this.currentState = SeekingState.CELEBRATING_DIAMOND;
             this.hamster.setCelebratingDiamond(true); // Triggers begging animation
-            AdorableHamsterPets.LOGGER.debug("Hamster {} reached CELEBRATING_DIAMOND state for ore at {}", this.hamster.getId(), this.targetOrePos);
+            AdorableHamsterPets.LOGGER.trace("Hamster {} reached CELEBRATING_DIAMOND state for ore at {}", this.hamster.getId(), this.targetOrePos);
 
             if (this.hamster.getOwner() instanceof ServerPlayerEntity serverPlayerOwner) {
                 ModCriteria.HAMSTER_LED_TO_DIAMOND.get().trigger(serverPlayerOwner, this.hamster, this.targetOrePos);
@@ -396,7 +396,7 @@ public class HamsterSeekDiamondGoal extends Goal {
         AdvancementEntry advancement = owner.server.getAdvancementLoader().get(advId);
 
         if (advancement == null) {
-            AdorableHamsterPets.LOGGER.debug("[GoldMessage] CRITICAL: Could not find advancement '{}'. Message will not be sent. Check file path and JSON validity.", advId);
+            AdorableHamsterPets.LOGGER.error("[GoldMessage] CRITICAL: Could not find advancement '{}'. Message will not be sent. Check file path and JSON validity.", advId);
             return;
         }
 
