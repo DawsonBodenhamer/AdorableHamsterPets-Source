@@ -226,7 +226,7 @@ public class AdorableHamsterPetsClient {
             // Reset any double-tap state on fresh mount.
             isWaitingForSecondSneakPress = false;
 
-            AdorableHamsterPets.LOGGER.debug("[AHP DEBUG CLIENT] Mount transition detected -> draining input queues and starting debounce ({} ticks).",
+            AdorableHamsterPets.LOGGER.trace("[AHP DEBUG CLIENT] Mount transition detected -> draining input queues and starting debounce ({} ticks).",
                     DISMOUNT_DEBOUNCE_DEFAULT);
         }
 
@@ -260,7 +260,7 @@ public class AdorableHamsterPetsClient {
         // --- 3. Edge detection: call wasPressed() ONCE and store the result ---
         boolean wasKeyPressed = keyToListenFor != null && keyToListenFor.wasPressed();
 
-        AdorableHamsterPets.LOGGER.debug(
+        AdorableHamsterPets.LOGGER.trace(
                 "[AHP DEBUG CLIENT] Tick Handler: Listening for '{}'. wasPressed() = {}",
                 keyToListenFor != null ? keyToListenFor.getTranslationKey() : "null-binding",
                 wasKeyPressed
@@ -280,13 +280,13 @@ public class AdorableHamsterPetsClient {
                 long delayMillis = config.doubleTapDelayTicks.get() * 50L;
 
                 if (isWaitingForSecondSneakPress && (currentTime - lastSneakPressTime) <= delayMillis) {
-                    AdorableHamsterPets.LOGGER.debug("[AHP DEBUG CLIENT] Tick Handler: DOUBLE_TAP second press detected. Sending dismount payload.");
+                    AdorableHamsterPets.LOGGER.trace("[AHP DEBUG CLIENT] Tick Handler: DOUBLE_TAP second press detected. Sending dismount payload.");
                     // Second press was within the delay window, trigger dismount
                     // Use the 1.20.1 pattern with an Identifier and an empty buffer
                     dev.architectury.networking.NetworkManager.sendToServer(ModPackets.DISMOUNT_HAMSTER_ID, new PacketByteBuf(Unpooled.buffer()));
                     isWaitingForSecondSneakPress = false; // Reset the double-tap state
                 } else {
-                    AdorableHamsterPets.LOGGER.debug("[AHP DEBUG CLIENT] Tick Handler: DOUBLE_TAP first press detected. Starting timer.");
+                    AdorableHamsterPets.LOGGER.trace("[AHP DEBUG CLIENT] Tick Handler: DOUBLE_TAP first press detected. Starting timer.");
                     isWaitingForSecondSneakPress = true;
                     lastSneakPressTime = currentTime;
                 }
@@ -298,7 +298,7 @@ public class AdorableHamsterPetsClient {
             long currentTime = System.currentTimeMillis();
             long delayMillis = config.doubleTapDelayTicks.get() * 50L;
             if ((currentTime - lastSneakPressTime) > delayMillis) {
-                AdorableHamsterPets.LOGGER.debug("[AHP DEBUG CLIENT] Tick Handler: DOUBLE_TAP timed out.");
+                AdorableHamsterPets.LOGGER.trace("[AHP DEBUG CLIENT] Tick Handler: DOUBLE_TAP timed out.");
                 isWaitingForSecondSneakPress = false;
             }
         }

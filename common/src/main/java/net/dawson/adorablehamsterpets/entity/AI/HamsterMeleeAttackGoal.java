@@ -38,6 +38,7 @@ public class HamsterMeleeAttackGoal extends MeleeAttackGoal {
             SoundEvent attackSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_ATTACK_SOUNDS, this.hamster.getRandom());
             if (attackSound != null) {
                 this.hamster.playSound(attackSound, 1.2F, this.hamster.getSoundPitch());
+                AdorableHamsterPets.LOGGER.trace("[AttackGoal {} Tick {}] Played attack sound: {}", this.hamster.getId(), this.hamster.getWorld().getTime(), attackSound.getId());
             }
             this.hamster.triggerAnimOnServer("mainController", "attack");
 
@@ -49,7 +50,7 @@ public class HamsterMeleeAttackGoal extends MeleeAttackGoal {
             // 3. Deal the damage to the target using the correct source.
             target.damage(damageSource, damageAmount);
 
-            AdorableHamsterPets.LOGGER.debug("[AttackGoal {} Tick {}] Called tryAttack() on target {}.", this.hamster.getId(), this.hamster.getWorld().getTime(), target.getId());
+            AdorableHamsterPets.LOGGER.trace("[AttackGoal {} Tick {}] Called tryAttack() on target {}.", this.hamster.getId(), this.hamster.getWorld().getTime(), target.getId());
 
         }
     }
@@ -81,7 +82,7 @@ public class HamsterMeleeAttackGoal extends MeleeAttackGoal {
     @Override
     public void start() {
         super.start();
-        AdorableHamsterPets.LOGGER.debug("[AttackGoal {} Tick {}] Goal started.", this.hamster.getId(), this.hamster.getWorld().getTime());
+        AdorableHamsterPets.LOGGER.trace("[AttackGoal {} Tick {}] Goal started.", this.hamster.getId(), this.hamster.getWorld().getTime());
         // Use the accessor to set the cooldown to 0, making the hamster able to attack immediately.
         ((MeleeAttackGoalAccessor) this).setCooldown(0);
         this.hamster.setActiveCustomGoalDebugName(this.getClass().getSimpleName());
@@ -91,7 +92,7 @@ public class HamsterMeleeAttackGoal extends MeleeAttackGoal {
     @Override
     public void stop() {
         super.stop();
-        AdorableHamsterPets.LOGGER.debug("[AttackGoal {} Tick {}] Goal stopped.", this.hamster.getId(), this.hamster.getWorld().getTime());
+        AdorableHamsterPets.LOGGER.trace("[AttackGoal {} Tick {}] Goal stopped.", this.hamster.getId(), this.hamster.getWorld().getTime());
         if (this.hamster.getActiveCustomGoalDebugName().equals(this.getClass().getSimpleName())) {
             this.hamster.setActiveCustomGoalDebugName("None");
         }

@@ -82,7 +82,7 @@ public class ClientShoulderHamsterData {
         // Open the landing event window when the player lands
         if (playerJustLanded) {
             this.landingEventWindow = 7;
-            AdorableHamsterPets.LOGGER.debug("[PHYSICS DEBUG] Player LANDING detected. Opening 15-tick impact window.");
+            AdorableHamsterPets.LOGGER.trace("[PHYSICS DEBUG] Player LANDING detected. Opening 15-tick impact window.");
         }
 
         // Decrement the window timer
