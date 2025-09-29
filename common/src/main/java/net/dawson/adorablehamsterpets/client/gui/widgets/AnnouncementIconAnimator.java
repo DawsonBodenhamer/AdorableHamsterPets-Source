@@ -21,7 +21,7 @@ public class AnnouncementIconAnimator {
     private static final int WIGGLE_INTERVAL_TICKS = 80;
     private static final int WIGGLE_DURATION_TICKS = 5;
     private static final float WIGGLE_MAX_ANGLE_DEGREES = 50.0f;
-    private static final int CLICK_ANIMATION_DURATION_TICKS = 4;
+    private static final int CLICK_ANIMATION_DURATION_TICKS = 2;
 
     // --- Main Physics Constants ---
     private static final double STIFFNESS = 3.0;               // Spring stiffness; higher = faster snap to target
