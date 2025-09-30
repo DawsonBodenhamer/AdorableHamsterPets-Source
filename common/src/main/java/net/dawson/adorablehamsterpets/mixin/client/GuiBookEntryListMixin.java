@@ -1,6 +1,7 @@
 package net.dawson.adorablehamsterpets.mixin.client;
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
+import net.dawson.adorablehamsterpets.mixin.accessor.ScreenWidgetAdder;
 import net.dawson.adorablehamsterpets.mixin.client.accessor.GuiBookAccessor;
 import net.dawson.adorablehamsterpets.mixin.client.accessor.ClickableWidgetAccessor;
 import net.minecraft.client.MinecraftClient;
@@ -184,7 +185,8 @@ public abstract class GuiBookEntryListMixin extends GuiBook {
             // Use accessor to set the height on 1.20.1
             ((ClickableWidgetAccessor) button).adorablehamsterpets$setHeight(buttonHeight);
 
-            self.addDrawableChild(button);
+            // Use ScreenWidgetAdder accessor to add the widget for cross-loader compatibility
+            ((ScreenWidgetAdder)(Object)self).adorablehamsterpets$addWidget(button);
             this.entryButtons.add(button);
 
             yOffset += buttonHeight + 1;

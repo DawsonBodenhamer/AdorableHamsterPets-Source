@@ -4,6 +4,7 @@ import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.client.announcements.AnnouncementManager;
 import net.dawson.adorablehamsterpets.client.gui.widgets.AnnouncementIconWidget;
 import net.dawson.adorablehamsterpets.config.Configs;
+import net.dawson.adorablehamsterpets.mixin.accessor.ScreenWidgetAdder;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
@@ -48,7 +49,8 @@ public abstract class TitleScreenMixin extends Screen {
                 // Add widget if on title screen
                 if (MinecraftClient.getInstance().currentScreen == (TitleScreen) (Object) this) {
                     AdorableHamsterPets.LOGGER.trace("[AHP TitleScreen] Adding AnnouncementIconWidget to the screen.");
-                    this.addDrawableChild(new AnnouncementIconWidget(
+                    // Use ScreenWidgetAdder accessor to add the widget for cross-loader compatibility
+                    ((ScreenWidgetAdder)(Object)this).adorablehamsterpets$addWidget(new AnnouncementIconWidget(
                             0, 0, 16, 16,
                             button -> ((AnnouncementIconWidget) button).onPress(),
                             (Screen) (Object) this // 'this' is the TitleScreen instance

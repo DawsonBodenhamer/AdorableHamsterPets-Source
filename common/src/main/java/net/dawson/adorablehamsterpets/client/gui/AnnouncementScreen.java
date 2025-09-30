@@ -6,6 +6,7 @@ import net.dawson.adorablehamsterpets.client.announcements.AnnouncementManager;
 import net.dawson.adorablehamsterpets.client.announcements.ClientAnnouncementState;
 import net.dawson.adorablehamsterpets.client.announcements.PatchouliIntegration;
 import net.dawson.adorablehamsterpets.config.Configs;
+import net.dawson.adorablehamsterpets.mixin.accessor.ScreenWidgetAdder;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Drawable;
@@ -89,7 +90,8 @@ public class AnnouncementScreen extends Screen {
         // --- "←" Close/Back Button ---
         int closeButtonX = this.guiLeft - 10; // Slightly overlapping the left side of the GUI
         int closeButtonY = this.guiTop + 5; // Slightly below the top of the GUI
-        this.addDrawableChild(ButtonWidget.builder(Text.literal("←").formatted(Formatting.BOLD), button -> this.returnToBook())
+        // Use ScreenWidgetAdder accessor to add the widget for cross-loader compatibility
+        ((ScreenWidgetAdder)(Object)this).adorablehamsterpets$addWidget(ButtonWidget.builder(Text.literal("←").formatted(Formatting.BOLD), button -> this.returnToBook())
                 .dimensions(closeButtonX, closeButtonY, 20, 16)
                 .tooltip(Tooltip.of(Text.translatable("gui.adorablehamsterpets.announcement.button.close.tooltip")))
                 .build());
@@ -170,7 +172,8 @@ public class AnnouncementScreen extends Screen {
         for (int i = 0; i < buttonBuilders.size(); i++) {
             ButtonWidget.Builder builder = buttonBuilders.get(i);
             int currentX = startX + i * (buttonWidth + buttonPadding);
-            addDrawableChild(builder.dimensions(currentX, buttonY, buttonWidth, 20).build());
+            // Use ScreenWidgetAdder accessor to add the widget for cross-loader compatibility
+            ((ScreenWidgetAdder)(Object)this).adorablehamsterpets$addWidget(builder.dimensions(currentX, buttonY, buttonWidth, 20).build());
         }
     }
 
@@ -269,7 +272,7 @@ public class AnnouncementScreen extends Screen {
 
 
         // --- 5. Render Widgets (Buttons) ---
-        // This replicates the logic from `super.render()` to draw all elements added via `addDrawableChild`,
+        // This replicates the logic from `super.render()` to draw all elements added via ScreenWidgetAdder accessor for cross loader compatibility
         // but crucially, it does NOT call `renderBackground()` again.
         for (Element element : this.children()) {
             if (element instanceof Drawable drawable) {
