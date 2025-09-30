@@ -6,6 +6,7 @@ import net.dawson.adorablehamsterpets.client.announcements.AnnouncementManager;
 import net.dawson.adorablehamsterpets.client.announcements.ClientAnnouncementState;
 import net.dawson.adorablehamsterpets.client.announcements.PatchouliIntegration;
 import net.dawson.adorablehamsterpets.config.Configs;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Drawable;
 import net.minecraft.client.gui.Element;
@@ -254,7 +255,7 @@ public class AnnouncementScreen extends Screen {
         float defaultScale = 1.3f;
         int maxWidth = 222; // Total is 242, so this creates 10 pixels of padding on each side of the title
         Text boldTitle = this.title.copy().formatted(Formatting.BOLD);
-        int titleWidth = this.textRenderer.getWidth(boldTitle);
+        int titleWidth = MinecraftClient.getInstance().textRenderer.getWidth(boldTitle);
         float finalScale = defaultScale;
 
         if (titleWidth * defaultScale > maxWidth) {
@@ -263,7 +264,7 @@ public class AnnouncementScreen extends Screen {
 
         matrices.translate(this.width / 2.0, this.guiTop + 9, 0);
         matrices.scale(finalScale, finalScale, 1.0f);
-        context.drawText(this.textRenderer, boldTitle, -titleWidth / 2, 0, 0x323232, false);
+        context.drawText(MinecraftClient.getInstance().textRenderer, boldTitle, -titleWidth / 2, 0, 0x323232, false);
         matrices.pop();
 
 
@@ -348,7 +349,7 @@ public class AnnouncementScreen extends Screen {
                 float scale = Math.max(1.0f, 2.0f - (level - 1) * 0.25f);
                 int scaledWidth = (int) (markdownRenderer.width / scale);
                 MutableText styledText = Text.literal(text).setStyle(Style.EMPTY.withBold(true));
-                List<OrderedText> wrappedLines = this.textRenderer.wrapLines(styledText, scaledWidth);
+                List<OrderedText> wrappedLines = MinecraftClient.getInstance().textRenderer.wrapLines(styledText, scaledWidth);
                 int heightOfLines = wrappedLines.size() * (int) (textRenderer.fontHeight * scale);
                 int totalSpacing = Math.max(0, wrappedLines.size() - 1) * MarkdownRenderer.LINE_SPACING;
                 lineHeight = heightOfLines + totalSpacing + MarkdownRenderer.HEADING_BOTTOM_MARGIN;
