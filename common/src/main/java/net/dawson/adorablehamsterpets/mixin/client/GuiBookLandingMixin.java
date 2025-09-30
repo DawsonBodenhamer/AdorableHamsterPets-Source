@@ -2,6 +2,7 @@ package net.dawson.adorablehamsterpets.mixin.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -100,14 +101,14 @@ public abstract class GuiBookLandingMixin extends GuiBook {
         Text titleText = this.book.getBookItem().getName();
         int titleX = 13 + 7; // MODIFIED: Shifted right by 7
         int titleY = 16;
-        graphics.drawText(this.textRenderer, titleText, titleX, titleY, titleColor, false);
+        graphics.drawText(MinecraftClient.getInstance().textRenderer, titleText, titleX, titleY, titleColor, false);
 
         // --- 4. Render the Wrapped Subtitle ---
         Text subtitleText = this.book.getSubtitle().fillStyle(this.book.getFontStyle());
         int subtitleX = 24 - 5; // MODIFIED: Shifted left by 5
         int subtitleY = 24 + 2; // MODIFIED: Shifted down by 2
         int wrapWidth = 100;    // The available width for the text
-        graphics.drawTextWrapped(this.textRenderer, subtitleText, subtitleX, subtitleY, wrapWidth, titleColor);
+        graphics.drawTextWrapped(MinecraftClient.getInstance().textRenderer, subtitleText, subtitleX, subtitleY, wrapWidth, titleColor);
 
         // --- 5. Cancel the Original Method ---
         ci.cancel();
