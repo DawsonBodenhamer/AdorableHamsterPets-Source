@@ -2,6 +2,7 @@ package net.dawson.adorablehamsterpets.mixin.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
+import net.dawson.adorablehamsterpets.mixin.accessor.ScreenWidgetAdder;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.text.Text;
@@ -146,7 +147,8 @@ public abstract class GuiBookLandingMixin extends GuiBook {
         } else {
             button = new GuiButtonCategory(this, x, y, category, self::handleButtonCategory);
         }
-        this.addDrawableChild(button);
+        // Use ScreenWidgetAdder accessor to add the widget for cross-loader compatibility
+        ((ScreenWidgetAdder)(Object)this).adorablehamsterpets$addWidget(button);
 
         // Cancel original positioning
         ci.cancel();
