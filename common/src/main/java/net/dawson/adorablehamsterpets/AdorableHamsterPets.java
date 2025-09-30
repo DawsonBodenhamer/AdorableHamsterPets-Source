@@ -14,6 +14,7 @@ import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.dawson.adorablehamsterpets.entity.ShoulderLocation;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
+import net.dawson.adorablehamsterpets.event.AHPCommonEvents;
 import net.dawson.adorablehamsterpets.item.ModItemGroups;
 import net.dawson.adorablehamsterpets.item.ModItems;
 import net.dawson.adorablehamsterpets.networking.ModPackets;
@@ -78,6 +79,7 @@ public class AdorableHamsterPets {
 			ModWorldGeneration.registerBiomeModifications();
 
 			// --- Events ---
+			AHPCommonEvents.init();
 			PlayerEvent.PLAYER_JOIN.register(AdorableHamsterPets::onPlayerJoin);
 			PlayerEvent.PLAYER_CLONE.register(AdorableHamsterPets::onPlayerClone);
 			CommandRegistrationEvent.EVENT.register(ModCommands::register);
