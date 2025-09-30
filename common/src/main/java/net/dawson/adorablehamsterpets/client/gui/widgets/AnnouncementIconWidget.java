@@ -64,14 +64,14 @@ public class AnnouncementIconWidget extends ButtonWidget {
             int targetX;
             int targetY;
 
-            // Position slightly outside the top-right corner, with slightly different
+            // Position slightly outside the corner, with slightly different
             // offsets for creative and survival mode to accommodate their unique shapes.
             if (containerScreen instanceof net.minecraft.client.gui.screen.ingame.CreativeInventoryScreen) {
-                // Creative Inventory
-                targetX = guiLeft + guiWidth - this.width + 4 + Configs.AHP.creativeWidgetIconOffsetX.get();
-                targetY = guiTop - 36 + Configs.AHP.creativeWidgetIconOffsetY.get();
+                // Creative Inventory (outside bottom right corner, to avoid conflicting with extra inventory tabs)
+                targetX = guiLeft + guiWidth + 5 + Configs.AHP.creativeWidgetIconOffsetX.get();
+                targetY = guiTop + 139 + Configs.AHP.creativeWidgetIconOffsetY.get();
             } else {
-                // Survival Inventory
+                // Survival Inventory (overlapping top right corner)
                 targetX = guiLeft + guiWidth - this.width + 4 + Configs.AHP.survivalWidgetIconOffsetX.get();
                 targetY = guiTop - 4 + Configs.AHP.survivalWidgetIconOffsetY.get();
             }
