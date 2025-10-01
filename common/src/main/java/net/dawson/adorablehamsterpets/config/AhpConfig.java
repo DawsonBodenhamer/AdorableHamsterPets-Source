@@ -399,6 +399,32 @@ public class AhpConfig extends Config {
             "#minecraft:boats"
     ));
 
+    // --- Core Hamster Attributes ---
+    @Translatable.Name("Core Hamster Attributes")
+    @Translatable.Desc("All the knobs and dials that make your hamster the majestic (or chaotic) creature it is.")
+    public ConfigGroup hamsterAttributes = new ConfigGroup("hamsterAttributes", true);
+
+    @Translatable.Name("Max Health (Wild")
+    @Translatable.Desc("How much abuse a wild hamster can take before it gives up the ghost. Vanilla animals are around 8-10. Set it to 200 (100 hearts) if you enjoy a challenge, or 1 if you're a monster.")
+    public ValidatedDouble wildMaxHealth = new ValidatedDouble(8.0, 200.0, 1.0);
+
+    @Translatable.Name("Max Health (Tamed)")
+    @Translatable.Desc("How beefy your tamed fuzzball is. Defaults to double its wild health, because love makes you stronger. Or something. Vanilla wolves have 20 (10 hearts).")
+    public ValidatedDouble tamedMaxHealth = new ValidatedDouble(16.0, 200.0, 1.0);
+
+    @Translatable.Name("Taming Chance")
+    @Translatable.Desc("Convince a hamster to love you. Taming difficulty (1 in X chance). Higher = more cucumbers sacrificed to fuzzy freeloaders.")
+    public ValidatedInt tamingChanceDenominator = new ValidatedInt(3, 20, 1);
+
+    @Translatable.Name("Melee Damage")
+    @Translatable.Desc("Tamed hamster melee damage. Squeak-first, ask questions later.")
+    public ValidatedDouble meleeDamage = new ValidatedDouble(2.0, 40.0, 0.0);
+
+    @ConfigGroup.Pop
+    @Translatable.Name("Throw Damage")
+    @Translatable.Desc("Damage dealt by thrown hamster. Surprisingly effective against Creepers. How convenient.")
+    public ValidatedDouble hamsterThrowDamage = new ValidatedDouble(20.0, 40.0, 0.0);
+
     // --- Spawn Settings ---
     @Translatable.Name("Spawn Settings")
     @Translatable.Desc("How Many, Where, and How Often?  Note: Some of these settings require re-logging into your world to take effect.")
@@ -493,16 +519,6 @@ public class AhpConfig extends Config {
     @Translatable.Desc("A list of specific biome IDs to NEVER allow spawns in, even if they match a tag. This overrides all other settings. Format: 'mod_id:biome_name'. For example, 'minecraft:plains'.")
     public List<String> excludeBiomes = new ArrayList<>(List.of("mod_id:biome_name"));
 
-    // --- Taming & Breeding Settings ---
-    @Translatable.Name("Taming & Breeding Settings")
-    @Translatable.Desc("Convince a hamster to love you—and occasionally accept a roommate.")
-    public ConfigGroup tamingAndBreeding = new ConfigGroup("tamingAndBreeding", true);
-
-    @ConfigGroup.Pop
-    @Translatable.Name("Taming Chance")
-    @Translatable.Desc("Taming difficulty (1 in X chance). Higher = more cucumbers sacrificed to fuzzy freeloaders.")
-    public ValidatedInt tamingChanceDenominator = new ValidatedInt(3, 20, 1);
-
     // --- Shoulder Hamster Settings ---
     @Translatable.Name("Shoulder Hamster Settings")
     @Translatable.Desc("Settings for your fuzzy parrot of doom.")
@@ -511,6 +527,14 @@ public class AhpConfig extends Config {
     @Translatable.Name("Core Settings")
     @Translatable.Desc("Just the basic stuff. You know, detecting creepers, sniffing diamonds. Just average Minecraft stuff really. No big deal. Why are you clapping and squealing? Stop that. You look silly.")
     public ConfigGroup shoulderCore = new ConfigGroup("shoulderCore", true);
+
+    @Translatable.Name("Consume Shoulder-Mount Item")
+    @Translatable.Desc("Should luring a hamster to your shoulder consume the item (e.g., cheese)? Turn this off if you believe your charm alone should be enough. The item will still be required, just not eaten.")
+    public boolean consumeShoulderMountItem = true;
+
+    @Translatable.Name("Enable Force-Mount Keybind")
+    @Translatable.Desc("Tired of wasting perfectly good cheese? Enable this to use a dedicated keybind (unbound by default). Hold down this key while right-clicking your hamster to hoist them onto your shoulder, no questions asked. Uses a separate key you must set in Controls > Key Binds.")
+    public boolean enableShoulderMountKeybind = false;
 
     @NonSync
     @Translatable.Name("Enable Creeper Detection")
@@ -653,54 +677,6 @@ public class AhpConfig extends Config {
     @Translatable.Desc("The throw speed of your furry projectile when under the influence of Steamed Green Beans. Goes from 'yeet' to 'yote'.")
     public ValidatedDouble hamsterThrowVelocityBuffed = new ValidatedDouble(2.5, 5.0, 0.1);
 
-    // --- Independent Diamond Seeking Settings ---
-    @Translatable.Name("Independent Diamond Seeking Settings")
-    @Translatable.Desc("Unleash free-range prospectors. What could go wrong?")
-    public ConfigGroup independentDiamondSeeking = new ConfigGroup("independentDiamondSeeking", true);
-
-    @Translatable.Name("Enable Independent Diamond Seeking")
-    @Translatable.Desc("Permit hamsters to embark on solo get-rich-quick schemes?")
-    public boolean enableIndependentDiamondSeeking = true;
-
-    @Translatable.Name("Diamond Seek Scan Radius (Blocks)")
-    @Translatable.Desc("How far a hamster scans once it’s decided to play prospector.")
-    public ValidatedInt diamondSeekRadius = new ValidatedInt(10, 20, 5);
-
-    @ConfigGroup.Pop
-    @Translatable.Name("Gold 'Mistake' Chance")
-    @Translatable.Desc("The probability (0.0 to 1.0) that a hamster will seek gold instead of diamond, if both are available. At 0.5, it's a coin toss. At 1.0, it's guaranteed hamster sulking.")
-    public ValidatedFloat goldMistakeChance = new ValidatedFloat(0.33f, 1.0f, 0.0f);
-
-    // --- Diamond Stealing Behavior Settings---
-    @Translatable.Name("Diamond Stealing Behavior Settings")
-    @Translatable.Desc("For when your hamster develops a taste for the finer things in life. Can be configured so they steal any item— even from other mods, but they only steal diamonds by default.")
-    public ConfigGroup diamondStealing = new ConfigGroup("diamondStealing", true);
-
-    @Translatable.Name("Enable Diamond Stealing")
-    @Translatable.Desc("Permits hamsters to engage in spontaneous, high-stakes games of keep-away with your valuables. A chase ensues. Obviously.")
-    public boolean enableDiamondStealing = true;
-
-    @Translatable.Name("Pounce Chance")
-    @Translatable.Desc("Probability (0.1 to 1.0) a hamster will succumb to temptation. High by default. You shouldn't leave your diamonds lying around anyway.")
-    public ValidatedFloat diamondPounceChance = new ValidatedFloat(0.75f, 1.0f, 0.1f);
-
-    @Translatable.Name("Minimum Flee Distance (Blocks)")
-    @Translatable.Desc("The hamster's personal space bubble.")
-    public ValidatedInt minFleeDistance = new ValidatedInt(5, 20, 1);
-
-    @Translatable.Name("Maximum Flee Distance (Blocks)")
-    @Translatable.Desc("The maximum distance before the hamster gets bored and stops running to taunt you.")
-    public ValidatedInt maxFleeDistance = new ValidatedInt(20, 40, 5);
-
-    @Translatable.Name("Minimum Steal Duration (Seconds)")
-    @Translatable.Desc("The shortest amount of time the hamster will entertain this little game before getting bored and dropping your stuff.")
-    public ValidatedInt minStealDurationSeconds = new ValidatedInt(5, 240, 1);
-
-    @ConfigGroup.Pop
-    @Translatable.Name("Maximum Steal Duration (Seconds)")
-    @Translatable.Desc("The longest your cardio session can last before the hamster's attention span gives out.")
-    public ValidatedInt maxStealDurationSeconds = new ValidatedInt(15, 300, 5);
-
     // --- Tamed Sleep Settings ---
     @Translatable.Name("Tamed Sleep Settings")
     @Translatable.Desc("Even digital rodents need beauty sleep— adjust according to your patience levels.")
@@ -726,20 +702,6 @@ public class AhpConfig extends Config {
     @Translatable.Name("Max Sit Time Before Drowsy (Secs)")
     @Translatable.Desc("Maximum seconds before the inevitable deep snooze.")
     public ValidatedInt tamedQuiescentSitMaxSeconds = new ValidatedInt(180, 600, 2);
-
-    // --- Combat & Damage Settings ---
-    @Translatable.Name("Combat & Damage Settings")
-    @Translatable.Desc("Squeak-first, ask questions later. Dial in the rodent kung fu.")
-    public ConfigGroup combat = new ConfigGroup("combat", true);
-
-    @Translatable.Name("Melee Damage")
-    @Translatable.Desc("Tamed hamster melee damage. Mostly for show, let's be honest.")
-    public ValidatedDouble meleeDamage = new ValidatedDouble(2.0, 40.0, 0.0);
-
-    @ConfigGroup.Pop
-    @Translatable.Name("Throw Damage")
-    @Translatable.Desc("Damage dealt by thrown hamster. Surprisingly effective against Creepers. How convenient.")
-    public ValidatedDouble hamsterThrowDamage = new ValidatedDouble(20.0, 40.0, 0.0);
 
     // --- Food Healing Settings ---
     @Translatable.Name("Food Healing Settings")
@@ -794,6 +756,54 @@ public class AhpConfig extends Config {
     @Translatable.Name("Regen Level")
     @Translatable.Desc("Heals minor paper-cuts (and fragile egos).")
     public ValidatedInt greenBeanBuffAmplifierRegen = new ValidatedInt(0, 4, 0);
+
+    // --- Independent Diamond Seeking Settings ---
+    @Translatable.Name("Independent Diamond Seeking Settings")
+    @Translatable.Desc("Unleash free-range prospectors. What could go wrong?")
+    public ConfigGroup independentDiamondSeeking = new ConfigGroup("independentDiamondSeeking", true);
+
+    @Translatable.Name("Enable Independent Diamond Seeking")
+    @Translatable.Desc("Permit hamsters to embark on solo get-rich-quick schemes?")
+    public boolean enableIndependentDiamondSeeking = true;
+
+    @Translatable.Name("Diamond Seek Scan Radius (Blocks)")
+    @Translatable.Desc("How far a hamster scans once it’s decided to play prospector.")
+    public ValidatedInt diamondSeekRadius = new ValidatedInt(10, 20, 5);
+
+    @ConfigGroup.Pop
+    @Translatable.Name("Gold 'Mistake' Chance")
+    @Translatable.Desc("The probability (0.0 to 1.0) that a hamster will seek gold instead of diamond, if both are available. At 0.5, it's a coin toss. At 1.0, it's guaranteed hamster sulking.")
+    public ValidatedFloat goldMistakeChance = new ValidatedFloat(0.33f, 1.0f, 0.0f);
+
+    // --- Diamond Stealing Behavior Settings---
+    @Translatable.Name("Diamond Stealing Behavior Settings")
+    @Translatable.Desc("For when your hamster develops a taste for the finer things in life. Can be configured so they steal any item— even from other mods, but they only steal diamonds by default.")
+    public ConfigGroup diamondStealing = new ConfigGroup("diamondStealing", true);
+
+    @Translatable.Name("Enable Diamond Stealing")
+    @Translatable.Desc("Permits hamsters to engage in spontaneous, high-stakes games of keep-away with your valuables. A chase ensues. Obviously.")
+    public boolean enableDiamondStealing = true;
+
+    @Translatable.Name("Pounce Chance")
+    @Translatable.Desc("Probability (0.1 to 1.0) a hamster will succumb to temptation. High by default. You shouldn't leave your diamonds lying around anyway.")
+    public ValidatedFloat diamondPounceChance = new ValidatedFloat(0.75f, 1.0f, 0.1f);
+
+    @Translatable.Name("Minimum Flee Distance (Blocks)")
+    @Translatable.Desc("The hamster's personal space bubble.")
+    public ValidatedInt minFleeDistance = new ValidatedInt(5, 20, 1);
+
+    @Translatable.Name("Maximum Flee Distance (Blocks)")
+    @Translatable.Desc("The maximum distance before the hamster gets bored and stops running to taunt you.")
+    public ValidatedInt maxFleeDistance = new ValidatedInt(20, 40, 5);
+
+    @Translatable.Name("Minimum Steal Duration (Seconds)")
+    @Translatable.Desc("The shortest amount of time the hamster will entertain this little game before getting bored and dropping your stuff.")
+    public ValidatedInt minStealDurationSeconds = new ValidatedInt(5, 240, 1);
+
+    @ConfigGroup.Pop
+    @Translatable.Name("Maximum Steal Duration (Seconds)")
+    @Translatable.Desc("The longest your cardio session can last before the hamster's attention span gives out.")
+    public ValidatedInt maxStealDurationSeconds = new ValidatedInt(15, 300, 5);
 
     // --- Worldgen: Bush & Sunflower Stuff ---
     @Translatable.Name("Worldgen: Bush & Sunflower Stuff")

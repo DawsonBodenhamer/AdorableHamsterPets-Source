@@ -42,6 +42,7 @@ public final class AdorableHamsterPetsNeoForgeClient {
         // Use the event to register the key mapping
         event.register(ModKeyBindings.THROW_HAMSTER_KEY);
         event.register(ModKeyBindings.DISMOUNT_HAMSTER_KEY);
+        event.register(ModKeyBindings.FORCE_MOUNT_HAMSTER_KEY);
     }
 
     /**
