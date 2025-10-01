@@ -25,7 +25,7 @@ import vazkii.patchouli.client.book.gui.button.GuiButtonEntry;
 
 import java.util.List;
 
-@Mixin(value = GuiButtonEntry.class, remap = false)
+@Mixin(value = GuiButtonEntry.class)
 public abstract class GuiButtonEntryMixin extends ButtonWidget {
 
     @Shadow @Final private GuiBook parent;

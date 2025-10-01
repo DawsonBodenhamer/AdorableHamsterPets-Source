@@ -22,7 +22,7 @@ import vazkii.patchouli.common.book.Book;
  * announcement GUI.
  * <p>
  */
-@Mixin(value = GuiButtonBookMarkRead.class, remap = false)
+@Mixin(value = GuiButtonBookMarkRead.class)
 public abstract class GuiButtonBookMarkReadMixin {
 
     @Shadow private Book book;
