@@ -1,0 +1,19 @@
+{
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    {
+      "item": "adorablehamsterpets:cucumber"
+    }
+  ],
+  "result": [
+    {
+      "item": {
+        "count": 5,
+        "id": "adorablehamsterpets:sliced_cucumber"
+      }
+    }
+  ],
+  "tool": {
+    "tag": "c:tools/knife"
+  }
+}
