@@ -2,12 +2,14 @@ package net.dawson.adorablehamsterpets.config;
 
 import me.fzzyhmstrs.fzzy_config.annotations.NonSync;
 import me.fzzyhmstrs.fzzy_config.annotations.RootConfig;
+import me.fzzyhmstrs.fzzy_config.annotations.Translation;
 import me.fzzyhmstrs.fzzy_config.config.Config;
 import me.fzzyhmstrs.fzzy_config.config.ConfigAction;
 import me.fzzyhmstrs.fzzy_config.config.ConfigGroup;
 import me.fzzyhmstrs.fzzy_config.screen.widget.TextureIds;
 import me.fzzyhmstrs.fzzy_config.util.Translatable;
 import me.fzzyhmstrs.fzzy_config.validation.ValidatedField;
+import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedAny;
 import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedBoolean;
 import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedCondition;
 import me.fzzyhmstrs.fzzy_config.validation.misc.ValidatedEnum;
@@ -165,62 +167,57 @@ public class AhpConfig extends Config {
 
     private final ValidatedField<Boolean> isWidgetIconEnabled = enableWidgetIcon.map(b -> b, b -> b);
 
+    /**
+     * A Plain-Old-Java-Object (POJO) to encapsulate the X and Y offset settings
+     * for the announcement icon widget. This is wrapped by ValidatedAny to create
+     * a pop-up "mini-config" screen.
+     * <p>
+     * NOTE FOR FUTURE SELF:
+     * Without @Translation, each instance would look up separate, instance-specific
+     * lang keys (based on the field path), or fall back to the annotation text.
+     * <p>
+     * Adding @Translation with a shared prefix forces BOTH instances to use the same
+     * language keys:
+     *   adorablehamsterpets.main.widgetIconOffsets.offsetX(.desc)
+     *   adorablehamsterpets.main.widgetIconOffsets.offsetY(.desc)
+     * This keeps the lang file DRY and guarantees consistent labels/tooltips across
+     * all WidgetIconOffsets popups.
+     */
+    @Translation(prefix = "adorablehamsterpets.main.widgetIconOffsets")
+    public static class WidgetIconOffsets {
+        @NonSync
+        @Translatable.Name("Offset X")
+        @Translatable.Desc("Shove it sideways (in pixels). Increase the number to move it right, decrease to move left.")
+        public ValidatedInt offsetX = new ValidatedInt(0, 100, -100);
+
+        @NonSync
+        @Translatable.Name("Offset Y")
+        @Translatable.Desc("Shove it vertically (in pixels). Increase the number to move it down, decrease to move up.")
+        public ValidatedInt offsetY = new ValidatedInt(0, 100, -100);
+    }
+
     @NonSync
     @Translatable.Name("Survival Inventory")
     @Translatable.Desc("Control the icon's placement for standard GUIs. Because nothing says 'immersion' like a perfectly aligned notification bell. Position is relative to the GUI's top-right corner.")
-    public ConfigGroup survivalWidgetIconSettings = new ConfigGroup("survivalWidgetIconSettings", true);
-
-    @NonSync
-    @Translatable.Name("Offset X")
-    @Translatable.Desc("Shove it sideways. *NOTE: Due to current bug with FzzyConfig, you'll need to click on 'Widget Icon Settings' group to manually expand it.")
-    public ValidatedCondition<Integer> survivalWidgetIconOffsetX =
-            new ValidatedInt(0, 100, -100)
+    public ValidatedCondition<WidgetIconOffsets> survivalWidgetIconSettings =
+            new ValidatedAny<>(new WidgetIconOffsets())
                     .toCondition(
                             isWidgetIconEnabled,
                             Text.literal("Only available when 'Enable GUI Widget Icon' is ON."),
-                            () -> 0
+                            WidgetIconOffsets::new
                     );
 
     @NonSync
     @ConfigGroup.Pop
-    @Translatable.Name("Offset Y")
-    @Translatable.Desc("Shove it vertically. *NOTE: Due to current bug with FzzyConfig, you'll need to click on 'Widget Icon Settings' group to manually expand it.")
-    public ValidatedCondition<Integer> survivalWidgetIconOffsetY =
-            new ValidatedInt(0, 100, -100)
-                    .toCondition(
-                            isWidgetIconEnabled,
-                            Text.literal("Only available when 'Enable GUI Widget Icon' is ON."),
-                            () -> 0
-                    );
-
-    @NonSync
+    @ConfigGroup.Pop
     @Translatable.Name("Creative Inventory")
     @Translatable.Desc("Control the icon's placement for the creative mode GUI. Because nothing says 'immersion' like a perfectly aligned notification bell. Position is relative to the GUI's top-right corner.")
-    public ConfigGroup creativeWidgetIconSettings = new ConfigGroup("creativeWidgetIconSettings", true);
-
-    @NonSync
-    @Translatable.Name("Offset X")
-    @Translatable.Desc("Shove it sideways. *NOTE: Due to current bug with FzzyConfig, you'll need to click on 'Widget Icon Settings' group to manually expand it.")
-    public ValidatedCondition<Integer> creativeWidgetIconOffsetX =
-            new ValidatedInt(0, 100, -100)
+    public ValidatedCondition<WidgetIconOffsets> creativeWidgetIconSettings =
+            new ValidatedAny<>(new WidgetIconOffsets())
                     .toCondition(
                             isWidgetIconEnabled,
                             Text.literal("Only available when 'Enable GUI Widget Icon' is ON."),
-                            () -> 0
-                    );
-
-    @NonSync
-    @ConfigGroup.Pop
-    @ConfigGroup.Pop
-    @ConfigGroup.Pop
-    @Translatable.Name("Offset Y")
-    @Translatable.Desc("Shove it vertically. *NOTE: Due to current bug with FzzyConfig, you'll need to click on 'Widget Icon Settings' group to manually expand it.")
-    public ValidatedCondition<Integer> creativeWidgetIconOffsetY =
-            new ValidatedInt(0, 100, -100)
-                    .toCondition(
-                            isWidgetIconEnabled,
-                            Text.literal("Only available when 'Enable GUI Widget Icon' is ON."),
-                            () -> 0
+                            WidgetIconOffsets::new
                     );
 
 
