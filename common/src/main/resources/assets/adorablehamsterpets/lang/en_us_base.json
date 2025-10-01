@@ -73,6 +73,8 @@
   "key.adorablehamsterpets.throw_hamster": "Throw Hamster",
   "key.adorablehamsterpets.dismount_hamster": "Dismount Hamster",
   "key.adorablehamsterpets.dismount_hamster.disabled": "(Currently Inactive - See Config)",
+  "key.adorablehamsterpets.force_mount_hamster": "Force Shoulder Mount",
+  "key.adorablehamsterpets.force_mount_hamster.disabled": "(Currently Inactive - See Config)",
 
   "message.adorablehamsterpets.throw_cooldown": "Your hamster needs a break— try again in %d minute and %d seconds.",
   "message.adorablehamsterpets.baby_throw_refusal": "Your baby hamster clings tightly, refusing to become a furry cannonball. Perhaps wait until it's older?",

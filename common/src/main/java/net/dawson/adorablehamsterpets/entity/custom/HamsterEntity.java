@@ -4,6 +4,7 @@ import dev.architectury.registry.menu.MenuRegistry;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
+import net.dawson.adorablehamsterpets.client.option.ModKeyBindings;
 import net.dawson.adorablehamsterpets.component.HamsterShoulderData;
 import net.dawson.adorablehamsterpets.config.AhpConfig;
 import net.dawson.adorablehamsterpets.config.Configs;
@@ -353,7 +354,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
      */
     public static DefaultAttributeContainer.Builder createHamsterAttributes() {
         return MobEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 8.0D)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, Configs.AHP.wildMaxHealth.get())
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.25D)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, THROW_DAMAGE)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, Configs.AHP.meleeDamage.get())
@@ -1417,8 +1418,11 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 }
             }
 
-            // --- Shoulder Mounting with Cheese ---
-            if (ModItemTags.isShoulderMountFood(stack)) {
+            // --- Shoulder Mounting Logic ---
+            boolean isUsingItem = ModItemTags.isShoulderMountFood(stack);
+            boolean isUsingKeybind = !world.isClient() && Configs.AHP.enableShoulderMountKeybind && ModKeyBindings.FORCE_MOUNT_HAMSTER_KEY.isPressed();
+
+            if (isUsingItem || isUsingKeybind) {
                 if (!world.isClient) {
                     // --- Find First Available Slot ---
                     ShoulderLocation availableSlot = null;
@@ -1431,36 +1435,39 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     }
 
                     if (availableSlot != null) {
-                        AdorableHamsterPets.LOGGER.trace("[AHP DEBUG] MOUNTING: Found available slot '{}' for Hamster ID {}.", availableSlot, this.getId());
+                        AdorableHamsterPets.LOGGER.debug("[AHP DEBUG] MOUNTING: Found available slot '{}' for Hamster ID {}.", availableSlot, this.getId());
 
                         // --- Save, Set, and Update Queue ---
                         HamsterShoulderData data = this.saveToShoulderData();
                         playerAccessor.setShoulderHamster(availableSlot, data.toNbt());
                         playerAccessor.adorablehamsterpets$getMountOrderQueue().addLast(availableSlot);
-                        // The mount order queue is handled in the PlayerEntityMixin's NBT methods.
 
                         BlockPos hamsterPosForMountSound = this.getBlockPos();
                         this.discard(); // Remove hamster from world
 
-                        // --- Trigger Events and Play Effects ---
+                        // --- Trigger Generic Events and Play Mount Sound ---
                         if (player instanceof ServerPlayerEntity serverPlayer) {
                             ModCriteria.HAMSTER_ON_SHOULDER.get().trigger(serverPlayer);
                         }
                         player.sendMessage(Text.translatable("message.adorablehamsterpets.shoulder_mount_success"), true);
 
-                        SoundEvent mountLureSound = ModSounds.getDynamicItemSound(stack);
-                        world.playSound(null, hamsterPosForMountSound, mountLureSound, SoundCategory.PLAYERS, 1.0f, 1.0f);
-
                         SoundEvent mountSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_SHOULDER_MOUNT_SOUNDS, this.random);
                         if (mountSound != null) {
                             world.playSound(null, player.getBlockPos(), mountSound, SoundCategory.PLAYERS, 1.0f, this.getSoundPitch());
                         }
-                        ((ServerWorld)world).spawnParticles(new ItemStackParticleEffect(ParticleTypes.ITEM, stack),
-                                hamsterPosForMountSound.getX() + 0.5, hamsterPosForMountSound.getY() + 0.5, hamsterPosForMountSound.getZ() + 0.5,
-                                8, 0.25D, 0.25D, 0.25D, 0.05);
 
-                        if (!player.getAbilities().creativeMode) {
-                            stack.decrement(1);
+                        // --- Item-Specific Effects and Consumption ---
+                        if (isUsingItem) {
+                            SoundEvent mountLureSound = ModSounds.getDynamicItemSound(stack);
+                            world.playSound(null, hamsterPosForMountSound, mountLureSound, SoundCategory.PLAYERS, 1.0f, 1.0f);
+
+                            ((ServerWorld)world).spawnParticles(new ItemStackParticleEffect(ParticleTypes.ITEM, stack),
+                                    hamsterPosForMountSound.getX() + 0.5, hamsterPosForMountSound.getY() + 0.5, hamsterPosForMountSound.getZ() + 0.5,
+                                    8, 0.25D, 0.25D, 0.25D, 0.05);
+
+                            if (!player.getAbilities().creativeMode && Configs.AHP.consumeShoulderMountItem) {
+                                stack.decrement(1);
+                            }
                         }
                     } else {
                         player.sendMessage(Text.translatable("message.adorablehamsterpets.shoulder_occupied"), true);
@@ -1541,21 +1548,18 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     // --- Taming Override ---
     @Override
     public void setTamed(boolean tamed, boolean updateAttributes) {
-        // --- 1. Set Tamed State and Attributes ---
+        // --- Set Tamed State and Attributes ---
         super.setTamed(tamed, updateAttributes);
         if (tamed) {
-            this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(16.0D);
+            this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(Configs.AHP.tamedMaxHealth.get());
             this.setHealth(this.getMaxHealth()); // Set health to the updated maximum
-            // --- Ensure Attack Damage is set correctly on tame ---
             // Set the base attack damage attribute to the defined melee damage when tamed.
             this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE).setBaseValue(Configs.AHP.meleeDamage.get());
-            // --- End Attack Damage ---
         } else {
-            this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(8.0D);
-            // Reset attack damage if untamed (optional, but good practice)
+            this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(Configs.AHP.wildMaxHealth.get());
+            // Reset attack damage if untamed
             this.getAttributeInstance(EntityAttributes.GENERIC_ATTACK_DAMAGE).setBaseValue(Configs.AHP.meleeDamage.get());
         }
-        // --- End 1. Set Tamed State and Attributes ---
     }
 
     // --- Breeding ---
@@ -2839,7 +2843,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         if (spawnReason == SpawnReason.NATURAL || spawnReason == SpawnReason.SPAWN_EGG || spawnReason == SpawnReason.CHUNK_GENERATION) {
             RegistryEntry<Biome> biomeEntry = world.getBiome(this.getBlockPos());
             String biomeKeyStr = biomeEntry.getKey().map(key -> key.getValue().toString()).orElse("UNKNOWN");
-            AdorableHamsterPets.LOGGER.debug("[HamsterInit] SpawnReason: {}, BiomeKey: {}", spawnReason, biomeKeyStr); // Keep this log
+            AdorableHamsterPets.LOGGER.debug("[HamsterInit] SpawnReason: {}, BiomeKey: {}", spawnReason, biomeKeyStr);
 
             HamsterVariant chosenVariant = determineVariantForBiome(biomeEntry, this.random);
             this.setVariant(chosenVariant.getId());
@@ -2851,6 +2855,14 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             this.setVariant(randomVariantId);
             AdorableHamsterPets.LOGGER.debug("[HamsterInit] SpawnReason: {}, Assigned random variant: {}",
                     spawnReason, HamsterVariant.byId(randomVariantId).name());
+        }
+
+        // --- Apply Configured Health on Spawn ---
+        // This ensures the entity instance uses the live config value, overriding any
+        // stale value that might have been baked in during static attribute registration.
+        if (!this.isTamed()) {
+            this.getAttributeInstance(EntityAttributes.GENERIC_MAX_HEALTH).setBaseValue(Configs.AHP.wildMaxHealth.get());
+            this.setHealth(this.getMaxHealth()); // Set current health to the new max
         }
 
         // Always update cheek trackers on initialization

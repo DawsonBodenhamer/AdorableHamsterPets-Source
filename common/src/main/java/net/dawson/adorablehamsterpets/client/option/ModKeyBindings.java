@@ -10,10 +10,12 @@ public class ModKeyBindings {
     public static final String KEY_CATEGORY_HAMSTERPETS = "key.categories.adorablehamsterpets.main";
     public static final String KEY_THROW_HAMSTER = "key.adorablehamsterpets.throw_hamster";
     public static final String KEY_DISMOUNT_HAMSTER = "key.adorablehamsterpets.dismount_hamster";
+    public static final String KEY_FORCE_MOUNT_HAMSTER = "key.adorablehamsterpets.force_mount_hamster";
 
     // --- KeyBinding Instances ---
     public static KeyBinding THROW_HAMSTER_KEY;
     public static KeyBinding DISMOUNT_HAMSTER_KEY;
+    public static KeyBinding FORCE_MOUNT_HAMSTER_KEY;
 
     /**
      * Initializes the KeyBinding objects. This should be called during client setup
@@ -27,9 +29,14 @@ public class ModKeyBindings {
                 KEY_CATEGORY_HAMSTERPETS
         );
 
-        // --- Use the DynamicDismountKeyBinding class ---
         DISMOUNT_HAMSTER_KEY = new DynamicDismountKeyBinding(
                 KEY_DISMOUNT_HAMSTER,
+                InputUtil.UNKNOWN_KEY.getCode(), // Unbound by default
+                KEY_CATEGORY_HAMSTERPETS
+        );
+
+        FORCE_MOUNT_HAMSTER_KEY = new DynamicForceMountKeyBinding(
+                KEY_FORCE_MOUNT_HAMSTER,
                 InputUtil.UNKNOWN_KEY.getCode(), // Unbound by default
                 KEY_CATEGORY_HAMSTERPETS
         );

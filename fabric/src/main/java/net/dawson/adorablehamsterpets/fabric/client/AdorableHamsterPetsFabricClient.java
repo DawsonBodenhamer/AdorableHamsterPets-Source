@@ -16,5 +16,6 @@ public final class AdorableHamsterPetsFabricClient implements ClientModInitializ
         ModKeyBindings.init();
         KeyMappingRegistry.register(ModKeyBindings.THROW_HAMSTER_KEY);
         KeyMappingRegistry.register(ModKeyBindings.DISMOUNT_HAMSTER_KEY);
+        KeyMappingRegistry.register(ModKeyBindings.FORCE_MOUNT_HAMSTER_KEY);
     }
 }
