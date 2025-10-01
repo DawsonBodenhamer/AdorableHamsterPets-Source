@@ -1,4 +1,10 @@
 {
+  "conditions": [
+    {
+      "type": "architectury:mod_loaded",
+      "mod_id": "farmersdelight"
+    }
+  ],
   "type": "farmersdelight:cutting",
   "ingredients": [
     {
