@@ -25,14 +25,14 @@ import vazkii.patchouli.common.book.Book;
 @Mixin(value = GuiButtonBookMarkRead.class)
 public abstract class GuiButtonBookMarkReadMixin {
 
-    @Shadow private Book book;
+    @Shadow(remap = false) private Book book;
 
     /** Access the private markEntry() in the target class. */
-    @Invoker("markEntry")
+    @Invoker(value = "markEntry", remap = false)
     abstract void adorablehamsterpets$markEntry(BookEntry entry);
 
     /** Access the private markCategoryAsRead() in the target class. */
-    @Invoker("markCategoryAsRead")
+    @Invoker(value = "markCategoryAsRead", remap = false)
     abstract void adorablehamsterpets$markCategoryAsRead(BookEntry entry, BookCategory category, int maxRecursion);
 
     @Inject(method = "onPress", at = @At("HEAD"), cancellable = true)

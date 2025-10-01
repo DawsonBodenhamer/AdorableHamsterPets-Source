@@ -28,9 +28,9 @@ import java.util.List;
 @Mixin(value = GuiButtonEntry.class)
 public abstract class GuiButtonEntryMixin extends ButtonWidget {
 
-    @Shadow @Final private GuiBook parent;
-    @Shadow @Final private BookEntry entry;
-    @Shadow private float timeHovered;
+    @Shadow(remap = false) @Final private GuiBook parent;
+    @Shadow(remap = false) @Final private BookEntry entry;
+    @Shadow(remap = false) private float timeHovered;
 
     // Required constructor Mixin to compile
     public GuiButtonEntryMixin(int x, int y, int width, int height, Text message, PressAction onPress, NarrationSupplier narrationSupplier) {
