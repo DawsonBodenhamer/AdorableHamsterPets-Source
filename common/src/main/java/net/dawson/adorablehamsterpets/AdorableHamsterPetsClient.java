@@ -62,6 +62,7 @@ public class AdorableHamsterPetsClient {
     // --- Announcement System Fields ---
     private static final AnnouncementHudRenderer announcementHudRenderer = new AnnouncementHudRenderer();
     private static List<AnnouncementManager.PendingNotification> pendingNotifications = Collections.emptyList();
+    private static int nextRefreshTicks = 6000; // 5 minutes
 
     /**
      * Public getter for other client classes to access the cached list of pending notifications.
@@ -122,6 +123,13 @@ public class AdorableHamsterPetsClient {
         if (client.world != null) {
             // Update the cached list of pending notifications once per tick.
             pendingNotifications = AnnouncementManager.INSTANCE.getPendingNotifications();
+        }
+
+        // --- Periodic Manifest Refresh ---
+        if (--nextRefreshTicks <= 0) {
+            nextRefreshTicks = 6000; // Reset timer
+            AnnouncementManager.INSTANCE.refreshManifest(); // Fire and forget
+            AdorableHamsterPets.LOGGER.debug("[AHP Client Tick] Triggered periodic manifest refresh.");
         }
 
         // -- Key Presses and Other Tick Logic ---

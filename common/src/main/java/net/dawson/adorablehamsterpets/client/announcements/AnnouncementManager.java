@@ -41,6 +41,7 @@ public class AnnouncementManager {
     private boolean manifestJustLoaded = false;
     private boolean manifestLoaded = false;
     private final Set<Identifier> deferredReadMarks = new HashSet<>();
+    private CompletableFuture<Void> activeRefreshFuture = CompletableFuture.completedFuture(null);
 
     private AnnouncementManager() {
         this.clientState = ClientAnnouncementState.createDefault();
@@ -157,8 +158,8 @@ public class AnnouncementManager {
             hasRefreshedThisSession = true;
             return refreshManifest();
         }
-        // If already refreshed, return a future that's already completed.
-        return CompletableFuture.completedFuture(null);
+        // If already refreshed, return the active (or last completed) future.
+        return activeRefreshFuture;
     }
 
     public Announcement getAnnouncementById(String id) {
@@ -357,7 +358,19 @@ public class AnnouncementManager {
         public static final String MANDATORY_MESSAGE = "mandatory_message";
     }
 
+    /**
+     * Ensures the manifest is refreshed if needed, returning a future that completes when the refresh is done.
+     * This method is the primary entry point for triggering a refresh.
+     *
+     * @return A CompletableFuture that completes when the manifest fetch is finished.
+     */
     public CompletableFuture<Void> refreshManifest() {
+        // If the current future is not done, a refresh is already in progress. Return it.
+        if (!activeRefreshFuture.isDone()) {
+            return activeRefreshFuture;
+        }
+
+        // Start a new refresh and store its future.
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                 .uri(URI.create(GITHUB_RAW_URL + "manifest.json"))
                 .GET();
