@@ -229,7 +229,7 @@ public class AnnouncementScreen extends Screen {
 
         // --- 2. Render Background ---
         // This draws the background texture once, at the bottom of the render stack.
-        this.renderBackground(context, mouseX, mouseY, delta);
+        this.renderBackground(context);
 
         // --- 2. Render Markdown Content within Scissor Box ---
         context.enableScissor(
@@ -282,18 +282,18 @@ public class AnnouncementScreen extends Screen {
     }
 
     @Override
-    public void renderBackground(DrawContext context, int mouseX, int mouseY, float delta) {
+    public void renderBackground(DrawContext context) {
         // Render the default dark overlay
-        super.renderBackground(context, mouseX, mouseY, delta);
+        super.renderBackground(context);
 
         // Custom Background Texture
         context.drawTexture(BACKGROUND_TEXTURE, this.guiLeft, this.guiTop, 0, 0, BACKGROUND_WIDTH, BACKGROUND_HEIGHT);
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double horizontalAmount, double verticalAmount) {
+    public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
         int maxScroll = Math.max(0, markdownRenderer.getTotalHeight() - CONTENT_HEIGHT);
-        this.scrollY = MathHelper.clamp(this.scrollY - verticalAmount * 10, 0, maxScroll);
+        this.scrollY = MathHelper.clamp(this.scrollY - amount * 10, 0, maxScroll);
         return true;
     }
 
