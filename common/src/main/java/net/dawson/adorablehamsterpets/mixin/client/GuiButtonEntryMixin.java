@@ -46,7 +46,7 @@ public abstract class GuiButtonEntryMixin extends ButtonWidget {
     }
 
     /**
-     * Injects into the start of the renderWidget method to replace its logic, but ONLY for the Hamster Tips guide book.
+     * Injects into the start of the renderButton method to replace its logic, but ONLY for the Hamster Tips guide book.
      * This new implementation draws the entry title with text wrapping.
      */
     @Inject(method = "renderButton", at = @At("HEAD"), cancellable = true)

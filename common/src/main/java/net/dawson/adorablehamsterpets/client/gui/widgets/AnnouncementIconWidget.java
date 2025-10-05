@@ -49,8 +49,9 @@ public class AnnouncementIconWidget extends ButtonWidget {
         this.parentScreen = parentScreen;
     }
 
+    // Override renderButton on 1.20.1 instead of renderWidget
     @Override
-    public void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
+    protected void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
         AnnouncementIconAnimator animator = AnnouncementIconAnimator.INSTANCE;
 
         // --- 1. Dynamic Position Calculation ---
