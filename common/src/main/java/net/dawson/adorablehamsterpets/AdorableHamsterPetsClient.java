@@ -94,7 +94,7 @@ public class AdorableHamsterPetsClient {
         // --- Event Registrations ---
         ClientTickEvent.CLIENT_POST.register(AdorableHamsterPetsClient::onEndClientTick);
         ClientPlayerEvent.CLIENT_PLAYER_JOIN.register(player -> AnnouncementManager.INSTANCE.processDeferredReadMarks());
-        ClientGuiEvent.RENDER_HUD.register((context, tickCounter) -> announcementHudRenderer.render(context, tickCounter.getTickDelta(true)));
+        ClientGuiEvent.RENDER_HUD.register((context, tickDelta) -> announcementHudRenderer.render(context, tickDelta));
     }
 
     /**
