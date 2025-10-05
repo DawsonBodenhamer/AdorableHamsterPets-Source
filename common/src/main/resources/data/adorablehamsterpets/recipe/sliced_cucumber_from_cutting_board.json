@@ -1,9 +1,9 @@
 {
+  "fabric:load_conditions": [
+    { "condition": "fabric:any_mod_loaded", "values": ["farmersdelight"] }
+  ],
   "conditions": [
-    {
-      "type": "architectury:mod_loaded",
-      "mod_id": "farmersdelight"
-    }
+    { "type": "forge:mod_loaded", "modid": "farmersdelight" }
   ],
   "type": "farmersdelight:cutting",
   "ingredients": [
@@ -13,13 +13,11 @@
   ],
   "result": [
     {
-      "item": {
-        "count": 5,
-        "id": "adorablehamsterpets:sliced_cucumber"
-      }
+      "count": 5,
+      "item": "adorablehamsterpets:sliced_cucumber"
     }
   ],
   "tool": {
-    "tag": "c:tools/knife"
+    "tag": "adorablehamsterpets:tools/knives"
   }
 }
