@@ -13,8 +13,6 @@
     "accessor.LookAtEntityGoalAccessor",
     "accessor.LookAroundGoalAccessor",
     "accessor.FollowOwnerGoalAccessor",
-    "client.accessor.GuiBookAccessor",
-    "client.accessor.GuiButtonEntryAccessor",
     "accessor.BookContentsBuilderAccessor",
     "accessor.ValidatedFieldAccessor"
   ],
@@ -30,7 +28,9 @@
     "client.BookContentsBuilderMixin",
     "client.accessor.HandledScreenAccessor",
     "client.GuiButtonBookMarkReadMixin",
-    "client.GuiBookIndexMixin"
+    "client.GuiBookIndexMixin",
+    "client.accessor.GuiBookAccessor",
+    "client.accessor.GuiButtonEntryAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
