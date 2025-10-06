@@ -148,8 +148,8 @@ public class AdorableHamsterPetsClient {
                 boolean hasShoulderHamsterClient = ((PlayerEntityAccessor) client.player).hasAnyShoulderHamster();
 
                 if (!lookingAtReachableBlock && hasShoulderHamsterClient) {
-                    // Send an empty buffer for the throw packet
-                    dev.architectury.networking.NetworkManager.sendToServer(ModPackets.THROW_HAMSTER_ID, new PacketByteBuf(Unpooled.buffer()));
+                    // Send a typed packet for 1.20.1
+                    ModPackets.CHANNEL.sendToServer(new ModPackets.ThrowHamsterC2SPacket());
                 }
             }
         }
@@ -162,7 +162,8 @@ public class AdorableHamsterPetsClient {
             PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
             buf.writeInt(entityId);
             buf.writeBoolean(false); // isRendering = false
-            dev.architectury.networking.NetworkManager.sendToServer(ModPackets.UPDATE_HAMSTER_RENDER_STATE_ID, buf);
+            // Send a typed packet for 1.20.1
+            ModPackets.CHANNEL.sendToServer(new ModPackets.UpdateRenderStateC2SPacket(entityId, false));
         }
 
         renderedHamsterIdsLastTick.clear();
@@ -281,8 +282,8 @@ public class AdorableHamsterPetsClient {
             // --- 4. Apply press type logic (SINGLE vs DOUBLE) ---
             if (config.dismountPressType.get() == DismountPressType.SINGLE_PRESS) {
                 // Single press always triggers the dismount
-                // Use the 1.20.1 pattern with an Identifier and an empty buffer
-                dev.architectury.networking.NetworkManager.sendToServer(ModPackets.DISMOUNT_HAMSTER_ID, new PacketByteBuf(Unpooled.buffer()));
+                // Send a typed packet for 1.20.1
+                ModPackets.CHANNEL.sendToServer(new ModPackets.DismountHamsterC2SPacket());
             } else { // DOUBLE_TAP
                 long currentTime = System.currentTimeMillis();
                 long delayMillis = config.doubleTapDelayTicks.get() * 50L;
@@ -290,8 +291,8 @@ public class AdorableHamsterPetsClient {
                 if (isWaitingForSecondSneakPress && (currentTime - lastSneakPressTime) <= delayMillis) {
                     AdorableHamsterPets.LOGGER.trace("[AHP DEBUG CLIENT] Tick Handler: DOUBLE_TAP second press detected. Sending dismount payload.");
                     // Second press was within the delay window, trigger dismount
-                    // Use the 1.20.1 pattern with an Identifier and an empty buffer
-                    dev.architectury.networking.NetworkManager.sendToServer(ModPackets.DISMOUNT_HAMSTER_ID, new PacketByteBuf(Unpooled.buffer()));
+                    // Send a typed packet for 1.20.1
+                    ModPackets.CHANNEL.sendToServer(new ModPackets.DismountHamsterC2SPacket());
                     isWaitingForSecondSneakPress = false; // Reset the double-tap state
                 } else {
                     AdorableHamsterPets.LOGGER.trace("[AHP DEBUG CLIENT] Tick Handler: DOUBLE_TAP first press detected. Starting timer.");

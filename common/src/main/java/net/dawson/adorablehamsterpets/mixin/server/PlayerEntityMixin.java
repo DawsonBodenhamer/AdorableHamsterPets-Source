@@ -1,7 +1,6 @@
 package net.dawson.adorablehamsterpets.mixin.server;
 
 import com.mojang.authlib.GameProfile;
-import dev.architectury.networking.NetworkManager;
 import io.netty.buffer.Unpooled;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
@@ -372,8 +371,12 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             PacketByteBuf throwBuf = new PacketByteBuf(Unpooled.buffer());
             throwBuf.writeInt(hamster.getId());
 
-            NetworkManager.sendToPlayer((ServerPlayerEntity) self, ModPackets.START_HAMSTER_FLIGHT_SOUND_ID, flightBuf);
-            NetworkManager.sendToPlayer((ServerPlayerEntity) self, ModPackets.START_HAMSTER_THROW_SOUND_ID, throwBuf);
+            // Get the ServerPlayerEntity instance (only needed for 1.20.1)
+            ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
+
+            // Send typed packets for 1.20.1
+            ModPackets.CHANNEL.sendToPlayer(player, new ModPackets.StartFlightSoundS2CPacket(hamster.getId()));
+            ModPackets.CHANNEL.sendToPlayer(player, new ModPackets.StartThrowSoundS2CPacket(hamster.getId()));
 
             double radius = 64.0;
             Vec3d hamsterPos = hamster.getPos();
@@ -385,8 +388,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             PacketByteBuf throwBufNearby = new PacketByteBuf(Unpooled.buffer());
             throwBufNearby.writeInt(hamster.getId());
 
-            NetworkManager.sendToPlayers(nearbyPlayers, ModPackets.START_HAMSTER_FLIGHT_SOUND_ID, flightBufNearby);
-            NetworkManager.sendToPlayers(nearbyPlayers, ModPackets.START_HAMSTER_THROW_SOUND_ID, throwBufNearby);
+            ModPackets.CHANNEL.sendToPlayers(nearbyPlayers, new ModPackets.StartFlightSoundS2CPacket(hamster.getId()));
+            ModPackets.CHANNEL.sendToPlayers(nearbyPlayers, new ModPackets.StartThrowSoundS2CPacket(hamster.getId()));
 
             ModCriteria.HAMSTER_THROWN.trigger((ServerPlayerEntity) self);
         } else {
