@@ -193,19 +193,17 @@ public class AnnouncementIconWidget extends ButtonWidget {
                 Announcement announcement = notifications.get(0).announcement();
                 Book book = BookRegistry.INSTANCE.books.get(bookId);
                 if (book != null) {
-                    // --- 2. Create a virtual BookEntry on the fly ---
-                    // This is needed so the "Mark as Read" button has an entry to target.
+                    // Get the "real" virtual entry from the book's contents
                     Identifier entryId = Identifier.of(AdorableHamsterPets.MOD_ID, "announcement_" + announcement.id());
-                    JsonObject json = new JsonObject();
-                    json.addProperty("name", announcement.title());
-                    json.addProperty("icon", "minecraft:writable_book");
-                    json.addProperty("category", "adorablehamsterpets:update_notes"); // Dummy category
-                    json.add("pages", new JsonArray());
-                    BookEntry virtualEntry = new BookEntry(json, entryId, book, AdorableHamsterPets.MOD_ID);
+                    BookEntry realVirtualEntry = book.getContents().entries.get(entryId);
 
-                    // Open the screen with a null parent
-                    // Passing null tells the screen to return to the game HUD on close.
-                    client.setScreen(new AnnouncementScreen(announcement, notification.reason(), null, virtualEntry));
+                    if (realVirtualEntry != null) {
+                        // Open the screen with the real entry and a null parent
+                        // Passing null tells the screen to return to the game HUD on close.
+                        client.setScreen(new AnnouncementScreen(announcement, notification.reason(), null, realVirtualEntry));
+                    } else {
+                        AdorableHamsterPets.LOGGER.error("[AHP] Could not find virtual entry '{}' in book contents to open announcement screen.", entryId);
+                    }
                 }
             } else {
                 // --- Multiple Pending Notifications Logic ---
