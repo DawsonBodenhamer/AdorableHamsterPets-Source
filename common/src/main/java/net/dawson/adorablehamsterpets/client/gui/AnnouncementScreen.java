@@ -151,7 +151,7 @@ public class AnnouncementScreen extends Screen {
             }
 
             // "Changelog" button is for ANY update note.
-            String changelogUrl = String.format("https://modrinth.com/mod/adorable-hamster-pets/version/%s", announcement.semver());
+            String changelogUrl = String.format("https://modrinth.com/mod/adorable-hamster-pets/version/%s-1.20.1+fabric", announcement.semver());
             buttonBuilders.add(ButtonWidget.builder(Text.translatable("gui.adorablehamsterpets.announcement.button.changelog"), button -> {
                 Util.getOperatingSystem().open(URI.create(changelogUrl));
             }).tooltip(Tooltip.of(Text.translatable("gui.adorablehamsterpets.announcement.button.changelog.tooltip"))));
