@@ -15,11 +15,8 @@
     "accessor.LookAroundGoalAccessor",
     "accessor.FollowOwnerGoalAccessor",
     "accessor.TemptGoalAccessor",
-    "client.accessor.GuiBookAccessor",
-    "client.accessor.GuiButtonEntryAccessor",
     "accessor.BookContentsBuilderAccessor",
-    "accessor.ValidatedFieldAccessor",
-    "client.accessor.ClickableWidgetAccessor"
+    "accessor.ValidatedFieldAccessor"
   ],
   "client": [
     "client.GuiBookLandingMixin",
@@ -33,7 +30,10 @@
     "client.BookContentsBuilderMixin",
     "client.accessor.HandledScreenAccessor",
     "client.GuiButtonBookMarkReadMixin",
-    "client.GuiBookIndexMixin"
+    "client.GuiBookIndexMixin",
+    "client.accessor.GuiBookAccessor",
+    "client.accessor.GuiButtonEntryAccessor",
+    "client.accessor.ClickableWidgetAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
