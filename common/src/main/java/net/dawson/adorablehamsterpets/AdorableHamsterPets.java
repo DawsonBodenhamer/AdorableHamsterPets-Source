@@ -3,7 +3,9 @@ package net.dawson.adorablehamsterpets;
 import dev.architectury.event.events.common.CommandRegistrationEvent;
 import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.event.events.common.PlayerEvent;
+import dev.architectury.platform.Platform;
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
+import dev.architectury.utils.Env;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
 import net.dawson.adorablehamsterpets.block.ModBlocks;
@@ -73,7 +75,11 @@ public class AdorableHamsterPets {
 			ModItemTags.parseConfig();
 
 			// --- Networking Registration ---
-			ModPackets.registerPayloads();
+			// On the server, explicitly register the S2C payload types so it knows how to send them.
+			// On the client, the types are registered implicitly when the S2C receivers are registered.
+			if (Platform.getEnvironment() == Env.SERVER) {
+				ModPackets.registerPayloads();
+			}
 			ModPackets.registerC2SPackets();
 
 			// --- World Gen ---
