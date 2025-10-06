@@ -73,7 +73,8 @@ public class AdorableHamsterPets {
 			ModItemTags.parseConfig();
 
 			// --- Networking Registration ---
-			ModPackets.register();
+			ModPackets.registerPayloads();
+			ModPackets.registerC2SPackets();
 
 			// --- World Gen ---
 			ModWorldGeneration.registerBiomeModifications();

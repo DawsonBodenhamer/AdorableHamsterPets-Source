@@ -11,13 +11,23 @@ import net.minecraft.server.network.ServerPlayerEntity;
 public class ModPackets {
 
     /**
-     * Registers all C2S (Client-to-Server) and S2C (Server-to-Client) packets.
-     * This method should be called from the common initializer to ensure both the client
-     * and server are aware of all packet types and their codecs. The handlers for S2C
-     * packets are automatically only executed on the client by Architectury.
+     * Registers all packet PAYLOAD TYPES. This is safe to call on both the client and server.
+     * It ensures both sides know about the existence and structure (codec) of each packet.
+     * The server needs this to know how to encode S2C packets for sending.
+     * C2S packet types are registered implicitly when their receiver is registered.
      */
-    public static void register() {
-        // --- C2S Packets ---
+    public static void registerPayloads() {
+        // --- S2C Payloads (Server-to-Client) ---
+        // This is a crucial step for the server. It learns what these packets are.
+        NetworkManager.registerS2CPayloadType(StartHamsterFlightSoundPayload.ID, StartHamsterFlightSoundPayload.CODEC);
+        NetworkManager.registerS2CPayloadType(StartHamsterThrowSoundPayload.ID, StartHamsterThrowSoundPayload.CODEC);
+    }
+
+    /**
+     * Registers all C2S (Client-to-Server) packet HANDLERS.
+     * This is safe to call on the server (and client, though the handlers only run on the server).
+     */
+    public static void registerC2SPackets() {
         NetworkManager.registerReceiver(NetworkManager.Side.C2S, ThrowHamsterPayload.ID, ThrowHamsterPayload.CODEC,
                 (payload, context) -> context.queue(() -> HamsterEntity.tryThrowFromShoulder((ServerPlayerEntity) context.getPlayer()))
         );
@@ -33,8 +43,13 @@ public class ModPackets {
                     }
                 })
         );
+    }
 
-        // --- S2C Packets ---
+    /**
+     * Registers all S2C (Server-to-Client) packet HANDLERS.
+     * This method MUST ONLY be called on the client side.
+     */
+    public static void registerS2CPackets() {
         NetworkManager.registerReceiver(NetworkManager.Side.S2C, StartHamsterFlightSoundPayload.ID, StartHamsterFlightSoundPayload.CODEC,
                 (payload, context) -> context.queue(() -> AdorableHamsterPetsClient.handleStartFlightSound(payload))
         );

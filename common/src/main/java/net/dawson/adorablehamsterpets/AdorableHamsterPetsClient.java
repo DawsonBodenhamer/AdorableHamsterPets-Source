@@ -26,6 +26,7 @@ import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.dawson.adorablehamsterpets.entity.client.HamsterRenderer;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.item.ModItems;
+import net.dawson.adorablehamsterpets.networking.ModPackets;
 import net.dawson.adorablehamsterpets.networking.payload.*;
 import net.dawson.adorablehamsterpets.screen.HamsterInventoryScreen;
 import net.dawson.adorablehamsterpets.screen.ModScreenHandlers;
@@ -83,6 +84,9 @@ public class AdorableHamsterPetsClient {
             }
         });
         ColorHandlerRegistry.registerItemColors((stack, tintIndex) -> -1, ModItems.HAMSTER_SPAWN_EGG.get());
+
+        // --- Client-Side Packet Handler Registration ---
+        ModPackets.registerS2CPackets();
 
         // Announcement System
         AnnouncementManager.INSTANCE.initialize();
