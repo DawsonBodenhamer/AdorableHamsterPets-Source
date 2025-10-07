@@ -89,7 +89,6 @@ public class AdorableHamsterPetsClient {
         ModPackets.registerS2CPackets();
 
         // Announcement System
-        AnnouncementManager.INSTANCE.initialize();
         AHPClientScreenEvents.register();
         ModClientCommands.register();
 
