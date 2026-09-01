@@ -903,6 +903,22 @@ public final class HamsterInteractionUtil {
     }
 
     /**
+     * Universal gate to determine if a hamster is eligible for petting.
+     */
+    public static boolean canBePetted(HamsterEntity hamster) {
+        return hamster.isAlive()
+                && !hamster.isAiDisabled()
+                && !hamster.isShoulderPet()
+                && !hamster.isKnockedOut()
+                && !hamster.isSleeping()
+                && !hamster.isSulking()
+                && !hamster.isFrozenMovement()
+                && !hamster.isCelebratingBaby()
+                && !hamster.isCelebratingDiamond()
+                && !hamster.hasRedstoneFever();
+    }
+
+    /**
      * Selects a random item from the Default or Extra cheek pouch loot lists.
      * Prioritizes lists that actually contain items. If configured,
      * it pulls exclusively from a custom mini game rewards list.
