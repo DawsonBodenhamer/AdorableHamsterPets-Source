@@ -68,6 +68,8 @@ encounters with cave hamsters that have glowing red eyes, frantic movement, and 
 - **Shoulder Hamster Throw Selection**
   - Throwing now skips hamsters whose cooldown is still active and selects the next ready hamster in the configured
     FIFO/LIFO order. If every mounted hamster is recovering, the normal cooldown message still appears.
+- **Snowshoe Hamsters**
+  - Hamsters now walk on top of powdered snow instead of sinking in, and thrown hamsters land on the drift rather than vanishing into it. Hamsters are lightweights so it feels like it always should have been this way. Now your hamsters can comfortably watch you freeze to death.
 
 ### Fixed
 - **Crop Tag Compatibility**
