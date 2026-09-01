@@ -524,8 +524,7 @@ public class AdorableHamsterPetsClient {
                         hamster ->
                                 hamster.isTamed()
                                         && hamster.isOwner(client.player)
-                                        && !hamster.isShoulderPet()
-                                        && !HamsterMovementUtil.shouldNotMove(hamster)
+                                        && HamsterInteractionUtil.canBePetted(hamster)
                 );
 
                 for (HamsterEntity hamster : nearbyHamsters) {

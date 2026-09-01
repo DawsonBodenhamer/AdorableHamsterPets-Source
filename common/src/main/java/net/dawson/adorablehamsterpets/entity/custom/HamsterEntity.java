@@ -2268,8 +2268,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                     if (serverPlayer.currentScreenHandler == serverPlayer.playerScreenHandler
                             && serverPlayer.isSneaking()) {
                         // Ensure hamster is in a pet-able state & within 5 blocks
-                        if (!this.isShoulderPet()
-                                && !HamsterMovementUtil.shouldNotMove(this)
+                        if (HamsterInteractionUtil.canBePetted(this)
                                 && this.squaredDistanceTo(serverPlayer) < 25.0) {
                             // Verify player is looking at hamster
                             if (EntityTargetingUtil.isLookingAt(serverPlayer, this, 5.0, 0)) {
