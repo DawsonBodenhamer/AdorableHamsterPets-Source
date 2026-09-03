@@ -14,6 +14,7 @@ import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.dawson.adorablehamsterpets.util.HamsterInteractionUtil;
 import net.dawson.adorablehamsterpets.util.HamsterPhysicsUtil;
 import net.dawson.adorablehamsterpets.util.HamsterRenderTracker;
+import net.dawson.adorablehamsterpets.util.GuidebookProgressUtil;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -41,6 +42,7 @@ public class ModPackets {
         NetworkManager.registerS2CPayloadType(PlayDistantSoundPayload.ID, PlayDistantSoundPayload.CODEC);
         NetworkManager.registerS2CPayloadType(PlayShoulderMountSoundPayload.ID, PlayShoulderMountSoundPayload.CODEC);
         NetworkManager.registerS2CPayloadType(PlayerKnockbackPayload.ID, PlayerKnockbackPayload.CODEC);
+        NetworkManager.registerS2CPayloadType(ShowGuidebookWarningPayload.ID, ShowGuidebookWarningPayload.CODEC);
     }
 
     /**
@@ -95,6 +97,34 @@ public class ModPackets {
 
                     // Set cache
                     ((PlayerEntityAccessor) player).ahp$initGuideBookTracking(true);
+                })
+        );
+
+        NetworkManager.registerReceiver(NetworkManager.Side.C2S, AcknowledgeGuidebookWarningPayload.ID, AcknowledgeGuidebookWarningPayload.CODEC,
+                (payload, context) -> context.queue(() -> {
+                    if (context.getPlayer() instanceof ServerPlayerEntity player) {
+                        GuidebookProgressUtil.markMissingGuidebookWarningSeen(player);
+                    }
+                })
+        );
+
+        NetworkManager.registerReceiver(NetworkManager.Side.C2S, RequestGuidebookWarningPayload.ID, RequestGuidebookWarningPayload.CODEC,
+                (payload, context) -> context.queue(() -> {
+                    if (!(context.getPlayer() instanceof ServerPlayerEntity player)) return;
+                    if (Configs.AHP_UI.playersWhoHaveSeenGuidebookWarning.contains("john_wayne")) return;
+                    if (Configs.AHP_UI.enableAutoGuidebookDelivery) return;
+                    if (GuidebookProgressUtil.hasReceivedGuidebook(player)) return;
+                    if (GuidebookProgressUtil.hasSeenMissingGuidebookWarning(player)) return;
+
+                    PlayerEntityAccessor accessor = (PlayerEntityAccessor) player;
+                    if (accessor.ahp$computeHasGuideBook(player)) {
+                        GuidebookProgressUtil.markGuidebookReceived(player);
+                        return;
+                    }
+
+                    if (GuidebookProgressUtil.markMissingGuidebookWarningSeen(player)) {
+                        NetworkManager.sendToPlayer(player, new ShowGuidebookWarningPayload());
+                    }
                 })
         );
 
@@ -278,6 +308,10 @@ public class ModPackets {
 
         NetworkManager.registerReceiver(NetworkManager.Side.S2C, PlayGuidebookEffectsPayload.ID, PlayGuidebookEffectsPayload.CODEC,
                 (payload, context) -> context.queue(() -> AdorableHamsterPetsClient.queueGuidebookEffects(payload))
+        );
+
+        NetworkManager.registerReceiver(NetworkManager.Side.S2C, ShowGuidebookWarningPayload.ID, ShowGuidebookWarningPayload.CODEC,
+                (payload, context) -> context.queue(AdorableHamsterPetsClient::handleGuidebookWarningApproval)
         );
 
         // Handle the Shoulder Data Sync

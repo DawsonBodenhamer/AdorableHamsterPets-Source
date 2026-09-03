@@ -1691,12 +1691,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
      */
     @Unique
     private boolean ahp$tryFallbackDelivery(ServerPlayerEntity player) {
-        PlayerAdvancementTracker advancementTracker = player.getAdvancementTracker();
-        Identifier flagAdvId = Identifier.of(AdorableHamsterPets.MOD_ID, "technical/has_received_initial_guidebook");
-        AdvancementEntry flagAdvancementEntry = player.server.getAdvancementLoader().get(flagAdvId);
-
         // Abort if they've already received the initial delivery at some point
-        if (flagAdvancementEntry == null || advancementTracker.getProgress(flagAdvancementEntry).isDone()) {
+        if (GuidebookProgressUtil.hasReceivedGuidebook(player)) {
             return false;
         }
 

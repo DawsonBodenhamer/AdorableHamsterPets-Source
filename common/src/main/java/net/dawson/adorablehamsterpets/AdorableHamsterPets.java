@@ -29,6 +29,7 @@ import net.dawson.adorablehamsterpets.screen.ModScreenHandlers;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.dawson.adorablehamsterpets.util.HamsterBedUtil;
 import net.dawson.adorablehamsterpets.util.HamsterNbtUtil;
+import net.dawson.adorablehamsterpets.util.GuidebookProgressUtil;
 import net.dawson.adorablehamsterpets.util.HamsterPlacementUtil;
 import net.dawson.adorablehamsterpets.util.AcornRingUtil;
 import net.dawson.adorablehamsterpets.util.ModLootTableModifiers;
@@ -364,15 +365,7 @@ public class AdorableHamsterPets {
 
 		// --- 3. Grant the Flag Advancement ---
 		if (grantInitialAdvancement) {
-			PlayerAdvancementTracker advancementTracker = player.getAdvancementTracker();
-			Identifier flagAdvId = Identifier.of(MOD_ID, "technical/has_received_initial_guidebook");
-			net.minecraft.advancement.AdvancementEntry flagAdvancementEntry = player.server.getAdvancementLoader().get(flagAdvId);
-
-			if (flagAdvancementEntry != null) {
-				for (String criterion : flagAdvancementEntry.value().criteria().keySet()) {
-					advancementTracker.grantCriterion(flagAdvancementEntry, criterion);
-				}
-			}
+			GuidebookProgressUtil.markGuidebookReceived(player);
 		}
 
 		// --- 4. Send Fallback Message ---

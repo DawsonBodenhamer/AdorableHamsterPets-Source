@@ -89,6 +89,8 @@ public class AdorableHamsterPetsClient {
 
     // --- Guidebook ---
     private static int clientSessionTimer = 0;
+    private static boolean guidebookWarningRequestSent = false;
+    private static int pendingGuidebookWarningPart2Ticks = 0;
     private static boolean pendingGuidebookEffects = false;
     private static int pendingGuidebookEffectsTimer = 0;
 
@@ -202,10 +204,21 @@ public class AdorableHamsterPetsClient {
         // --- Timers Reset & Sync ---
         ClientPlayerEvent.CLIENT_PLAYER_JOIN.register(player -> {
             clientSessionTimer = 0;
+            guidebookWarningRequestSent = false;
+            pendingGuidebookWarningPart2Ticks = 0;
             ClientParticleManager.INSTANCE.clear();
             ClientShoulderHamsterData.REPLAY_CACHE.clear();
             HamsterFeverBreathingSoundManager.INSTANCE.reset(MinecraftClient.getInstance());
             pendingGuidebookEffects = false;
+
+            AhpUiConfig uiConfig = AdorableHamsterPets.UI_CONFIG;
+            String username = player.getGameProfile().getName();
+            String warningKey = getGuidebookWarningKey(MinecraftClient.getInstance(), username);
+            if (uiConfig.playersWhoHaveSeenGuidebookWarning.contains("john_wayne") ||
+                    uiConfig.playersWhoHaveSeenGuidebookWarning.contains(username) ||
+                    uiConfig.playersWhoHaveSeenGuidebookWarning.contains(warningKey)) {
+                NetworkManager.sendToServer(new AcknowledgeGuidebookWarningPayload());
+            }
 
             // Sync initial supporter crown theme preference to server
             int payloadTheme = Configs.AHP_SUPPORTER.showMyCrown ? Configs.AHP_SUPPORTER.crownTheme.get().ordinal() : -1;
@@ -773,74 +786,51 @@ public class AdorableHamsterPetsClient {
      *                            3. Logic Helpers
      * ────────────────────────────────────────────────────────────────────────────*/
 
-    /**
-     * Checks if the player has the guidebook. If they don't have it after a configured time,
-     * sends a dramatic warning message.
-     */
+    /** Requests a dramatic missing guidebook warning message after a configured delay. */
     private static void handleGuidebookWarning(MinecraftClient client) {
         if (client.player == null) return;
 
+        if (pendingGuidebookWarningPart2Ticks > 0 && --pendingGuidebookWarningPart2Ticks == 0) {
+            sendWarningPart2(client.player);
+        }
+
         final AhpUiConfig config = AdorableHamsterPets.UI_CONFIG;
         String username = client.player.getGameProfile().getName();
+        String warningKey = getGuidebookWarningKey(client, username);
 
-        // Fast exit if globally disabled via secret key ("john_wayne"), or if already seen by this player
+        // Fast exit for secret bypass, migrated global entries, or this server's acknowledgement
         if (config.playersWhoHaveSeenGuidebookWarning.contains("john_wayne") ||
-                config.playersWhoHaveSeenGuidebookWarning.contains(username)) {
+                config.playersWhoHaveSeenGuidebookWarning.contains(username) ||
+                config.playersWhoHaveSeenGuidebookWarning.contains(warningKey) ||
+                guidebookWarningRequestSent) {
             return;
         }
 
-        int warningTime = config.guidebookWarningTimer.get();
-
-        if (clientSessionTimer > warningTime + 145) {
-            clientSessionTimer = 0;
-        }
-
         clientSessionTimer++;
-
-        // Check 1: 1 second in (20 ticks) - Silent Check
-        // If they spawn with the book (or get it from auto-delivery), mark as seen silently.
-        if (clientSessionTimer == 20) {
-            if (hasGuideBook(client.player)) {
-                markGuidebookWarningSeen(config, username);
-            }
-        }
-
-        // Check 2: Configured time - Warning Part 1
-        if (clientSessionTimer == warningTime) {
-            if (!hasGuideBook(client.player)) {
-                sendWarningPart1(client.player);
-            } else {
-                // If they have the book now, mark as seen and don't proceed to Part 2
-                markGuidebookWarningSeen(config, username);
-            }
-        }
-
-        // Check 3: 5 seconds later - Warning Part 2
-        if (clientSessionTimer == warningTime + 140) {
-            if (!hasGuideBook(client.player)) {
-                sendWarningPart2(client.player);
-            }
-            // Mark as seen regardless to prevent spamming next session
-            markGuidebookWarningSeen(config, username);
+        if (clientSessionTimer >= config.guidebookWarningTimer.get()) {
+            guidebookWarningRequestSent = true;
+            NetworkManager.sendToServer(new RequestGuidebookWarningPayload());
         }
     }
 
-    private static void markGuidebookWarningSeen(AhpUiConfig config, String username) {
-        if (!config.playersWhoHaveSeenGuidebookWarning.contains(username)) {
-            config.playersWhoHaveSeenGuidebookWarning.add(username);
+    public static void handleGuidebookWarningApproval() {
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (client.player == null) return;
+
+        AhpUiConfig config = AdorableHamsterPets.UI_CONFIG;
+        String warningKey = getGuidebookWarningKey(client, client.player.getGameProfile().getName());
+        if (!config.playersWhoHaveSeenGuidebookWarning.contains(warningKey)) {
+            config.playersWhoHaveSeenGuidebookWarning.add(warningKey);
             config.save();
         }
+
+        sendWarningPart1(client.player);
+        pendingGuidebookWarningPart2Ticks = 140;
     }
 
-    private static boolean hasGuideBook(net.minecraft.entity.player.PlayerEntity player) {
-        // Iterate and check item type to ignore NBT/Components
-        for (int i = 0; i < player.getInventory().size(); i++) {
-            ItemStack stack = player.getInventory().getStack(i);
-            if (stack.isOf(ModItems.HAMSTER_GUIDE_BOOK.get())) {
-                return true;
-            }
-        }
-        return false;
+    private static String getGuidebookWarningKey(MinecraftClient client, String username) {
+        if (client.getCurrentServerEntry() == null) return username;
+        return username + "@" + client.getCurrentServerEntry().address.toLowerCase(Locale.ROOT);
     }
 
     private static void sendWarningPart1(net.minecraft.entity.player.PlayerEntity player) {
