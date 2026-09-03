@@ -25,8 +25,6 @@ import net.dawson.adorablehamsterpets.networking.ModPackets;
 import net.dawson.adorablehamsterpets.particles.ModParticles;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.dawson.adorablehamsterpets.util.*;
-import net.minecraft.advancement.Advancement;
-import net.minecraft.advancement.PlayerAdvancementTracker;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -58,7 +56,6 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -1688,12 +1685,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
      */
     @Unique
     private boolean ahp$tryFallbackDelivery(ServerPlayerEntity player) {
-        PlayerAdvancementTracker advancementTracker = player.getAdvancementTracker();
-        Identifier flagAdvId = Identifier.of(AdorableHamsterPets.MOD_ID, "technical/has_received_initial_guidebook");
-        Advancement flagAdvancement = player.server.getAdvancementLoader().get(flagAdvId);
-
         // Abort if they've already received the initial delivery at some point
-        if (flagAdvancement == null || advancementTracker.getProgress(flagAdvancement).isDone()) {
+        if (GuidebookProgressUtil.hasReceivedGuidebook(player)) {
             return false;
         }
 

@@ -22,6 +22,7 @@ import net.dawson.adorablehamsterpets.networking.ModPackets;
 import net.dawson.adorablehamsterpets.particles.ModParticles;
 import net.dawson.adorablehamsterpets.screen.ModScreenHandlers;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
+import net.dawson.adorablehamsterpets.util.GuidebookProgressUtil;
 import net.dawson.adorablehamsterpets.util.HamsterBedUtil;
 import net.dawson.adorablehamsterpets.util.HamsterNbtUtil;
 import net.dawson.adorablehamsterpets.util.HamsterPlacementUtil;
@@ -349,15 +350,7 @@ public class AdorableHamsterPets {
 
 		// --- 3. Grant the Flag Advancement ---
 		if (grantInitialAdvancement) {
-			PlayerAdvancementTracker advancementTracker = player.getAdvancementTracker();
-			Identifier flagAdvId = Identifier.of(MOD_ID, "technical/has_received_initial_guidebook");
-			Advancement flagAdvancement = player.server.getAdvancementLoader().get(flagAdvId);
-
-			if (flagAdvancement != null) {
-				for (String criterion : flagAdvancement.getCriteria().keySet()) {
-					advancementTracker.grantCriterion(flagAdvancement, criterion);
-				}
-			}
+			GuidebookProgressUtil.markGuidebookReceived(player);
 		}
 
 		// --- 4. Send Fallback Message ---

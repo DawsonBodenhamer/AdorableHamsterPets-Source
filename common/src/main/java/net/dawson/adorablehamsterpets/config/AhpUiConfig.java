@@ -98,9 +98,9 @@ public class AhpUiConfig extends Config {
     @Translatable.Desc("If Auto Delivery is disabled (like in most modpacks), give the guidebook the first time the player actually spots a wild hamster from 10 blocks away. This will only trigger once, and only if the player has never received the guidebook before.")
     public boolean enableAutoGuidebookDeliveryFallback = true;
 
-    @Translatable.Name("Seen Warning Players")
-    @Translatable.Desc("A list of usernames for players who have already seen the missing guidebook warning. Ensures that everyone sees this, but only once unless you delete your name from this list.")
     @NonSync
+    @Translatable.Name("Seen Warning Players")
+    @Translatable.Desc("A list of players who have already seen the missing guidebook warning. This helps ensure that each player sees the warning only once. It was broken for a while, but it is fixed as of v3.7.0.")
     public List<String> playersWhoHaveSeenGuidebookWarning = new ArrayList<>();
 
     @NonSync

@@ -13,6 +13,7 @@ import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.mixin.accessor.ValidatedFieldAccessor;
 import net.dawson.adorablehamsterpets.screen.HamsterInventoryScreenHandler;
+import net.dawson.adorablehamsterpets.util.GuidebookProgressUtil;
 import net.dawson.adorablehamsterpets.util.HamsterInteractionUtil;
 import net.dawson.adorablehamsterpets.util.HamsterRenderTracker;
 import net.minecraft.advancement.Advancement;
@@ -54,6 +55,8 @@ public class ModPackets {
     public record DismountHamsterC2SPacket() {}
     public record UpdateHamsterRenderStateC2SPacket(List<Integer> hamsterEntityIds, boolean isRendering) {}
     public record RequestGuidebookC2SPacket() {}
+    public record AcknowledgeGuidebookWarningC2SPacket() {}
+    public record RequestGuidebookWarningC2SPacket() {}
     public record RequestHamsterMountC2SPacket(int entityId) {}
     public record ResetHeistHistoryC2SPacket() {}
     public record RequestHamsterRideC2SPacket(int entityId) {}
@@ -69,6 +72,7 @@ public class ModPackets {
 
     // S2C (Server-to-Client)
     public record PlayGuidebookEffectsS2CPacket(boolean closeScreen) {}
+    public record ShowGuidebookWarningS2CPacket() {}
     public record SpawnBeddingParticlesS2CPacket(BlockPos pos, Direction direction, WoodVariant variant) {}
     public record SyncHamsterStateS2CPacket(int entityId, NbtCompound data) {}
     public record PlayDistantSoundS2CPacket(Identifier soundId, float volume, float pitch) {}
@@ -164,6 +168,35 @@ public class ModPackets {
 
                     // Set cache
                     ((PlayerEntityAccessor) player).ahp$initGuideBookTracking(true);
+                })
+        );
+
+        CHANNEL.register(AcknowledgeGuidebookWarningC2SPacket.class,
+                (packet, buf) -> {},
+                (buf) -> new AcknowledgeGuidebookWarningC2SPacket(),
+                (packet, context) -> context.get().queue(() ->
+                        GuidebookProgressUtil.markMissingGuidebookWarningSeen((ServerPlayerEntity) context.get().getPlayer()))
+        );
+
+        CHANNEL.register(RequestGuidebookWarningC2SPacket.class,
+                (packet, buf) -> {},
+                (buf) -> new RequestGuidebookWarningC2SPacket(),
+                (packet, context) -> context.get().queue(() -> {
+                    ServerPlayerEntity player = (ServerPlayerEntity) context.get().getPlayer();
+                    if (Configs.AHP_UI.playersWhoHaveSeenGuidebookWarning.contains("john_wayne")) return;
+                    if (Configs.AHP_UI.enableAutoGuidebookDelivery) return;
+                    if (GuidebookProgressUtil.hasReceivedGuidebook(player)) return;
+                    if (GuidebookProgressUtil.hasSeenMissingGuidebookWarning(player)) return;
+
+                    PlayerEntityAccessor accessor = (PlayerEntityAccessor) player;
+                    if (accessor.ahp$computeHasGuideBook(player)) {
+                        GuidebookProgressUtil.markGuidebookReceived(player);
+                        return;
+                    }
+
+                    if (GuidebookProgressUtil.markMissingGuidebookWarningSeen(player)) {
+                        CHANNEL.sendToPlayer(player, new ShowGuidebookWarningS2CPacket());
+                    }
                 })
         );
 
@@ -410,6 +443,14 @@ public class ModPackets {
                 (buf) -> new PlayGuidebookEffectsS2CPacket(buf.readBoolean()),
                 (packet, context) -> context.get().queue(() ->
                         EnvExecutor.runInEnv(Env.CLIENT, () -> () -> AdorableHamsterPetsClient.queueGuidebookEffects(packet))
+                )
+        );
+
+        CHANNEL.register(ShowGuidebookWarningS2CPacket.class,
+                (packet, buf) -> {},
+                (buf) -> new ShowGuidebookWarningS2CPacket(),
+                (packet, context) -> context.get().queue(() ->
+                        EnvExecutor.runInEnv(Env.CLIENT, () -> AdorableHamsterPetsClient::handleGuidebookWarningApproval)
                 )
         );
 

@@ -88,8 +88,11 @@ encounters with cave hamsters that have glowing red eyes, frantic movement, and 
     longer visually deflates cheeks that still contain items, fixing a synchronization flaw present since at least
     v1.1.0.
 - **Missing Guidebook Warning**
-  - The warning now remembers each player's acknowledgement between restarts and mod updates instead of periodically
-    forgetting and filing the same complaint again.
+  - The warning now remembers each player's acknowledgement on the server and permanently recognizes anyone who has
+    held the guidebook, preventing repeats after restarts, client config resets, or mod updates.
+  - Players who manually obtained and discarded the guidebook before this update may still receive one final warning,
+    because the mod had no way to record that earlier possession. But now it will be a one-time message for real. For
+    real for real.
 - **Crate Retrieval**
   - Acorn, cucumber, green bean, and Hamster Food Mix crates now drop themselves when broken, prefer axes, and count as
     standard storage blocks for storage-focused mod compatibility.
