@@ -40,6 +40,7 @@ public class ModPackets {
         NetworkManager.registerS2CPayloadType(SyncHamsterStatePayload.ID, SyncHamsterStatePayload.CODEC);
         NetworkManager.registerS2CPayloadType(SyncPettingStatePayload.ID, SyncPettingStatePayload.CODEC);
         NetworkManager.registerS2CPayloadType(PlayDistantSoundPayload.ID, PlayDistantSoundPayload.CODEC);
+        NetworkManager.registerS2CPayloadType(StopDistantSoundPayload.ID, StopDistantSoundPayload.CODEC);
         NetworkManager.registerS2CPayloadType(PlayShoulderMountSoundPayload.ID, PlayShoulderMountSoundPayload.CODEC);
         NetworkManager.registerS2CPayloadType(PlayerKnockbackPayload.ID, PlayerKnockbackPayload.CODEC);
         NetworkManager.registerS2CPayloadType(ShowGuidebookWarningPayload.ID, ShowGuidebookWarningPayload.CODEC);
@@ -332,6 +333,10 @@ public class ModPackets {
 
         NetworkManager.registerReceiver(NetworkManager.Side.S2C, PlayDistantSoundPayload.ID, PlayDistantSoundPayload.CODEC,
                 (payload, context) -> context.queue(() -> AdorableHamsterPetsClient.handlePlayDistantSound(payload))
+        );
+
+        NetworkManager.registerReceiver(NetworkManager.Side.S2C, StopDistantSoundPayload.ID, StopDistantSoundPayload.CODEC,
+                (payload, context) -> context.queue(() -> AdorableHamsterPetsClient.handleStopDistantSound(payload))
         );
 
         NetworkManager.registerReceiver(NetworkManager.Side.S2C, SyncPettingStatePayload.ID, SyncPettingStatePayload.CODEC,

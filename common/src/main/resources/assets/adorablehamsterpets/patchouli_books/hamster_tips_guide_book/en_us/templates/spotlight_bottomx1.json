@@ -1,0 +1,34 @@
+{
+  "include": [
+    { "template": "dynamic_page",
+      "as": "page",
+      "using": {
+        "header": "#header",
+        "header_color": "#header_color",
+        "text": "#text",
+        "text_color": "#text_color"
+      }
+    }
+  ],
+  "components": [
+    {
+      "type": "patchouli:image",
+      "image": "patchouli:textures/gui/crafting.png",
+      "u": 0,
+      "v": 102,
+      "width": 66,
+      "height": 26,
+      "texture_width": 128,
+      "texture_height": 256,
+      "x": 25,
+      "y": 119
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#item_input",
+      "link_recipe": true,
+      "x": 50,
+      "y": 124
+    }
+  ]
+}

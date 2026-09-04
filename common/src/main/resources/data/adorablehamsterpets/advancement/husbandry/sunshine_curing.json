@@ -1,15 +1,15 @@
 {
   "parent": "adorablehamsterpets:husbandry/redstone_fever",
   "display": {
-    "icon": { "id": "minecraft:sunflower" },
-    "title": { "translate": "advancements.adorablehamsterpets.husbandry.sunshine_curing.title" },
-    "description": { "translate": "advancements.adorablehamsterpets.husbandry.sunshine_curing.description" },
+    "icon": { "id": "adorablehamsterpets:acorn_flute_ember" },
+    "title": { "translate": "advancements.adorablehamsterpets.husbandry.flute_curing.title" },
+    "description": { "translate": "advancements.adorablehamsterpets.husbandry.flute_curing.description" },
     "frame": "goal",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false
   },
   "criteria": {
-    "completed_sunlight_cure": { "trigger": "adorablehamsterpets:sunshine_curing" }
+    "completed_flute_assisted_cure": { "trigger": "adorablehamsterpets:sunshine_curing" }
   }
 }

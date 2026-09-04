@@ -19,6 +19,7 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 
@@ -45,7 +46,7 @@ public final class RedstoneFeverUtil {
             Identifier.of(AdorableHamsterPets.MOD_ID, "redstone_fever_movement_speed");
     private static final Set<String> WARNED_INVALID_DIMENSIONS = ConcurrentHashMap.newKeySet();
 
-    private static final TagKey<net.minecraft.world.biome.Biome> CAVE_BIOMES =
+    private static final TagKey<Biome> CAVE_BIOMES =
             TagKey.of(RegistryKeys.BIOME, Identifier.of(AdorableHamsterPets.MOD_ID, "is_cave"));
 
     /* ─────────────────────────────────────────────────────────────────────────────
@@ -73,6 +74,7 @@ public final class RedstoneFeverUtil {
         if (!Configs.AHP_MAIN.enableRedstoneFever) return false;
         if (hamster.isTamed() || hamster.getRedstoneFeverState().isFevered()) return false;
 
+        hamster.getFluteProgressState().clearFeverPerformers();
         hamster.getRedstoneFeverState().setFevered(true);
         hamster.getRedstoneFeverState().setScarVariant(hamster.getRandom().nextInt(3));
         if (resolveCommissionedRoll) {
@@ -100,6 +102,7 @@ public final class RedstoneFeverUtil {
         if (hamster.getRedstoneFeverState().isFevered()) {
             clearDisabledState(hamster);
         } else {
+            hamster.getFluteProgressState().clearFeverPerformers();
             clearMovementSpeedModifier(hamster);
             if (hamster.hasRedstoneFever()) hamster.synchronizeRedstoneFeverVisualState();
         }
@@ -117,6 +120,7 @@ public final class RedstoneFeverUtil {
         RedstoneFeverState state = hamster.getRedstoneFeverState();
         state.setFirstLeadRescuerUuid(null);
         state.setFirstSunlightTargetUuid(null);
+        hamster.getFluteProgressState().clearFeverPerformers();
         state.setFevered(false);
         hamster.setRedstoneFeverBurstActive(false);
         hamster.setTarget(null);
@@ -131,9 +135,15 @@ public final class RedstoneFeverUtil {
         if (creditedPlayer == null) {
             creditedPlayer = hamster.getRedstoneFeverState().getFirstSunlightTargetUuid();
         }
-        if (creditedPlayer != null && hamster.getWorld() instanceof ServerWorld world) {
-            RedstoneFeverCureCreditState.awardOrQueue(world, creditedPlayer);
+        boolean fluteAssisted = hamster.getRedstoneFeverState().isFevered()
+                && creditedPlayer != null
+                && hamster.getFluteProgressState().hasFeverPerformer(creditedPlayer);
+        if (fluteAssisted && hamster.getWorld() instanceof ServerWorld world) {
+            if (hamster.getFluteProgressState().qualifyReward(creditedPlayer)) {
+                RedstoneFeverCureCreditState.awardOrQueue(world, creditedPlayer);
+            }
         }
+        hamster.getFluteProgressState().clearFeverPerformers();
 
         // --- 2. Clear Condition Behavior ---
         hamster.getRedstoneFeverState().setCommissionedRollResolved(true);
@@ -159,6 +169,7 @@ public final class RedstoneFeverUtil {
         // Admin cures deliberately erase rescuers before shared cure transition
         hamster.getRedstoneFeverState().setFirstLeadRescuerUuid(null);
         hamster.getRedstoneFeverState().setFirstSunlightTargetUuid(null);
+        hamster.getFluteProgressState().clearFeverPerformers();
         cure(hamster);
     }
 
@@ -198,7 +209,7 @@ public final class RedstoneFeverUtil {
 
     // --- 3. Shared Severity and Presentation ---
     public static double getSeverity(HamsterEntity hamster) {
-        long required = SUNLIGHT_TICKS_PER_DAY * Configs.AHP_MAIN.redstoneFeverSunlightCureDays.get();
+        long required = getRequiredSunlightCureTicks();
         return 1.0D - Math.clamp((double) hamster.getRedstoneFeverState().getSunlightTicks() / required, 0.0D, 1.0D);
     }
 
@@ -405,10 +416,20 @@ public final class RedstoneFeverUtil {
         long progress = hamster.getRedstoneFeverState().getSunlightTicks() + 20L;
         hamster.getRedstoneFeverState().setSunlightTicks(progress);
         hamster.synchronizeRedstoneFeverVisualState();
-        long required = SUNLIGHT_TICKS_PER_DAY * Configs.AHP_MAIN.redstoneFeverSunlightCureDays.get();
+        long required = getRequiredSunlightCureTicks();
         if (progress >= required) {
             cure(hamster);
         }
+    }
+
+    public static long getRequiredSunlightCureTicks() {
+        return requiredSunlightCureTicks(
+                Configs.AHP_MAIN.enableOneMinuteRedstoneFeverCureDebug.get(),
+                Configs.AHP_MAIN.redstoneFeverSunlightCureDays.get());
+    }
+
+    static long requiredSunlightCureTicks(boolean oneMinuteDebugMode, int configuredDays) {
+        return oneMinuteDebugMode ? 20L * 60L : SUNLIGHT_TICKS_PER_DAY * configuredDays;
     }
 
     // --- 4. Dimension Eligibility ---

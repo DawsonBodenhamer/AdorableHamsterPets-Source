@@ -3,6 +3,7 @@ package net.dawson.adorablehamsterpets.sound;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
+import net.dawson.adorablehamsterpets.flute.AcornFluteSoundSpec;
 import net.dawson.adorablehamsterpets.mixin.accessor.LivingEntityInvoker;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.DataComponentTypes;
@@ -231,6 +232,18 @@ public record TimedSound(RegistrySupplier<SoundEvent> sound, double durationSeco
     public static final RegistrySupplier<SoundEvent> AHP_THEME_SONG_8_BIT = registerSoundEvent("ahp_theme_song_8_bit");
     public static final RegistrySupplier<SoundEvent> AHP_THEME_SONG_LOW_FI = registerSoundEvent("ahp_theme_song_low_fi");
     public static final RegistrySupplier<SoundEvent> AHP_THEME_SONG_ORCHESTRAL = registerSoundEvent("ahp_theme_song_orchestral");
+    public static final RegistrySupplier<SoundEvent> AHP_THEME_SONG_ZAMPONA = registerSoundEvent("ahp_theme_song_zampona");
+
+    // --- Acorn Flute ---
+    public static final RegistrySupplier<SoundEvent> ACORN_FLUTE_RIFF1 = registerSoundEvent("acorn_flute_riff1");
+    public static final RegistrySupplier<SoundEvent> ACORN_FLUTE_RIFF2 = registerSoundEvent("acorn_flute_riff2");
+    public static final RegistrySupplier<SoundEvent> ACORN_FLUTE_RIFF3 = registerSoundEvent("acorn_flute_riff3");
+    public static final RegistrySupplier<SoundEvent> ACORN_FLUTE_RIFF4 = registerSoundEvent("acorn_flute_riff4");
+    public static final RegistrySupplier<SoundEvent> ACORN_FLUTE_RIFF5 = registerSoundEvent("acorn_flute_riff5");
+    public static final RegistrySupplier<SoundEvent> ACORN_FLUTE_RIFF6 = registerSoundEvent("acorn_flute_riff6");
+    public static final RegistrySupplier<SoundEvent> ACORN_FLUTE_RIFF7 = registerSoundEvent("acorn_flute_riff7");
+    public static final RegistrySupplier<SoundEvent> ACORN_FLUTE_RIFF8 = registerSoundEvent("acorn_flute_riff8");
+    public static final RegistrySupplier<SoundEvent> ACORN_FLUTE_CHIFF = registerSoundEvent("acorn_flute_chiff");
     public static final RegistrySupplier<SoundEvent> HAMSTER_DING = registerSoundEvent("ding");
     public static final RegistrySupplier<SoundEvent> HAMSTER_POP = registerSoundEvent("hamster_pop");
     public static final RegistrySupplier<SoundEvent> MAGIC_SHIMMER = registerSoundEvent("magic_shimmer");
@@ -268,6 +281,17 @@ public record TimedSound(RegistrySupplier<SoundEvent> sound, double durationSeco
             new TimedSound(HAMSTER_LABORED_BREATHING_LOOP1, 1.9817D, 0.0D),
             new TimedSound(HAMSTER_LABORED_BREATHING_LOOP2, 1.7533D, 0.0D)
     );
+    public static final List<TimedSound> ACORN_FLUTE_RIFFS = List.of(
+            new TimedSound(ACORN_FLUTE_RIFF1, AcornFluteSoundSpec.RIFF_DURATIONS_SECONDS.get(0), 0.0D),
+            new TimedSound(ACORN_FLUTE_RIFF2, AcornFluteSoundSpec.RIFF_DURATIONS_SECONDS.get(1), 0.0D),
+            new TimedSound(ACORN_FLUTE_RIFF3, AcornFluteSoundSpec.RIFF_DURATIONS_SECONDS.get(2), 0.0D),
+            new TimedSound(ACORN_FLUTE_RIFF4, AcornFluteSoundSpec.RIFF_DURATIONS_SECONDS.get(3), 0.0D),
+            new TimedSound(ACORN_FLUTE_RIFF5, AcornFluteSoundSpec.RIFF_DURATIONS_SECONDS.get(4), 0.0D),
+            new TimedSound(ACORN_FLUTE_RIFF6, AcornFluteSoundSpec.RIFF_DURATIONS_SECONDS.get(5), 0.0D),
+            new TimedSound(ACORN_FLUTE_RIFF7, AcornFluteSoundSpec.RIFF_DURATIONS_SECONDS.get(6), 0.0D),
+            new TimedSound(ACORN_FLUTE_RIFF8, AcornFluteSoundSpec.RIFF_DURATIONS_SECONDS.get(7), 0.0D));
+    public static final TimedSound ACORN_FLUTE_CHIFF_TIMED =
+            new TimedSound(ACORN_FLUTE_CHIFF, AcornFluteSoundSpec.CHIFF_DURATION_SECONDS, 0.0D);
     public static final List<RegistrySupplier<SoundEvent>> HAMSTER_IDLE_SOUNDS = List.of(
             HAMSTER_IDLE1, HAMSTER_IDLE2, HAMSTER_IDLE3, HAMSTER_IDLE4, HAMSTER_IDLE5,
             HAMSTER_IDLE6, HAMSTER_IDLE7, HAMSTER_IDLE8, HAMSTER_IDLE9, HAMSTER_IDLE10, HAMSTER_IDLE11

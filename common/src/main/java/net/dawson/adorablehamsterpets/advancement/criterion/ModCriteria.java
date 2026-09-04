@@ -41,6 +41,8 @@ public class ModCriteria {
             CRITERIA.register("redstone_fever_discovered", RedstoneFeverCriterion::new);
     public static final RegistrySupplier<RedstoneFeverCriterion> SUNSHINE_CURING =
             CRITERIA.register("sunshine_curing", RedstoneFeverCriterion::new);
+    public static final RegistrySupplier<AcornMusicDiscCriterion> ACORN_MUSIC_DISC =
+            CRITERIA.register("acorn_music_disc", AcornMusicDiscCriterion::new);
 
     // --- 3. Main Registration Call ---
     public static void register() {

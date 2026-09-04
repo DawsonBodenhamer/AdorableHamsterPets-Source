@@ -4,6 +4,7 @@ import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.dawson.adorablehamsterpets.AdorableHamsterPetsClient;
 import net.dawson.adorablehamsterpets.client.option.ModKeyBindings;
+import net.dawson.adorablehamsterpets.client.particle.AcornFluteNoteParticle;
 import net.dawson.adorablehamsterpets.client.particle.HamsterBeddingParticle;
 import net.dawson.adorablehamsterpets.client.particle.PixieDustParticle;
 import net.dawson.adorablehamsterpets.client.particle.PixieDustParticleTheme;
@@ -55,6 +56,10 @@ public final class AdorableHamsterPetsFabricClient implements ClientModInitializ
             RegistrySupplier<SimpleParticleType> supplier = ModParticles.PIXIE_DUST.get(theme);
             ParticleFactoryRegistry.getInstance().register(supplier.get(), provider -> new PixieDustParticle.Factory(provider, theme));
         }
+
+        ParticleFactoryRegistry.getInstance().register(
+                ModParticles.ACORN_FLUTE_NOTE.get(),
+                AcornFluteNoteParticle.Factory::new);
 
         // --- Register Block Jiggle Renderer ---
         WorldRenderEvents.AFTER_ENTITIES.register(context -> {

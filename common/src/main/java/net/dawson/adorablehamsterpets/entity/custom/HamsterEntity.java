@@ -18,6 +18,9 @@ import net.dawson.adorablehamsterpets.entity.client.feature.ShoulderAnimationSta
 import net.dawson.adorablehamsterpets.entity.control.HamsterBodyControl;
 import net.dawson.adorablehamsterpets.entity.custom.animation.HamsterAnimationController;
 import net.dawson.adorablehamsterpets.entity.custom.genetics.HamsterGenome;
+import net.dawson.adorablehamsterpets.flute.FluteProgressState;
+import net.dawson.adorablehamsterpets.flute.FlutePerformanceManager;
+import net.dawson.adorablehamsterpets.item.custom.AcornFluteItem;
 import net.dawson.adorablehamsterpets.particles.ModParticles;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.dawson.adorablehamsterpets.util.*;
@@ -91,8 +94,9 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private static final double SHADOW_MAX_OFFSET = 0.35;
 
     // --- Hamster State Flags ---
-    // TODO: All 31 bits are used up now, so need to split flags into two separate
-    //  DataTracker entries, starting back at 1 << 0 for the second integer
+    // TODO: 30 out of 31 bits are used, so only room for one more and then
+    //  need to split flags into two separate DataTracker entries, starting
+    //  back at 1 << 0 for the second integer
     public static final int SLEEPING_FLAG = 1 << 0;
     public static final int SITTING_FLAG = 1 << 1;
     public static final int BEGGING_FLAG = 1 << 2;
@@ -123,7 +127,6 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     public static final int IS_BEING_PET_FLAG = 1 << 27;
     public static final int AGGRESSION_STATE_BIT_1 = 1 << 28;
     public static final int AGGRESSION_STATE_BIT_2 = 1 << 29;
-    public static final int IS_DANCING_FLAG = 1 << 30;
     public static final int IS_HIDING_FLAG = 1 << 31;
 
     // --- Tracked Data ---
@@ -146,6 +149,9 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private static final TrackedData<String> ACTIVE_CUSTOM_GOAL_NAME_DEBUG = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.STRING);
     private static final TrackedData<Integer> REDSTONE_FEVER_VISUAL_STATE = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private static final TrackedData<Boolean> REDSTONE_FEVER_BURST_ACTIVE = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Integer> DANCE_STYLE = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<Boolean> FLUTE_MOUNT_FLIGHT = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Float> FLUTE_MOUNT_PITCH = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.FLOAT);
 
     /* ──────────────────────────────────────────────────────────────────────────────
      *        Static Registration and Setup
@@ -246,6 +252,10 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     @Unique public float prevClientFallPitchProgress = 0.0f;
     @Unique public transient float clientSwimPitch = 0.0f;
     @Unique public transient float prevClientSwimPitch = 0.0f;
+    @Unique public transient float clientFluteMountPitch = 0.0f;
+    @Unique public transient float prevClientFluteMountPitch = 0.0f;
+    @Unique public transient boolean clientFluteMountFlight = false;
+    @Unique private transient boolean fluteMountResponseActive = false;
     public int timesBred = 0;
 
     // --- Object References and Positions ---
@@ -272,6 +282,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private final InventoryRuntimeState inventoryRuntimeState = new InventoryRuntimeState();
     private final RiderInputState riderInputState = new RiderInputState();
     private final RedstoneFeverState redstoneFeverState = new RedstoneFeverState();
+    private final FluteProgressState fluteProgressState = new FluteProgressState();
     private final SleepRuntimeState sleepRuntimeState = new SleepRuntimeState();
     private final ThreeDimensionalLayoutState threeDimensionalLayoutState =
             new ThreeDimensionalLayoutState();
@@ -320,6 +331,9 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         builder.add(FALL_IMMUNITY_ACTIVE, true);
         builder.add(REDSTONE_FEVER_VISUAL_STATE, 0);
         builder.add(REDSTONE_FEVER_BURST_ACTIVE, false);
+        builder.add(DANCE_STYLE, DanceStyle.NONE.ordinal());
+        builder.add(FLUTE_MOUNT_FLIGHT, false);
+        builder.add(FLUTE_MOUNT_PITCH, 0.0F);
     }
 
     @Override
@@ -395,6 +409,10 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         return this.redstoneFeverState;
     }
 
+    public FluteProgressState getFluteProgressState() {
+        return this.fluteProgressState;
+    }
+
     public boolean hasRedstoneFever() {
         return this.getDataTracker().get(REDSTONE_FEVER_VISUAL_STATE) > 0;
     }
@@ -421,8 +439,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         // Pack scar and recovery percentage into dedicated tracked state
         int visualState = 0;
         if (this.redstoneFeverState.isFevered()) {
-            long required = RedstoneFeverUtil.SUNLIGHT_TICKS_PER_DAY
-                    * Configs.AHP_MAIN.redstoneFeverSunlightCureDays.get();
+            long required = RedstoneFeverUtil.getRequiredSunlightCureTicks();
             double progress = required == 0L
                     ? 0.0D
                     : (double) this.redstoneFeverState.getSunlightTicks() / required;
@@ -800,11 +817,21 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     }
 
     public boolean isDancing() {
-        return getHamsterFlag(IS_DANCING_FLAG);
+        return getDanceStyle() != DanceStyle.NONE;
     }
 
     public void setDancing(boolean dancing) {
-        setHamsterFlag(IS_DANCING_FLAG, dancing);
+        setDanceStyle(dancing ? DanceStyle.BOUNCING : DanceStyle.NONE);
+    }
+
+    public DanceStyle getDanceStyle() {
+        int ordinal = this.dataTracker.get(DANCE_STYLE);
+        DanceStyle[] styles = DanceStyle.values();
+        return ordinal >= 0 && ordinal < styles.length ? styles[ordinal] : DanceStyle.NONE;
+    }
+
+    public void setDanceStyle(DanceStyle style) {
+        this.dataTracker.set(DANCE_STYLE, style.ordinal());
     }
 
     public boolean isHiding() {
@@ -985,6 +1012,30 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
     public void setShoulderPet(boolean isShoulderPet) {
         setHamsterFlag(IS_SHOULDER_PET_FLAG, isShoulderPet);
+    }
+
+    public boolean isFluteMountFlight() {
+        return this.dataTracker.get(FLUTE_MOUNT_FLIGHT);
+    }
+
+    public void setFluteMountFlight(boolean active) {
+        this.dataTracker.set(FLUTE_MOUNT_FLIGHT, active);
+    }
+
+    public float getFluteMountPitch() {
+        return this.dataTracker.get(FLUTE_MOUNT_PITCH);
+    }
+
+    public void setFluteMountPitch(float pitch) {
+        this.dataTracker.set(FLUTE_MOUNT_PITCH, pitch);
+    }
+
+    public boolean isFluteMountResponseActive() {
+        return this.fluteMountResponseActive;
+    }
+
+    public void setFluteMountResponseActive(boolean active) {
+        this.fluteMountResponseActive = active;
     }
 
     public boolean isWanderModeActive() {
@@ -1434,7 +1485,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             ParticleEffectsUtil.spawnParticles(
                     this.getWorld(),
                     Vec3d.ofCenter(pos),
-                    net.minecraft.particle.ParticleTypes.POOF,
+                    ParticleTypes.POOF,
                     50,
                     new Vec3d(0.5, 0.75, 0.5),
                     0.0);
@@ -1552,10 +1603,18 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         // --- 1. Pre-Checks ---
         if (this.hasPassenger(player)) return ActionResult.PASS;
         if (this.interactionCooldown > 0) return ActionResult.PASS;
+
+        ItemStack stack = player.getStackInHand(hand);
+        if (hand == Hand.MAIN_HAND && stack.getItem() instanceof AcornFluteItem flute) {
+            if (!this.getWorld().isClient() && player instanceof ServerPlayerEntity serverPlayer) {
+                FlutePerformanceManager.startPerformance(serverPlayer, stack, flute.variant());
+            }
+            return ActionResult.SUCCESS;
+        }
+
         // Fever blocks food, taming, play, and other ordinary interaction paths
         if (this.hasRedstoneFever()) return ActionResult.PASS;
 
-        ItemStack stack = player.getStackInHand(hand);
         World world = this.getWorld();
 
         // --- 2. Global Interactions ---
@@ -2793,6 +2852,16 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
         // --- 5. Fall Pitch Interpolation ---
         if (world.isClient) {
+            this.prevClientFluteMountPitch = this.clientFluteMountPitch;
+            if (this.isFluteMountFlight()) {
+                this.clientFluteMountFlight = true;
+                this.clientFluteMountPitch +=
+                        (this.getFluteMountPitch() - this.clientFluteMountPitch) * 0.45F;
+            } else {
+                this.clientFluteMountFlight = false;
+                this.clientFluteMountPitch += (0.0F - this.clientFluteMountPitch) * 0.35F;
+            }
+
             // Capture state for interpolation before modification
             this.prevClientFallPitchProgress = this.clientFallPitchProgress;
 
@@ -2832,7 +2901,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
         // --- 1. Jukebox Dancing ---
         if (!world.isClient() && this.age % 20 == 0) {
-            boolean dancing = false;
+            DanceStyle danceStyle = DanceStyle.NONE;
             boolean isSniffingForOre =
                     this.getActiveCustomGoalName()
                             .startsWith(HamsterSniffForOreGoal.class.getSimpleName());
@@ -2840,11 +2909,11 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             if (!HamsterMovementUtil.shouldNotMove(this)
                     && !this.isPlayingTag()
                     && !isSniffingForOre) {
-                dancing = HamsterAIUtil.isDancingSongPlayingNearby(this);
+                danceStyle = HamsterAIUtil.getNearbyDanceStyle(this);
             }
 
-            if (this.isDancing() != dancing) {
-                this.setDancing(dancing);
+            if (this.getDanceStyle() != danceStyle) {
+                this.setDanceStyle(danceStyle);
             }
         }
 

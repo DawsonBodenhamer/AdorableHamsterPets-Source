@@ -2,6 +2,7 @@ package net.dawson.adorablehamsterpets.entity.AI;
 
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
+import net.dawson.adorablehamsterpets.flute.FlutePerformanceManager;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.dawson.adorablehamsterpets.util.HamsterMovementUtil;
 import net.dawson.adorablehamsterpets.util.HamsterPlacementUtil;
@@ -20,7 +21,6 @@ public final class HamsterRedstoneFeverBurstGoal extends Goal {
      * ────────────────────────────────────────────────────────────────────────────*/
 
     private static final double BURST_NAVIGATION_SPEED = 1.3D;
-    private static final double BURST_ORBIT_RADIUS = 2.0D;
     private static final int MAX_CONSECUTIVE_WAYPOINT_FAILURES = 8;
 
     /* ──────────────────────────────────────────────────────────────────────────────
@@ -51,6 +51,7 @@ public final class HamsterRedstoneFeverBurstGoal extends Goal {
 
     @Override
     public boolean canStart() {
+        if (FlutePerformanceManager.isAffectedByNormalRiff(this.hamster)) return false;
         if (this.cooldownTicks > 0) {
             this.cooldownTicks--;
             return false;
@@ -69,6 +70,7 @@ public final class HamsterRedstoneFeverBurstGoal extends Goal {
     public boolean shouldContinue() {
         return this.remainingTicks > 0
                 && this.hamster.hasRedstoneFever()
+                && !FlutePerformanceManager.isAffectedByNormalRiff(this.hamster)
                 && Configs.AHP_MAIN.enableRedstoneFeverEnergyBursts
                 && !HamsterMovementUtil.shouldNotMove(this.hamster)
                 && this.isAnchorStable()
@@ -111,7 +113,7 @@ public final class HamsterRedstoneFeverBurstGoal extends Goal {
     public void tick() {
         // --- 1. Advance Orbit ---
         this.remainingTicks--;
-        Vec3d orbitTarget = orbitTarget(this.anchor, this.angle);
+        Vec3d orbitTarget = RedstoneFeverBurstPolicy.orbitTarget(this.anchor, this.angle);
 
         if (this.remainingTicks % 4 != 0 && !this.hamster.getNavigation().isIdle()) return;
         this.angle += this.direction * Math.toRadians(38.0D);
@@ -147,7 +149,7 @@ public final class HamsterRedstoneFeverBurstGoal extends Goal {
 
     private void scheduleNext() {
         // Normalize reversed config pairs before random selection
-        int[] intervalBounds = normalizeIntervalBounds(
+        int[] intervalBounds = RedstoneFeverBurstPolicy.normalizeIntervalBounds(
                 Configs.AHP_MAIN.redstoneFeverMinBurstIntervalSeconds.get(),
                 Configs.AHP_MAIN.redstoneFeverMaxBurstIntervalSeconds.get());
         // Recovery stretches intervals without disabling bursts before full cure
@@ -161,17 +163,6 @@ public final class HamsterRedstoneFeverBurstGoal extends Goal {
     }
 
     private boolean isAnchorStable() {
-        return isAnchorStable(this.hamster.getPos(), this.anchor);
-    }
-
-    static Vec3d orbitTarget(Vec3d anchor, double angle) {
-        return new Vec3d(
-                anchor.x + Math.cos(angle) * BURST_ORBIT_RADIUS,
-                anchor.y,
-                anchor.z + Math.sin(angle) * BURST_ORBIT_RADIUS);
-    }
-
-    static boolean isAnchorStable(Vec3d position, Vec3d anchor) {
-        return (position.x - anchor.x) * (position.x - anchor.x) + (position.z - anchor.z) * (position.z - anchor.z) <= (BURST_ORBIT_RADIUS + 1.5D) * (BURST_ORBIT_RADIUS + 1.5D);
+        return RedstoneFeverBurstPolicy.isAnchorStable(this.hamster.getPos(), this.anchor);
     }
 }

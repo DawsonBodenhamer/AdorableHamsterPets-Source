@@ -216,7 +216,7 @@ public final class ColorSpaceUtil {
 
             float normalizedDistance = hueDistance * 2.0f;
 
-            float hueMultiplier = net.minecraft.util.math.MathHelper.lerp(
+            float hueMultiplier = MathHelper.lerp(
                     normalizedDistance,
                     ColorTuning.DAMPENING_MULTIPLIER,
                     1.0f

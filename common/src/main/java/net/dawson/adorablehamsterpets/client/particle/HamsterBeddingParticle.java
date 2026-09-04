@@ -11,7 +11,10 @@ import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A particle representing a piece of hamster bedding (a leaf).
@@ -23,7 +26,7 @@ import java.util.*;
  *     or a dispenser. This includes a gentle pendulum-like sway and a deterministic, spatially-coherent
  *     wind gust model that creates realistic, synchronized movement among nearby particles.
  */
-public class HamsterBeddingParticle extends SpriteBillboardParticle {
+public class HamsterBeddingParticle extends SpriteBillboardParticle implements FloatyParticleMotion.Target {
 
     // --- Constants ---
     /** A magic number used in the 'vy' field to signal that this particle should use the "floaty" physics simulation. */
@@ -40,22 +43,7 @@ public class HamsterBeddingParticle extends SpriteBillboardParticle {
     private static final float HORIZ_SPEED_CAP = 0.08f;
 
     // --- Gust Physics Constants (for floaty mode) ---
-    private static final int   GUST_WINDOW_TICKS   = 100;    // Time window to evaluate gust events.
-    private static final float GUST_PROB_PER_WIN   = 0.35f;  // Chance a gust event exists in a window.
-    private static final int   GUST_MIN_LEN        = 20;
-    private static final int   GUST_MAX_LEN        = 40;
-    private static final int   GUST_CELL_BLOCKS    = 12;    // Spatial coherence grid size.
-    private static final float GUST_UP_ACCEL       = 0.025f;
-    private static final float GUST_HORIZ_ACCEL    = 0.06f;
-    private static final float GUST_SPIN_IMPULSE   = 2.0f;
-    private static final float GUST_SPIN_DAMP      = 0.85f;
-    private static final float COUPLING_MIN        = 0.12f;  // Minimum particle response to a gust.
-    private static final float COUPLING_SPAN       = 0.78f;
-    private static final int   PER_PARTICLE_DELAY_MAX = 8;   // Staggers the start of a particle's gust response.
-    private static final float WIND_DRAG           = 0.10f;  // How strongly particles are pulled toward the wind's target speed.
-    private static final float WIND_TARGET_SPEED   = 0.09f;  // Blocks per tick at full strength
-    private static final float GUST_RISE_FRAC      = 0.30f;  // The first 30% of a gust's duration is its ramp-up swayPhaseOffset.
-    private static final float EXTRA_HCAP          = 0.075f; // Additional horizontal speed allowed during a full gust.
+    private static final float EXTRA_HCAP = 0.075f; // Cap for horizontal speed during full gust
 
     // --- Sound Management ---
     private static final Set<Long> playedGustSoundsThisTick = new HashSet<>();
@@ -67,7 +55,7 @@ public class HamsterBeddingParticle extends SpriteBillboardParticle {
     // --- Fields ---
     // --- State ---
     private final boolean useFloatyPhysics;
-    private long lastAppliedGustKey = Long.MIN_VALUE;
+    private final FloatyParticleMotion floatyMotion;
 
     // --- Sway Physics ---
     private final float swayFrequency;
@@ -76,16 +64,13 @@ public class HamsterBeddingParticle extends SpriteBillboardParticle {
     private final float swayDirectionX, swayDirectionZ;
     private final float constantRollVelocity;
 
-    // --- Gust Physics ---
-    private float gustSpinVel = 0f;
-    private float gustCoupling = 0f;
-    private int gustDelayTicks = 0;
-
     public HamsterBeddingParticle(ClientWorld world,
                                   double x, double y, double z,
                                   double vx, double vy, double vz,
                                   SpriteProvider sprites) {
         super(world, x, y, z, vx, vy, vz);
+
+        this.floatyMotion = new FloatyParticleMotion();
 
         // Set size to match leaf textures on bed
         this.scale *= 2.0f;
@@ -184,74 +169,19 @@ public class HamsterBeddingParticle extends SpriteBillboardParticle {
             this.velocityY += UPWARD_BOOST_AT_APEX * (float)Math.pow(positionInSwing, 4);
 
             // --- Gust Simulation ---
-            float gustStrengthLocal = 0f;
-            if (isOutdoor) { // Reuse the isOutdoor check
-                Gust gust = sampleGust(this.world, this.x, this.z);
-
-                if (gust.active) {
-                    // Initialize gust response for this particle if it's a new gust event.
-                    if (gust.key != lastAppliedGustKey) {
-                        // Play sound once per unique gust event per tick, up to MAX_CONCURRENT_SOUNDS simultaneously
-                        if (soundStartTimes.size() < MAX_CONCURRENT_SOUNDS && playedGustSoundsThisTick.add(gust.key)) {
-                            float vol = Configs.AHP_UI.leafGustVolume.get();
-                            if (vol > 0) {
-                                this.world.playSound(this.x, this.y, this.z, ModSounds.GENTLE_BREEZE.get(), SoundCategory.AMBIENT, vol, 1.0f, false);
-                                soundStartTimes.addLast(worldTime);
-                            }
-                        }
-
-                        Random pr = new Random(mix64(gust.key, System.identityHashCode(this)));
-                        this.gustCoupling = COUPLING_MIN + pr.nextFloat() * COUPLING_SPAN;
-                        this.gustCoupling = (float) Math.sqrt(this.gustCoupling); // Bias toward stronger coupling, most particles affected.
-                        this.gustDelayTicks = pr.nextInt(PER_PARTICLE_DELAY_MAX + 1);
-                        this.lastAppliedGustKey = gust.key;
-                    }
-
-                    int delayedTicksSinceGustStart = Math.max(0, gust.ticksSinceGustStart - this.gustDelayTicks);
-                    float gustProgress = delayedTicksSinceGustStart / (float) gust.gustDurationTicks;
-                    float rise = smooth01(Math.min(1f, gustProgress / GUST_RISE_FRAC));
-                    float decay = (float) Math.exp(-3.0f * gustProgress);
-                    gustStrengthLocal = rise * decay * this.gustCoupling;
-
-                    // Apply a one-time spin impulse when the particle first feels the gust.
-                    if (delayedTicksSinceGustStart == 0 && gust.ticksSinceGustStart >= this.gustDelayTicks) {
-                        this.gustSpinVel += GUST_SPIN_IMPULSE * this.gustCoupling;
-                    }
-
-                    // --- Interpolate Gust Angle ---
-                    float easeOutFactor = 1.0f - (float) Math.pow(1.0f - gustProgress, 3.0); // Cubic ease-out
-                    float finalGustDirX = MathHelper.lerp(easeOutFactor, driftDirX, gust.gustDirX);
-                    float finalGustDirZ = MathHelper.lerp(easeOutFactor, driftDirZ, gust.gustDirZ);
-
-                    // Apply drag along the interpolated wind angle toward the wind's target speed.
-                    float along = (float)(this.velocityX * finalGustDirX + this.velocityZ * finalGustDirZ);
-                    float target = WIND_TARGET_SPEED * gustStrengthLocal;
-                    float corr = (target - along) * WIND_DRAG;
-                    this.velocityX += finalGustDirX * corr;
-                    this.velocityZ += finalGustDirZ * corr;
-
-                    // Apply upward and lateral push from the gust using the interpolated direction.
-                    this.velocityY += gustStrengthLocal * GUST_UP_ACCEL;
-                    this.velocityX += finalGustDirX * gustStrengthLocal * GUST_HORIZ_ACCEL;
-                    this.velocityZ += finalGustDirZ * gustStrengthLocal * GUST_HORIZ_ACCEL;
-                }
-            }
+            float gustStrengthLocal = isOutdoor
+                    ? this.floatyMotion.applyGust(this.world, worldTime, this.x, this.y, this.z, driftDirX, driftDirZ, this)
+                    : 0f;
 
             // --- Velocity & Rotation Update with Dynamic Horizontal Cap ---
-            float dynamicHorizontalCap = HORIZ_SPEED_CAP + gustStrengthLocal * EXTRA_HCAP;
-            float horizontalSpeedSquared = (float)(this.velocityX * this.velocityX + this.velocityZ * this.velocityZ);
-            if (horizontalSpeedSquared > dynamicHorizontalCap * dynamicHorizontalCap) {
-                float scale = dynamicHorizontalCap / MathHelper.sqrt(horizontalSpeedSquared);
-                this.velocityX *= scale;
-                this.velocityZ *= scale;
-            }
+            this.floatyMotion.capHorizontalVelocity(this, HORIZ_SPEED_CAP, EXTRA_HCAP, gustStrengthLocal);
 
             // --- Roll update ---
             this.prevAngle = this.angle;
-            this.gustSpinVel *= GUST_SPIN_DAMP;
+            float gustSpinVelocity = this.floatyMotion.dampAndGetSpinVelocity();
             // Angular velocity from sway is now based on cos(phase) to make it fastest at the apex of the swing, creating a 'twist'.
             float swayAngularVelocity = cosPhase * this.swayFrequency * SWAY_ROTATION_AMPLITUDE * SWAY_ROTATION_SPEED_MOD;
-            this.angle += this.constantRollVelocity + swayAngularVelocity + this.gustSpinVel;
+            this.angle += this.constantRollVelocity + swayAngularVelocity + gustSpinVelocity;
         }
 
         super.tick();
@@ -268,68 +198,52 @@ public class HamsterBeddingParticle extends SpriteBillboardParticle {
         return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    // --- Deterministic Wind Model ---
-    /**
-     * Represents a single gust event active in the current window at a given position.
-     */
-    private record Gust(boolean active, long key, int ticksSinceGustStart, int gustDurationTicks, float gustDirX, float gustDirZ) {}
+    // --- Gust Event Hook ---
+    @Override
+    public double velocityX() {
+        return this.velocityX;
+    }
 
-    /**
-     * Deterministically samples a wind gust based on the current world time and particle position.
-     * This creates spatially and temporally coherent wind effects for groups of particles.
-     */
-    private static Gust sampleGust(ClientWorld world, double x, double z) {
-        long worldTime = world.getTime();
-        long gustWindowIndex = Math.floorDiv(worldTime, GUST_WINDOW_TICKS);
+    @Override
+    public double velocityZ() {
+        return this.velocityZ;
+    }
 
-        int cellX = MathHelper.floor((float)x) / GUST_CELL_BLOCKS;
-        int cellZ = MathHelper.floor((float)z) / GUST_CELL_BLOCKS;
+    @Override
+    public void addVelocityX(double amount) {
+        this.velocityX += amount;
+    }
 
-        long baseSeed = mix64(cellX, cellZ, gustWindowIndex);
-        Random r = new Random(baseSeed);
+    @Override
+    public void addVelocityY(double amount) {
+        this.velocityY += amount;
+    }
 
-        if (r.nextFloat() >= GUST_PROB_PER_WIN) {
-            return new Gust(false, baseSeed, 0, 0, 0f, 0f);
+    @Override
+    public void addVelocityZ(double amount) {
+        this.velocityZ += amount;
+    }
+
+    @Override
+    public void multiplyVelocityX(float factor) {
+        this.velocityX *= factor;
+    }
+
+    @Override
+    public void multiplyVelocityZ(float factor) {
+        this.velocityZ *= factor;
+    }
+
+    @Override
+    public void onGustStarted(ClientWorld world, double x, double y, double z, long gustKey, long worldTime) {
+        // Play sound once per unique gust event per tick, up to MAX_CONCURRENT_SOUNDS simultaneously
+        if (soundStartTimes.size() < MAX_CONCURRENT_SOUNDS && playedGustSoundsThisTick.add(gustKey)) {
+            float vol = Configs.AHP_UI.leafGustVolume.get();
+            if (vol > 0) {
+                world.playSound(x, y, z, ModSounds.GENTLE_BREEZE.get(), SoundCategory.AMBIENT, vol, 1.0f, false);
+                soundStartTimes.addLast(worldTime);
+            }
         }
-
-        int tickInCurrentWindow = (int)(worldTime % GUST_WINDOW_TICKS);
-        int maxStartTickInWindow = Math.max(1, GUST_WINDOW_TICKS - GUST_MAX_LEN - 1);
-        int gustStartTick = 1 + r.nextInt(maxStartTickInWindow);
-        int gustDurationTicks = GUST_MIN_LEN + r.nextInt(GUST_MAX_LEN - GUST_MIN_LEN + 1);
-
-        if (tickInCurrentWindow < gustStartTick || tickInCurrentWindow > gustStartTick + gustDurationTicks) {
-            long key = baseSeed ^ gustStartTick;
-            return new Gust(false, key, 0, gustDurationTicks, 0f, 0f);
-        }
-
-        float theta = r.nextFloat() * MathHelper.TAU;
-        float gustDirX = MathHelper.cos(theta);
-        float gustDirZ = MathHelper.sin(theta);
-        long key = (baseSeed ^ gustStartTick);
-        int ticksSinceGustStart = tickInCurrentWindow - gustStartTick;
-
-        return new Gust(true, key, ticksSinceGustStart, gustDurationTicks, gustDirX, gustDirZ);
-    }
-
-    /** A small, fast mixing function for generating stable randomness per cell/window. */
-    private static long mix64(long seedA, long seedB) {
-        long x = seedA * 0x9E3779B97F4A7C15L + seedB + 0xBF58476D1CE4E5B9L;
-        x ^= (x >>> 30);
-        x *= 0xBF58476D1CE4E5B9L;
-        x ^= (x >>> 27);
-        x *= 0x94D049BB133111EBL;
-        x ^= (x >>> 31);
-        return x;
-    }
-
-    private static long mix64(long currentSwayAcceleration, long b, long c) {
-        return mix64(mix64(currentSwayAcceleration, b), c);
-    }
-
-    /** A smoothing function (ease-in, ease-out) for gust strength envelopes. */
-    private static float smooth01(float x) {
-        x = MathHelper.clamp(x, 0f, 1f);
-        return x * x * (3f - 2f * x);
     }
 
     // --- Factory ---

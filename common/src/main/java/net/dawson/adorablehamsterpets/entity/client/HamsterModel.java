@@ -195,7 +195,15 @@ public class HamsterModel extends GeoModel<HamsterEntity> {
             float pitchOffset = 0.0f;
 
             // --- Dynamic Pitch Rotation ---
-            if (entity.isProjectileDummy) {
+            if (entity.clientFluteMountFlight) {
+                float partialTick = animationState.getPartialTick();
+                pitchOffset = MathHelper.lerp(
+                        partialTick,
+                        entity.prevClientFluteMountPitch,
+                        entity.clientFluteMountPitch);
+            } else if (entity.isFluteMountFlight()) {
+                pitchOffset = entity.getFluteMountPitch();
+            } else if (entity.isProjectileDummy) {
                 // --- Projectile Mode ---
                 // Align with velocity vector (follow flight arc)
                 Vec3d velocity = entity.getVelocity();

@@ -30,6 +30,7 @@ import net.dawson.adorablehamsterpets.client.particle.HamsterBeddingParticle;
 import net.dawson.adorablehamsterpets.client.particle.PixieDustParticleTheme;
 import net.dawson.adorablehamsterpets.client.perk.PlayerPerkManager;
 import net.dawson.adorablehamsterpets.client.render.BlockJiggleManager;
+import net.dawson.adorablehamsterpets.client.sound.DistantSoundManager;
 import net.dawson.adorablehamsterpets.client.sound.HamsterFeverBreathingSoundManager;
 import net.dawson.adorablehamsterpets.client.sound.HamsterTreeLoopSoundInstance;
 import net.dawson.adorablehamsterpets.client.state.ClientShoulderHamsterData;
@@ -67,6 +68,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -209,6 +211,7 @@ public class AdorableHamsterPetsClient {
             ClientParticleManager.INSTANCE.clear();
             ClientShoulderHamsterData.REPLAY_CACHE.clear();
             HamsterFeverBreathingSoundManager.INSTANCE.reset(MinecraftClient.getInstance());
+            DistantSoundManager.INSTANCE.reset(MinecraftClient.getInstance());
             pendingGuidebookEffects = false;
 
             AhpUiConfig uiConfig = AdorableHamsterPets.UI_CONFIG;
@@ -252,7 +255,7 @@ public class AdorableHamsterPetsClient {
         // --- Custom Keybind Interaction ---
         InteractionEvent.INTERACT_ENTITY.register((player, entity, hand) -> {
             // Ensure we are on client and main hand to avoid double firing
-            if (player.getWorld().isClient && hand == net.minecraft.util.Hand.MAIN_HAND && entity instanceof HamsterEntity hamster) {
+            if (player.getWorld().isClient && hand == Hand.MAIN_HAND && entity instanceof HamsterEntity hamster) {
 
                 // 1. Force Shoulder Mount
                 if (Configs.AHP_MAIN.enableShoulderMountKeybind && ModKeyBindings.FORCE_MOUNT_HAMSTER_KEY.isPressed()) {
@@ -316,7 +319,10 @@ public class AdorableHamsterPetsClient {
         // --- 2. Redstone Fever Breathing ---
         HamsterFeverBreathingSoundManager.INSTANCE.tick(client);
 
-        // --- 3. Announcement System Logic ---
+        // --- 3. Distant Audio Sessions ---
+        DistantSoundManager.INSTANCE.tick(client);
+
+        // --- 4. Announcement System Logic ---
         boolean isGuiOpen = client.currentScreen != null;
         AnnouncementIconAnimator.INSTANCE.tick(isGuiOpen);
 
@@ -341,7 +347,7 @@ public class AdorableHamsterPetsClient {
             AdorableHamsterPets.LOGGER.debug("[AHP Client Tick] Triggered periodic manifest refresh.");
         }
 
-        // --- 4. Input & Game Logic ---
+        // --- 5. Input & Game Logic ---
         if (client.player == null || client.world == null) {
             renderedHamsterIdsThisTick.clear();
             renderedHamsterIdsLastTick.clear();
@@ -833,7 +839,7 @@ public class AdorableHamsterPetsClient {
         return username + "@" + client.getCurrentServerEntry().address.toLowerCase(Locale.ROOT);
     }
 
-    private static void sendWarningPart1(net.minecraft.entity.player.PlayerEntity player) {
+    private static void sendWarningPart1(PlayerEntity player) {
         // 1. Once Only Disclaimer
         MutableText message = Text.literal("\n")
                 .append(Text.translatable("message.adorablehamsterpets.warning.only_once").formatted(Formatting.RED, Formatting.BOLD))
@@ -859,7 +865,7 @@ public class AdorableHamsterPetsClient {
         player.playSound(ModSounds.HAMSTER_DING.value(), 1.0f, 0.8f);
     }
 
-    private static void sendWarningPart2(net.minecraft.entity.player.PlayerEntity player) {
+    private static void sendWarningPart2(PlayerEntity player) {
         // 4. The Oath
         MutableText message = Text.literal("\n")
                 .append(Text.translatable("message.adorablehamsterpets.warning.oath_label").formatted(Formatting.GOLD, Formatting.BOLD))
@@ -1123,29 +1129,23 @@ public class AdorableHamsterPetsClient {
 
     /**
      * Handles the {@link PlayDistantSoundPayload} packet.
-     * Plays a sound at a specific location on the client, bypassing vanilla's distance attenuation checks
-     * often imposed by ServerPlayerEntity#playSound, allowing "distant" impact sounds to be heard.
+     * Delegates playback to {@link DistantSoundManager}, which resolves the
+     * payload's listener-position, positioned, or keyed-session mode.
      *
-     * @param payload The packet data containing sound ID, volume, and pitch.
+     * @param payload The packet data containing sound and playback details.
      */
     public static void handlePlayDistantSound(PlayDistantSoundPayload payload) {
         MinecraftClient client = MinecraftClient.getInstance();
-        if (client.world == null || client.player == null) return;
+        DistantSoundManager.INSTANCE.handlePlay(client, payload);
+    }
 
-        // Resolve the sound identifier to a SoundEvent
-        SoundEvent sound = SoundEvent.of(payload.soundId());
-
-        // Play the sound at the player's location to ensure audibility
-        client.world.playSound(
-                client.player.getX(),
-                client.player.getY(),
-                client.player.getZ(),
-                sound,
-                SoundCategory.NEUTRAL,
-                payload.volume(),
-                payload.pitch(),
-                false // distanceDelay
-        );
+    /**
+     * Handles explicit cancellation of a keyed distant sound session.
+     *
+     * @param payload The packet containing the deterministic session key.
+     */
+    public static void handleStopDistantSound(StopDistantSoundPayload payload) {
+        DistantSoundManager.INSTANCE.stopSession(MinecraftClient.getInstance(), payload.sessionKey());
     }
 
     /* ──────────────────────────────────────────────────────────────────────────────

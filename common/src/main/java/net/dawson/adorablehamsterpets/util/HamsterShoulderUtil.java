@@ -10,6 +10,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 
@@ -56,7 +57,7 @@ public final class HamsterShoulderUtil {
         HitResult hitResult = player.raycast(4.5, 0.0f, false);
         BlockPos initialSearchPos =
                 hitResult.getType() == HitResult.Type.BLOCK
-                        ? ((net.minecraft.util.hit.BlockHitResult) hitResult).getBlockPos()
+                        ? ((BlockHitResult) hitResult).getBlockPos()
                         : fallbackPos;
         Optional<BlockPos> safePos =
                 HamsterPlacementUtil.findSafeSpawnPosition(initialSearchPos, world, 5, hamster);

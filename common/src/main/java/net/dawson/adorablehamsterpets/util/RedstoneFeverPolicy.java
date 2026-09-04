@@ -17,7 +17,7 @@ final class RedstoneFeverPolicy {
             boolean creative,
             boolean spectator,
             boolean invulnerable) {
-        return alive && !removed && !creative && !spectator && !invulnerable;
+        return alive && !removed && !spectator;
     }
 
     private RedstoneFeverPolicy() {}

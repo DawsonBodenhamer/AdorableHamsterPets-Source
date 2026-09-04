@@ -2,7 +2,8 @@ package net.dawson.adorablehamsterpets.util;
 
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
-import net.dawson.adorablehamsterpets.sound.ModSounds;
+import net.dawson.adorablehamsterpets.entity.custom.DanceStyle;
+import net.dawson.adorablehamsterpets.flute.DanceSongMatcher;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.JukeboxBlockEntity;
 import net.minecraft.block.jukebox.JukeboxSong;
@@ -11,7 +12,6 @@ import net.minecraft.component.type.LoreComponent;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.item.ItemStack;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -127,7 +128,7 @@ public final class HamsterAIUtil {
      * Scans for a nearby jukebox actively playing the Cheese Music Disc or any configured
      * custom discs to which the hamster is intended to dance.
      */
-    public static boolean isDancingSongPlayingNearby(HamsterEntity hamster) {
+    public static DanceStyle getNearbyDanceStyle(HamsterEntity hamster) {
         World world = hamster.getWorld();
 
         for (BlockPos p : BlockPos.iterateOutwards(hamster.getBlockPos(), 8, 4, 8)) {
@@ -136,43 +137,26 @@ public final class HamsterAIUtil {
                     if (jbe.getManager().isPlaying() && jbe.getManager().getSong() != null) {
                         JukeboxSong song = jbe.getManager().getSong();
 
-                        // Check AHP theme song
-                        SoundEvent currentSong = song.soundEvent().value();
-                        if (currentSong.equals(ModSounds.AHP_THEME_SONG_8_BIT.get()) ||
-                                currentSong.equals(ModSounds.AHP_THEME_SONG_LOW_FI.get()) ||
-                                currentSong.equals(ModSounds.AHP_THEME_SONG_ORCHESTRAL.get())) {
-                            return true;
+                        ItemStack discStack = jbe.getStack();
+                        String songDesc = song.description().getString().toLowerCase(Locale.ROOT);
+                        String itemName = discStack.getName().getString().toLowerCase(Locale.ROOT);
+                        String itemKey = discStack.getTranslationKey().toLowerCase(Locale.ROOT);
+                        LoreComponent lore = discStack.get(DataComponentTypes.LORE);
+
+                        List<String> searchableText = new ArrayList<>(List.of(songDesc, itemName, itemKey));
+                        if (lore != null) {
+                            for (Text line : lore.lines()) searchableText.add(line.getString());
                         }
-
-                        // Check dynamic config strings
-                        if (!Configs.AHP_ITEMS.dancingMusicDiscStrings.isEmpty()) {
-                            ItemStack discStack = jbe.getStack();
-                            String songDesc = song.description().getString().toLowerCase(Locale.ROOT);
-                            String itemName = discStack.getName().getString().toLowerCase(Locale.ROOT);
-                            String itemKey = discStack.getTranslationKey().toLowerCase(Locale.ROOT);
-
-                            LoreComponent lore = discStack.get(DataComponentTypes.LORE);
-
-                            for (String searchStr : Configs.AHP_ITEMS.dancingMusicDiscStrings) {
-                                String lowerSearch = searchStr.toLowerCase(Locale.ROOT);
-
-                                if (songDesc.contains(lowerSearch) || itemName.contains(lowerSearch) || itemKey.contains(lowerSearch)) {
-                                    return true;
-                                }
-
-                                if (lore != null) {
-                                    for (Text line : lore.lines()) {
-                                        if (line.getString().toLowerCase(Locale.ROOT).contains(lowerSearch)) {
-                                            return true;
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        DanceStyle style = DanceSongMatcher.classify(
+                                Configs.AHP_ITEMS.slowDancingMusicDiscStrings,
+                                Configs.AHP_ITEMS.dancingMusicDiscStrings,
+                                searchableText);
+                        if (style != DanceStyle.NONE) return style;
                     }
                 }
             }
         }
-        return false;
+        return DanceStyle.NONE;
     }
+
 }

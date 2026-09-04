@@ -5,6 +5,7 @@ import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.entity.custom.genetics.HamsterGenome;
 import net.dawson.adorablehamsterpets.entity.custom.genetics.HamsterPaletteManager;
+import net.dawson.adorablehamsterpets.flute.FluteTrainingPolicy;
 import net.dawson.adorablehamsterpets.util.MiscUtil;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -18,6 +19,8 @@ import snownee.jade.api.IEntityComponentProvider;
 import snownee.jade.api.IServerDataProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
+
+import java.util.Locale;
 
 public enum HamsterGeneticsComponentProvider implements IEntityComponentProvider, IServerDataProvider<EntityAccessor> {
     INSTANCE;
@@ -101,6 +104,17 @@ public enum HamsterGeneticsComponentProvider implements IEntityComponentProvider
                     "tooltip.adorablehamsterpets.jade.redstone_fever",
                     Text.translatable(stateKey)));
         }
+
+        // --- Acorn Flute Training ---
+        if (Configs.AHP_UI.showJadeFluteTraining) {
+            FluteTrainingPolicy.Tier tier = FluteTrainingPolicy.tier(
+                    serverData.getInt("AcornFluteSuccessfulMounts"),
+                    Configs.AHP_MAIN.acornFluteMountsToMastery.get());
+            tooltip.add(Text.translatable(
+                    "jade.adorablehamsterpets.flute_training",
+                    Text.translatable("jade.adorablehamsterpets.flute_training."
+                            + tier.name().toLowerCase(Locale.ROOT))));
+        }
     }
 
     @Override
@@ -111,6 +125,7 @@ public enum HamsterGeneticsComponentProvider implements IEntityComponentProvider
             data.putInt("AggressionState", hamster.getAggressionState().ordinal());
             data.putBoolean("RedstoneFevered", hamster.hasRedstoneFever());
             data.putInt("RedstoneFeverRecoveryStage", hamster.getRedstoneFeverRecoveryStage());
+            data.putInt("AcornFluteSuccessfulMounts", hamster.getFluteProgressState().getSuccessfulMounts());
         }
     }
 

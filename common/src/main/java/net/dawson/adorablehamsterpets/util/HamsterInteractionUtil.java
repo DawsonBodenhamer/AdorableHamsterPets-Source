@@ -822,6 +822,17 @@ public final class HamsterInteractionUtil {
      * Accessible by both right-click interactions and force-mount keybinds.
      */
     public static void executeShoulderMount(HamsterEntity hamster, PlayerEntity player, ItemStack stack) {
+        executeShoulderMount(hamster, player, stack, ShoulderMountSoundTiming.DELAYED);
+    }
+
+    /**
+     * Executes shoulder mounting with sound timing appropriate to the initiating interaction.
+     */
+    public static void executeShoulderMount(
+            HamsterEntity hamster,
+            PlayerEntity player,
+            ItemStack stack,
+            ShoulderMountSoundTiming soundTiming) {
         PlayerEntityAccessor playerAccessor = (PlayerEntityAccessor) player;
 
         // --- Mount Priority Logic ---
@@ -868,7 +879,9 @@ public final class HamsterInteractionUtil {
                     hamster.getWorld().playSound(player, player.getBlockPos(), mountSound, SoundCategory.PLAYERS, 1.0f, pitch);
 
                     // Calculate delay based on destination
-                    int soundDelay = (availableSlot == ShoulderLocation.RIGHT_SHOULDER) ? 23 : 39;
+                    int soundDelay = soundTiming == ShoulderMountSoundTiming.IMMEDIATE
+                            ? 0
+                            : (availableSlot == ShoulderLocation.RIGHT_SHOULDER ? 23 : 39);
 
                     // Send packet to mounting player to handle their own sound timing dynamically
                     NetworkManager.sendToPlayer(serverPlayer, new PlayShoulderMountSoundPayload(mountSound.getId(), pitch, soundDelay));
@@ -941,5 +954,10 @@ public final class HamsterInteractionUtil {
         return (selectedPool == 1)
                 ? ConfigDataCache.getRandomCustomLootItem(hamster.getRandom())
                 : ConfigDataCache.getRandomDefaultLootItem(hamster.getRandom());
+    }
+
+    public enum ShoulderMountSoundTiming {
+        DELAYED,
+        IMMEDIATE
     }
 }

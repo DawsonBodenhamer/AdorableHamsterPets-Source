@@ -16,6 +16,7 @@ import net.dawson.adorablehamsterpets.entity.custom.HamsterBlockHiderEntity;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterTreeSearcherEntity;
 import net.dawson.adorablehamsterpets.entity.custom.genetics.HamsterPaletteManager;
+import net.dawson.adorablehamsterpets.flute.FlutePerformanceManager;
 import net.dawson.adorablehamsterpets.item.ModItems;
 import net.dawson.adorablehamsterpets.mixin.accessor.SlotAccessor;
 import net.dawson.adorablehamsterpets.util.AcornRingUtil;
@@ -93,6 +94,7 @@ public class AHPCommonEvents {
         TickEvent.SERVER_POST.register(HamsterSpawnCommandUtil::onServerTick);
         TickEvent.SERVER_POST.register(AcornRingUtil::onServerTick);
         TickEvent.SERVER_POST.register(CaveHamsterSpawner::onServerTick);
+        TickEvent.SERVER_POST.register(FlutePerformanceManager::onServerTick);
 
         // Trigger the genetics report on headless servers
         LifecycleEvent.SERVER_STARTED.register(server -> {

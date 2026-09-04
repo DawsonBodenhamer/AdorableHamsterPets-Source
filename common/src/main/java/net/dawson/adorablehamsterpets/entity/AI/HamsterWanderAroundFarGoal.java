@@ -5,6 +5,7 @@ import net.dawson.adorablehamsterpets.block.entity.HamsterBedBlockEntity;
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.config.WanderDistance;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
+import net.dawson.adorablehamsterpets.entity.custom.DanceStyle;
 import net.dawson.adorablehamsterpets.util.EntityTargetingUtil;
 import net.dawson.adorablehamsterpets.util.HamsterMovementUtil;
 import net.dawson.adorablehamsterpets.util.HamsterPlacementUtil;
@@ -80,7 +81,7 @@ public class HamsterWanderAroundFarGoal extends WanderAroundFarGoal {
             }
 
             // Reduce wander frequency by 50% if dancing to music disc
-            if (this.hamster.isDancing()) {
+            if (this.hamster.getDanceStyle() == DanceStyle.BOUNCING) {
                 interval *= 2;
             }
 
@@ -123,7 +124,7 @@ public class HamsterWanderAroundFarGoal extends WanderAroundFarGoal {
             if (newTarget != null) {
                 // Apply 50% speed reduction if dancing
                 double activeSpeed = BUFFED_WANDER_SPEED;
-                if (this.hamster.isDancing()) {
+                if (this.hamster.getDanceStyle() == DanceStyle.BOUNCING) {
                     activeSpeed *= 0.5;
                 }
                 this.mob.getNavigation().startMovingTo(newTarget.x, newTarget.y, newTarget.z, activeSpeed);
@@ -139,7 +140,7 @@ public class HamsterWanderAroundFarGoal extends WanderAroundFarGoal {
         double currentSpeed = this.hamster.hasGreenBeanBuff() ? BUFFED_WANDER_SPEED : this.speed;
 
         // Reduce speed by 50% if dancing
-        if (this.hamster.isDancing()) {
+        if (this.hamster.getDanceStyle() == DanceStyle.BOUNCING) {
             currentSpeed *= 0.5;
         }
 

@@ -23,6 +23,7 @@ public class ModItemGroups {
                         output.add(ModItems.MUSIC_DISC_CHEESE.get());
                         output.add(ModItems.MUSIC_DISC_BLUE_CHEESE.get());
                         output.add(ModItems.MUSIC_DISC_PARMESAN.get());
+                        output.add(ModItems.MUSIC_DISC_ACORN.get());
                         output.add(ModItems.CHEESE.get());
                         output.add(ModItems.HAMSTER_FOOD_MIX.get());
                         output.add(ModItems.CUCUMBER.get());
@@ -41,6 +42,9 @@ public class ModItemGroups {
                         output.add(ModItems.ACORN_SHARD.get());
                         output.add(ModItems.ACORN_HAT.get());
                         output.add(ModItems.ACORN_RING.get());
+                        output.add(ModItems.ACORN_FLUTE_LUSH.get());
+                        output.add(ModItems.ACORN_FLUTE_EMBER.get());
+                        output.add(ModItems.ACORN_FLUTE_HARMONY.get());
                         output.add(ModItems.HAMSTER_ARMOR_ACORN.get());
                         output.add(ModItems.HAMSTER_ARMOR_IRON.get());
                         output.add(ModItems.HAMSTER_ARMOR_GOLD.get());

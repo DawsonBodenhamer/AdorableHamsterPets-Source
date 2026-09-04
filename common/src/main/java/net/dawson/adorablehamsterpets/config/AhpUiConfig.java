@@ -179,6 +179,11 @@ public class AhpUiConfig extends Config {
     public boolean showJadeRedstoneFeverRecovery = false;
 
     @NonSync
+    @Translatable.Name("Show Flute Training")
+    @Translatable.Desc("Show whether a hamster is Untrained, Learning, Responsive, or Attuned to the Acorn Flute. The more in sync, the faster the hamster will respond when you use the flute to call it to your shoulder.")
+    public boolean showJadeFluteTraining = false;
+
+    @NonSync
     @ConfigGroup.Pop
     @Translatable.Name("Show Inventory")
     @Translatable.Desc("Display the default Jade inventory contents so you can see what your hamster is hoarding.")

@@ -14,8 +14,8 @@
       "using": {
         "item_output1": "#item_output1"
       },
-      "x": 180,
-      "y": 130
+      "x": 54,
+      "y": 123
     }
   ],
   "components": [
@@ -23,8 +23,9 @@
       "type": "patchouli:item",
       "item": "#item_input",
       "link_recipe": true,
-      "x": 160,
-      "y": 130
+      "framed": true,
+      "x": 29,
+      "y": 123
     }
   ]
 }

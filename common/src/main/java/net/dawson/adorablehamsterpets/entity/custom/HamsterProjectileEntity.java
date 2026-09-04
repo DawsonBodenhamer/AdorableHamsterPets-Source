@@ -1,9 +1,12 @@
 package net.dawson.adorablehamsterpets.entity.custom;
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
+import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
 import net.dawson.adorablehamsterpets.config.ConfigDataCache;
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
+import net.dawson.adorablehamsterpets.flute.AcornMusicDiscRewardPolicy;
+import net.dawson.adorablehamsterpets.flute.FlutePerformanceManager;
 import net.dawson.adorablehamsterpets.item.ModItems;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.dawson.adorablehamsterpets.util.HamsterNbtUtil;
@@ -29,6 +32,7 @@ import net.minecraft.entity.projectile.thrown.ThrownEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -40,6 +44,8 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import java.util.UUID;
 
 /**
  * A standard thrown entity wrapper for hamsters.
@@ -239,8 +245,46 @@ public class HamsterProjectileEntity extends ThrownEntity {
                         impactSound = ModSounds.getDynamicEntitySound(hitEntity, isDeath, damageSource);
 
                         // Music Disc Drop Logic
-                        if (isDeath && livingHit instanceof CreeperEntity creeper && creeper.shouldRenderOverlay()) {
-                            ItemScatterer.spawn(this.getWorld(), creeper.getX(), creeper.getY(), creeper.getZ(), new ItemStack(ModItems.MUSIC_DISC_CHEESE.get()));
+                        // Charged creeper deaths drop Cheese unless every ritual condition passes
+                        if (isDeath && livingHit instanceof CreeperEntity creeper) {
+                            UUID throwerUuid = ownerPlayer == null ? null : ownerPlayer.getUuid();
+                            UUID qualifiedRescuerUuid = hamster.getFluteProgressState().getQualifiedRescuerUuid();
+                            boolean calmedByNormalRiff = FlutePerformanceManager.isAffectedByNormalRiff(creeper);
+                            AcornMusicDiscRewardPolicy.Outcome rewardOutcome;
+
+                            synchronized (hamster.getFluteProgressState()) {
+                                rewardOutcome = AcornMusicDiscRewardPolicy.evaluate(
+                                        true,
+                                        creeper.shouldRenderOverlay(),
+                                        calmedByNormalRiff,
+                                        throwerUuid,
+                                        qualifiedRescuerUuid,
+                                        hamster.getFluteProgressState().hasAvailableRewardFor(throwerUuid));
+                                if (rewardOutcome == AcornMusicDiscRewardPolicy.Outcome.ACORN_DISC
+                                        && !hamster.getFluteProgressState().consumeReward(throwerUuid)) {
+                                    // Preserve ordinary charged-creeper drop if consumption loses race
+                                    rewardOutcome = AcornMusicDiscRewardPolicy.Outcome.CHEESE_DISC;
+                                }
+                            }
+
+                            if (rewardOutcome == AcornMusicDiscRewardPolicy.Outcome.ACORN_DISC) {
+                                ItemScatterer.spawn(
+                                        this.getWorld(),
+                                        creeper.getX(),
+                                        creeper.getY(),
+                                        creeper.getZ(),
+                                        new ItemStack(ModItems.MUSIC_DISC_ACORN.get()));
+                                if (ownerPlayer instanceof ServerPlayerEntity thrower) {
+                                    ModCriteria.ACORN_MUSIC_DISC.get().trigger(thrower);
+                                }
+                            } else if (rewardOutcome == AcornMusicDiscRewardPolicy.Outcome.CHEESE_DISC) {
+                                ItemScatterer.spawn(
+                                        this.getWorld(),
+                                        creeper.getX(),
+                                        creeper.getY(),
+                                        creeper.getZ(),
+                                        new ItemStack(ModItems.MUSIC_DISC_CHEESE.get()));
+                            }
                         }
 
                         // Apply damage

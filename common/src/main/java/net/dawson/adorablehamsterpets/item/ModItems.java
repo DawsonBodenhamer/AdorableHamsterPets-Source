@@ -7,6 +7,8 @@ import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.block.ModBlocks;
 import net.dawson.adorablehamsterpets.block.custom.WoodVariant;
 import net.dawson.adorablehamsterpets.config.Configs;
+import net.dawson.adorablehamsterpets.entity.ModEntities;
+import net.dawson.adorablehamsterpets.flute.AcornFluteVariant;
 import net.dawson.adorablehamsterpets.item.custom.*;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.jukebox.JukeboxSong;
@@ -36,7 +38,7 @@ public class ModItems {
             () -> new PatchouliGuideBookItem(new Item.Settings().maxCount(1)));
 
     public static final RegistrySupplier<Item> HAMSTER_SPAWN_EGG = registerItem("hamster_spawn_egg",
-            () -> new SpawnEggItem(net.dawson.adorablehamsterpets.entity.ModEntities.HAMSTER.get(), 0x9c631f, 0xffffff, new Item.Settings()));
+            () -> new SpawnEggItem(ModEntities.HAMSTER.get(), 0x9c631f, 0xffffff, new Item.Settings()));
 
     // --- Crops & Food ---
     public static final RegistrySupplier<Item> GREEN_BEAN_SEEDS = registerItem("green_bean_seeds",
@@ -119,6 +121,7 @@ public class ModItems {
     public static final RegistryKey<JukeboxSong> CHEESE_SONG_8_BIT_KEY = RegistryKey.of(RegistryKeys.JUKEBOX_SONG, Identifier.of(AdorableHamsterPets.MOD_ID, "ahp_theme_song_8_bit"));
     public static final RegistryKey<JukeboxSong> BLUE_CHEESE_SONG_LOW_FI_KEY = RegistryKey.of(RegistryKeys.JUKEBOX_SONG, Identifier.of(AdorableHamsterPets.MOD_ID, "ahp_theme_song_low_fi"));
     public static final RegistryKey<JukeboxSong> PARMESAN_SONG_ORCHESTRAL_KEY = RegistryKey.of(RegistryKeys.JUKEBOX_SONG, Identifier.of(AdorableHamsterPets.MOD_ID, "ahp_theme_song_orchestral"));
+    public static final RegistryKey<JukeboxSong> ACORN_SONG_ZAMPONA_KEY = RegistryKey.of(RegistryKeys.JUKEBOX_SONG, Identifier.of(AdorableHamsterPets.MOD_ID, "ahp_theme_song_zampona"));
 
     public static final RegistrySupplier<Item> MUSIC_DISC_CHEESE = registerItem("music_disc_cheese",
             () -> new Item(new Item.Settings().maxCount(1).rarity(Rarity.RARE).jukeboxPlayable(CHEESE_SONG_8_BIT_KEY)) {
@@ -159,6 +162,19 @@ public class ModItems {
                 }
             });
 
+    public static final RegistrySupplier<Item> MUSIC_DISC_ACORN = registerItem("music_disc_acorn",
+            () -> new Item(new Item.Settings().maxCount(1).rarity(Rarity.RARE).jukeboxPlayable(ACORN_SONG_ZAMPONA_KEY)) {
+                @Override
+                public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+                    if (Configs.AHP_UI.enableItemTooltips) {
+                        tooltip.add(Text.translatable("tooltip.adorablehamsterpets.music_disc_acorn.hint").formatted(Formatting.GOLD));
+                    } else if (!Platform.isModLoaded("emi")) {
+                        tooltip.add(Text.literal("Adorable Hamster Pets").formatted(Formatting.BLUE, Formatting.ITALIC));
+                    }
+                    super.appendTooltip(stack, context, tooltip, type);
+                }
+            });
+
     // --- Acorn & Resources ---
     public static final RegistrySupplier<Item> ACORN = registerItem("acorn",
             () -> new AliasedBlockItem(Blocks.OAK_SAPLING, new Item.Settings()) {
@@ -167,39 +183,6 @@ public class ModItems {
                     if (Configs.AHP_UI.enableItemTooltips) {
                         tooltip.add(Text.translatable("tooltip.adorablehamsterpets.acorn.hint1").formatted(Formatting.GOLD));
                         tooltip.add(Text.translatable("tooltip.adorablehamsterpets.acorn.hint2").formatted(Formatting.GRAY));
-                    } else if (!Platform.isModLoaded("emi")) {
-                        tooltip.add(Text.literal("Adorable Hamster Pets").formatted(Formatting.BLUE, Formatting.ITALIC));
-                    }
-                    super.appendTooltip(stack, context, tooltip, type);
-                }
-            });
-    public static final RegistrySupplier<Item> ACORN_HAT = registerItem("acorn_hat",
-            () -> new Item(new Item.Settings()) {
-                @Override
-                public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-                    if (Configs.AHP_UI.enableItemTooltips) {
-                        tooltip.add(Text.translatable("tooltip.adorablehamsterpets.acorn_hat.hint1").formatted(Formatting.GOLD));
-                        tooltip.add(Text.translatable("tooltip.adorablehamsterpets.acorn_hat.hint2").formatted(Formatting.GRAY));
-                    } else if (!Platform.isModLoaded("emi")) {
-                        tooltip.add(Text.literal("Adorable Hamster Pets").formatted(Formatting.BLUE, Formatting.ITALIC));
-                    }
-                    super.appendTooltip(stack, context, tooltip, type);
-                }
-            });
-
-    public static final RegistrySupplier<Item> ACORN_RING = registerItem("acorn_ring",
-            () -> new Item(new Item.Settings().maxCount(64)) {
-                @Override
-                public void appendTooltip(
-                        ItemStack stack,
-                        TooltipContext context,
-                        List<Text> tooltip,
-                        TooltipType type) {
-                    if (Configs.AHP_UI.enableItemTooltips) {
-                        tooltip.add(Text.translatable("tooltip.adorablehamsterpets.acorn_ring.hint1")
-                                .formatted(Formatting.GOLD));
-                        tooltip.add(Text.translatable("tooltip.adorablehamsterpets.acorn_ring.hint2")
-                                .formatted(Formatting.GRAY));
                     } else if (!Platform.isModLoaded("emi")) {
                         tooltip.add(Text.literal("Adorable Hamster Pets").formatted(Formatting.BLUE, Formatting.ITALIC));
                     }
@@ -220,6 +203,50 @@ public class ModItems {
                     super.appendTooltip(stack, context, tooltip, type);
                 }
             });
+
+    public static final RegistrySupplier<Item> ACORN_HAT = registerItem("acorn_hat",
+            () -> new Item(new Item.Settings()) {
+                @Override
+                public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
+                    if (Configs.AHP_UI.enableItemTooltips) {
+                        tooltip.add(Text.translatable("tooltip.adorablehamsterpets.acorn_hat.hint1").formatted(Formatting.GOLD));
+                        tooltip.add(Text.translatable("tooltip.adorablehamsterpets.acorn_hat.hint2").formatted(Formatting.GRAY));
+                    } else if (!Platform.isModLoaded("emi")) {
+                        tooltip.add(Text.literal("Adorable Hamster Pets").formatted(Formatting.BLUE, Formatting.ITALIC));
+                    }
+                    super.appendTooltip(stack, context, tooltip, type);
+                }
+            });
+
+    // --- Acorn Items ---
+    public static final RegistrySupplier<Item> ACORN_RING = registerItem("acorn_ring",
+            () -> new Item(new Item.Settings().maxCount(64)) {
+                @Override
+                public void appendTooltip(
+                        ItemStack stack,
+                        TooltipContext context,
+                        List<Text> tooltip,
+                        TooltipType type) {
+                    if (Configs.AHP_UI.enableItemTooltips) {
+                        tooltip.add(Text.translatable("tooltip.adorablehamsterpets.acorn_ring.hint1")
+                                .formatted(Formatting.GOLD));
+                        tooltip.add(Text.translatable("tooltip.adorablehamsterpets.acorn_ring.hint2")
+                                .formatted(Formatting.GRAY));
+                    } else if (!Platform.isModLoaded("emi")) {
+                        tooltip.add(Text.literal("Adorable Hamster Pets").formatted(Formatting.BLUE, Formatting.ITALIC));
+                    }
+                    super.appendTooltip(stack, context, tooltip, type);
+                }
+            });
+
+    public static final RegistrySupplier<Item> ACORN_FLUTE_LUSH = registerItem("acorn_flute_lush",
+            () -> new AcornFluteItem(new Item.Settings().maxCount(16), AcornFluteVariant.LUSH));
+
+    public static final RegistrySupplier<Item> ACORN_FLUTE_EMBER = registerItem("acorn_flute_ember",
+            () -> new AcornFluteItem(new Item.Settings().maxCount(16), AcornFluteVariant.EMBER));
+
+    public static final RegistrySupplier<Item> ACORN_FLUTE_HARMONY = registerItem("acorn_flute_harmony",
+            () -> new AcornFluteItem(new Item.Settings().maxCount(16), AcornFluteVariant.HARMONY));
 
     // --- Hamster Armor ---
     public static final RegistrySupplier<Item> HAMSTER_ARMOR_ACORN = registerItem("hamster_armor_acorn",

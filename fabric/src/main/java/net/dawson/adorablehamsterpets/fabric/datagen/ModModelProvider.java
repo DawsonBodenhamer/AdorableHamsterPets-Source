@@ -118,6 +118,7 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.MUSIC_DISC_CHEESE.get(), Models.GENERATED);
         itemModelGenerator.register(ModItems.MUSIC_DISC_BLUE_CHEESE.get(), Models.GENERATED);
         itemModelGenerator.register(ModItems.MUSIC_DISC_PARMESAN.get(), Models.GENERATED);
+        itemModelGenerator.register(ModItems.MUSIC_DISC_ACORN.get(), Models.GENERATED);
 
         // --- 3. Food & Crops ---
         itemModelGenerator.register(ModItems.CHEESE.get(), Models.GENERATED);
@@ -137,6 +138,9 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.ACORN_SHARD.get(), Models.GENERATED);
         itemModelGenerator.register(ModItems.ACORN_HAT.get(), Models.GENERATED);
         itemModelGenerator.register(ModItems.ACORN_RING.get(), Models.GENERATED);
+        itemModelGenerator.register(ModItems.ACORN_FLUTE_LUSH.get(), Models.GENERATED);
+        itemModelGenerator.register(ModItems.ACORN_FLUTE_EMBER.get(), Models.GENERATED);
+        itemModelGenerator.register(ModItems.ACORN_FLUTE_HARMONY.get(), Models.GENERATED);
         itemModelGenerator.register(ModItems.HAMSTER_ARMOR_ACORN.get(), Models.GENERATED);
         itemModelGenerator.register(ModItems.HAMSTER_ARMOR_IRON.get(), Models.GENERATED);
         itemModelGenerator.register(ModItems.HAMSTER_ARMOR_GOLD.get(), Models.GENERATED);
