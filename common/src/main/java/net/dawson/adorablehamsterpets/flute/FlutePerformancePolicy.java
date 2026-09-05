@@ -45,6 +45,16 @@ public final class FlutePerformancePolicy {
         return playerAlive && sameDimension && sameStack && matchingFluteVariant;
     }
 
+    public static String sanitizePreviousGoalName(String goalName) {
+        if (goalName == null
+                || goalName.equals("HamsterLookAtEntityGoal")
+                || goalName.equals("HamsterLookAroundGoal")
+                || goalName.equals("FluteMountResponse")) {
+            return "None";
+        }
+        return goalName;
+    }
+
     public enum Mode {
         NORMAL,
         SHOULDER_CALL

@@ -27,6 +27,8 @@ import net.dawson.adorablehamsterpets.util.*;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.control.BodyControl;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.PrioritizedGoal;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.MobNavigation;
 import net.minecraft.entity.ai.pathing.PathNodeType;
@@ -1036,6 +1038,18 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
     public void setFluteMountResponseActive(boolean active) {
         this.fluteMountResponseActive = active;
+        if (this.goalSelector != null) {
+            if (active) {
+                this.goalSelector.disableControl(Goal.Control.LOOK);
+                for (PrioritizedGoal goal : this.goalSelector.getGoals()) {
+                    if (goal.isRunning() && goal.getControls().contains(Goal.Control.LOOK)) {
+                        goal.stop();
+                    }
+                }
+            } else {
+                this.goalSelector.enableControl(Goal.Control.LOOK);
+            }
+        }
     }
 
     public boolean isWanderModeActive() {
@@ -1208,7 +1222,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
      * True any time the hamster is falling, unless swimming, sitting or in the startup grace
      * period.
      */
-    public boolean shouldRenderFlying() {
+    public boolean shouldRenderFalling() {
         if (this.isSitting() || this.isTouchingWater() || this.isInLava()) return false;
 
         // Prevent flying when bobbing on the water surface
@@ -2866,7 +2880,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             this.prevClientFallPitchProgress = this.clientFallPitchProgress;
 
             // Determine whether to pitch down
-            if (this.shouldRenderFlying()) {
+            if (this.shouldRenderFalling()) {
                 // Ease in pitch for natural falls
                 this.clientFallPitchProgress += 1.0f / NORMAL_FALL_PITCH_DURATION;
             } else {

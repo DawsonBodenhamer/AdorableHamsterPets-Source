@@ -19,7 +19,8 @@ public class HamsterAnimationScheduler {
     private final List<ScheduledTask> tasks = new ArrayList<>();
 
     // --- Animation Duration Map ---
-    // Durations are in ticks (Animation Length + small 3 tick buffer)
+    // Durations are in ticks (Animation Length + small 3 tick buffer).
+    // Note: anim_hamster_head_cock_* animations are intentionally omitted to preserve their "hold_on_last_frame" functionality
     private static final Map<String, Integer> ANIMATION_DURATIONS = new HashMap<>();
     static {
         ANIMATION_DURATIONS.put("crash", 32);
@@ -52,6 +53,7 @@ public class HamsterAnimationScheduler {
         ANIMATION_DURATIONS.put("anim_hamster_receiving_pets", 183);
         ANIMATION_DURATIONS.put("stun", 63);
         ANIMATION_DURATIONS.put("sitting_roll", 63);
+        ANIMATION_DURATIONS.put("anim_hamster_high_jump", 243);
     }
 
     /**

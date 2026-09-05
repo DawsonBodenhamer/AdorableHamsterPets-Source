@@ -97,9 +97,14 @@ public class HamsterModel extends GeoModel<HamsterEntity> {
         var flowerBackWithArmorBone = processor.getBone("flower_lower_back_with_armor");
 
         // --- Statue / AI Disabled Logic ---
-        var closedEyesBone = processor.getBone("closed_eyes");
-        if (closedEyesBone != null) {
-            closedEyesBone.setHidden(entity.isAiDisabled()); // Ensure eyes remain open in t-pose
+        // Ensure eyes remain open in t-pose
+        var upperEyeLidBone = processor.getBone("upper_eye_lid");
+        if (upperEyeLidBone != null) {
+            upperEyeLidBone.setHidden(entity.isAiDisabled());
+        }
+        var lowerEyeLidBone = processor.getBone("lower_eye_lid");
+        if (lowerEyeLidBone != null) {
+            lowerEyeLidBone.setHidden(entity.isAiDisabled());
         }
 
         // --- Easter Egg Logic ---
