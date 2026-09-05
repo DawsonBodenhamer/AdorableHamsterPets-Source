@@ -10,6 +10,7 @@ import net.dawson.adorablehamsterpets.entity.custom.DanceStyle;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 /**
  * Owns hamster animation definitions, selection precedence, trigger registration, and the three
@@ -34,7 +35,12 @@ public final class HamsterAnimationController {
     private static final RawAnimation KNOCKED_OUT_ANIM = animation("anim_hamster_ko");
     private static final RawAnimation WAKE_UP_FROM_KO_ANIM = animation("anim_hamster_wakeup_from_ko");
     private static final RawAnimation FLYING_ANIM = animation("anim_hamster_flying");
+    private static final RawAnimation FALLING_ANIM = animation("anim_hamster_falling");
     private static final RawAnimation HIGH_JUMP_ANIM = animation("anim_hamster_high_jump");
+    private static final RawAnimation HEAD_COCK_RIGHT_ANIM = animation("anim_hamster_head_cock_right");
+    private static final RawAnimation HEAD_COCK_LEFT_ANIM = animation("anim_hamster_head_cock_left");
+    private static final RawAnimation HEAD_COCK_UP_RIGHT_ANIM = animation("anim_hamster_head_cock_up_right");
+    private static final RawAnimation HEAD_COCK_UP_LEFT_ANIM = animation("anim_hamster_head_cock_up_left");
     private static final RawAnimation STANDING_HEADSHAKE_ANIM = animation("anim_hamster_standing_headshake");
     private static final RawAnimation SITTING_HEADSHAKE_ANIM = animation("anim_hamster_sitting_headshake");
     private static final RawAnimation MOVING_HEADSHAKE_ANIM = animation("anim_hamster_moving_headshake");
@@ -183,8 +189,10 @@ public final class HamsterAnimationController {
                                     if (state.sulking()) return event.setAndContinue(SULKING_ANIM);
                                     if (state.touchingWater() && !state.onGround())
                                         return event.setAndContinue(SWIMMING_ANIM);
-                                    if (state.projectileDummy() || state.renderFlying())
+                                    if (state.projectileDummy())
                                         return event.setAndContinue(FLYING_ANIM);
+                                    if (state.renderFalling())
+                                        return event.setAndContinue(FALLING_ANIM);
                                     if (state.taunting())
                                         return event.setAndContinue(TAUNTING_ANIM);
                                     if (state.presentingItem())
@@ -344,6 +352,18 @@ public final class HamsterAnimationController {
                                                 "mainController", "quick_bounce_on_back_legs");
                                     }
                                 }));
+
+        // --- Secondary Layered Head Controller ---
+        controllers.add(
+                new AnimationController<>(
+                                hamster,
+                                "headController",
+                                3,
+                                event -> PlayState.STOP)
+                        .triggerableAnim("anim_hamster_head_cock_right", HEAD_COCK_RIGHT_ANIM)
+                        .triggerableAnim("anim_hamster_head_cock_left", HEAD_COCK_LEFT_ANIM)
+                        .triggerableAnim("anim_hamster_head_cock_up_right", HEAD_COCK_UP_RIGHT_ANIM)
+                        .triggerableAnim("anim_hamster_head_cock_up_left", HEAD_COCK_UP_LEFT_ANIM));
     }
 
     /* ──────────────────────────────────────────────────────────────────────────────
@@ -396,7 +416,7 @@ public final class HamsterAnimationController {
             boolean sulking,
             boolean touchingWater,
             boolean onGround,
-            boolean renderFlying,
+            boolean renderFalling,
             boolean taunting,
             boolean presentingItem,
             String activeGoalName,
@@ -425,7 +445,7 @@ public final class HamsterAnimationController {
                     hamster.isSulking(),
                     hamster.isTouchingWater(),
                     hamster.isOnGround(),
-                    hamster.shouldRenderFlying(),
+                    hamster.shouldRenderFalling(),
                     hamster.isTaunting(),
                     hamster.isPresentingItem(),
                     hamster.getActiveCustomGoalName(),

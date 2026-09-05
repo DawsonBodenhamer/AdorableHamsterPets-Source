@@ -37,6 +37,7 @@ public class HamsterLookAroundGoal extends LookAroundGoal {
                     && !hamster.isSulking()
                     && !hamster.isHoldingMouthItem()
                     && !hamster.isFrozenMovement()
+                    && !hamster.isFluteMountResponseActive()
                     && !hamster.isCelebratingDiamond()
                     && !hamster.isCelebratingBaby()
                     && !hamster.getActiveCustomGoalName().equals(HamsterWanderAroundFarGoal.class.getSimpleName())
@@ -64,6 +65,7 @@ public class HamsterLookAroundGoal extends LookAroundGoal {
                     || hamster.isSulking()
                     || hamster.isHoldingMouthItem()
                     || hamster.isFrozenMovement()
+                    || hamster.isFluteMountResponseActive()
                     || hamster.isCelebratingDiamond()
                     || hamster.isCelebratingBaby()
                     || hamster.getActiveCustomGoalName().equals("Escaping Water")) {

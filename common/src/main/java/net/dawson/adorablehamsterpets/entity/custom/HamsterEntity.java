@@ -27,6 +27,8 @@ import net.dawson.adorablehamsterpets.util.*;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.control.BodyControl;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.PrioritizedGoal;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.MobNavigation;
 import net.minecraft.entity.ai.pathing.PathNodeType;
@@ -153,6 +155,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private static final TrackedData<Integer> DANCE_STYLE = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private static final TrackedData<Boolean> FLUTE_MOUNT_FLIGHT = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Float> FLUTE_MOUNT_PITCH = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.FLOAT);
+    private static final TrackedData<Float> FLUTE_MOUNT_YAW = DataTracker.registerData(HamsterEntity.class, TrackedDataHandlerRegistry.FLOAT);
 
     /* ──────────────────────────────────────────────────────────────────────────────
      *        Static Registration and Setup
@@ -336,6 +339,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         this.dataTracker.startTracking(DANCE_STYLE, DanceStyle.NONE.ordinal());
         this.dataTracker.startTracking(FLUTE_MOUNT_FLIGHT, false);
         this.dataTracker.startTracking(FLUTE_MOUNT_PITCH, 0.0F);
+        this.dataTracker.startTracking(FLUTE_MOUNT_YAW, 0.0F);
     }
 
     @Override
@@ -1033,12 +1037,32 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         this.dataTracker.set(FLUTE_MOUNT_PITCH, pitch);
     }
 
+    public float getFluteMountYaw() {
+        return this.dataTracker.get(FLUTE_MOUNT_YAW);
+    }
+
+    public void setFluteMountYaw(float yaw) {
+        this.dataTracker.set(FLUTE_MOUNT_YAW, yaw);
+    }
+
     public boolean isFluteMountResponseActive() {
         return this.fluteMountResponseActive;
     }
 
     public void setFluteMountResponseActive(boolean active) {
         this.fluteMountResponseActive = active;
+        if (this.goalSelector != null) {
+            if (active) {
+                this.goalSelector.disableControl(Goal.Control.LOOK);
+                for (PrioritizedGoal goal : this.goalSelector.getGoals()) {
+                    if (goal.isRunning() && goal.getControls().contains(Goal.Control.LOOK)) {
+                        goal.stop();
+                    }
+                }
+            } else {
+                this.goalSelector.enableControl(Goal.Control.LOOK);
+            }
+        }
     }
 
     public boolean isWanderModeActive() {
@@ -1211,7 +1235,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
      * True any time the hamster is falling, unless swimming, sitting or in the startup grace
      * period.
      */
-    public boolean shouldRenderFlying() {
+    public boolean shouldRenderFalling() {
         if (this.isSitting() || this.isTouchingWater() || this.isInLava()) return false;
 
         // Prevent flying when bobbing on the water surface
@@ -1728,6 +1752,15 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     @Override
     public EntityView method_48926() {
         return this.getWorld();
+    }
+
+    @Override
+    public void updateTrackedPositionAndAngles(
+            double x, double y, double z, float yaw, float pitch, int interpolationSteps, boolean interpolate) {
+        if (this.isFluteMountFlight()) {
+            yaw = this.getFluteMountYaw();
+        }
+        super.updateTrackedPositionAndAngles(x, y, z, yaw, pitch, interpolationSteps, interpolate);
     }
 
     @Override
@@ -2882,6 +2915,10 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                 this.clientFluteMountFlight = true;
                 this.clientFluteMountPitch +=
                         (this.getFluteMountPitch() - this.clientFluteMountPitch) * 0.45F;
+                float flightYaw = this.getFluteMountYaw();
+                this.setYaw(flightYaw);
+                this.headYaw = flightYaw;
+                this.bodyYaw = flightYaw;
             } else {
                 this.clientFluteMountFlight = false;
                 this.clientFluteMountPitch += (0.0F - this.clientFluteMountPitch) * 0.35F;
@@ -2891,7 +2928,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             this.prevClientFallPitchProgress = this.clientFallPitchProgress;
 
             // Determine whether to pitch down
-            if (this.shouldRenderFlying()) {
+            if (this.shouldRenderFalling()) {
                 // Ease in pitch for natural falls
                 this.clientFallPitchProgress += 1.0f / NORMAL_FALL_PITCH_DURATION;
             } else {

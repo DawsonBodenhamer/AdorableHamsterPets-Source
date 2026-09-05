@@ -54,6 +54,7 @@ public final class FlutePerformanceManager {
 
     private static final int FLIGHT_DURATION_TICKS = 24;
     private static final int ARRIVAL_PRESENTATION_TICKS = 2;
+    private static final int HIGH_JUMP_PREP_TICKS = (int) Math.round(0.42D * 20.0D); // 8.4 ticks rounded to 8
     private static final double NOTES_PER_TICK = 0.23D;
     private static final double FLIGHT_ARC_HEIGHT = 2.55D;
     private static final double SHOULDER_OFFSET = 0.36D;
@@ -142,6 +143,10 @@ public final class FlutePerformanceManager {
                 target != null && RESPONDING_HAMSTERS.contains(target.getUuid()));
         if (selectedMode == FlutePerformancePolicy.Mode.SHOULDER_CALL) {
             TimedSound sound = ModSounds.ACORN_FLUTE_CHIFF_TIMED;
+            boolean wasLookingAtEntity = target.isLookAtEntityGoalActive
+                    || HamsterLookAtEntityGoal.class.getSimpleName().equals(target.getActiveCustomGoalName());
+            String previousGoal = FlutePerformancePolicy.sanitizePreviousGoalName(
+                    target.getActiveCustomGoalName());
             Performance performance = Performance.shoulderCall(
                     player,
                     player.getUuid(),
@@ -159,10 +164,11 @@ public final class FlutePerformanceManager {
                     target.isFrozenMovement(),
                     target.hasNoGravity(),
                     target.getHamsterFlag(HamsterEntity.SITTING_FLAG),
-                    target.getActiveCustomGoalName());
+                    previousGoal,
+                    wasLookingAtEntity);
             performances.add(performance);
             RESPONDING_HAMSTERS.add(target.getUuid());
-            prepareShoulderResponse(target);
+            prepareShoulderResponse(target, player);
             playSound(world, performance);
             return true;
         }
@@ -316,12 +322,39 @@ public final class FlutePerformanceManager {
             HamsterMovementUtil.faceEntity(hamster, player);
             hamster.getNavigation().stop();
             hamster.setVelocity(Vec3d.ZERO);
-            hamster.setActiveCustomGoalName(HamsterLookAtEntityGoal.class.getSimpleName());
-            if (currentTick - performance.startTick < performance.responseDelayTicks) {
+            hamster.setActiveCustomGoalName("FluteMountResponse");
+
+            long elapsedTicks = currentTick - performance.startTick;
+
+            if (elapsedTicks >= 10 && !performance.headCockTriggered) {
+                String headCockAnim;
+                if (performance.wasLookingAtEntity) {
+                    headCockAnim = hamster.getRandom().nextBoolean()
+                            ? "anim_hamster_head_cock_up_right"
+                            : "anim_hamster_head_cock_up_left";
+                } else {
+                    headCockAnim = hamster.getRandom().nextBoolean()
+                            ? "anim_hamster_head_cock_right"
+                            : "anim_hamster_head_cock_left";
+                }
+                hamster.triggerAnimOnServer("headController", headCockAnim);
+                performance.headCockTriggered = true;
+                performance.triggeredHeadCockAnim = headCockAnim;
+            }
+
+            int prepStartTick = Math.max(0, performance.responseDelayTicks - HIGH_JUMP_PREP_TICKS);
+            if (elapsedTicks >= prepStartTick && !performance.jumpAnimTriggered) {
+                if (performance.headCockTriggered && performance.triggeredHeadCockAnim != null) {
+                    hamster.stopTriggeredAnimation("headController", performance.triggeredHeadCockAnim);
+                }
+                hamster.triggerAnimOnServer("mainController", "anim_hamster_high_jump");
+                performance.jumpAnimTriggered = true;
+            }
+
+            if (elapsedTicks < performance.responseDelayTicks) {
                 return true;
             }
 
-            hamster.triggerAnimOnServer("mainController", "anim_hamster_high_jump");
             hamster.setNoGravity(true);
             hamster.setFluteMountFlight(true);
             hamster.setFluteMountPitch(0.0F);
@@ -432,8 +465,15 @@ public final class FlutePerformanceManager {
             return false;
         }
 
+        if (performance.headCockTriggered && performance.triggeredHeadCockAnim != null) {
+            hamster.stopTriggeredAnimation("headController", performance.triggeredHeadCockAnim);
+        }
+        if (performance.jumpAnimTriggered) {
+            hamster.stopTriggeredAnimation("mainController", "anim_hamster_high_jump");
+        }
         hamster.setFluteMountFlight(false);
         hamster.setFluteMountPitch(0.0F);
+        hamster.setFluteMountYaw(0.0F);
         hamster.setFluteMountResponseActive(false);
         hamster.setNoGravity(performance.previousNoGravity);
         hamster.setFrozenMovement(performance.previousFrozenMovement);
@@ -456,14 +496,15 @@ public final class FlutePerformanceManager {
         return true;
     }
 
-    private static void prepareShoulderResponse(HamsterEntity hamster) {
+    private static void prepareShoulderResponse(HamsterEntity hamster, ServerPlayerEntity player) {
         hamster.setSitting(false, true);
         hamster.setFluteMountResponseActive(true);
-        hamster.setActiveCustomGoalName(HamsterLookAtEntityGoal.class.getSimpleName());
+        hamster.setActiveCustomGoalName("FluteMountResponse");
         hamster.getDataTracker().set(
                 HamsterEntity.CURRENT_LOOK_UP_ANIM_ID,
                 Math.floorMod(hamster.getUuid().hashCode(), 3) + 1);
         hamster.getNavigation().stop();
+        HamsterMovementUtil.faceEntity(hamster, player);
     }
 
     /* ──────────────────────────────────────────────────────────────────────────────
@@ -548,6 +589,7 @@ public final class FlutePerformanceManager {
         hamster.prevYaw = yaw;
         hamster.prevBodyYaw = yaw;
         hamster.prevHeadYaw = yaw;
+        hamster.setFluteMountYaw(yaw);
         return yaw;
     }
 
@@ -588,8 +630,15 @@ public final class FlutePerformanceManager {
         if (hamster != null) {
             RESPONDING_HAMSTERS.remove(hamster.getUuid());
             if (!hamster.isRemoved()) {
+                if (performance.headCockTriggered && performance.triggeredHeadCockAnim != null) {
+                    hamster.stopTriggeredAnimation("headController", performance.triggeredHeadCockAnim);
+                }
+                if (performance.jumpAnimTriggered) {
+                    hamster.stopTriggeredAnimation("mainController", "anim_hamster_high_jump");
+                }
                 hamster.setFluteMountFlight(false);
                 hamster.setFluteMountPitch(0.0F);
+                hamster.setFluteMountYaw(0.0F);
                 hamster.setFluteMountResponseActive(false);
                 hamster.setNoGravity(performance.previousNoGravity);
                 hamster.setFrozenMovement(performance.previousFrozenMovement);
@@ -638,7 +687,11 @@ public final class FlutePerformanceManager {
         private final boolean previousNoGravity;
         private final boolean previousSitting;
         private final String previousGoalName;
+        private final boolean wasLookingAtEntity;
         private boolean soundStopped;
+        private boolean headCockTriggered;
+        @Nullable private String triggeredHeadCockAnim;
+        private boolean jumpAnimTriggered;
         private boolean flightStarted;
         private long flightStartTick;
         private Vec3d flightStartPosition = Vec3d.ZERO;
@@ -661,7 +714,8 @@ public final class FlutePerformanceManager {
                 boolean previousFrozenMovement,
                 boolean previousNoGravity,
                 boolean previousSitting,
-                String previousGoalName) {
+                String previousGoalName,
+                boolean wasLookingAtEntity) {
             this.player = player;
             this.playerUuid = playerUuid;
             this.initiatingStack = initiatingStack;
@@ -679,6 +733,7 @@ public final class FlutePerformanceManager {
             this.previousNoGravity = previousNoGravity;
             this.previousSitting = previousSitting;
             this.previousGoalName = previousGoalName;
+            this.wasLookingAtEntity = wasLookingAtEntity;
         }
 
         private static Performance normal(
@@ -706,7 +761,8 @@ public final class FlutePerformanceManager {
                     false,
                     false,
                     false,
-                    "None");
+                    "None",
+                    false);
         }
 
         private static Performance shoulderCall(
@@ -724,7 +780,8 @@ public final class FlutePerformanceManager {
                 boolean previousFrozenMovement,
                 boolean previousNoGravity,
                 boolean previousSitting,
-                String previousGoalName) {
+                String previousGoalName,
+                boolean wasLookingAtEntity) {
             return new Performance(
                     player,
                     playerUuid,
@@ -741,7 +798,8 @@ public final class FlutePerformanceManager {
                     previousFrozenMovement,
                     previousNoGravity,
                     previousSitting,
-                    previousGoalName);
+                    previousGoalName,
+                    wasLookingAtEntity);
         }
 
     }

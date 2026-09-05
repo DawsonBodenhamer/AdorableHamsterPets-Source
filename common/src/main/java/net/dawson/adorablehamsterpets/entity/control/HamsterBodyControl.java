@@ -1,5 +1,6 @@
 package net.dawson.adorablehamsterpets.entity.control;
 
+import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.minecraft.entity.ai.control.BodyControl;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.util.math.MathHelper;
@@ -26,6 +27,11 @@ public class HamsterBodyControl extends BodyControl {
      */
     @Override
     public void tick() {
+        if (this.entity instanceof HamsterEntity hamster && hamster.isFluteMountFlight()) {
+            this.entity.bodyYaw = MathHelper.wrapDegrees(hamster.getYaw());
+            return;
+        }
+
         // If the hamster is moving (pathfinding), its body should face the direction of movement.
         if (this.isMoving()) {
             this.entity.bodyYaw = MathHelper.wrapDegrees(this.entity.getYaw());

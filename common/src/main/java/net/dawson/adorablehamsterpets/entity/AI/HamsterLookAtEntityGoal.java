@@ -43,8 +43,9 @@ public class HamsterLookAtEntityGoal extends LookAtEntityGoal {
         // --- 1. Hamster State Check ---
         if (this.hamsterMob instanceof HamsterEntity hamster) {
             if (hamster.isSitting() || hamster.isSleeping() || hamster.isKnockedOut() || hamster.isSulking()
-                    || hamster.isHoldingMouthItem() || hamster.isFrozenMovement() || hamster.isCelebratingDiamond()
-                    || hamster.isCelebratingBaby() || hamster.getActiveCustomGoalName().equals(HamsterWanderAroundFarGoal.class.getSimpleName())) {
+                    || hamster.isHoldingMouthItem() || hamster.isFrozenMovement() || hamster.isFluteMountResponseActive()
+                    || hamster.isCelebratingDiamond() || hamster.isCelebratingBaby()
+                    || hamster.getActiveCustomGoalName().equals(HamsterWanderAroundFarGoal.class.getSimpleName())) {
                 return false;
             }
         }
@@ -85,7 +86,8 @@ public class HamsterLookAtEntityGoal extends LookAtEntityGoal {
         // --- 1. Check Hamster State ---
         if (this.hamsterMob instanceof HamsterEntity hamster) {
             if (hamster.isSitting() || hamster.isSleeping() || hamster.isKnockedOut() || hamster.isSulking()
-                    || hamster.isHoldingMouthItem() || hamster.isFrozenMovement() || hamster.isCelebratingDiamond() || hamster.isCelebratingBaby()) {
+                    || hamster.isHoldingMouthItem() || hamster.isFrozenMovement() || hamster.isFluteMountResponseActive()
+                    || hamster.isCelebratingDiamond() || hamster.isCelebratingBaby()) {
                 return false;
             }
         }
