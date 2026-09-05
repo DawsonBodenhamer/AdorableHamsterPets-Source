@@ -2,6 +2,8 @@ package net.dawson.adorablehamsterpets.world.gen.feature;
 
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.block.ModBlocks;
+import net.dawson.adorablehamsterpets.block.custom.WildCucumberBushBlock;
+import net.dawson.adorablehamsterpets.block.custom.WildGreenBeanBushBlock;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -34,7 +36,7 @@ public class ModConfiguredFeatures {
                         18, // Fewer tries per patch than sunflowers, adjust as needed
                         PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK,
                                 // Ensure the bush starts seeded when generated naturally
-                                new SimpleBlockFeatureConfig(BlockStateProvider.of(ModBlocks.WILD_GREEN_BEAN_BUSH.get().getDefaultState().with(net.dawson.adorablehamsterpets.block.custom.WildGreenBeanBushBlock.SEEDED, true)))
+                                new SimpleBlockFeatureConfig(BlockStateProvider.of(ModBlocks.WILD_GREEN_BEAN_BUSH.get().getDefaultState().with(WildGreenBeanBushBlock.SEEDED, true)))
                         )
                 ));
         // --- End Register Green Bean ---
@@ -45,7 +47,7 @@ public class ModConfiguredFeatures {
                         18, // Fewer tries per patch, adjust as needed
                         PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK,
                                 // Ensure the bush starts seeded when generated naturally
-                                new SimpleBlockFeatureConfig(BlockStateProvider.of(ModBlocks.WILD_CUCUMBER_BUSH.get().getDefaultState().with(net.dawson.adorablehamsterpets.block.custom.WildCucumberBushBlock.SEEDED, true)))
+                                new SimpleBlockFeatureConfig(BlockStateProvider.of(ModBlocks.WILD_CUCUMBER_BUSH.get().getDefaultState().with(WildCucumberBushBlock.SEEDED, true)))
                         )
                 ));
         // --- End Register Cucumber ---

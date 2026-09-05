@@ -19,6 +19,7 @@ import net.dawson.adorablehamsterpets.entity.custom.HamsterProjectileEntity;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterTreeSearcherEntity;
 import net.dawson.adorablehamsterpets.effect.FeatherYeetingStatusEffect;
 import net.dawson.adorablehamsterpets.effect.ModStatusEffects;
+import net.dawson.adorablehamsterpets.flute.FlutePerformanceManager;
 import net.dawson.adorablehamsterpets.item.ModItems;
 import net.dawson.adorablehamsterpets.item.custom.HamsterArmorItem;
 import net.dawson.adorablehamsterpets.networking.ModPackets;
@@ -424,6 +425,9 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Inject(method = "onDeath", at = @At("HEAD"))
     private void adorablehamsterpets$onDeath(DamageSource damageSource, CallbackInfo ci) {
         PlayerEntity self = (PlayerEntity) (Object) this;
+        if (!self.getWorld().isClient() && self instanceof ServerPlayerEntity serverPlayer) {
+            FlutePerformanceManager.cancel(serverPlayer);
+        }
         if (!self.getWorld().isClient() && Configs.AHP_MAIN.enableTeleportRescue) {
             this.ahp$pocketFollowingHamsters(self.getPos(), self.getWorld().getRegistryKey());
         }
@@ -720,7 +724,8 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     @Inject(method = "remove(Lnet/minecraft/entity/Entity$RemovalReason;)V", at = @At("HEAD"))
     private void adorablehamsterpets$onRemove(Entity.RemovalReason reason, CallbackInfo ci) {
         if (!this.getWorld().isClient()) {
-            net.dawson.adorablehamsterpets.util.HamsterRenderTracker.onPlayerDisconnect(this.getUuid());
+            FlutePerformanceManager.cancel((ServerPlayerEntity) (Object) this);
+            HamsterRenderTracker.onPlayerDisconnect(this.getUuid());
         }
     }
 

@@ -58,6 +58,7 @@ public final class HamsterNbtUtil {
         nbt.putBoolean("isGeneticsVisualizerMember", hamster.isGeneticsVisualizerMember());
         nbt.putInt("AggressionState", hamster.getAggressionState().ordinal());
         hamster.getRedstoneFeverState().writeNbt(nbt);
+        hamster.getFluteProgressState().writeNbt(nbt);
 
         // --- 2. Parent Following ---
         if (hamster.getParentUuid() != null) {
@@ -177,6 +178,7 @@ public final class HamsterNbtUtil {
             }
         }
         hamster.getRedstoneFeverState().readNbt(nbt);
+        hamster.getFluteProgressState().readNbt(nbt);
         RedstoneFeverUtil.normalizeDisabledState(hamster);
         hamster.synchronizeRedstoneFeverVisualState();
 
@@ -352,7 +354,8 @@ public final class HamsterNbtUtil {
                 statusData,
                 appearanceData,
                 behaviorData,
-                conditionData
+                conditionData,
+                hamster.getFluteProgressState().createTransferData()
         );
     }
 
@@ -379,6 +382,7 @@ public final class HamsterNbtUtil {
             hamster.setHealth(data.health());
             if (player != null) {hamster.setOwnerUuid(player.getUuid());}
             data.conditionData().applyTo(hamster.getRedstoneFeverState());
+            hamster.getFluteProgressState().applyTransferData(data.fluteProgressData());
             RedstoneFeverUtil.normalizeDisabledState(hamster);
             hamster.synchronizeRedstoneFeverVisualState();
             hamster.setTamed(true, true);

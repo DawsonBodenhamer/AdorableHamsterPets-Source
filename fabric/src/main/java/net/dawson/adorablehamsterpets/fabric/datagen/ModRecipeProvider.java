@@ -71,6 +71,33 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .offerTo(exporter, Identifier.of(AdorableHamsterPets.MOD_ID, getItemPath(template) + "_duplication"));
     }
 
+    // Helper for Acorn Flute variants
+    private void offerAcornFluteRecipe(
+            Consumer<RecipeJsonProvider> exporter,
+            Item result,
+            String recipeId,
+            String middlePattern,
+            Item pitcherPlant,
+            Item torchflower) {
+        ShapedRecipeJsonBuilder builder = ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, result)
+                .pattern("AAA")
+                .pattern(middlePattern)
+                .pattern("AAA")
+                .input('A', ModItems.ACORN_SHARD.get())
+                .input('S', Items.STRING)
+                .group("acorn_flute")
+                .criterion("has_acorn_shard", conditionsFromItem(ModItems.ACORN_SHARD.get()));
+
+        if (middlePattern.indexOf('P') >= 0) {
+            builder.input('P', pitcherPlant);
+        }
+        if (middlePattern.indexOf('T') >= 0) {
+            builder.input('T', torchflower);
+        }
+
+        builder.offerTo(exporter, Identifier.of(AdorableHamsterPets.MOD_ID, recipeId));
+    }
+
     // --- 3. Public Methods ---
     @Override
     public void generate(Consumer<RecipeJsonProvider> exporter) {
@@ -190,6 +217,16 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .input('H', ModItems.ACORN_HAT.get())
                 .criterion("has_acorn_hat", conditionsFromItem(ModItems.ACORN_HAT.get()))
                 .offerTo(exporter);
+
+        // Acorn Flute variants
+        offerAcornFluteRecipe(exporter, ModItems.ACORN_FLUTE_LUSH.get(), "acorn_flute_lush", "PSP",
+                Items.PITCHER_PLANT, Items.TORCHFLOWER);
+        offerAcornFluteRecipe(exporter, ModItems.ACORN_FLUTE_EMBER.get(), "acorn_flute_ember", "TST",
+                Items.PITCHER_PLANT, Items.TORCHFLOWER);
+        offerAcornFluteRecipe(exporter, ModItems.ACORN_FLUTE_HARMONY.get(), "acorn_flute_harmony", "PST",
+                Items.PITCHER_PLANT, Items.TORCHFLOWER);
+        offerAcornFluteRecipe(exporter, ModItems.ACORN_FLUTE_HARMONY.get(), "acorn_flute_harmony_mirrored", "TSP",
+                Items.PITCHER_PLANT, Items.TORCHFLOWER);
 
         // Smithing Upgrades
         offerHamsterArmorUpgrade(exporter, ModItems.HAMSTER_ARMOR_TRIM_SMITHING_TEMPLATE_IRON.get(), Items.IRON_INGOT, ModItems.HAMSTER_ARMOR_IRON.get());

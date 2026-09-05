@@ -6,6 +6,7 @@ import net.dawson.adorablehamsterpets.AdorableHamsterPetsClient;
 import net.dawson.adorablehamsterpets.block.ModBlockEntities;
 import net.dawson.adorablehamsterpets.block.client.HamsterBedRenderer;
 import net.dawson.adorablehamsterpets.client.option.ModKeyBindings;
+import net.dawson.adorablehamsterpets.client.particle.AcornFluteNoteParticle;
 import net.dawson.adorablehamsterpets.client.particle.HamsterBeddingParticle;
 import net.dawson.adorablehamsterpets.client.particle.PixieDustParticle;
 import net.dawson.adorablehamsterpets.client.particle.PixieDustParticleTheme;
@@ -104,6 +105,10 @@ public final class AdorableHamsterPetsForgeClient {
             RegistrySupplier<DefaultParticleType> supplier = ModParticles.PIXIE_DUST.get(theme);
             event.registerSpriteSet(supplier.get(), provider -> new PixieDustParticle.Factory(provider, theme));
         }
+
+        event.registerSpriteSet(
+                ModParticles.ACORN_FLUTE_NOTE.get(),
+                AcornFluteNoteParticle.Factory::new);
     }
 
     @SubscribeEvent

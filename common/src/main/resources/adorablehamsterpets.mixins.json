@@ -8,6 +8,7 @@
     "server.RavagerEntityMixin",
     "server.SpiderEntityMixin",
     "server.PlayerEntityMixin",
+    "server.CreeperEntityMixin",
     "server.SweetBerryBushBlockMixin",
     "server.PiglinBrainMixin",
     "server.EndPortalBlockMixin",

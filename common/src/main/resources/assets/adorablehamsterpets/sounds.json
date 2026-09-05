@@ -483,6 +483,86 @@
       }
     ]
   },
+  "ahp_theme_song_zampona": {
+    "sounds": [
+      {
+        "name": "adorablehamsterpets:records/ahp_theme_song_zampona",
+        "stream": true
+      }
+    ]
+  },
+  "acorn_flute_riff1": {
+    "sounds": [
+      {
+        "name": "adorablehamsterpets:acorn_flute_riff1",
+        "stream": true
+      }
+    ]
+  },
+  "acorn_flute_riff2": {
+    "sounds": [
+      {
+        "name": "adorablehamsterpets:acorn_flute_riff2",
+        "stream": true
+      }
+    ]
+  },
+  "acorn_flute_riff3": {
+    "sounds": [
+      {
+        "name": "adorablehamsterpets:acorn_flute_riff3",
+        "stream": true
+      }
+    ]
+  },
+  "acorn_flute_riff4": {
+    "sounds": [
+      {
+        "name": "adorablehamsterpets:acorn_flute_riff4",
+        "stream": true
+      }
+    ]
+  },
+  "acorn_flute_riff5": {
+    "sounds": [
+      {
+        "name": "adorablehamsterpets:acorn_flute_riff5",
+        "stream": true
+      }
+    ]
+  },
+  "acorn_flute_riff6": {
+    "sounds": [
+      {
+        "name": "adorablehamsterpets:acorn_flute_riff6",
+        "stream": true
+      }
+    ]
+  },
+  "acorn_flute_riff7": {
+    "sounds": [
+      {
+        "name": "adorablehamsterpets:acorn_flute_riff7",
+        "stream": true
+      }
+    ]
+  },
+  "acorn_flute_riff8": {
+    "sounds": [
+      {
+        "name": "adorablehamsterpets:acorn_flute_riff8",
+        "stream": true
+      }
+    ]
+  },
+  "acorn_flute_chiff": {
+    "sounds": [
+      {
+        "name": "adorablehamsterpets:acorn_flute_chiff",
+        "stream": true
+      }
+    ]
+  },
   "hamster_slap": {
     "subtitle": "subtitles.adorablehamsterpets.hamster_slap",
     "sounds": [ "adorablehamsterpets:hamster_slap" ]

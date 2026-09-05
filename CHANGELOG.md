@@ -7,10 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.7.0] - Unreleased
 
-# **The Redstone Fever Update**
+# **The Fever Pitch Update**
 
-Some cave hamsters have inhaled a little bit too much redstone dust. Redstone Fever introduces rare aggressive
-encounters with cave hamsters that have glowing red eyes, frantic movement, and there's a new sunlight rescue challenge. The new Acorn Ring player-wearable accessory allows truces between pet households, while Hide & Seek, combat, food luring, storage crates, water rescue, and several other systems received fixy fixy attention.
+Some cave hamsters have inhaled a little too much redstone dust, so naturally the treatment now includes a flute solo. Redstone Fever introduces rare aggressive cave encounters and a sunlight rescue challenge, while the new Acorn Flute can distract threats, call trained hamsters to your shoulder from a configurable distance, and is also used to obtain a new music disc. The new Acorn Ring adds truces between pet households, and Hide & Seek, combat, food luring, storage crates, water rescue, and several other systems received fixy fixy attention.
 
 <font color="red">**IMPORTANT:**</font> If you've been looking for **White** or **Pearl Rose** hamsters and couldn't find them, this update fixes that— but **with one important condition:** you must follow the _**Missing White & Pearl Rose Hamsters**_ instructions down below (I colored it red) to manually restore the affected settings to their new defaults. Why? Because I didn't want to overwrite everyone's custom worldgen config settings in case some people have spent a lot of time on it.
 
@@ -18,11 +17,20 @@ encounters with cave hamsters that have glowing red eyes, frantic movement, and 
 - **Redstone Fever**
 - You might now come across rare wild aggressive cave hamsters with scars, glowing red eyes, new animations, redstone particles, 3 new custom sound effect types, and unpredictable circular energy bursts. Thanks to [@The Retro Stitcher](https://theretrostitcher.com/) for the original Redstone Fever concept/idea!
   - Currently, Redstone Fever is only applied when a hamster first spawns. Existing hamsters cannot contract it.  I might add contagiousness in the future if it's requested.
-  - Food cannot tame, distract, or pacify an untreated hamster. Lead it above redstone depth and keep it in direct clear sunlight for 3 Minecraft days to cure the condition and restore ordinary wild behavior.
+  - Food cannot tame, distract, or pacify an untreated hamster. You'll need to play a riff on the Acorn Flute to briefly interrupt its attacks while it keeps watching you with those red eyes. Lead it above redstone depth and keep it in direct clear sunlight for 3 Minecraft days to cure the condition and restore ordinary wild behavior.
   - How do you lead it? You're the bait. Better find some good armor. For your toes.
   - Spawning, sunlight treatment, aggression, bursts, and eligible dimensions are configurable. The Jade HUD overlay can optionally show Severe, Recovering, or Nearly Cured status if you enable it.
-  - Added a new *Hamster Tips* guidebook entry, admin apply/cure commands, and Redstone Fever and Sunshine Curing advancements. Admin cures won't grant advancements.
-  - Added a set of hidden config settings commissioned by the **After Beyond Networks** team for their upcoming "Ultimate Nightmare" event. These settings allow pre-existing wild hamsters resolve one hidden surface-surprise roll when first approached by a player. Each result persists, so reloading or changing the chance cannot reroll the same hamster. These settings are purposefully hidden at the bottom of the config under "Commissioned Features." This changelog is the only place they will be mentioned.
+  - Added a set of hidden config settings commissioned by the **After Beyond Networks** team for their upcoming "Ultimate Nightmare" event. These settings allow pre-existing wild hamsters to resolve one hidden surface-surprise roll when first approached by a player. Each result persists, so reloading or changing the chance cannot reroll the same hamster. These settings are purposefully hidden at the bottom of the config under "Commissioned Features." This changelog is the only place they will be mentioned.
+- **Acorn Flute & Acorn Music Disc**
+  - Craft separate Lush, Ember, and Harmony Acorn Flutes from Acorn Shards, string, and pitcher plants or torchflowers. All three stack to 16 and share the same mechanics; the color is purely cosmetic at this stage, but does affect the color of the musical note particles.
+  - Play from your main hand to begin one of random riff sounds. You can play again right away to switch sounds. Switching items ends your active performance immediately. You can't play a flute if you aren't holding it. Duh. Different players can perform at the same time, so multiplayer flute incidents remain fully supported. I tried to make sure all the sounds were in E minor, but I'm not a music expert, lol.
+  - Server owners can turn up an Anti-Spam Cooldown that enforces a minimum wait between flute plays (config, just 0.5 seconds by default— I didn't want to punish your shaky aim if you intended to summon the hamster to your shoulder but missed the target and played a normal riff instead).
+  - Normal riffs can be heard up to 80 blocks away (very quiet) and distract threats within 16 blocks by default.
+  - You can distract creepers and fevered hamsters with the flute. Server owners can decide whether you should be able to calm all creepers or charged creepers only in the config.
+  - Fevered hamsters keep pursuing players while distracted, but won't attack or frantically sprint around in circles.
+  - Look directly at an owned hamster within 8 blocks while you have an open shoulder or head slot, and your flute will play a shorter chiff sound instead of the normal riff. The hamster will think about what that means, and then jump onto your shoulder. Successfully repeating this will train that exact hamster from a 3-second response toward 1 second after a configurable number of mounts (50 by default). A new optional Jade HUD line shows `Untrained`, `Learning`, `Responsive`, or `Attuned`. I left it off by default since the Jade HUD is already getting crowded.
+  - A flute-assisted sunlight cure qualifies that exact hamster for the Acorn Music Disc ritual. Tame it, mount it, then throw it at a charged creeper while any player's normal riff is actively calming the creeper. The qualified rescuer must make the killing throw; but failed attempts do not consume the qualification so if you can find another charged creeper you can try again.
+  - A successful ritual replaces the ordinary Cheese Music Disc drop with one Acorn Music Disc. It contains a fully licensed zampoña style version of the AHP theme song.
 - **Acorn Ring**
   - Craft an Acorn Ring from an Acorn Hat and four Copper Ingots, or find one independently in uncommon loot chests.
   - Wear it in your offhand with no extra mod, or in a ring slot through [**Accessories**](https://modrinth.com/mod/accessories)
@@ -33,10 +41,6 @@ encounters with cave hamsters that have glowing red eyes, frantic movement, and 
   - An offhand ring stays out of sight. Removing either ring ends protection without starting a fight.
   - By default, the ring also keeps you from accidentally hitting your own pets. A separate setting can extend that
     restraint to other ring wearers' pets; the all-pet contract and loot frequency are configurable too.
-- **Hide and Squeak Advancement**
-  - Successfully find your hamster during Hide & Seek to earn a dedicated advancement.
-- **Hide & Seek Guidebook Entry**
-  - Added a *Hamster Tips* entry explaining the start message, hiding-place clues, time limit, and reward.
 - **Hamster Combat Timer**
   - Standard-mode hamsters now abandon a fight after 30 seconds without relevant combat from their owner. Menace mode remains professionally unreasonable.
 - **Per-Hamster Armor Visibility**
@@ -46,14 +50,36 @@ encounters with cave hamsters that have glowing red eyes, frantic movement, and 
   - Added `/ahp reset_hamster` for server OPs. It returns the nearest hamster to a freshly spawned wild state while
     preserving its fur, patterns, eyes, animation personality, and cheek-pouch loot. Ownership, equipment, AI state,
     cooldowns, and other history get a clean slate.
+- **Redstone Fever Admin Commands**
+  - Added `/ahp redstone_fever apply` and `/ahp redstone_fever cure` for server OPs. With no target, each affects the nearest live hamster within 16 blocks; pass an entity selector when the whole cave needs attention. Doesn't work on tamed hamsters, and admin cures won't grant advancements.
+- **New Hamster Tips Guidebook Entries**
+  - **Redstone Fever**
+    - Explains how to interrupt attacks with an Acorn Flute riff, and the **Musical Rodentry** entry gained a page hinting at how to get the new Acorn Music Disc.
+  - **Acorn Flute**
+    - Explains how a riff distracts creepers and interrupts fevered hamsters, how to summon a hamster onto your shoulder, and how successful mounts train that hamster to respond faster.
+  - **Hide & Seek Minigame**
+    - Explains the start message, hiding-place clues, time limit and reward so people don't keep asking me why their hamster disappeared lol.
+- **New Advancements**
+  - **Redstone Fever**
+    - Discover a hamster suffering from Redstone Fever. Apparently prolonged redstone exposure has side effects.
+  - **Flute-Assisted Recovery**
+    - Cure a fevered hamster with prolonged direct sunlight and good music. Medical licensing remains pending.
+  - **The Final Note**
+    - Complete the Acorn Music Disc ritual with the same hamster you helped cure. Poetic. Legendary.
+  - **Hide and Squeak**
+    - Find your hamster during a game of Hide & Seek before time runs out. Apparently this counts as responsible pet ownership.
 
 ### Changed
+- **Fast and Slow Hamster Dancing**
+  - Hamsters now bounce to Fast song matches and loop a new swaying animation to Slow matches. The existing `dancingMusicDiscStrings` setting and all saved values remain the Fast list; the new Slow list defaults to `low-fi` and `zampoña` and wins when both lists match. For example, if a song name contained both “hamster” and “zampoña," a nearby hamster would do the slower dance.
 - **Food Gets a Hamster's Attention**
   - Every configured hamster food can now lure eligible hamsters, temporarily interrupting ordinary combat without
     erasing a valid target. Tamed hamsters still only follow their owner.
   - Begging is reserved for taming food and shoulder-mount treats. Other food attracts them without the performance.
 - **Recipe Output Adjustments**
   - Hamster Food Mix crafting now produces 4 Hamster Food Mix instead of 1.
+- **Acorn Composting**
+  - Acorns now compost more reliably, and now you can also compost Acorn Shards for a smaller but still useful contribution, and Acorn Hats provide the lowest contribution.
 - **Cycle Aggression States Without Sneaking**
   - Configured Pacifist, Standard, and Menace items now change aggression through ordinary feeding.
   - If the hamster is already in Standard aggression mode, configured sunflower seeds remain ordinary food.

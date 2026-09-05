@@ -2,6 +2,7 @@ package net.dawson.adorablehamsterpets.entity.AI;
 
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
+import net.dawson.adorablehamsterpets.flute.FlutePerformanceManager;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.dawson.adorablehamsterpets.util.HamsterMovementUtil;
 import net.dawson.adorablehamsterpets.util.RedstoneFeverUtil;
@@ -22,6 +23,7 @@ public final class HamsterRedstoneFeverCombatGoal extends Goal {
      * ─────────────────────────────────────────────────────────────────────────────*/
 
     private static final int ATTACK_COOLDOWN_TICKS = 35;
+    private static final double DISTRACTED_FOLLOW_DISTANCE = 4.0D;
 
     /* ─────────────────────────────────────────────────────────────────────────────
      *        Instance Fields
@@ -83,10 +85,20 @@ public final class HamsterRedstoneFeverCombatGoal extends Goal {
 
         // --- 2. Pursue Target ---
         this.hamster.getLookControl().lookAt(target, 30.0F, 30.0F);
+        if (FlutePerformanceManager.isAffectedByNormalRiff(this.hamster)) {
+            if (this.hamster.squaredDistanceTo(target)
+                    > DISTRACTED_FOLLOW_DISTANCE * DISTRACTED_FOLLOW_DISTANCE) {
+                this.hamster.getNavigation().startMovingTo(target, 1.5D);
+            } else {
+                this.hamster.getNavigation().stop();
+            }
+            return;
+        }
         if (!this.hamster.getNavigation().startMovingTo(target, 1.5D)) {
             this.clearTarget();
             return;
         }
+
         double reach = this.hamster.getWidth() * 2.0F + target.getWidth();
         if (this.attackCooldown > 0 || this.hamster.squaredDistanceTo(target) > reach * reach) return;
 

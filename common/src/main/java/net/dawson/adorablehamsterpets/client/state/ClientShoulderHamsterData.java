@@ -3,13 +3,16 @@ package net.dawson.adorablehamsterpets.client.state;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.config.Configs;
+import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.dawson.adorablehamsterpets.entity.ShoulderLocation;
 import net.dawson.adorablehamsterpets.entity.client.feature.ShoulderHamsterState;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
+import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -75,7 +78,7 @@ public class ClientShoulderHamsterData {
      */
     public HamsterEntity getOrCreateDummy(ShoulderLocation location, World world) {
         return this.dummyHamsters.computeIfAbsent(location, loc -> {
-            HamsterEntity dummy = new HamsterEntity(net.dawson.adorablehamsterpets.entity.ModEntities.HAMSTER.get(), world);
+            HamsterEntity dummy = new HamsterEntity(ModEntities.HAMSTER.get(), world);
             dummy.setNoGravity(true);
             dummy.setSilent(true);
             return dummy;
@@ -228,9 +231,9 @@ public class ClientShoulderHamsterData {
                             SoundEvent impactSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_SHOULDER_IMPACT_SOUNDS, player.getRandom());
                             if (impactSound != null) {
                                 client.getSoundManager().play(
-                                        new net.minecraft.client.sound.PositionedSoundInstance(
+                                        new PositionedSoundInstance(
                                                 impactSound,
-                                                net.minecraft.sound.SoundCategory.PLAYERS,
+                                                SoundCategory.PLAYERS,
                                                 1.0f,
                                                 0.9f + player.getRandom().nextFloat() * 0.2f,
                                                 player.getRandom(),

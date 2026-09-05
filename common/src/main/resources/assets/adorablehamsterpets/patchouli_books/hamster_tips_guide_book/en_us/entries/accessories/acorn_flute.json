@@ -1,0 +1,35 @@
+{
+  "name": "book.adorablehamsterpets.entry.acorn_flute",
+  "icon": "adorablehamsterpets:acorn_flute_ember",
+  "category": "adorablehamsterpets:accessories",
+  "entry_color": "00AAAA",
+  "sortnum": 3,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": {
+        "item": "adorablehamsterpets:acorn_flute_ember"
+      },
+      "link_recipe": true,
+      "anchor": "acorn_flute",
+      "text": "book.adorablehamsterpets.entry.acorn_flute.page1.body"
+    },
+    {
+      "type": "adorablehamsterpets:dynamic_page",
+      "header": "book.adorablehamsterpets.entry.acorn_flute.page2.header",
+      "header_color": "00AAAA",
+      "text": "book.adorablehamsterpets.entry.acorn_flute.page2.body",
+      "text_color": "000000"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "adorablehamsterpets:acorn_flute_lush",
+      "recipe2": "adorablehamsterpets:acorn_flute_ember"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "adorablehamsterpets:acorn_flute_harmony",
+      "recipe2": "adorablehamsterpets:acorn_flute_harmony_mirrored"
+    }
+  ]
+}

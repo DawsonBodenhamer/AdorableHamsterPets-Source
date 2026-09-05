@@ -1,9 +1,11 @@
 package net.dawson.adorablehamsterpets.particles;
 
+import com.mojang.serialization.Codec;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.block.custom.WoodVariant;
+import net.dawson.adorablehamsterpets.client.particle.AcornFluteNoteParticleEffect;
 import net.dawson.adorablehamsterpets.client.particle.PixieDustParticleTheme;
 import net.minecraft.particle.DefaultParticleType;
 import net.minecraft.particle.ParticleType;
@@ -26,6 +28,15 @@ public class ModParticles {
 
     // Map to link each Pixie Dust theme to a particle type
     public static final Map<PixieDustParticleTheme, RegistrySupplier<DefaultParticleType>> PIXIE_DUST = new EnumMap<>(PixieDustParticleTheme.class);
+
+    // Particle color palette matches flute palette
+    public static final RegistrySupplier<ParticleType<AcornFluteNoteParticleEffect>> ACORN_FLUTE_NOTE =
+            PARTICLE_TYPES.register("acorn_flute_note", () -> new ParticleType<AcornFluteNoteParticleEffect>(false, AcornFluteNoteParticleEffect.PARAMETERS_FACTORY) {
+                @Override
+                public Codec<AcornFluteNoteParticleEffect> getCodec() {
+                    return AcornFluteNoteParticleEffect.CODEC;
+                }
+            });
 
     static {
         for (WoodVariant variant : WoodVariant.values()) {

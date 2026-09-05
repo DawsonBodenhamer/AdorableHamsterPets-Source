@@ -5,6 +5,7 @@ import net.dawson.adorablehamsterpets.entity.AI.HamsterSniffForOreGoal;
 import net.dawson.adorablehamsterpets.entity.ShoulderLocation;
 import net.dawson.adorablehamsterpets.entity.client.feature.ShoulderAnimationState;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
+import net.dawson.adorablehamsterpets.entity.custom.DanceStyle;
 
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
@@ -33,6 +34,7 @@ public final class HamsterAnimationController {
     private static final RawAnimation KNOCKED_OUT_ANIM = animation("anim_hamster_ko");
     private static final RawAnimation WAKE_UP_FROM_KO_ANIM = animation("anim_hamster_wakeup_from_ko");
     private static final RawAnimation FLYING_ANIM = animation("anim_hamster_flying");
+    private static final RawAnimation HIGH_JUMP_ANIM = animation("anim_hamster_high_jump");
     private static final RawAnimation STANDING_HEADSHAKE_ANIM = animation("anim_hamster_standing_headshake");
     private static final RawAnimation SITTING_HEADSHAKE_ANIM = animation("anim_hamster_sitting_headshake");
     private static final RawAnimation MOVING_HEADSHAKE_ANIM = animation("anim_hamster_moving_headshake");
@@ -73,6 +75,7 @@ public final class HamsterAnimationController {
     private static final RawAnimation WALKING_ANIM = animation("anim_hamster_walking");
     private static final RawAnimation SPRINTING_ANIM = animation("anim_hamster_sprinting");
     private static final RawAnimation BOUNCING_ANIM = animation("anim_hamster_bouncing");
+    private static final RawAnimation SWAYING_ANIM = animation("anim_hamster_swaying");
     private static final RawAnimation IDLE1_ANIM = animation("anim_hamster_idle1");
     private static final RawAnimation IDLE2_ANIM = animation("anim_hamster_idle2");
     private static final RawAnimation FEVER_IDLE_ANIM = animation("anim_hamster_idle_fever");
@@ -203,7 +206,8 @@ public final class HamsterAnimationController {
 
                                     if (state.celebratingDiamond())
                                         return event.setAndContinue(BOUNCING_ANIM);
-                                    if (state.dancing()) return event.setAndContinue(BOUNCING_ANIM);
+                                    if (state.danceStyle() == DanceStyle.BOUNCING)
+                                        return event.setAndContinue(BOUNCING_ANIM);
 
                                     // --- 4. Sleep Sequence ---
                                     if (state.tamed()) {
@@ -270,6 +274,9 @@ public final class HamsterAnimationController {
                                         };
                                     }
 
+                                    if (state.danceStyle() == DanceStyle.SWAYING)
+                                        return event.setAndContinue(SWAYING_ANIM);
+
                                     RawAnimation current =
                                             event.getController().getCurrentRawAnimation();
 
@@ -285,6 +292,7 @@ public final class HamsterAnimationController {
                                 })
                         // --- 6. Triggered Animations ---
                         .triggerableAnim("crash", CRASH_ANIM)
+                        .triggerableAnim("anim_hamster_high_jump", HIGH_JUMP_ANIM)
                         .triggerableAnim("wakeup_from_ko", WAKE_UP_FROM_KO_ANIM)
                         .triggerableAnim("standing_headshake", STANDING_HEADSHAKE_ANIM)
                         .triggerableAnim("sitting_headshake", SITTING_HEADSHAKE_ANIM)
@@ -395,7 +403,7 @@ public final class HamsterAnimationController {
             double horizontalSpeedSquared,
             boolean oreTargetAbove,
             boolean celebratingDiamond,
-            boolean dancing,
+            DanceStyle danceStyle,
             boolean tamed,
             String deepSleepAnimationId,
             boolean sitting,
@@ -424,7 +432,7 @@ public final class HamsterAnimationController {
                     hamster.getVelocity().horizontalLengthSquared(),
                     hamster.isOreTargetAbove(),
                     hamster.isCelebratingDiamond(),
-                    hamster.isDancing(),
+                    hamster.getDanceStyle(),
                     hamster.isTamed(),
                     hamster.getDataTracker().get(HamsterEntity.CURRENT_DEEP_SLEEP_ANIM_ID),
                     hamster.isSitting(),

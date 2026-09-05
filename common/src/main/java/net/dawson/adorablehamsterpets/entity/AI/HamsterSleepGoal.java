@@ -11,6 +11,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -249,7 +250,7 @@ public class HamsterSleepGoal extends Goal {
     private boolean isParentOnShoulder(PlayerEntityAccessor accessor, UUID parentUuid) {
         if (!accessor.hasAnyShoulderHamster()) return false;
         for (ShoulderLocation loc : ShoulderLocation.values()) {
-            net.minecraft.nbt.NbtCompound nbt = accessor.getShoulderHamster(loc);
+            NbtCompound nbt = accessor.getShoulderHamster(loc);
             if (!nbt.isEmpty()) {
                 Optional<HamsterState> state = HamsterState.fromNbt(nbt);
                 if (state.isPresent() && state.get().entityUuid().equals(parentUuid)) {

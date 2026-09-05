@@ -31,6 +31,7 @@ public class ModCriteria {
     public static final MaxShoulderHamstersCriterion MAX_SHOULDER_HAMSTERS = new MaxShoulderHamstersCriterion(Identifier.of(AdorableHamsterPets.MOD_ID, "max_shoulder_hamsters"));
     public static final RedstoneFeverCriterion REDSTONE_FEVER_DISCOVERED = new RedstoneFeverCriterion(Identifier.of(AdorableHamsterPets.MOD_ID, "redstone_fever_discovered"));
     public static final RedstoneFeverCriterion SUNSHINE_CURING = new RedstoneFeverCriterion(Identifier.of(AdorableHamsterPets.MOD_ID, "sunshine_curing"));
+    public static final AcornMusicDiscCriterion ACORN_MUSIC_DISC = new AcornMusicDiscCriterion(Identifier.of(AdorableHamsterPets.MOD_ID, "acorn_music_disc"));
 
     /**
      * Registers a criterion with Minecraft's advancement system.
@@ -68,6 +69,7 @@ public class ModCriteria {
         register(MAX_SHOULDER_HAMSTERS);
         register(REDSTONE_FEVER_DISCOVERED);
         register(SUNSHINE_CURING);
+        register(ACORN_MUSIC_DISC);
 
         AdorableHamsterPets.LOGGER.info("Registering Mod Criteria for " + AdorableHamsterPets.MOD_ID);
     }

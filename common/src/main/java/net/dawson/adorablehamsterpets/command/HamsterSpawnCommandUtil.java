@@ -493,7 +493,7 @@ public class HamsterSpawnCommandUtil {
                 Collections.shuffle(permutations);
                 return permutations;
             } else {
-                return generateRandomPermutations(net.minecraft.util.math.random.Random.create(), finalCount, finalUseWildRules);
+                return generateRandomPermutations(Random.create(), finalCount, finalUseWildRules);
             }
         }).thenAcceptAsync(permutations -> {
             // Apply results back on main server thread
@@ -537,7 +537,7 @@ public class HamsterSpawnCommandUtil {
      *        Private Helpers
      * ────────────────────────────────────────────────────────────────────────────*/
 
-    private static List<HamsterGenome> generateRandomPermutations(net.minecraft.util.math.random.Random random, int count, boolean useWildOverlayRulesForBreeding) {
+    private static List<HamsterGenome> generateRandomPermutations(Random random, int count, boolean useWildOverlayRulesForBreeding) {
         List<HamsterGenome> list = new ArrayList<>(count);
         List<PaletteDefinition> allBases = new ArrayList<>(HamsterPaletteManager.PALETTE_REGISTRY.values());
         List<String> allPaletteIds = new ArrayList<>(HamsterPaletteManager.PALETTE_REGISTRY.keySet());

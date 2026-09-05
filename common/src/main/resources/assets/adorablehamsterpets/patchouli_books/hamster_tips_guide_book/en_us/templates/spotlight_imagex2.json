@@ -15,8 +15,8 @@
         "item_output1": "#item_output1",
         "item_output2": "#item_output2"
       },
-      "x": 170,
-      "y": 130
+      "x": 40,
+      "y": 123
     }
   ],
   "components": [
@@ -28,8 +28,8 @@
       "texture_width": 16,
       "texture_height": 16,
       "scale": 1,
-      "x": 150,
-      "y": 130
+      "x": 21,
+      "y": 123
     }
   ]
 }

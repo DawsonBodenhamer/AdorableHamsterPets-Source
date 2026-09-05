@@ -7,6 +7,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.dawson.adorablehamsterpets.AdorableHamsterPets;
 import net.dawson.adorablehamsterpets.entity.custom.RedstoneFeverState;
+import net.dawson.adorablehamsterpets.flute.FluteProgressState;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -15,6 +16,7 @@ import net.minecraft.util.Uuids;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.GlobalPos;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -29,7 +31,8 @@ public record HamsterState(
         StatusData statusData,
         AppearanceData appearanceData,
         BehaviorData behaviorData,
-        HamsterConditionData conditionData
+        HamsterConditionData conditionData,
+        FluteProgressState.TransferData fluteProgressData
 ) {
 
     /* ───────────────────────────────────────────────────────────────────────────────
@@ -68,9 +71,16 @@ public record HamsterState(
                         StatusData.CODEC.forGetter(HamsterState::statusData),
                         AppearanceData.CODEC.forGetter(HamsterState::appearanceData),
                         BehaviorData.CODEC.forGetter(HamsterState::behaviorData),
-                        HamsterConditionData.CODEC.forGetter(HamsterState::conditionData)
+                        HamsterConditionData.CODEC.forGetter(HamsterState::conditionData),
+                        FluteProgressState.TransferData.CODEC
+                                .optionalFieldOf("fluteProgress", FluteProgressState.TransferData.empty())
+                                .forGetter(HamsterState::fluteProgressData)
                 ).apply(instance, HamsterState::new)
         );
+    }
+
+    public HamsterState {
+        Objects.requireNonNull(fluteProgressData, "fluteProgressData");
     }
 
     /* ──────────────────────────────────────────────────────────────────────────────
@@ -152,7 +162,8 @@ public record HamsterState(
                 this.statusData,
                 this.appearanceData,
                 this.behaviorData.withHamsterFlags(newFlags),
-                this.conditionData
+                this.conditionData,
+                this.fluteProgressData
         );
     }
 

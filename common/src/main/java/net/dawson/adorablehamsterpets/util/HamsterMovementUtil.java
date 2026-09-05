@@ -181,6 +181,7 @@ public final class HamsterMovementUtil {
                 hamster.isAiDisabled(),
                 hamster.isSitting(),
                 hamster.isFrozenMovement(),
+                hamster.isFluteMountResponseActive(),
                 hamster.isCelebratingBaby(),
                 hamster.isCelebratingDiamond());
     }
@@ -189,9 +190,15 @@ public final class HamsterMovementUtil {
             boolean aiDisabled,
             boolean sitting,
             boolean frozenMovement,
+            boolean fluteMountResponseActive,
             boolean celebratingBaby,
             boolean celebratingDiamond) {
-        return aiDisabled || sitting || frozenMovement || celebratingBaby || celebratingDiamond;
+        return aiDisabled
+                || sitting
+                || frozenMovement
+                || fluteMountResponseActive
+                || celebratingBaby
+                || celebratingDiamond;
     }
 
     /**

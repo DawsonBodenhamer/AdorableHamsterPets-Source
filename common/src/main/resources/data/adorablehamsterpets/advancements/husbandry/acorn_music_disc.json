@@ -1,0 +1,15 @@
+{
+  "parent": "adorablehamsterpets:husbandry/sunshine_curing",
+  "display": {
+    "icon": { "item": "adorablehamsterpets:music_disc_acorn" },
+    "title": { "translate": "advancements.adorablehamsterpets.husbandry.acorn_music_disc.title" },
+    "description": { "translate": "advancements.adorablehamsterpets.husbandry.acorn_music_disc.description" },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "completed_acorn_music_disc_ritual": { "trigger": "adorablehamsterpets:acorn_music_disc" }
+  }
+}

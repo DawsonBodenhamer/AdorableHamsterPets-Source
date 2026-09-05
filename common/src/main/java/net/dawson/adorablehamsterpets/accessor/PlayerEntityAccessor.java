@@ -30,7 +30,7 @@ public interface PlayerEntityAccessor {
     default void adorablehamsterpets$dismountShoulderHamster() {
         adorablehamsterpets$dismountShoulderHamster(false);
     }
-    void adorablehamsterpets$setRawHamsterState(net.minecraft.nbt.NbtCompound nbt);
+    void adorablehamsterpets$setRawHamsterState(NbtCompound nbt);
     void adorablehamsterpets$syncHamsterState();
     ArrayDeque<ShoulderLocation> adorablehamsterpets$getMountOrderQueue();
     ClientShoulderHamsterData adorablehamsterpets$getClientHamsterState();

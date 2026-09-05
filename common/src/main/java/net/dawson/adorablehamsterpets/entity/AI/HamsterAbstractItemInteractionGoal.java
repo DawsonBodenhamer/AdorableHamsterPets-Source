@@ -200,7 +200,7 @@ public abstract class HamsterAbstractItemInteractionGoal extends Goal {
                 this.lungeTicks--;
 
                 if (this.lungeTicks >= 0) {
-                    net.dawson.adorablehamsterpets.util.HamsterMovementUtil.faceEntity(this.hamster, this.targetItem);
+                    HamsterMovementUtil.faceEntity(this.hamster, this.targetItem);
                 }
 
                 if (this.pounceStartPos != null && this.lungeTicks >= 0) {

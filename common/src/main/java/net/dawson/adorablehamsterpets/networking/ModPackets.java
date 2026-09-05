@@ -24,15 +24,19 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import static net.dawson.adorablehamsterpets.AdorableHamsterPets.MOD_ID;
 
@@ -75,10 +79,107 @@ public class ModPackets {
     public record ShowGuidebookWarningS2CPacket() {}
     public record SpawnBeddingParticlesS2CPacket(BlockPos pos, Direction direction, WoodVariant variant) {}
     public record SyncHamsterStateS2CPacket(int entityId, NbtCompound data) {}
-    public record PlayDistantSoundS2CPacket(Identifier soundId, float volume, float pitch) {}
+    public record StopDistantSoundS2CPacket(String sessionKey) {
+        public StopDistantSoundS2CPacket(UUID sessionId) {
+            this(sessionId != null ? sessionId.toString() : "");
+        }
+    }
+    public record PlayDistantSoundS2CPacket(
+            Identifier soundId,
+            float volume,
+            float pitch,
+            float audioRange,
+            Optional<Vec3d> position,
+            int sourceEntityId,
+            String sessionKey,
+            SoundCategory category
+    ) {
+        public PlayDistantSoundS2CPacket(Identifier soundId, float volume, float pitch) {
+            this(soundId, volume, pitch, 0.0F, Optional.empty(), 0, "", SoundCategory.NEUTRAL);
+        }
+
+        public PlayDistantSoundS2CPacket {
+            if (position == null) {
+                position = Optional.empty();
+            }
+            if (sessionKey == null) {
+                sessionKey = "";
+            }
+            if (category == null) {
+                category = SoundCategory.NEUTRAL;
+            }
+        }
+
+        public static PlayDistantSoundS2CPacket positioned(
+                Identifier soundId,
+                Vec3d position,
+                float baseVolume,
+                float pitch,
+                float audioRange,
+                SoundCategory category
+        ) {
+            return new PlayDistantSoundS2CPacket(
+                    soundId,
+                    baseVolume,
+                    pitch,
+                    audioRange,
+                    Optional.of(position),
+                    0,
+                    "",
+                    category
+            );
+        }
+
+        public static PlayDistantSoundS2CPacket positioned(
+                Identifier soundId,
+                Vec3d position,
+                float baseVolume,
+                float pitch,
+                float audioRange
+        ) {
+            return positioned(soundId, position, baseVolume, pitch, audioRange, SoundCategory.NEUTRAL);
+        }
+
+        public static PlayDistantSoundS2CPacket startSession(
+                Identifier soundId,
+                Vec3d position,
+                int sourceEntityId,
+                float baseVolume,
+                float pitch,
+                float audioRange,
+                String sessionKey,
+                SoundCategory category
+        ) {
+            if (sessionKey == null || sessionKey.isBlank()) {
+                throw new IllegalArgumentException("Distant sound session key cannot be blank");
+            }
+            return new PlayDistantSoundS2CPacket(
+                    soundId,
+                    baseVolume,
+                    pitch,
+                    audioRange,
+                    Optional.of(position),
+                    sourceEntityId,
+                    sessionKey,
+                    category
+            );
+        }
+
+        public static PlayDistantSoundS2CPacket startSession(
+                Identifier soundId,
+                Vec3d position,
+                float baseVolume,
+                float pitch,
+                float audioRange,
+                String sessionKey,
+                SoundCategory category
+        ) {
+            return startSession(soundId, position, 0, baseVolume, pitch, audioRange, sessionKey, category);
+        }
+    }
     public record SyncPettingStateS2CPacket(boolean isPetting) {}
     public record PlayMountSoundS2CPacket(Identifier soundId, float pitch, int delay) {}
-    public record PlayerKnockbackS2CPacket(double velocityX, double velocityY, double velocityZ) {} // Add this
+    public record PlayerKnockbackS2CPacket(double velocityX, double velocityY, double velocityZ) {}
 
     /**
      * Registers all packet definitions and their handlers.
@@ -479,14 +580,40 @@ public class ModPackets {
                     buf.writeIdentifier(packet.soundId());
                     buf.writeFloat(packet.volume());
                     buf.writeFloat(packet.pitch());
+                    buf.writeFloat(packet.audioRange());
+                    buf.writeBoolean(packet.position().isPresent());
+                    if (packet.position().isPresent()) {
+                        buf.writeDouble(packet.position().get().x);
+                        buf.writeDouble(packet.position().get().y);
+                        buf.writeDouble(packet.position().get().z);
+                    }
+                    buf.writeVarInt(packet.sourceEntityId());
+                    buf.writeString(packet.sessionKey());
+                    buf.writeEnumConstant(packet.category());
                 },
-                (buf) -> new PlayDistantSoundS2CPacket(
-                        buf.readIdentifier(),
-                        buf.readFloat(),
-                        buf.readFloat()
-                ),
+                (buf) -> {
+                    Identifier soundId = buf.readIdentifier();
+                    float volume = buf.readFloat();
+                    float pitch = buf.readFloat();
+                    float audioRange = buf.readFloat();
+                    Optional<Vec3d> position = buf.readBoolean()
+                            ? Optional.of(new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble()))
+                            : Optional.empty();
+                    int sourceEntityId = buf.readVarInt();
+                    String sessionKey = buf.readString();
+                    SoundCategory category = buf.readEnumConstant(SoundCategory.class);
+                    return new PlayDistantSoundS2CPacket(soundId, volume, pitch, audioRange, position, sourceEntityId, sessionKey, category);
+                },
                 (packet, context) -> context.get().queue(() ->
                         EnvExecutor.runInEnv(Env.CLIENT, () -> () -> AdorableHamsterPetsClient.handlePlayDistantSound(packet))
+                )
+        );
+
+        CHANNEL.register(StopDistantSoundS2CPacket.class,
+                (packet, buf) -> buf.writeString(packet.sessionKey()),
+                (buf) -> new StopDistantSoundS2CPacket(buf.readString()),
+                (packet, context) -> context.get().queue(() ->
+                        EnvExecutor.runInEnv(Env.CLIENT, () -> () -> AdorableHamsterPetsClient.handleStopDistantSound(packet))
                 )
         );
 

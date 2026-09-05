@@ -292,9 +292,21 @@ public class AhpMainConfig extends Config {
     @Translatable.Desc("Allows infected hamsters to recover by spending enough time in direct sunlight above the depths where Redstone Fever naturally appears.")
     public boolean enableRedstoneFeverSunlightCuring = true;
 
+    @Translatable.Name("One-Minute Cure Debug Mode")
+    @Translatable.Desc("For testing only. Makes infected hamsters require 60 seconds of valid sunlight instead of the configured number of days.")
+    public ValidatedBoolean enableOneMinuteRedstoneFeverCureDebug = new ValidatedBoolean(false);
+
+    private final ValidatedField<Boolean> isOneMinuteCureDebugDisabled =
+            enableOneMinuteRedstoneFeverCureDebug.map(enabled -> !enabled, disabled -> !disabled);
+
     @Translatable.Name("Required Curing Days")
     @Translatable.Desc("Number of Minecraft days an infected hamster must spend in direct sunlight to be cured. Progress pauses underground, in the shade and at night.")
-    public ValidatedInt redstoneFeverSunlightCureDays = new ValidatedInt(3, 30, 1);
+    public ValidatedCondition<Integer> redstoneFeverSunlightCureDays =
+            new ValidatedInt(3, 30, 1)
+                    .toCondition(
+                            isOneMinuteCureDebugDisabled,
+                            Text.translatable("config.adorablehamsterpets.condition.one_minute_cure_debug_off"),
+                            () -> 3);
 
     @Translatable.Name("Aggression Range")
     @Translatable.Desc("Maximum range in blocks at which an infected hamster can acquire a target.")
@@ -324,6 +336,41 @@ public class AhpMainConfig extends Config {
     @Translatable.Name("Maximum Burst Duration")
     @Translatable.Desc("Longest possible duration of an energy burst (in seconds).")
     public ValidatedInt redstoneFeverMaxBurstDurationSeconds = new ValidatedInt(2, 30, 1);
+
+    // --- Acorn Flute ---
+    @Translatable.Name("Acorn Flute Settings")
+    @Translatable.Desc("Set how far the music carries, how much trouble it interrupts, and how quickly hamsters learn the recall signal.")
+    public ConfigGroup acornFlute = new ConfigGroup("acornFlute", true);
+
+    @Translatable.Name("Audio Range")
+    @Translatable.Desc("Maximum distance in blocks at which players can hear an Acorn Flute. This setting is purely related to audio and has nothing to do with the effects that it has. The volume of the audio is dynamically adjusted based off your distance from the source.")
+    public ValidatedInt acornFluteAudioRange = new ValidatedInt(70, 256, 16);
+
+    @Translatable.Name("Riff Layering Threshold")
+    @Translatable.Desc("Percentage of the current riff that must finish before another flute use layers a new riff over it. With the default of 80%, playing during a riff's first 80% cuts it short and starts a new one; playing during the final 20% layers the new riff on top while the first one finishes.")
+    public ValidatedInt acornFluteRiffLayeringThresholdPercent = new ValidatedInt(80, 100, 0);
+
+    @Translatable.Name("Effect Radius")
+    @Translatable.Desc("Radius in blocks where a flute riff distracts creepers and interrupts Redstone Fever attacks.")
+    public ValidatedInt acornFluteEffectRadius = new ValidatedInt(16, 64, 1);
+
+    @Translatable.Name("Summoning Radius")
+    @Translatable.Desc("Maximum distance in blocks for calling an owned hamster to an open shoulder or head slot. You can call them even if they are sitting or sleeping. Beyond this range they cannot hear you. Allegedly.")
+    public ValidatedInt acornFluteMountTargetingRadius = new ValidatedInt(8, 64, 1);
+
+    @Translatable.Name("Distracted Creepers")
+    @Translatable.Desc("Choose whether flute riffs calm every creeper, or only charged creepers. Is it OP? No. No, it's not. Don't even say that.")
+    public ValidatedEnum<AcornFluteCreeperMode> acornFluteCreeperMode =
+            new ValidatedEnum<>(AcornFluteCreeperMode.ALL);
+
+    @Translatable.Name("Mounts to Mastery")
+    @Translatable.Desc("Successful flute-assisted mounts needed for full attunement. Hamsters initially have to think about what you're asking for, so it at first, it takes ~3 seconds for them to respond. Keep training, and they will eventually respond within a single second.")
+    public ValidatedInt acornFluteMountsToMastery = new ValidatedInt(50, 1000, 1);
+
+    @ConfigGroup.Pop
+    @Translatable.Name("Anti-Spam Cooldown")
+    @Translatable.Desc("Minimum wait (in ticks) between flute uses. 20 ticks = 1 second. It's only one half of a second by default because I didn't want to punish your shaky aim if you intended to summon your hamster but you missed and played a normal riff instead. But if server members have decided the flute is actually a maraca, feel free to crank it up.")
+    public ValidatedInt acornFluteAntiSpamCooldownTicks = new ValidatedInt(10, 300, 0);
 
     // --- Breeding & Litter Size ---
     @Translatable.Name("Breeding & Litter Size")

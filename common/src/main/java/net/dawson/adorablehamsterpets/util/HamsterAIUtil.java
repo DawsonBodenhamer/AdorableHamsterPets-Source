@@ -2,7 +2,8 @@ package net.dawson.adorablehamsterpets.util;
 
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
-import net.dawson.adorablehamsterpets.sound.ModSounds;
+import net.dawson.adorablehamsterpets.entity.custom.DanceStyle;
+import net.dawson.adorablehamsterpets.flute.DanceSongMatcher;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.JukeboxBlockEntity;
 import net.minecraft.entity.ItemEntity;
@@ -12,7 +13,6 @@ import net.minecraft.item.MusicDiscItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
@@ -20,6 +20,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -128,7 +129,7 @@ public final class HamsterAIUtil {
      * Scans for a nearby jukebox actively playing the Cheese Music Disc or any configured
      * custom discs to which the hamster is intended to dance.
      */
-    public static boolean isDancingSongPlayingNearby(HamsterEntity hamster) {
+    public static DanceStyle getNearbyDanceStyle(HamsterEntity hamster) {
         World world = hamster.getWorld();
 
         for (BlockPos p : BlockPos.iterateOutwards(hamster.getBlockPos(), 8, 4, 8)) {
@@ -138,66 +139,44 @@ public final class HamsterAIUtil {
                     // 1.20.1: Check if jukebox is actively playing and has record
                     if (jbe.isPlayingRecord() && !jbe.getStack().isEmpty()) {
                         ItemStack discStack = jbe.getStack();
-
                         if (discStack.getItem() instanceof MusicDiscItem discItem) {
+                            String songDesc = discItem.getDescription().getString().toLowerCase(Locale.ROOT);
+                            String itemName = discStack.getName().getString().toLowerCase(Locale.ROOT);
+                            String itemKey = discStack.getTranslationKey().toLowerCase(Locale.ROOT);
 
-                            // Check AHP theme song
-                            SoundEvent currentSound = discItem.getSound();
+                            List<String> searchableText = new ArrayList<>(List.of(songDesc, itemName, itemKey));
 
-                            if (currentSound.equals(ModSounds.AHP_THEME_SONG_8_BIT.get()) ||
-                                    currentSound.equals(ModSounds.AHP_THEME_SONG_LOW_FI.get()) ||
-                                    currentSound.equals(ModSounds.AHP_THEME_SONG_ORCHESTRAL.get())) {
-                                return true;
-                            }
-
-                            // Check dynamic config strings
-                            if (!Configs.AHP_ITEMS.dancingMusicDiscStrings.isEmpty()) {
-                                String songDesc = discItem.getDescription().getString().toLowerCase(Locale.ROOT);
-                                String itemName = discStack.getName().getString().toLowerCase(Locale.ROOT);
-                                String itemKey = discStack.getTranslationKey().toLowerCase(Locale.ROOT);
-
-                                // 1.20.1: Parse Lore from NBT instead of Data Components
-                                NbtList loreList = null;
-                                NbtCompound nbt = discStack.getNbt();
-
-                                if (nbt != null && nbt.contains(ItemStack.DISPLAY_KEY, NbtElement.COMPOUND_TYPE)) {
-                                    NbtCompound display = nbt.getCompound(ItemStack.DISPLAY_KEY);
-                                    if (display.contains(ItemStack.LORE_KEY, NbtElement.LIST_TYPE)) {
-                                        loreList = display.getList(ItemStack.LORE_KEY, NbtElement.STRING_TYPE);
-                                    }
-                                }
-
-                                for (String searchStr : Configs.AHP_ITEMS.dancingMusicDiscStrings) {
-                                    String lowerSearch = searchStr.toLowerCase(Locale.ROOT);
-
-                                    if (songDesc.contains(lowerSearch) || itemName.contains(lowerSearch) || itemKey.contains(lowerSearch)) {
-                                        return true;
-                                    }
-
-                                    if (loreList != null) {
-                                        for (int i = 0; i < loreList.size(); i++) {
-                                            String lineJson = loreList.getString(i);
-                                            try {
-                                                // 1.20.1: Lore is stored as JSON text
-                                                Text lineText = Text.Serializer.fromJson(lineJson);
-                                                if (lineText != null && lineText.getString().toLowerCase(Locale.ROOT).contains(lowerSearch)) {
-                                                    return true;
-                                                }
-                                            } catch (Exception e) {
-                                                // Fallback if raw string matches
-                                                if (lineJson.toLowerCase(Locale.ROOT).contains(lowerSearch)) {
-                                                    return true;
-                                                }
+                            // 1.20.1: Parse Lore from NBT instead of Data Components
+                            NbtCompound nbt = discStack.getNbt();
+                            if (nbt != null && nbt.contains(ItemStack.DISPLAY_KEY, NbtElement.COMPOUND_TYPE)) {
+                                NbtCompound display = nbt.getCompound(ItemStack.DISPLAY_KEY);
+                                if (display.contains(ItemStack.LORE_KEY, NbtElement.LIST_TYPE)) {
+                                    NbtList loreList = display.getList(ItemStack.LORE_KEY, NbtElement.STRING_TYPE);
+                                    for (int i = 0; i < loreList.size(); i++) {
+                                        String lineJson = loreList.getString(i);
+                                        try {
+                                            Text lineText = Text.Serializer.fromJson(lineJson);
+                                            if (lineText != null) {
+                                                searchableText.add(lineText.getString());
                                             }
+                                        } catch (Exception e) {
+                                            searchableText.add(lineJson);
                                         }
                                     }
                                 }
                             }
+
+                            DanceStyle style = DanceSongMatcher.classify(
+                                    Configs.AHP_ITEMS.slowDancingMusicDiscStrings,
+                                    Configs.AHP_ITEMS.dancingMusicDiscStrings,
+                                    searchableText);
+                            if (style != DanceStyle.NONE) return style;
                         }
                     }
                 }
             }
         }
-        return false;
+        return DanceStyle.NONE;
     }
+
 }

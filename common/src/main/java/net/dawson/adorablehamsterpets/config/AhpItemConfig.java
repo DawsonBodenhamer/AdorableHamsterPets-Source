@@ -33,7 +33,18 @@ public class AhpItemConfig extends Config {
     public ConfigGroup itemTags = new ConfigGroup("itemTags", true);
 
     @Translatable.Name("Dancing Music Discs")
-    @Translatable.Desc("A list of strings. If a jukebox plays a music disc containing any of these strings in its name, description, or tooltips (not case-sensitive), nearby hamsters will dance to it.")
+    @Translatable.Desc("Here's where you control what types of music discs cause hamsters to dance, and what types of dances they do.")
+    public ConfigGroup dancingMusicDiscs = new ConfigGroup("dancingMusicDiscs", true);
+
+    @Translatable.Name("Slow Songs (Swaying)")
+    @Translatable.Desc("Case-insensitive key words matched against a music disc's name, description, translation key or lore. If a keyword from a song appears in both of these lists, this list takes priority over the 'bouncing' list.")
+    public List<String> slowDancingMusicDiscStrings = new ArrayList<>(List.of(
+            "low-fi", "zampoña"
+    ));
+
+    @ConfigGroup.Pop
+    @Translatable.Name("Fast Songs (Bouncing)")
+    @Translatable.Desc("Case-insensitive key words matched against a music disc's name, description, translation key or lore. If a keyword from a song appears in both of these lists, the 'swaying' list takes priority over this list.")
     public List<String> dancingMusicDiscStrings = new ArrayList<>(List.of(
             "hamtaro", "hamster", "hampter"
     ));

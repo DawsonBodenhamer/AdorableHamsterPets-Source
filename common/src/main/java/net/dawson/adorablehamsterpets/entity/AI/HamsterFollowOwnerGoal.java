@@ -1,5 +1,6 @@
 package net.dawson.adorablehamsterpets.entity.AI;
 
+import net.dawson.adorablehamsterpets.entity.custom.DanceStyle;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.mixin.accessor.FollowOwnerGoalAccessor;
 import net.dawson.adorablehamsterpets.util.HamsterMovementUtil;
@@ -174,7 +175,8 @@ public class HamsterFollowOwnerGoal extends FollowOwnerGoal {
             } else {
                 // Calculate base speed and apply a 50% reduction if they are currently busting a move
                 double activeSpeed = this.hamster.hasGreenBeanBuff() ? BUFFED_FOLLOW_SPEED : accessor.getSpeed();
-                if (this.hamster.isDancing()) {
+                if (this.hamster.getDanceStyle()
+                        == DanceStyle.BOUNCING) {
                     activeSpeed *= 0.5;
                 }
 
