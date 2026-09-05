@@ -55,7 +55,9 @@ public class HamsterBeddingParticle extends SpriteBillboardParticle implements F
     // --- Fields ---
     // --- State ---
     private final boolean useFloatyPhysics;
+    private final float baseScale;
     private final FloatyParticleMotion floatyMotion;
+    private float previousScale;
 
     // --- Sway Physics ---
     private final float swayFrequency;
@@ -74,6 +76,10 @@ public class HamsterBeddingParticle extends SpriteBillboardParticle implements F
 
         // Set size to match leaf textures on bed
         this.scale *= 2.0f;
+        this.baseScale = this.scale;
+        this.scale = 0.0f;
+        this.previousScale = 0.0f;
+        this.alpha = 0.0f;
 
         // Use floaty physics if spawned from the Hamster Bedding item
         this.useFloatyPhysics = (vy == BEDDING_ITEM_FLAG);
@@ -184,6 +190,10 @@ public class HamsterBeddingParticle extends SpriteBillboardParticle implements F
             this.angle += this.constantRollVelocity + swayAngularVelocity + gustSpinVelocity;
         }
 
+        this.previousScale = this.scale;
+        this.scale = this.baseScale * ParticleAnimationUtil.growInScale(this.age);
+        this.alpha = ParticleAnimationUtil.fadeInOpacity(this.age);
+
         super.tick();
 
         // --- Finalization ---
@@ -191,6 +201,14 @@ public class HamsterBeddingParticle extends SpriteBillboardParticle implements F
         if (this.onGround) {
             this.maxAge = Math.min(this.maxAge, this.age + 10);
         }
+    }
+
+    @Override
+    public float getSize(float tickDelta) {
+        return ParticleAnimationUtil.interpolateScale(
+                this.previousScale,
+                this.scale,
+                tickDelta);
     }
 
     @Override

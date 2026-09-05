@@ -14,22 +14,20 @@
       "item_input": "adorablehamsterpets:music_disc_cheese"
     },
     {
-      "type": "adorablehamsterpets:spotlight_itemx1",
+      "type": "adorablehamsterpets:spotlight_bottomx1",
       "header": "book.adorablehamsterpets.entry.musical_rodentry.page2.header",
       "header_color": "00AAAA",
       "text": "book.adorablehamsterpets.entry.musical_rodentry.page2.body",
       "text_color": "000000",
-      "item_input": "adorablehamsterpets:music_disc_cheese",
-      "item_output1": "adorablehamsterpets:music_disc_parmesan"
+      "item_input": "adorablehamsterpets:music_disc_parmesan"
     },
     {
-      "type": "adorablehamsterpets:spotlight_itemx1",
+      "type": "adorablehamsterpets:spotlight_bottomx1",
       "header": "book.adorablehamsterpets.entry.musical_rodentry.page2.header",
       "header_color": "00AAAA",
       "text": "book.adorablehamsterpets.entry.musical_rodentry.page3.body",
       "text_color": "000000",
-      "item_input": "adorablehamsterpets:music_disc_cheese",
-      "item_output1": "adorablehamsterpets:music_disc_blue_cheese"
+      "item_input": "adorablehamsterpets:music_disc_blue_cheese"
     },
     {
       "type": "adorablehamsterpets:spotlight_bottomx1",

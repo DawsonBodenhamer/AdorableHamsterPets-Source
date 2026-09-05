@@ -32,12 +32,18 @@ public final class AcornFluteNoteParticleEffect implements ParticleEffect {
 
     public static final MapCodec<AcornFluteNoteParticleEffect> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-                    VARIANT_CODEC.fieldOf("variant").forGetter(AcornFluteNoteParticleEffect::variant)
+                    VARIANT_CODEC.fieldOf("variant").forGetter(AcornFluteNoteParticleEffect::variant),
+                    Codec.FLOAT.fieldOf("look_yaw").forGetter(AcornFluteNoteParticleEffect::lookYaw),
+                    Codec.FLOAT.fieldOf("look_pitch").forGetter(AcornFluteNoteParticleEffect::lookPitch)
             ).apply(instance, AcornFluteNoteParticleEffect::new));
 
     public static final PacketCodec<RegistryByteBuf, AcornFluteNoteParticleEffect> PACKET_CODEC = PacketCodec.tuple(
             PacketCodecs.VAR_INT,
             effect -> effect.variant.ordinal(),
+            PacketCodecs.FLOAT,
+            AcornFluteNoteParticleEffect::lookYaw,
+            PacketCodecs.FLOAT,
+            AcornFluteNoteParticleEffect::lookPitch,
             AcornFluteNoteParticleEffect::fromOrdinal);
 
     /* ──────────────────────────────────────────────────────────────────────────────
@@ -45,13 +51,29 @@ public final class AcornFluteNoteParticleEffect implements ParticleEffect {
      * ────────────────────────────────────────────────────────────────────────────*/
 
     private final AcornFluteVariant variant;
+    private final float lookYaw;
+    private final float lookPitch;
 
     public AcornFluteNoteParticleEffect(AcornFluteVariant variant) {
+        this(variant, 0.0F, 0.0F);
+    }
+
+    public AcornFluteNoteParticleEffect(AcornFluteVariant variant, float lookYaw, float lookPitch) {
         this.variant = Objects.requireNonNull(variant, "variant");
+        this.lookYaw = lookYaw;
+        this.lookPitch = lookPitch;
     }
 
     public AcornFluteVariant variant() {
         return this.variant;
+    }
+
+    public float lookYaw() {
+        return this.lookYaw;
+    }
+
+    public float lookPitch() {
+        return this.lookPitch;
     }
 
     @Override
@@ -60,7 +82,10 @@ public final class AcornFluteNoteParticleEffect implements ParticleEffect {
     }
 
     // --- Serialization Helpers ---
-    private static AcornFluteNoteParticleEffect fromOrdinal(int ordinal) {
-        return new AcornFluteNoteParticleEffect(AcornFluteVariant.values()[ordinal]);
+    private static AcornFluteNoteParticleEffect fromOrdinal(int ordinal, float lookYaw, float lookPitch) {
+        return new AcornFluteNoteParticleEffect(
+                AcornFluteVariant.values()[ordinal],
+                lookYaw,
+                lookPitch);
     }
 }

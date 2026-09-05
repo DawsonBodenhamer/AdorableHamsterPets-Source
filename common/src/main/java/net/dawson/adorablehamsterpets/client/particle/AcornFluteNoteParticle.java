@@ -1,8 +1,6 @@
 package net.dawson.adorablehamsterpets.client.particle;
 
-import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.flute.AcornFluteVariant;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFactory;
 import net.minecraft.client.particle.ParticleTextureSheet;
@@ -10,49 +8,38 @@ import net.minecraft.client.particle.SpriteBillboardParticle;
 import net.minecraft.client.particle.SpriteProvider;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 
 /**
- * A colored Acorn Flute note with the same localized gust response as floaty bedding.
+ * A colored Acorn Flute note following a player-directed three-dimensional cone.
  */
-public final class AcornFluteNoteParticle extends SpriteBillboardParticle
-        implements FloatyParticleMotion.Target {
+public final class AcornFluteNoteParticle extends SpriteBillboardParticle {
 
     /* ──────────────────────────────────────────────────────────────────────────────
      *        Constants
      * ────────────────────────────────────────────────────────────────────────────*/
 
-    private static final int MIN_LIFETIME = 48;
-    private static final int LIFETIME_VARIANCE = 24;
-    private static final float NOTE_SCALE = 0.891F;
-    private static final float INITIAL_UPWARD_SPEED = 0.0115F;
-    private static final float INITIAL_UPWARD_SPEED_VARIANCE = 0.0046F;
-    private static final float UPWARD_ACCELERATION = 0.0002875F;
-    private static final float UNIVERSAL_DRIFT_ACCELERATION = 0.002F;
-    private static final float DRIFT_PERIOD_TICKS = 3.0F * 60.0F * 20.0F;
-    private static final float HORIZONTAL_SPEED_CAP = 0.12F;
-    private static final float GUST_SPEED_ALLOWANCE = 0.10F;
-    private static final float VELOCITY_DAMPING = 0.96F;
-    private static final float ROTATION_SPEED_MIN = 0.012F;
-    private static final float ROTATION_SPEED_MAX = 0.060F;
+    private static final int MIN_LIFETIME = 40;                     // Higher = notes live longer
+    private static final int LIFETIME_VARIANCE = 20;                // Higher = more lifespan variation
+    private static final float NOTE_SCALE = 1.0F;                   // Higher = bigger
+    private static final float CONE_HALF_ANGLE_DEGREES = 20.0F;     // Higher = wider cone
+    private static final float CONE_VERTICAL_MIN_DEGREES = 25.0F;   // 0 = parallel to horizon
+    private static final float CONE_VERTICAL_MAX_DEGREES = 90.0F;   // Steepest upward launch pitch
+    private static final float INITIAL_SPEED = 0.02F;               // Higher = faster launch
+    private static final float INITIAL_SPEED_VARIANCE = 0.07F;      // Higher = wider launch speeds
+    private static final float DIRECTIONAL_ACCELERATION = 0.01F;    // Higher = stronger push each tick
+    private static final float VELOCITY_DAMPING = 0.96F;            // Closer to 1.0 = glides farther
+    private static final float ROTATION_SPEED_MIN = 0.02F;          // Higher = faster
+    private static final float ROTATION_SPEED_MAX = 0.06F;          // Higher = faster
 
     // --- Deterministic Tuning Probes ---
     static float noteScale() {
         return NOTE_SCALE;
     }
 
-    static float initialVerticalSpeed(float randomSample) {
-        return INITIAL_UPWARD_SPEED
-                + MathHelper.clamp(randomSample, 0.0F, 1.0F) * INITIAL_UPWARD_SPEED_VARIANCE;
-    }
-
-    static double baselineVerticalDisplacement(int ticks, float randomSample) {
-        double displacement = 0.0D;
-        double velocity = initialVerticalSpeed(randomSample);
-        for (int tick = 0; tick < Math.max(0, ticks); tick++) {
-            displacement += velocity;
-            velocity = (velocity + UPWARD_ACCELERATION) * VELOCITY_DAMPING;
-        }
-        return displacement;
+    static float initialSpeed(float randomSample) {
+        return INITIAL_SPEED
+                + MathHelper.clamp(randomSample, 0.0F, 1.0F) * INITIAL_SPEED_VARIANCE;
     }
 
     static float opacity(int age, int maxAge) {
@@ -61,12 +48,13 @@ public final class AcornFluteNoteParticle extends SpriteBillboardParticle
         }
 
         float fadeStart = maxAge * 0.9F;
-        return age < fadeStart
+        float fadeOut = age < fadeStart
                 ? 1.0F
                 : MathHelper.clamp(
                         (maxAge - age) / (maxAge - fadeStart),
                         0.0F,
                         1.0F);
+        return ParticleAnimationUtil.fadeInOpacity(age) * fadeOut;
     }
 
     static float rotationSpeed(float signedRandomSample) {
@@ -80,32 +68,72 @@ public final class AcornFluteNoteParticle extends SpriteBillboardParticle
      *        State
      * ────────────────────────────────────────────────────────────────────────────*/
 
-    private final FloatyParticleMotion floatyMotion = new FloatyParticleMotion();
+    private final float baseScale;
+    private final double directionX;
+    private final double directionY;
+    private final double directionZ;
+    private float previousScale;
     private float rotationVelocity;
 
     private AcornFluteNoteParticle(ClientWorld world,
                                    double x, double y, double z,
                                    double velocityX, double velocityY, double velocityZ,
-                                   SpriteProvider sprites, AcornFluteVariant variant) {
+                                   SpriteProvider sprites, AcornFluteVariant variant,
+                                   float lookYaw, float lookPitch) {
         super(world, x, y, z, 0.0D, 0.0D, 0.0D);
 
         this.setSprite(sprites.getSprite(this.random));
         this.maxAge = MIN_LIFETIME + this.random.nextInt(LIFETIME_VARIANCE);
         this.scale *= NOTE_SCALE;
+        this.baseScale = this.scale;
+        Vec3d direction = createConeDirection(lookYaw, lookPitch);
+        this.directionX = direction.x;
+        this.directionY = direction.y;
+        this.directionZ = direction.z;
+        this.scale = 0.0F;
+        this.previousScale = 0.0F;
+        this.alpha = 0.0F;
         this.gravityStrength = 0.0F;
         this.velocityMultiplier = VELOCITY_DAMPING;
-        this.collidesWithWorld = false;
+        this.collidesWithWorld = true;
 
         this.rotationVelocity = rotationSpeed(this.random.nextFloat() * 2.0F - 1.0F);
         this.angle = this.random.nextFloat() * MathHelper.TAU;
         this.prevAngle = this.angle;
 
-        // Ignore packet launch velocity so every note acquires the same global drift direction
-        this.velocityX = 0.0D;
-        this.velocityY = initialVerticalSpeed(this.random.nextFloat());
-        this.velocityZ = 0.0D;
+        double launchSpeed = initialSpeed(this.random.nextFloat());
+        this.velocityX = this.directionX * launchSpeed;
+        this.velocityY = this.directionY * launchSpeed;
+        this.velocityZ = this.directionZ * launchSpeed;
 
         this.setPaletteColor(variant);
+    }
+
+    private Vec3d createConeDirection(float lookYaw, float lookPitch) {
+        float minimumPitch = (float) Math.toRadians(CONE_VERTICAL_MIN_DEGREES);
+        float maximumPitch = (float) Math.toRadians(CONE_VERTICAL_MAX_DEGREES);
+        float clampedPitch = MathHelper.clamp(lookPitch, minimumPitch, maximumPitch);
+        float cosPitch = MathHelper.cos(clampedPitch);
+        Vec3d centerDirection = new Vec3d(
+                MathHelper.cos(lookYaw) * cosPitch,
+                MathHelper.sin(clampedPitch),
+                MathHelper.sin(lookYaw) * cosPitch).normalize();
+        Vec3d reference = Math.abs(centerDirection.y) > 0.99D
+                ? new Vec3d(1.0D, 0.0D, 0.0D)
+                : new Vec3d(0.0D, 1.0D, 0.0D);
+        Vec3d tangent = centerDirection.crossProduct(reference).normalize();
+        Vec3d bitangent = tangent.crossProduct(centerDirection).normalize();
+        double maximumConeAngle = Math.min(
+                Math.toRadians(CONE_HALF_ANGLE_DEGREES),
+                clampedPitch);
+        double coneAngle = maximumConeAngle * this.random.nextFloat();
+        double azimuth = MathHelper.TAU * this.random.nextFloat();
+        double sinConeAngle = Math.sin(coneAngle);
+
+        return centerDirection.multiply(Math.cos(coneAngle))
+                .add(tangent.multiply(sinConeAngle * Math.cos(azimuth)))
+                .add(bitangent.multiply(sinConeAngle * Math.sin(azimuth)))
+                .normalize();
     }
 
     // --- Palette ---
@@ -125,52 +153,19 @@ public final class AcornFluteNoteParticle extends SpriteBillboardParticle
 
     @Override
     public void tick() {
-        long worldTime = this.world.getTime();
-
         // --- Global Drift ---
-        this.velocityY += UPWARD_ACCELERATION;
-        float tickDelta = MinecraftClient.getInstance().getRenderTickCounter().getTickDelta(true);
-        float driftAngle = globalDriftAngle(
-                Configs.AHP_UI.enableDynamicDriftAngle.get(),
-                worldTime,
-                tickDelta,
-                Configs.AHP_UI.staticDriftAngle.get());
-        float driftDirectionX = MathHelper.cos(driftAngle);
-        float driftDirectionZ = MathHelper.sin(driftAngle);
-        this.velocityX += driftDirectionX * UNIVERSAL_DRIFT_ACCELERATION;
-        this.velocityZ += driftDirectionZ * UNIVERSAL_DRIFT_ACCELERATION;
-
-        // --- Shared Gust Response ---
-        float gustStrength = this.floatyMotion.applyGust(
-                this.world,
-                worldTime,
-                this.x,
-                this.y,
-                this.z,
-                driftDirectionX,
-                driftDirectionZ,
-                this);
-        this.floatyMotion.capHorizontalVelocity(
-                this,
-                HORIZONTAL_SPEED_CAP,
-                GUST_SPEED_ALLOWANCE,
-                gustStrength);
+        this.velocityX += this.directionX * DIRECTIONAL_ACCELERATION;
+        this.velocityY += this.directionY * DIRECTIONAL_ACCELERATION;
+        this.velocityZ += this.directionZ * DIRECTIONAL_ACCELERATION;
 
         // --- Continuous Rotation ---
         this.prevAngle = this.angle;
         this.angle += this.rotationVelocity;
+        this.previousScale = this.scale;
+        this.scale = this.baseScale * ParticleAnimationUtil.growInScale(this.age);
         this.alpha = opacity(this.age, this.maxAge);
 
         super.tick();
-    }
-
-    static float globalDriftAngle(
-            boolean dynamic, long worldTime, float tickDelta, int staticAngleDegrees) {
-        if (dynamic) {
-            float timeWithPartial = worldTime + tickDelta;
-            return timeWithPartial / DRIFT_PERIOD_TICKS * MathHelper.TAU;
-        }
-        return (float) Math.toRadians(staticAngleDegrees);
     }
 
     /* ──────────────────────────────────────────────────────────────────────────────
@@ -182,40 +177,12 @@ public final class AcornFluteNoteParticle extends SpriteBillboardParticle
         return ParticleTextureSheet.PARTICLE_SHEET_TRANSLUCENT;
     }
 
-    // --- Floaty Particle Target ---
     @Override
-    public double velocityX() {
-        return this.velocityX;
-    }
-
-    @Override
-    public double velocityZ() {
-        return this.velocityZ;
-    }
-
-    @Override
-    public void addVelocityX(double amount) {
-        this.velocityX += amount;
-    }
-
-    @Override
-    public void addVelocityY(double amount) {
-        this.velocityY += amount;
-    }
-
-    @Override
-    public void addVelocityZ(double amount) {
-        this.velocityZ += amount;
-    }
-
-    @Override
-    public void multiplyVelocityX(float factor) {
-        this.velocityX *= factor;
-    }
-
-    @Override
-    public void multiplyVelocityZ(float factor) {
-        this.velocityZ *= factor;
+    public float getSize(float tickDelta) {
+        return ParticleAnimationUtil.interpolateScale(
+                this.previousScale,
+                this.scale,
+                tickDelta);
     }
 
     /* ──────────────────────────────────────────────────────────────────────────────
@@ -243,7 +210,9 @@ public final class AcornFluteNoteParticle extends SpriteBillboardParticle
                     velocityY,
                     velocityZ,
                     this.sprites,
-                    effect.variant());
+                    effect.variant(),
+                    effect.lookYaw(),
+                    effect.lookPitch());
         }
     }
 }

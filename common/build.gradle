@@ -33,6 +33,7 @@ dependencies {
     modCompileOnly "maven.modrinth:iris:${rootProject.iris_version}-fabric"
 
     testImplementation "org.junit.jupiter:junit-jupiter:5.11.4"
+    testImplementation "software.bernie.geckolib:geckolib-fabric-$rootProject.minecraft_version:$rootProject.geckolib_version"
 }
 
 sourceSets.test {
