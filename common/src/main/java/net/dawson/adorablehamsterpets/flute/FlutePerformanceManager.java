@@ -41,10 +41,7 @@ import java.util.UUID;
 
 /**
  * Owns server-authoritative Acorn Flute performances and shoulder-call flights.
- *
- * <p>A performance belongs to the exact mainhand stack object used to start it. This
- * deliberately makes inventory changes a cancellation boundary without adding fragile
- * inventory or swap mixins.</p>
+ * Performances intentionally belong to the exact mainhand stack object used to start them.
  */
 public final class FlutePerformanceManager {
 
@@ -52,15 +49,14 @@ public final class FlutePerformanceManager {
      *        Constants and Static State
      * ────────────────────────────────────────────────────────────────────────────*/
 
-    private static final int FLIGHT_DURATION_TICKS = 24;
-    private static final int ARRIVAL_PRESENTATION_TICKS = 2;
+    private static final int FLIGHT_DURATION_TICKS = 15;
+    private static final int ARRIVAL_PRESENTATION_TICKS = 5;
     private static final int HIGH_JUMP_PREP_TICKS = (int) Math.round(0.42D * 20.0D); // 8.4 ticks rounded to 8
-    private static final double NOTES_PER_TICK = 0.23D;
+    public static final double NOTES_PER_TICK = 1.5D; // Maximum particle emission rate during note swells
     private static final double FLIGHT_ARC_HEIGHT = 2.55D;
     private static final double SHOULDER_OFFSET = 0.36D;
     private static final double HEAD_OFFSET_Y = 0.15D;
-    // Detection-only bound for the too-far action-bar response; the actual mount radius remains configurable.
-    private static final double MOUNT_FEEDBACK_RADIUS = 64.0D;
+    private static final double MOUNT_FEEDBACK_SEARCH_MULTIPLIER = 2.0D; // One extra configured range for feedback
     private static final Set<UUID> RESPONDING_HAMSTERS = new HashSet<>();
     private static final Map<UUID, List<Performance>> ACTIVE_PERFORMANCES = new HashMap<>();
 
@@ -117,7 +113,7 @@ public final class FlutePerformanceManager {
         HamsterEntity target = findMountTarget(player, mountRadius);
         if (target == null) {
             HamsterEntity distantTarget = findMountTarget(
-                    player, Math.max(mountRadius, MOUNT_FEEDBACK_RADIUS));
+                    player, mountFeedbackSearchRadius(mountRadius));
             if (distantTarget != null
                     && distantTarget.squaredDistanceTo(player) > mountRadius * mountRadius) {
                 player.sendMessage(
@@ -143,6 +139,7 @@ public final class FlutePerformanceManager {
                 target != null && RESPONDING_HAMSTERS.contains(target.getUuid()));
         if (selectedMode == FlutePerformancePolicy.Mode.SHOULDER_CALL) {
             TimedSound sound = ModSounds.ACORN_FLUTE_CHIFF_TIMED;
+            AcornFluteNoteProfile noteProfile = AcornFluteNoteProfiles.chiff();
             boolean wasLookingAtEntity = target.isLookAtEntityGoalActive
                     || HamsterLookAtEntityGoal.class.getSimpleName().equals(target.getActiveCustomGoalName());
             String previousGoal = FlutePerformancePolicy.sanitizePreviousGoalName(
@@ -156,6 +153,7 @@ public final class FlutePerformanceManager {
                     player.getPos(),
                     startTick,
                     sound,
+                    noteProfile,
                     target,
                     slot,
                     FluteTrainingPolicy.responseDelayTicks(
@@ -173,7 +171,9 @@ public final class FlutePerformanceManager {
             return true;
         }
 
-        TimedSound sound = ModSounds.ACORN_FLUTE_RIFFS.get(player.getRandom().nextInt(ModSounds.ACORN_FLUTE_RIFFS.size()));
+        int riffIndex = player.getRandom().nextInt(ModSounds.ACORN_FLUTE_RIFFS.size());
+        TimedSound sound = ModSounds.ACORN_FLUTE_RIFFS.get(riffIndex);
+        AcornFluteNoteProfile noteProfile = AcornFluteNoteProfiles.forRiffIndex(riffIndex);
         Performance performance = Performance.normal(
                 player,
                 player.getUuid(),
@@ -182,7 +182,8 @@ public final class FlutePerformanceManager {
                 player.getWorld().getRegistryKey(),
                 player.getPos(),
                 startTick,
-                sound);
+                sound,
+                noteProfile);
         performances.add(performance);
         playSound(world, performance);
         return true;
@@ -420,20 +421,29 @@ public final class FlutePerformanceManager {
             ServerPlayerEntity player, Performance performance, long currentTick) {
         ServerWorld world = player.getServerWorld();
         if (currentTick < performance.soundEndTick) {
-            performance.noteSpawnAccumulator += NOTES_PER_TICK;
+            long elapsedTick = currentTick - performance.startTick;
+            if (elapsedTick >= 0L && performance.noteProfile != null) {
+                double normalizedIntensity = AcornFluteNoteProfiles.applyParticleNoiseFloor(
+                        performance.noteProfile.normalizedIntensityAt(elapsedTick));
+                performance.noteSpawnAccumulator += NOTES_PER_TICK * normalizedIntensity;
+            }
         }
-        if (performance.noteSpawnAccumulator >= 1.0D) {
-            performance.noteSpawnAccumulator -= 1.0D;
+        int toSpawn = (int) performance.noteSpawnAccumulator;
+        if (toSpawn > 0) {
+            performance.noteSpawnAccumulator -= toSpawn;
             Vec3d hand = mainHandPosition(player);
             world.spawnParticles(
-                    new AcornFluteNoteParticleEffect(performance.variant),
+                    new AcornFluteNoteParticleEffect(
+                            performance.variant,
+                            playerLookYaw(player),
+                            playerLookPitch(player)),
                     hand.x,
                     hand.y,
                     hand.z,
-                    1,
-                    0.32D,
+                    toSpawn,
                     0.12D,
-                    0.32D,
+                    0.05D,
+                    0.12D,
                     0.025D);
         }
 
@@ -510,6 +520,10 @@ public final class FlutePerformanceManager {
     /* ──────────────────────────────────────────────────────────────────────────────
      *        Validation and Audio Helpers
      * ────────────────────────────────────────────────────────────────────────────*/
+
+    static double mountFeedbackSearchRadius(double mountRadius) {
+        return mountRadius * MOUNT_FEEDBACK_SEARCH_MULTIPLIER;
+    }
 
     @Nullable
     private static HamsterEntity findMountTarget(ServerPlayerEntity player, double radius) {
@@ -598,9 +612,18 @@ public final class FlutePerformanceManager {
         Vec3d right = new Vec3d(Math.cos(yaw), 0.0D, Math.sin(yaw));
         double side = player.getMainArm() == Arm.RIGHT ? -0.24D : 0.24D;
         return player.getEyePos()
-                .add(player.getRotationVec(1.0F).multiply(0.62D))
+                .add(player.getRotationVec(1.0F).multiply(0.42D))
                 .add(right.multiply(side))
                 .add(0.0D, -0.32D, 0.0D);
+    }
+
+    private static float playerLookYaw(PlayerEntity player) {
+        return (float) Math.toRadians(90.0D + player.getYaw());
+    }
+
+    private static float playerLookPitch(PlayerEntity player) {
+        float upwardAngleDegrees = Math.max(0.0F, Math.min(90.0F, -player.getPitch()));
+        return (float) Math.toRadians(upwardAngleDegrees);
     }
 
     private static void playSound(ServerWorld world, Performance performance) {
@@ -678,6 +701,7 @@ public final class FlutePerformanceManager {
         private final Vec3d sourcePosition;
         private final long startTick;
         private final TimedSound sound;
+        @Nullable private final AcornFluteNoteProfile noteProfile;
         private final long soundEndTick;
         private final Mode mode;
         @Nullable private final HamsterEntity target;
@@ -707,6 +731,7 @@ public final class FlutePerformanceManager {
                 Vec3d sourcePosition,
                 long startTick,
                 TimedSound sound,
+                @Nullable AcornFluteNoteProfile noteProfile,
                 Mode mode,
                 @Nullable HamsterEntity target,
                 @Nullable ShoulderLocation slot,
@@ -724,6 +749,7 @@ public final class FlutePerformanceManager {
             this.sourcePosition = sourcePosition;
             this.startTick = startTick;
             this.sound = sound;
+            this.noteProfile = noteProfile;
             this.soundEndTick = startTick + Math.max(1L, (long) Math.ceil(sound.durationSeconds() * 20.0D));
             this.mode = mode;
             this.target = target;
@@ -744,7 +770,8 @@ public final class FlutePerformanceManager {
                 RegistryKey<World> dimension,
                 Vec3d sourcePosition,
                 long startTick,
-                TimedSound sound) {
+                TimedSound sound,
+                @Nullable AcornFluteNoteProfile noteProfile) {
             return new Performance(
                     player,
                     playerUuid,
@@ -754,6 +781,7 @@ public final class FlutePerformanceManager {
                     sourcePosition,
                     startTick,
                     sound,
+                    noteProfile,
                     Mode.NORMAL,
                     null,
                     null,
@@ -774,6 +802,7 @@ public final class FlutePerformanceManager {
                 Vec3d sourcePosition,
                 long startTick,
                 TimedSound sound,
+                @Nullable AcornFluteNoteProfile noteProfile,
                 HamsterEntity target,
                 ShoulderLocation slot,
                 int responseDelayTicks,
@@ -791,6 +820,7 @@ public final class FlutePerformanceManager {
                     sourcePosition,
                     startTick,
                     sound,
+                    noteProfile,
                     Mode.SHOULDER_CALL,
                     target,
                     slot,

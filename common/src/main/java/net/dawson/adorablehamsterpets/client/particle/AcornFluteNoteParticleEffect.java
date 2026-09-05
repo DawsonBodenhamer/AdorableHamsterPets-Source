@@ -32,7 +32,9 @@ public final class AcornFluteNoteParticleEffect implements ParticleEffect {
 
     public static final Codec<AcornFluteNoteParticleEffect> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
-                    VARIANT_CODEC.fieldOf("variant").forGetter(AcornFluteNoteParticleEffect::variant)
+                    VARIANT_CODEC.fieldOf("variant").forGetter(AcornFluteNoteParticleEffect::variant),
+                    Codec.FLOAT.fieldOf("look_yaw").forGetter(AcornFluteNoteParticleEffect::lookYaw),
+                    Codec.FLOAT.fieldOf("look_pitch").forGetter(AcornFluteNoteParticleEffect::lookPitch)
             ).apply(instance, AcornFluteNoteParticleEffect::new));
 
     public static final ParticleEffect.Factory<AcornFluteNoteParticleEffect> PARAMETERS_FACTORY = new ParticleEffect.Factory<>() {
@@ -40,12 +42,25 @@ public final class AcornFluteNoteParticleEffect implements ParticleEffect {
         public AcornFluteNoteParticleEffect read(ParticleType<AcornFluteNoteParticleEffect> type, StringReader reader) throws CommandSyntaxException {
             reader.expect(' ');
             String name = reader.readString();
-            return new AcornFluteNoteParticleEffect(AcornFluteVariant.valueOf(name.toUpperCase(Locale.ROOT)));
+            float lookYaw = 0.0F;
+            float lookPitch = 0.0F;
+            if (reader.canRead()) {
+                reader.expect(' ');
+                lookYaw = reader.readFloat();
+            }
+            if (reader.canRead()) {
+                reader.expect(' ');
+                lookPitch = reader.readFloat();
+            }
+            return new AcornFluteNoteParticleEffect(
+                    AcornFluteVariant.valueOf(name.toUpperCase(Locale.ROOT)),
+                    lookYaw,
+                    lookPitch);
         }
 
         @Override
         public AcornFluteNoteParticleEffect read(ParticleType<AcornFluteNoteParticleEffect> type, PacketByteBuf buf) {
-            return fromOrdinal(buf.readVarInt());
+            return fromOrdinal(buf.readVarInt(), buf.readFloat(), buf.readFloat());
         }
     };
 
@@ -54,13 +69,29 @@ public final class AcornFluteNoteParticleEffect implements ParticleEffect {
      * ────────────────────────────────────────────────────────────────────────────*/
 
     private final AcornFluteVariant variant;
+    private final float lookYaw;
+    private final float lookPitch;
 
     public AcornFluteNoteParticleEffect(AcornFluteVariant variant) {
+        this(variant, 0.0F, 0.0F);
+    }
+
+    public AcornFluteNoteParticleEffect(AcornFluteVariant variant, float lookYaw, float lookPitch) {
         this.variant = Objects.requireNonNull(variant, "variant");
+        this.lookYaw = lookYaw;
+        this.lookPitch = lookPitch;
     }
 
     public AcornFluteVariant variant() {
         return this.variant;
+    }
+
+    public float lookYaw() {
+        return this.lookYaw;
+    }
+
+    public float lookPitch() {
+        return this.lookPitch;
     }
 
     @Override
@@ -71,15 +102,23 @@ public final class AcornFluteNoteParticleEffect implements ParticleEffect {
     @Override
     public void write(PacketByteBuf buf) {
         buf.writeVarInt(this.variant.ordinal());
+        buf.writeFloat(this.lookYaw);
+        buf.writeFloat(this.lookPitch);
     }
 
     @Override
     public String asString() {
-        return Registries.PARTICLE_TYPE.getId(this.getType()) + " " + this.variant.name().toLowerCase(Locale.ROOT);
+        return Registries.PARTICLE_TYPE.getId(this.getType())
+                + " " + this.variant.name().toLowerCase(Locale.ROOT)
+                + " " + this.lookYaw
+                + " " + this.lookPitch;
     }
 
     // --- Serialization Helpers ---
-    private static AcornFluteNoteParticleEffect fromOrdinal(int ordinal) {
-        return new AcornFluteNoteParticleEffect(AcornFluteVariant.values()[ordinal]);
+    private static AcornFluteNoteParticleEffect fromOrdinal(int ordinal, float lookYaw, float lookPitch) {
+        return new AcornFluteNoteParticleEffect(
+                AcornFluteVariant.values()[ordinal],
+                lookYaw,
+                lookPitch);
     }
 }
