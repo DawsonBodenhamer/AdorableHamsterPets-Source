@@ -83,7 +83,11 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
 //        getOrCreateTagBuilder(ItemTags.LECTERN_BOOKS)
 //                .add(ModItems.HAMSTER_GUIDE_BOOK.get());
 
-        // 7. Vanilla Trimmable Armor Wrapper
+        // 7. Chiseled Bookshelf Books
+        getOrCreateTagBuilder(ItemTags.BOOKSHELF_BOOKS)
+                .add(ModItems.HAMSTER_GUIDE_BOOK.get());
+
+        // 8. Vanilla Trimmable Armor Wrapper
         getOrCreateTagBuilder(ItemTags.TRIMMABLE_ARMOR)
                 .addTag(HAMSTER_ARMOR_ENCHANTABLE);
 

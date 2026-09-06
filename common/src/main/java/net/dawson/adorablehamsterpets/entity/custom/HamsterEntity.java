@@ -87,6 +87,8 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     private static final int CUSTOM_LOVE_TICKS = 600; // 30 seconds
     private static final int NORMAL_FALL_PITCH_DURATION = 15;
     private static final int PITCH_RESET_DURATION = 3;
+    private static final int MIN_SULKING_DURATION_TICKS = 8 * 20;
+    public static final int MAX_DISTRESS_DURATION_TICKS = 10 * 20;
     public static final int CELEBRATION_PARTICLE_DURATION_TICKS = 600;
 
     // --- Shadow Animation Tuning ---
@@ -228,6 +230,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
     // --- Timers and Ticks ---
     @Unique public int clientRollTimer = 0;
+    @Unique public int knockedOutTimer = 0;
     @Unique public int sulkTimer = 0;
     @Unique public int wakingUpTicks = 0;
     @Unique public int goToBedDelayTicks = 0;
@@ -489,6 +492,11 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             RedstoneFeverUtil.enforceFeatureToggle(this);
         }
 
+        // Pocket rescue must preempt active goals after the long-distance threshold is crossed.
+        if (HamsterMovementUtil.tryOwnerTeleportRescue(this)) {
+            return;
+        }
+
         // --- 1. AI-Disabled Presentation ---
         // Fast-path for AI-disabled statues
         if (this.isAiDisabled()) {
@@ -682,6 +690,21 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
         setHamsterFlag(SLEEPING_FLAG, sleeping);
     }
 
+    /**
+     * Returns whether an explicit stay-put state should keep this hamster in place during owner
+     * teleport rescue.
+     *
+     * <p>KO and sulking are sitting-like presentation states, not stay-put commands, so they
+     * remain rescue-eligible.
+     */
+    public boolean shouldStayPutDuringTeleportRescue() {
+        return !isKnockedOut()
+                && !isSulking()
+                && (getHamsterFlag(SITTING_FLAG)
+                        || isRescueSleeping()
+                        || HamsterBedUtil.isSleepingInBed(this));
+    }
+
     public int getAutoEatCooldownTicks() {
         return this.autoEatState.cooldownTicks;
     }
@@ -752,6 +775,47 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
 
     public void setKnockedOut(boolean knocked_out) {
         setHamsterFlag(KNOCKED_OUT_FLAG, knocked_out);
+        this.knockedOutTimer = knocked_out ? MAX_DISTRESS_DURATION_TICKS : 0;
+    }
+
+    public void wakeUpFromKnockout() {
+        if (!this.isKnockedOut()) return;
+
+        if (!this.getWorld().isClient()) {
+            SoundEvent wakeUpSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_WAKE_UP_SOUNDS, this.getRandom());
+            if (wakeUpSound != null) {
+                this.getWorld().playSound(null, this.getBlockPos(), wakeUpSound, SoundCategory.NEUTRAL, 1.0F, 1.0F);
+            }
+        }
+
+        this.setKnockedOut(false);
+        this.setSitting(false, true);
+        this.triggerAnimOnServer("mainController", "wakeup_from_ko");
+    }
+
+    public void restoreDistressTimers(int knockedOutTimer, int sulkTimer) {
+        this.knockedOutTimer = this.isKnockedOut()
+                ? MathHelper.clamp(
+                        knockedOutTimer > 0 ? knockedOutTimer : MAX_DISTRESS_DURATION_TICKS,
+                        1,
+                        MAX_DISTRESS_DURATION_TICKS)
+                : 0;
+        this.sulkTimer = this.isSulking()
+                ? MathHelper.clamp(
+                        sulkTimer > 0 ? sulkTimer : getRandomSulkingDuration(),
+                        1,
+                        MAX_DISTRESS_DURATION_TICKS)
+                : 0;
+    }
+
+    /**
+     * Clears temporary distress before a rescued hamster is reintroduced beside its owner.
+     * This intentionally bypasses normal wake-up feedback so teleport rescue remains silent.
+     */
+    public void clearDistressForTeleportRescue() {
+        this.setKnockedOut(false);
+        this.setSulking(false);
+        this.setInSittingPose(false);
     }
 
     public String getCurrentDeepSleepAnimationIdFromTracker() {
@@ -925,7 +989,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                         600; // Duration for fail particles
                 this.celebrationRuntimeState.sulkEntityEffectTicks =
                         600; // Duration for entity effect particles
-                this.sulkTimer = 160 + this.getRandom().nextInt(80); // 8-12 seconds
+                this.sulkTimer = getRandomSulkingDuration();
             }
         } else {
             // If stopping sulking, ensure all associated timers are also stopped/reset
@@ -2285,7 +2349,20 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
             this.sleepRuntimeState.napInBedDurationTimer--;
         if (this.localSpawnImmunityTicks > 0) this.localSpawnImmunityTicks--;
 
-        // --- 3. Sulking Timer ---
+        // --- 3. Distress Timers ---
+        if (this.knockedOutTimer > MAX_DISTRESS_DURATION_TICKS) {
+            this.knockedOutTimer = MAX_DISTRESS_DURATION_TICKS;
+        }
+        if (this.knockedOutTimer > 0) {
+            this.knockedOutTimer--;
+            if (this.knockedOutTimer == 0 && this.isKnockedOut() && !this.getWorld().isClient()) {
+                this.wakeUpFromKnockout();
+            }
+        }
+
+        if (this.sulkTimer > MAX_DISTRESS_DURATION_TICKS) {
+            this.sulkTimer = MAX_DISTRESS_DURATION_TICKS;
+        }
         if (this.sulkTimer > 0) {
             this.sulkTimer--;
             if (this.sulkTimer == 0 && this.isSulking() && !this.getWorld().isClient()) {
@@ -2308,6 +2385,11 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
                                 1.5f);
             }
         }
+    }
+
+    private int getRandomSulkingDuration() {
+        return MIN_SULKING_DURATION_TICKS
+                + this.getRandom().nextInt(MAX_DISTRESS_DURATION_TICKS - MIN_SULKING_DURATION_TICKS + 1);
     }
 
     private void tickPreSuperBehaviors() {

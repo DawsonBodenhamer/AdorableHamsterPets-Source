@@ -47,6 +47,7 @@ public final class HamsterNbtUtil {
             nbt.putBoolean("IsSleeping", false);
         }
         nbt.putBoolean("KnockedOut", hamster.getHamsterFlag(HamsterEntity.KNOCKED_OUT_FLAG));
+        nbt.putInt("KnockedOutTimer", hamster.knockedOutTimer);
         nbt.putBoolean("CheekPouchUnlocked", hamster.getHamsterFlag(HamsterEntity.CHEEK_POUCH_UNLOCKED_FLAG));
         nbt.putLong("ThrowCooldownEnd", hamster.throwCooldownEndTick);
         nbt.putLong("GreenBeanBuffDuration", hamster.getDataTracker().get(HamsterEntity.GREEN_BEAN_BUFF_DURATION));
@@ -134,15 +135,13 @@ public final class HamsterNbtUtil {
         // Backwards compat: read individual booleans & set flags
         boolean wasSittingNbt = hamster.isTamed() && nbt.getBoolean("Sitting");
         hamster.setSitting(wasSittingNbt, true); // This will correctly set the SITTING_FLAG
-        hamster.setHamsterFlag(HamsterEntity.KNOCKED_OUT_FLAG, nbt.getBoolean("KnockedOut"));
+        boolean loadedKnockedOut = nbt.getBoolean("KnockedOut");
+        hamster.setHamsterFlag(HamsterEntity.KNOCKED_OUT_FLAG, loadedKnockedOut);
         hamster.setHamsterFlag(HamsterEntity.CHEEK_POUCH_UNLOCKED_FLAG, nbt.getBoolean("CheekPouchUnlocked"));
         hamster.setHamsterFlag(HamsterEntity.SULKING_FLAG, nbt.getBoolean("IsSulking"));
-        if (nbt.contains("SulkTimer", NbtElement.INT_TYPE)) {
-            hamster.sulkTimer = nbt.getInt("SulkTimer");
-        } else if (hamster.isSulking()) {
-            // Backwards compat: if older save has them sulking, assign timer
-            hamster.sulkTimer = 160 + hamster.getRandom().nextInt(80);
-        }
+        hamster.restoreDistressTimers(
+                nbt.contains("KnockedOutTimer", NbtElement.INT_TYPE) ? nbt.getInt("KnockedOutTimer") : 0,
+                nbt.contains("SulkTimer", NbtElement.INT_TYPE) ? nbt.getInt("SulkTimer") : 0);
 
         hamster.setHamsterFlag(HamsterEntity.CELEBRATING_DIAMOND_FLAG, nbt.getBoolean("IsCelebratingDiamond"));
         boolean loadedSleeping = nbt.getBoolean("IsSleeping");
@@ -340,7 +339,9 @@ public final class HamsterNbtUtil {
         HamsterState.BehaviorData behaviorData = new HamsterState.BehaviorData(
                 seekingData,
                 wanderData,
-                hamster.getDataTracker().get(HamsterEntity.HAMSTER_FLAGS)
+                hamster.getDataTracker().get(HamsterEntity.HAMSTER_FLAGS),
+                hamster.knockedOutTimer,
+                hamster.sulkTimer
         );
         HamsterState.HamsterConditionData conditionData =
                 HamsterState.HamsterConditionData.capture(hamster.getRedstoneFeverState());
@@ -392,12 +393,16 @@ public final class HamsterNbtUtil {
             hamster.getDataTracker().set(HamsterEntity.FLOWER_POS, data.flowerPosition());
             hamster.getDataTracker().set(HamsterEntity.ANIMATION_PERSONALITY_ID, data.animationPersonalityId());
             hamster.getDataTracker().set(HamsterEntity.HAMSTER_FLAGS, data.hamsterFlags());
+            hamster.restoreDistressTimers(
+                    data.behaviorData().knockedOutTimer(),
+                    data.behaviorData().sulkTimer());
             hamster.setArmorVisible(data.armorVisible());
             hamster.totalAgeTicks = data.totalAgeTicks();
             hamster.timesBred = data.timesBred();
 
             // Sync vanilla sitting pose with restored flag
-            hamster.setInSittingPose(hamster.getHamsterFlag(HamsterEntity.SITTING_FLAG));
+            hamster.setInSittingPose(
+                    hamster.isKnockedOut() || hamster.getHamsterFlag(HamsterEntity.SITTING_FLAG));
 
             // --- 2. Load Custom Name ---
             data.customName().ifPresent(name -> {
