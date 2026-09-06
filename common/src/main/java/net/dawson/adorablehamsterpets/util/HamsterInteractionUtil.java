@@ -410,12 +410,7 @@ public final class HamsterInteractionUtil {
                 if (hamster.isSleeping()) {
                     HamsterBedUtil.wakeUpFromBed(hamster, true);
                 } else if (hamster.isKnockedOut()) {
-                    SoundEvent wakeUpSound = ModSounds.getRandomSoundFrom(ModSounds.HAMSTER_WAKE_UP_SOUNDS, hamster.getRandom());
-                    if (wakeUpSound != null)
-                        world.playSound(null, hamster.getBlockPos(), wakeUpSound, SoundCategory.NEUTRAL, 1.0F, 1.0F);
-                    hamster.setKnockedOut(false);
-                    hamster.setSitting(false, true);
-                    hamster.triggerAnimOnServer("mainController", "wakeup_from_ko");
+                    hamster.wakeUpFromKnockout();
                 } else if (hamster.isCelebratingDiamond()) {
                     hamster.setCelebratingDiamond(false);
                     hamster.setSitting(false, true);

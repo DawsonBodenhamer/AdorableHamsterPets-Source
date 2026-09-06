@@ -9,28 +9,24 @@ import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
 import net.dawson.adorablehamsterpets.block.ModBlocks;
 import net.dawson.adorablehamsterpets.block.custom.HamsterBedBlock;
 import net.dawson.adorablehamsterpets.block.custom.SunflowerBlock;
-import net.dawson.adorablehamsterpets.client.particle.PixieDustParticleTheme;
 import net.dawson.adorablehamsterpets.client.state.ClientShoulderHamsterData;
 import net.dawson.adorablehamsterpets.config.*;
+import net.dawson.adorablehamsterpets.effect.FeatherYeetingStatusEffect;
+import net.dawson.adorablehamsterpets.effect.ModStatusEffects;
 import net.dawson.adorablehamsterpets.entity.AI.HamsterSniffForOreGoal;
 import net.dawson.adorablehamsterpets.entity.ModEntities;
 import net.dawson.adorablehamsterpets.entity.ShoulderLocation;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterProjectileEntity;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterTreeSearcherEntity;
-import net.dawson.adorablehamsterpets.effect.FeatherYeetingStatusEffect;
-import net.dawson.adorablehamsterpets.effect.ModStatusEffects;
 import net.dawson.adorablehamsterpets.flute.FlutePerformanceManager;
 import net.dawson.adorablehamsterpets.item.ModItems;
 import net.dawson.adorablehamsterpets.item.custom.HamsterArmorItem;
 import net.dawson.adorablehamsterpets.networking.payload.PlayGuidebookEffectsPayload;
 import net.dawson.adorablehamsterpets.networking.payload.SyncHamsterStatePayload;
 import net.dawson.adorablehamsterpets.networking.payload.SyncPettingStatePayload;
-import net.dawson.adorablehamsterpets.particles.ModParticles;
 import net.dawson.adorablehamsterpets.sound.ModSounds;
 import net.dawson.adorablehamsterpets.util.*;
-import net.minecraft.advancement.AdvancementEntry;
-import net.minecraft.advancement.PlayerAdvancementTracker;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.DataComponentTypes;
@@ -48,22 +44,19 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -464,13 +457,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             boolean isSafeToSpawn = self.isOnGround() || self.isTouchingWater() || self.isClimbing() || self.hasVehicle();
 
             if (isSafeToSpawn) {
-                // Schedule incoming shimmer sound to play 15 ticks after arrival window
-                if (this.ahp$transitTimer == 15 && !this.ahp$inTransitHamsters.isEmpty()) {
-                    this.adorablehamsterpets$scheduledTasks.add(new ScheduledTask(world.getTime() + 10, () -> {
-                        world.playSound(null, this.getBlockPos(), ModSounds.MAGIC_SHIMMER.get(), SoundCategory.NEUTRAL, 1.5f, 1.2f);
-                    }));
-                }
-
                 this.ahp$transitTimer--;
 
                 if (this.ahp$transitTimer <= 0 && !this.ahp$inTransitHamsters.isEmpty()) {
@@ -478,23 +464,17 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
                     // Track occupied blocks
                     Set<BlockPos> occupiedPositions = new HashSet<>();
-                    int soundsScheduled = 0;
                     long currentWorldTime = newWorld.getTime();
 
                     for (NbtCompound nbt : this.ahp$inTransitHamsters) {
                         // Stagger spawns over 1-5 ticks
                         int delay = newWorld.getRandom().nextBetween(1, 5);
 
-                        // Hard limit sound effect to 7 times per rescue event
-                        boolean playSound = soundsScheduled < 7;
-                        if (playSound) {
-                            soundsScheduled++;
-                        }
-
                         this.adorablehamsterpets$scheduledTasks.add(new ScheduledTask(currentWorldTime + delay, () -> {
                             HamsterEntity newHamster = ModEntities.HAMSTER.get().create(newWorld);
                             if (newHamster != null) {
                                 newHamster.readNbt(nbt);
+                                newHamster.clearDistressForTeleportRescue();
 
                                 // --- Determine Target Position ---
                                 // Default to player position
@@ -529,7 +509,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                                 newHamster.setVelocity(0, -0.05, 0);
                                 newHamster.velocityDirty = true;
                                 newHamster.getNavigation().stop();
-                                newHamster.setSitting(false);
 
                                 // Prevent flight animation upon spawning
                                 newHamster.setFallFlyImmunityTicks(20);
@@ -544,35 +523,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                                     }
                                 });
 
-                                // Feedback
-                                if (playSound) {
-                                    newWorld.playSound(
-                                            null,
-                                            BlockPos.ofFloored(targetPos),
-                                            SoundEvents.ENTITY_FOX_TELEPORT,
-                                            SoundCategory.NEUTRAL,
-                                            0.20f,
-                                            1.5f + (newWorld.getRandom().nextFloat() - 0.5f) * 0.5f
-                                    );
-                                }
-                                ParticleEffectsUtil.spawnDecayingParticleCloud(
-                                        newHamster,
-                                        ParticleTypes.PORTAL,
-                                        60,
-                                        1,
-                                        0.1,
-                                        0.1,
-                                        -0.2
-                                );
-                                ParticleEffectsUtil.spawnDecayingParticleCloud(
-                                        newHamster,
-                                        ModParticles.PIXIE_DUST.get(PixieDustParticleTheme.LAVENDER).get(),
-                                        80,
-                                        5,
-                                        0.2,
-                                        0.2,
-                                        0.2
-                                );
                             }
                         }));
                     }
@@ -1580,6 +1530,10 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
             return false;
         }
 
+        if (hamster.shouldStayPutDuringTeleportRescue()) {
+            return false;
+        }
+
         // Treat babies identically if their parent is a valid rescue target
         if (hamster.isBaby() && hamster.getParentUuid() != null) {
             MinecraftServer server = hamster.getServer();
@@ -1593,7 +1547,7 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                 boolean parentRescued = false;
                 if (parentEntity instanceof HamsterEntity parentHamster && parentHamster.isAlive()) {
                     if (parentHamster.isTamed() && this.getUuid().equals(parentHamster.getOwnerUuid())
-                            && !parentHamster.isSitting()
+                            && !parentHamster.shouldStayPutDuringTeleportRescue()
                             && !parentHamster.isWanderModeActive()
                             && !parentHamster.isShoulderPet()) {
                         parentRescued = true;
@@ -1625,10 +1579,6 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
                     return true;
                 }
             }
-        }
-
-        if (hamster.isSitting()) {
-            return false;
         }
 
         // Tamed and owned by player

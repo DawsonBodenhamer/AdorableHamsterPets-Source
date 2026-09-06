@@ -11,6 +11,8 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleTypes;
@@ -37,10 +39,13 @@ public final class RedstoneFeverUtil {
      * ───────────────────────────────────────────────────────────────────────────────*/
 
     public static final long SUNLIGHT_TICKS_PER_DAY = 12_000L;
-    private static final double TREMOR_SPIKE_FREQUENCY = 0.06D; // Bigger = more often
+    private static final int FEVER_REGENERATION_AMPLIFIER = 4;                 // Regeneration V; effect amplifiers start at 0
+    private static final int FEVER_REGENERATION_DURATION_TICKS = 40;           // 2 seconds of effect time
+    private static final int FEVER_REGENERATION_REFRESH_THRESHOLD_TICKS = 20;  // Refresh when 1 second remains
+    private static final double TREMOR_SPIKE_FREQUENCY = 0.06D;                // Bigger = more often
     private static final double TREMOR_SPIKE_PHASE_MULTIPLIER = 0.61803398875D;
-    private static final double TREMOR_WINDOW_LOWER_BOUND = 0.454D; // Clip lower part of sine wave to shorten duration by ~30%
-    private static final double VISIBLE_TREMOR_SPIKE_THRESHOLD = 0.92D; // Higher threshold hides smaller spikes
+    private static final double TREMOR_WINDOW_LOWER_BOUND = 0.454D;             // Clip lower part of sine wave to shorten duration by ~30%
+    private static final double VISIBLE_TREMOR_SPIKE_THRESHOLD = 0.92D;         // Higher threshold hides smaller spikes
     private static final double SHIVER_SOUND_ALIGNMENT_OFFSET_TICKS = -7;
     public static final Identifier FEVER_MOVEMENT_SPEED_MODIFIER_ID =
             Identifier.of(AdorableHamsterPets.MOD_ID, "redstone_fever_movement_speed");
@@ -77,6 +82,7 @@ public final class RedstoneFeverUtil {
         hamster.getFluteProgressState().clearFeverPerformers();
         hamster.getRedstoneFeverState().setFevered(true);
         hamster.getRedstoneFeverState().setScarVariant(hamster.getRandom().nextInt(3));
+        maintainRegeneration(hamster);
         if (resolveCommissionedRoll) {
             hamster.getRedstoneFeverState().setCommissionedRollResolved(true);
         }
@@ -123,6 +129,7 @@ public final class RedstoneFeverUtil {
         hamster.getFluteProgressState().clearFeverPerformers();
         state.setFevered(false);
         hamster.setRedstoneFeverBurstActive(false);
+        clearRegeneration(hamster);
         hamster.setTarget(null);
         hamster.getNavigation().stop();
         hamster.synchronizeRedstoneFeverVisualState();
@@ -149,6 +156,7 @@ public final class RedstoneFeverUtil {
         hamster.getRedstoneFeverState().setCommissionedRollResolved(true);
         hamster.getRedstoneFeverState().setFevered(false);
         hamster.setRedstoneFeverBurstActive(false);
+        clearRegeneration(hamster);
         hamster.synchronizeRedstoneFeverVisualState();
         hamster.setTarget(null);
         hamster.getNavigation().stop();
@@ -194,6 +202,7 @@ public final class RedstoneFeverUtil {
             return;
         }
 
+        maintainRegeneration(hamster);
         tickAudio(hamster);
         captureLeadRescuer(hamster);
 
@@ -228,6 +237,28 @@ public final class RedstoneFeverUtil {
                     EntityAttributeModifier.Operation.ADD_MULTIPLIED_BASE));
         } else if (!shouldHaveModifier && hasModifier) {
             speed.removeModifier(FEVER_MOVEMENT_SPEED_MODIFIER_ID);
+        }
+    }
+
+    private static void maintainRegeneration(HamsterEntity hamster) {
+        StatusEffectInstance regeneration = hamster.getStatusEffect(StatusEffects.REGENERATION);
+        if (regeneration == null
+                || regeneration.getAmplifier() != FEVER_REGENERATION_AMPLIFIER
+                || regeneration.getDuration() <= FEVER_REGENERATION_REFRESH_THRESHOLD_TICKS) {
+            hamster.addStatusEffect(new StatusEffectInstance(
+                    StatusEffects.REGENERATION,
+                    FEVER_REGENERATION_DURATION_TICKS,
+                    FEVER_REGENERATION_AMPLIFIER,
+                    true,
+                    false,
+                    false));
+        }
+    }
+
+    private static void clearRegeneration(HamsterEntity hamster) {
+        StatusEffectInstance regeneration = hamster.getStatusEffect(StatusEffects.REGENERATION);
+        if (regeneration != null && regeneration.getAmplifier() == FEVER_REGENERATION_AMPLIFIER) {
+            hamster.removeStatusEffect(StatusEffects.REGENERATION);
         }
     }
 

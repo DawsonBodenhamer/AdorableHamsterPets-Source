@@ -15,7 +15,7 @@ Some cave hamsters have inhaled a little too much redstone dust, so naturally th
 
 ### Added
 - **Redstone Fever**
-- You might now come across rare wild aggressive cave hamsters with scars, glowing red eyes, new animations, redstone particles, 3 new custom sound effect types, and unpredictable circular energy bursts. Thanks to [@The Retro Stitcher](https://theretrostitcher.com/) for the original Redstone Fever concept/idea!
+- You might now come across rare wild aggressive cave hamsters with scars, glowing red eyes, rapid health regen, new animations, redstone particles, 3 new custom sound effect types, and unpredictable circular energy bursts. Thanks to [@The Retro Stitcher](https://theretrostitcher.com/) for the original Redstone Fever concept/idea!
   - Currently, Redstone Fever is only applied when a hamster first spawns. Existing hamsters cannot contract it.  I might add contagiousness in the future if it's requested.
   - Food cannot tame, distract, or pacify an untreated hamster. You'll need to play a riff on the Acorn Flute to briefly interrupt its attacks while it keeps watching you with those red eyes. Lead it above redstone depth and keep it in direct clear sunlight for 3 Minecraft days to cure the condition and restore ordinary wild behavior.
   - How do you lead it? You're the bait. Better find some good armor. For your toes.
@@ -70,6 +70,13 @@ Some cave hamsters have inhaled a little too much redstone dust, so naturally th
     - Find your hamster during a game of Hide & Seek before time runs out. Apparently this counts as responsible pet ownership.
 
 ### Changed
+- **Limited Sulking & Knocked Out States**
+  - Hamsters now recover from being knocked out or sulking within 10 seconds at most.
+  - I did this so you can more easily find your hamsters easier after throwing them. When they were permanently knocked out, they would never teleport to you in that condition.
+- **Teleport Rescue**
+  - My custom rescue code that brings following hamsters with you through all kinds of teleports is now silent and does not include particle effects. Its destination and delayed-spawn behavior remain unchanged. I just wanted to make sure it won't conflict with the new [**Void Hamster**](https://docs.google.com/document/d/1xlr4_pgvQ2KUDc4nyUVGhpClXSoFtABiVfZbJshMgps/edit?usp=sharing) coming in the next update.
+  - Long-distance rescue now cancels active minigames when the owner moves far enough away, while ordinary minigame behavior remains uninterrupted and commanded-sitting or bed-sleeping hamsters stay in place.
+  - Teleport Rescue now applies to hamsters that are knocked out and sulking. When they spawn next to you at the new location, they will be normal.
 - **Fast and Slow Hamster Dancing**
   - Hamsters now bounce to Fast song matches and loop a new swaying animation to Slow matches. The existing `dancingMusicDiscStrings` setting and all saved values remain the Fast list; the new Slow list defaults to `low-fi` and `zampoña` and wins when both lists match. For example, if a song name contained both “hamster” and “zampoña," a nearby hamster would do the slower dance.
 - **Food Gets a Hamster's Attention**
@@ -98,6 +105,8 @@ Some cave hamsters have inhaled a little too much redstone dust, so naturally th
   - Hamsters now walk on top of powdered snow instead of sinking in, and thrown hamsters land on the drift rather than vanishing into it. Hamsters are lightweights so it feels like it always should have been this way. Now your hamsters can comfortably watch you freeze to death.
 
 ### Fixed
+- **Chiseled Bookshelves**
+  - The Hamster Tips guidebook can now be stored in chiseled bookshelves.
 - **Crop Tag Compatibility**
   - Cucumber and Green Bean crops now work with vanilla crop and farmland-maintenance checks, improving compatibility with crop-focused mods.
 - **Cave Hamster Spawning**

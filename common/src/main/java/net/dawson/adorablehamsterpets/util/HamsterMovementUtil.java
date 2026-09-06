@@ -5,6 +5,7 @@ import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.config.Configs;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.FuzzyTargeting;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
@@ -21,6 +22,8 @@ import java.util.Optional;
  * Encapsulates movement mathematics for fleeing and taunting behaviors.
  */
 public final class HamsterMovementUtil {
+
+    private static final double POCKET_RESCUE_DISTANCE_SQUARED = 1024.0D; // 32-block rescue threshold
 
     private HamsterMovementUtil() {}
 
@@ -249,6 +252,43 @@ public final class HamsterMovementUtil {
     }
 
     /**
+     * Determines whether long-distance owner rescue should preempt the hamster's current AI goal.
+     * Ordinary follow-distance teleports remain governed by the normal goal priority system.
+     */
+    public static boolean shouldPrioritizeOwnerRescue(HamsterEntity hamster, Entity owner) {
+        return !hamster.isLeashed()
+                && !hamster.hasVehicle()
+                && hamster.squaredDistanceTo(owner) > POCKET_RESCUE_DISTANCE_SQUARED;
+    }
+
+    /**
+     * Runs the owner pocket-rescue check before ordinary AI goals can hold the movement control.
+     *
+     * @param hamster The hamster to check.
+     * @return True when the hamster was queued for pocket rescue and discarded.
+     */
+    public static boolean tryOwnerTeleportRescue(HamsterEntity hamster) {
+        if (hamster.getWorld().isClient()
+                || !Configs.AHP_MAIN.enableTeleportRescue
+                || !hamster.isTamed()
+                || hamster.shouldStayPutDuringTeleportRescue()
+                || hamster.isWanderModeActive()
+                || hamster.isShoulderPet()) {
+            return false;
+        }
+
+        LivingEntity owner = hamster.getOwner();
+        if (owner == null
+                || owner.getWorld() != hamster.getWorld()
+                || !owner.isAlive()
+                || !shouldPrioritizeOwnerRescue(hamster, owner)) {
+            return false;
+        }
+
+        return tryTeleportTo(hamster, owner, true) == TeleportResult.QUEUED_POCKET_RESCUE;
+    }
+
+    /**
      * Attempts to safely teleport the hamster to the target entity using a safe placement algorithm.
      * Intercepts long-distance AI teleports to prevent vanilla chunk tracking race conditions causing
      * server/client desync.
@@ -280,7 +320,7 @@ public final class HamsterMovementUtil {
         // Force Pocket Rescue Protocol for teleports more than 32 blocks
         if (allowPocketRescue
                 && Configs.AHP_MAIN.enableTeleportRescue
-                && hamster.squaredDistanceTo(target) > 1024.0) {
+                && hamster.squaredDistanceTo(target) > POCKET_RESCUE_DISTANCE_SQUARED) {
             PlayerEntity ownerPlayer = null;
 
             if (target instanceof PlayerEntity playerTarget) {

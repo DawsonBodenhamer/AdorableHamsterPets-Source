@@ -236,7 +236,9 @@ public record HamsterState(
     public record BehaviorData(
             MiniGameBehaviorData seekingBehaviorData,
             WanderModeData wanderModeData,
-            int hamsterFlags
+            int hamsterFlags,
+            int knockedOutTimer,
+            int sulkTimer
     ) {
 
         private static final MapCodec<BehaviorData> CODEC = RecordCodecBuilder.mapCodec(instance ->
@@ -248,12 +250,28 @@ public record HamsterState(
                                 .orElse(WanderModeData.empty())
                                 .forGetter(BehaviorData::wanderModeData),
                         Codec.INT.optionalFieldOf("hamsterFlags", 0)
-                                .forGetter(BehaviorData::hamsterFlags)
+                                .forGetter(BehaviorData::hamsterFlags),
+                        Codec.INT.optionalFieldOf("knockedOutTimer", 0)
+                                .forGetter(BehaviorData::knockedOutTimer),
+                        Codec.INT.optionalFieldOf("sulkTimer", 0)
+                                .forGetter(BehaviorData::sulkTimer)
                 ).apply(instance, BehaviorData::new)
         );
 
+        public BehaviorData(
+                MiniGameBehaviorData seekingBehaviorData,
+                WanderModeData wanderModeData,
+                int hamsterFlags) {
+            this(seekingBehaviorData, wanderModeData, hamsterFlags, 0, 0);
+        }
+
         public BehaviorData withHamsterFlags(int newFlags) {
-            return new BehaviorData(this.seekingBehaviorData, this.wanderModeData, newFlags);
+            return new BehaviorData(
+                    this.seekingBehaviorData,
+                    this.wanderModeData,
+                    newFlags,
+                    this.knockedOutTimer,
+                    this.sulkTimer);
         }
     }
 
