@@ -91,7 +91,8 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
         getOrCreateTagBuilder(ItemTags.MUSIC_DISCS)
                 .add(ModItems.MUSIC_DISC_CHEESE.get())
                 .add(ModItems.MUSIC_DISC_BLUE_CHEESE.get())
-                .add(ModItems.MUSIC_DISC_PARMESAN.get());
+                .add(ModItems.MUSIC_DISC_PARMESAN.get())
+                .add(ModItems.MUSIC_DISC_ACORN.get());
 
         // Farmer's Delight and MineColonies use this item tag for storage-crate interoperability
         getOrCreateTagBuilder(STORAGE_BLOCKS)
