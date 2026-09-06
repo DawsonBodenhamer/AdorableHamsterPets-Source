@@ -137,6 +137,9 @@ Some cave hamsters have inhaled a little too much redstone dust, so naturally th
 - **Mud and Snow Rendering**
   - Hamsters now render on top of mud and snow layers instead of sinking into lowered surfaces, where they would be
     partially or even sometimes completely hidden.
+- **Idle Breathing Floor Clipping**
+  - Hamster idle breathing animations now expand naturally upward and outward. Previously, the expansion caused the
+    hamster's paws to subtly phase into the ground with every breath.
 - **Guidebook Taming Typo**
   - Corrected an extra word in the sliced-cucumber instructions.
 - **Symphonic Dairy Translation**
