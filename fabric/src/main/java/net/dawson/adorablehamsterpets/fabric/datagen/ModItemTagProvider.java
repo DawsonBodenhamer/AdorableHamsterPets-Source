@@ -85,6 +85,13 @@ public class ModItemTagProvider extends FabricTagProvider.ItemTagProvider {
         getOrCreateTagBuilder(ItemTags.TRIMMABLE_ARMOR)
                 .addTag(HAMSTER_ARMOR_ENCHANTABLE);
 
+        // 8. Music Discs (only neccessary on 1.20.1)
+//        getOrCreateTagBuilder(ItemTags.MUSIC_DISCS)
+//                .add(ModItems.MUSIC_DISC_CHEESE.get())
+//                .add(ModItems.MUSIC_DISC_BLUE_CHEESE.get())
+//                .add(ModItems.MUSIC_DISC_PARMESAN.get())
+//                .add(ModItems.MUSIC_DISC_ACORN.get());
+
         // Farmer's Delight and MineColonies use this item tag for storage-crate interoperability
         getOrCreateTagBuilder(STORAGE_BLOCKS)
                 .add(ModItems.ACORN_CRATE.get())
