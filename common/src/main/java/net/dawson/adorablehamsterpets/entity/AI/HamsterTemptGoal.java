@@ -8,6 +8,9 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public class HamsterTemptGoal extends TemptGoal {
 
+    private static final int MIN_BEGGING_RECHECK_TICKS = 2;
+    private static final int MAX_BEGGING_RECHECK_TICKS = 8;
+
     // --- 1. Fields ---
     private final HamsterEntity hamster;
     private int recheckTimer = 0; // Frequency of begging state updates
@@ -22,6 +25,7 @@ public class HamsterTemptGoal extends TemptGoal {
     public void start() {
         super.start();
         this.hamster.setActiveCustomGoalName(this.getClass().getSimpleName());
+        this.recheckTimer = getRandomBeggingDelay();
     }
 
     // --- 3. Public Methods (Overrides from TemptGoal/Goal) ---
@@ -69,7 +73,7 @@ public class HamsterTemptGoal extends TemptGoal {
             this.recheckTimer--;
             return;
         }
-        this.recheckTimer = 5; // Re-check begging state roughly every 5 ticks.
+        this.recheckTimer = getRandomBeggingDelay(); // Re-check begging state roughly every 5 ticks.
 
         PlayerEntity temptingPlayer = this.closestPlayer;
 
@@ -90,5 +94,10 @@ public class HamsterTemptGoal extends TemptGoal {
         }
         this.hamster.setBegging(false);
         this.recheckTimer = 0;
+    }
+
+    // --- 4. Private Helper Methods ---
+    private int getRandomBeggingDelay() {
+        return this.hamster.getRandom().nextBetween(MIN_BEGGING_RECHECK_TICKS, MAX_BEGGING_RECHECK_TICKS);
     }
 }
