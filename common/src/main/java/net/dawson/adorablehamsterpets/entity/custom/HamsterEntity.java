@@ -268,6 +268,7 @@ public class HamsterEntity extends TameableEntity implements GeoEntity, Implemen
     @Unique public BlockPos currentOreTarget = null;
     @Unique public transient String particleEffectId = null;
     @Unique public transient String soundEffectId = null;
+    @Unique public transient int lastTurnTick = -100;
     @Unique public transient ShoulderLocation shoulderLocation = ShoulderLocation.RIGHT_SHOULDER;
     @Nullable @Unique public BlockPos lastFailedTarget = null;
     @Unique public transient HamsterEntity tagGamePartner = null;

@@ -6,7 +6,9 @@ import net.dawson.adorablehamsterpets.entity.ShoulderLocation;
 import net.dawson.adorablehamsterpets.entity.client.feature.ShoulderAnimationState;
 import net.dawson.adorablehamsterpets.entity.custom.HamsterEntity;
 import net.dawson.adorablehamsterpets.entity.custom.DanceStyle;
+import net.minecraft.util.math.MathHelper;
 
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
 import software.bernie.geckolib.animation.PlayState;
@@ -22,9 +24,9 @@ import software.bernie.geckolib.animation.RawAnimation;
  */
 public final class HamsterAnimationController {
 
-    /* ──────────────────────────────────────────────────────────────────────────────
+    /* ──────────────────────────────────────────────────────────────────────────
      *        Constants and Static State
-     * ────────────────────────────────────────────────────────────────────────────*/
+     * ──────────────────────────────────────────────────────────────────────────*/
 
     // --- Movement Thresholds ---
     private static final double WALK_TO_RUN_THRESHOLD_SQUARED = 0.002;
@@ -80,6 +82,8 @@ public final class HamsterAnimationController {
     private static final RawAnimation RUNNING_ANIM = animation("anim_hamster_running");
     private static final RawAnimation WALKING_ANIM = animation("anim_hamster_walking");
     private static final RawAnimation SPRINTING_ANIM = animation("anim_hamster_sprinting");
+    private static final RawAnimation TURNING1_ANIM = animation("anim_hamster_turning1");
+    private static final RawAnimation TURNING2_ANIM = animation("anim_hamster_turning2");
     private static final RawAnimation BOUNCING_ANIM = animation("anim_hamster_bouncing");
     private static final RawAnimation SWAYING_ANIM = animation("anim_hamster_swaying");
     private static final RawAnimation IDLE1_ANIM = animation("anim_hamster_idle1");
@@ -118,15 +122,15 @@ public final class HamsterAnimationController {
     private static final RawAnimation SITTING_ROLL_ANIM = animation("anim_hamster_sitting_roll");
     private static final RawAnimation SWIMMING_ANIM = animation("anim_hamster_swimming");
 
-    /* ──────────────────────────────────────────────────────────────────────────────
+    /* ──────────────────────────────────────────────────────────────────────────
      *        Constructors
-     * ────────────────────────────────────────────────────────────────────────────*/
+     * ──────────────────────────────────────────────────────────────────────────*/
 
     private HamsterAnimationController() {}
 
-    /* ──────────────────────────────────────────────────────────────────────────────
+    /* ──────────────────────────────────────────────────────────────────────────
      *        Static Registration and Setup
-     * ────────────────────────────────────────────────────────────────────────────*/
+     * ──────────────────────────────────────────────────────────────────────────*/
 
     public static void register(
             HamsterEntity hamster, AnimatableManager.ControllerRegistrar controllers) {
@@ -349,7 +353,7 @@ public final class HamsterAnimationController {
                                     }
                                 }));
 
-        // --- Secondary Layered Head Controller ---
+        // --- Layered Head Controller ---
         controllers.add(
                 new AnimationController<>(
                                 hamster,
@@ -360,14 +364,66 @@ public final class HamsterAnimationController {
                         .triggerableAnim("anim_hamster_head_cock_left", HEAD_COCK_LEFT_ANIM)
                         .triggerableAnim("anim_hamster_head_cock_up_right", HEAD_COCK_UP_RIGHT_ANIM)
                         .triggerableAnim("anim_hamster_head_cock_up_left", HEAD_COCK_UP_LEFT_ANIM));
+
+        // --- Layered Turning Controller ---
+        controllers.add(
+                new AnimationController<>(
+                        hamster,
+                        "turnController",
+                        0,
+                        event -> {
+                            AnimationState state = AnimationState.capture(hamster);
+                            if (state.horizontalSpeedSquared() > 1.0E-6 || !isMainControllerIdling(hamster)) {
+                                return PlayState.STOP;
+                            }
+
+                            float yawDelta = Math.abs(MathHelper.wrapDegrees(hamster.bodyYaw - hamster.prevBodyYaw));
+                            float headYawDelta = Math.abs(MathHelper.wrapDegrees(hamster.headYaw - hamster.prevHeadYaw));
+                            if (Math.max(yawDelta, headYawDelta) > 0.1f) {
+                                hamster.lastTurnTick = hamster.age;
+                            }
+
+                            if (hamster.age >= hamster.lastTurnTick && hamster.age - hamster.lastTurnTick <= 1) {
+                                RawAnimation current = event.getController().getCurrentRawAnimation();
+                                if (current != null
+                                        && (current.equals(TURNING1_ANIM)
+                                                || current.equals(TURNING2_ANIM))) {
+                                    return event.setAndContinue(current);
+                                }
+                                return event.setAndContinue(
+                                        hamster.getRandom().nextBoolean()
+                                                ? TURNING1_ANIM
+                                                : TURNING2_ANIM);
+                            }
+
+                            return PlayState.STOP;
+                        }));
     }
 
-    /* ──────────────────────────────────────────────────────────────────────────────
+    /* ──────────────────────────────────────────────────────────────────────────
      *        Static Utilities and Factories
-     * ────────────────────────────────────────────────────────────────────────────*/
+     * ──────────────────────────────────────────────────────────────────────────*/
 
     private static RawAnimation animation(String name) {
         return RawAnimation.begin().thenPlay(name);
+    }
+
+    private static boolean isMainControllerIdling(HamsterEntity hamster) {
+        AnimatableInstanceCache cache = hamster.getAnimatableInstanceCache();
+        if (cache == null) return false;
+        AnimatableManager<?> manager = cache.getManagerForId(hamster.getId());
+        if (manager == null) return false;
+        AnimationController<?> mainController = manager.getAnimationControllers().get("mainController");
+        if (mainController == null) return false;
+
+        RawAnimation current = mainController.getCurrentRawAnimation();
+        return current != null && (
+                current.equals(IDLE1_ANIM)
+                || current.equals(IDLE2_ANIM)
+                || current.equals(FEVER_IDLE_ANIM)
+                || current.equals(IDLE_LOOKING_UP1_ANIM)
+                || current.equals(IDLE_LOOKING_UP2_ANIM)
+                || current.equals(IDLE_LOOKING_UP3_ANIM));
     }
 
     private static RawAnimation sittingAnimation(int personality) {
@@ -395,9 +451,9 @@ public final class HamsterAnimationController {
         };
     }
 
-    /* ──────────────────────────────────────────────────────────────────────────────
+    /* ──────────────────────────────────────────────────────────────────────────
      *        Nested Types
-     * ────────────────────────────────────────────────────────────────────────────*/
+     * ──────────────────────────────────────────────────────────────────────────*/
 
     private record AnimationState(
             boolean aiDisabled,
