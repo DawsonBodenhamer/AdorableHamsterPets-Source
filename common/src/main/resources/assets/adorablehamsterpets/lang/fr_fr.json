@@ -30,7 +30,6 @@
   "adorablehamsterpets.main.cleaningChanceDenominator": "Fréquence de toilettage",
   "adorablehamsterpets.main.cleaningChanceDenominator.desc": "À quelle fréquence un hamster assis a soudain envie de se toiletter.\nC’est une chance de 1‑sur‑X par tick, donc plus le nombre est bas, plus il a de chances de se nettoyer. Par exemple, 1200 = il se toilettera environ une fois par minute, 300 ≈ toutes les 15 secondes, et 5000 ≈ toutes les 4 minutes.\nFélicitations — tu sais maintenant assez de choses pour faire des bêtises.",
   "adorablehamsterpets.main.commissionedFeatures": "Contenu sur demande",
-  "adorablehamsterpets.main.commissionedFeatures.desc": "Des mécaniques spécialisées qui ne s’intègrent pas forcément au thème du mod, mais qui ont été demandées et financées par divers membres de la communauté.",
   "adorablehamsterpets.main.consumeLureItem": "Consommer le leurre",
   "adorablehamsterpets.main.consumeLureItem.desc": "Attirer un hamster sur ton épaule doit‑il consommer l’objet utilisé (par ex. du fromage) ? Désactive ça si tu penses que ton charme devrait suffire. L’objet restera nécessaire… mais ne sera pas mangé.",
   "adorablehamsterpets.main.cooldowns": "Configuration du temps de recharge du noyau",

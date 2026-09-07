@@ -31,7 +31,6 @@
   "adorablehamsterpets.main.cleaningChanceDenominator": "毛づくろいの頻度",
   "adorablehamsterpets.main.cleaningChanceDenominator.desc": "お座り中に、急に毛づくろいをしたくなる確率です。「X回に1回」の数字なので、数字を小さくするほど頻繁にやります。1200なら1分に1回くらい。300なら15秒、5000なら4分くらいです。おめでとう、これであなたもハムスター博士ですね。",
   "adorablehamsterpets.main.commissionedFeatures": "特注機能",
-  "adorablehamsterpets.main.commissionedFeatures.desc": "MODのテーマに必ずしも合わないけれど、コミュニティの有志の方々からの資金提供によって実現した、ちょっと変わった非公式機能です。ほとんどの人が気づかないように、あえて設定の奥深くに隠してあります。",
   "adorablehamsterpets.main.consumeLureItem": "誘導アイテムを消費する",
   "adorablehamsterpets.main.consumeLureItem.desc": "ハムスターを肩に誘導する際、アイテム（チーズなど）を消費しますか？あなたの魅力だけで十分だと思うならオフにしてください。アイテム自体は必要ですが、食べられることはありません。",
   "adorablehamsterpets.main.cooldowns": "休憩時間の設定",

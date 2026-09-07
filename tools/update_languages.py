@@ -99,7 +99,7 @@ def main():
                     dialect_filename = f"{dialect}.json"
                     dialect_dest = os.path.join(DEST_DIR, dialect_filename)
                     shutil.copy2(source_file, dialect_dest)
-                    print(f"  └─ Copied dialect: -> {dialect_filename}")
+                    print(f"  Copied dialect: -> {dialect_filename}")
                     dialects_copied += 1
 
         except Exception as e:
