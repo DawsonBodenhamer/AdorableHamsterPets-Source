@@ -85,6 +85,10 @@ These hamsters like to bounce, shoulder-surf, hoard snacks, sniff for things, an
 <img src="https://raw.githubusercontent.com/DawsonBodenhamer/AdorableHamsterPets-Source/develop/media/ahp_readme_showcases_thumbnail_enderverse.png" alt="Showcase by Enderverse" width="32%">
 </a>
 
+<a href="https://youtu.be/UDhgNkANkZk">
+<img src="https://raw.githubusercontent.com/DawsonBodenhamer/AdorableHamsterPets-Source/develop/media/ahp_readme_showcases_thumbnail_x-kittle.png" alt="Showcase by x-kittle" width="32%">
+</a>
+
 </p>
 
 <br> <p> <img src="https://raw.githubusercontent.com/DawsonBodenhamer/AdorableHamsterPets-Source/develop/media/ahp_readme_showroom_banner.png" alt="Adorable Hamster Pets Showroom" width="100%"> </p>

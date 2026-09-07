@@ -22,9 +22,11 @@
   <a href="https://www.patreon.com/c/dawson_bodenhamer"><img src="https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fshieldsio-patreon.vercel.app%2Fapi%3Fusername%3Ddawson_bodenhamer%26type%3Dpatrons&style=for-the-badge&logo=patreon&logoColor=white&labelColor=555555&color=c37301" alt="Patreon"></a>
 </p>
 
-<p style="text-align: center;">
+<p>
   <a href="https://youtu.be/18-uvVcPgdg">
-    <img src="https://raw.githubusercontent.com/DawsonBodenhamer/AdorableHamsterPets-Source/develop/media/ahp_readme_thumbnail_updatev3.6.0_showcase_less_breathing_room.png" alt="Watch the Procedural Genetics Update showcase" width="100%">
+    <img style="float: right;" src="https://raw.githubusercontent.com/DawsonBodenhamer/AdorableHamsterPets-Source/develop/media/ahp_readme_thumbnail_updatev3.6.0_showcase.png"
+         alt="Watch the Procedural Genetics Update showcase"
+         width="75%">
   </a>
 </p>
 
@@ -86,6 +88,10 @@ These hamsters like to bounce, shoulder-surf, hoard snacks, sniff for things, an
 
 <a href="https://youtu.be/qGjH25FbPOg?t=592">
 <img src="https://raw.githubusercontent.com/DawsonBodenhamer/AdorableHamsterPets-Source/develop/media/ahp_readme_showcases_thumbnail_enderverse.png" alt="Showcase by Enderverse" width="32%">
+</a>
+
+<a href="https://youtu.be/UDhgNkANkZk">
+<img src="https://raw.githubusercontent.com/DawsonBodenhamer/AdorableHamsterPets-Source/develop/media/ahp_readme_showcases_thumbnail_x-kittle.png" alt="Showcase by x-kittle" width="32%">
 </a>
 
 </div>
@@ -306,7 +312,11 @@ Vanilla sunflowers merely exist; mine *produce*. Right-click the head to harvest
 
 ### <span style="color: #16a085;"><strong>New Food Stuffs</strong></span>
 
-<img align="right" src="https://i.imgur.com/VUrQDWD.png" alt="Items: cucumber, sliced cucumber, green beans, steamed green beans, hamster food mix, cheese" width="60%">
+<p>
+  <img style="float: right;" src="https://i.imgur.com/VUrQDWD.png"
+       alt="Items: cucumber, sliced cucumber, green beans, steamed green beans, hamster food mix, cheese"
+       width="60%">
+</p>
 
 *   **Cucumber/Green Beans:** Grow 'em, eat 'em raw (if you must), slice 'em, steam 'em. Culinary possibilities are… present. Wild hamsters go nuts for these.
 *   **Steamed Green Beans:** A suspiciously potent super-food for your hamster. Grants temporary buffs, followed by a mandatory "please wait" period. Don't get greedy.
@@ -328,7 +338,11 @@ Feed your hamster **Steamed Green Beans** to trigger a state of pure, unadultera
 
 This humble pile of leaves and twigs, officially known as **Hamster Bedding**, is the cornerstone of hamster interior design. You'll need it to craft the aforementioned **Hamster Beds**.
 
-<img align="right" src="https://raw.githubusercontent.com/DawsonBodenhamer/AdorableHamsterPets-Source/develop/media/hamster_bedding_particle_physics.gif" alt="Hamster Bedding Particles" width="70%">
+<p>
+  <img style="float: right;" src="https://raw.githubusercontent.com/DawsonBodenhamer/AdorableHamsterPets-Source/develop/media/hamster_bedding_particle_physics.gif"
+       alt="Hamster Bedding Particles"
+       width="70%">
+</p>
 
 But its true calling? Unnecessary ambiance. **Right-click** the item in the air (or put it in a **Dispenser**) to unleash a glorious poof of decorative leaf particles.
 
@@ -367,7 +381,11 @@ These are subject to change! Got a genius idea for the next hamster accessory th
     <img src="https://raw.githubusercontent.com/DawsonBodenhamer/AdorableHamsterPets-Source/develop/media/ahp_readme_divider_immersive_advancements.png" alt="Advancements" width="100%">
 </p>
 
-<img align="right" src="https://raw.githubusercontent.com/DawsonBodenhamer/AdorableHamsterPets-Source/develop/media/immersive_advancements.png" alt="Immersive Advancements" width="60%">
+<p>
+  <img style="float: right;" src="https://raw.githubusercontent.com/DawsonBodenhamer/AdorableHamsterPets-Source/develop/media/immersive_advancements.png"
+       alt="Immersive Advancements"
+       width="60%">
+</p>
 
 A custom advancements tab, **"The Hamster Life,"** guides you through the thrilling world of hamster husbandry, from finding your first seed to... um, yeeting.
 
