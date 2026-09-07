@@ -46,6 +46,8 @@ Some cave hamsters have inhaled a little too much redstone dust, so naturally th
 - **Per-Hamster Armor Visibility**
   - Each hamster inventory now has a compact checkbox for hiding that hamster's armor without removing its protection.
     The global armor-visual setting remains the final authority.
+- **Hamster Turning Animations**
+  - Idling hamsters now shuffle their paws and rock their body when rotating in place instead of gliding around like a robotic turntable.
 - **Hamster Reset Command**
   - Added `/ahp reset_hamster` for server OPs. It returns the nearest hamster to a freshly spawned wild state while
     preserving its fur, patterns, eyes, animation personality, and cheek-pouch loot. Ownership, equipment, AI state,
