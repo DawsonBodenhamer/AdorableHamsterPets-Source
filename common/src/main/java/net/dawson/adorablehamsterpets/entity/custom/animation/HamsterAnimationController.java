@@ -84,6 +84,7 @@ public final class HamsterAnimationController {
     private static final RawAnimation SPRINTING_ANIM = animation("anim_hamster_sprinting");
     private static final RawAnimation TURNING1_ANIM = animation("anim_hamster_turning1");
     private static final RawAnimation TURNING2_ANIM = animation("anim_hamster_turning2");
+    private static final RawAnimation FEVER_TURNING_ANIM = animation("anim_hamster_turning_fever");
     private static final RawAnimation BOUNCING_ANIM = animation("anim_hamster_bouncing");
     private static final RawAnimation SWAYING_ANIM = animation("anim_hamster_swaying");
     private static final RawAnimation IDLE1_ANIM = animation("anim_hamster_idle1");
@@ -370,10 +371,12 @@ public final class HamsterAnimationController {
                 new AnimationController<>(
                         hamster,
                         "turnController",
-                        0,
+                        3,
                         event -> {
                             AnimationState state = AnimationState.capture(hamster);
-                            if (state.horizontalSpeedSquared() > 1.0E-6 || !isMainControllerIdling(hamster)) {
+                            if (state.shoulderPet()
+                                    || state.horizontalSpeedSquared() > 1.0E-6
+                                    || !isMainControllerIdling(hamster)) {
                                 return PlayState.STOP;
                             }
 
@@ -385,6 +388,12 @@ public final class HamsterAnimationController {
 
                             if (hamster.age >= hamster.lastTurnTick && hamster.age - hamster.lastTurnTick <= 1) {
                                 RawAnimation current = event.getController().getCurrentRawAnimation();
+                                if (state.redstoneFever()) {
+                                    if (FEVER_TURNING_ANIM.equals(current)) {
+                                        return event.setAndContinue(current);
+                                    }
+                                    return event.setAndContinue(FEVER_TURNING_ANIM);
+                                }
                                 if (current != null
                                         && (current.equals(TURNING1_ANIM)
                                                 || current.equals(TURNING2_ANIM))) {
