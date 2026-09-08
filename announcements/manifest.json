@@ -1,6 +1,15 @@
 {
-  "latest_version": "3.6.1",
+  "latest_version": "3.7.0",
   "messages": [
+    {
+      "id": "update-3.7.0",
+      "title": "The Fever Pitch Update (v3.7.0)",
+      "kind": "update_available",
+      "semver": "3.7.0",
+      "markdown": "messages/v3.7.0-update.md",
+      "published": "2026-09-08T12:00:00Z",
+      "mandatory": true
+    },
     {
       "id": "update-3.6.1",
       "title": "New Update: v3.6.0!",
