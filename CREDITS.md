@@ -56,6 +56,7 @@ These generous souls contributed to the project to keep the lights on and the ha
 | [**@munchie**](https://this_person_did_not_want_to_include_a_link_but_I_wanted_their_name_to_be_blue.com)      | Holds the unofficial server record for the most sunflower seeds hoarded in a single chest.   |
 | [**@TheBecksiest**](https://linktr.ee/TheBecksiest)                                                            | A streamer whose chat demands mandatory, on-stream hamster-petting breaks every hour.        |
 | [**@Shyvor**](https://this_person_did_not_want_to_include_a_link_but_I_wanted_their_name_to_be_blue.com)       | Refuses to use conventional transport, opting instead to travel exclusively via strider.     |
+| [**@joeii.saki**](https://www.instagram.com/joeii.saki)                                                        | Building a fluffy empire one plushie at a time.                                             |
 
 ### <font color="teal">Dependencies</font>
 
