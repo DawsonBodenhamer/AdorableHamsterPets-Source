@@ -84,3 +84,6 @@ codegraph.json
 /GEMINI.md
 /QWEN.md
 /.github/copilot-instructions.md
+
+# Local release communication inputs and provenance
+/.ahp-publishing/
