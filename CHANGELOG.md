@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.7.1] - Unreleased
+
+# **The Aether Compatibility Patch**
+
+NeoForge modpacks using The Aether and Curios can now launch without installing a separate Accessories mod. What a fantastic update. Very exciting.
+
+### Fixed
+- **NeoForge 1.21.1 Accessories Compatibility**
+  - Fixed a launch failure when using The Aether with Curios and no separate Accessories installation. Acorn Rings remain usable through Curios or Accessories slots.
+
 ## [3.7.0] - 2026-09-08
 
 # **The Fever Pitch Update**
