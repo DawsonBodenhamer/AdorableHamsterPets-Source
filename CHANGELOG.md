@@ -7,13 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.7.1] - Unreleased
 
-# **The Aether Compatibility Patch**
+# **The Compatibility Patch**
 
 NeoForge modpacks using The Aether and Curios can now launch without installing a separate Accessories mod. What a fantastic update. Very exciting.
 
 ### Fixed
 - **NeoForge 1.21.1 Accessories Compatibility**
   - Fixed a launch failure when using The Aether with Curios and no separate Accessories installation. Acorn Rings remain usable through Curios or Accessories slots.
+- **Dynamic Trees Compatibility**
+  - Fixed hamsters bouncing off Dynamic Trees oak trunks and branches or flying through their leaves without starting a Tree Heist on Fabric.
 
 ## [3.7.0] - 2026-09-08
 

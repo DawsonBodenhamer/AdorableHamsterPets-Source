@@ -1,7 +1,9 @@
 package net.dawson.adorablehamsterpets;
 
 import dev.architectury.event.events.common.CommandRegistrationEvent;
+import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.event.events.common.PlayerEvent;
+import dev.architectury.platform.Platform;
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
 import net.dawson.adorablehamsterpets.accessor.PlayerEntityAccessor;
 import net.dawson.adorablehamsterpets.advancement.criterion.ModCriteria;
@@ -88,6 +90,11 @@ public class AdorableHamsterPets {
 		ModBlockEntities.register();
 		ModParticles.register();
 		ModStatusEffects.register();
+
+		// Refresh registry-backed rules after other mods finish their main initialization
+		if (Platform.isFabric() && System.getProperty("fabric-api.datagen") == null) {
+			LifecycleEvent.SETUP.register(ConfigDataCache::parseConfig);
+		}
 	}
 
 	/**
